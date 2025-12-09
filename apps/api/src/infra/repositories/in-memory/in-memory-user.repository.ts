@@ -21,6 +21,11 @@ export class InMemoryUserRepository implements IUserRepository {
     return user ? UserDataMapper.toDomain(user) : null;
   }
 
+  async find_by_provider_id(providerId: string): Promise<UserEntity | null> {
+    const user = this.users.find((u) => u.providerId === providerId);
+    return user ? UserDataMapper.toDomain(user) : null;
+  }
+
   async list_all(): Promise<UserEntity[]> {
     return this.users.map(UserDataMapper.toDomain);
   }

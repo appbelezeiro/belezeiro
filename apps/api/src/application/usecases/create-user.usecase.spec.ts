@@ -23,12 +23,16 @@ describe('CreateUserUseCase', () => {
     const input = {
       name: 'John Doe',
       email: 'john@example.com',
+      providerId: 'test-provider-id',
+      photoUrl: 'https://example.com/photo.jpg',
     };
 
     const user = await sut.execute(input);
 
     expect(user.name).toBe('John Doe');
     expect(user.email).toBe('john@example.com');
+    expect(user.providerId).toBe('test-provider-id');
+    expect(user.photoUrl).toBe('https://example.com/photo.jpg');
     expect(user.id).toContain('usr_');
   });
 });
