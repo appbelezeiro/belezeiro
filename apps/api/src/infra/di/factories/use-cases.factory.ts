@@ -14,6 +14,15 @@ import { CreateBookingUseCase } from '@/application/usecases/create-booking.usec
 import { CancelBookingUseCase } from '@/application/usecases/cancel-booking.usecase';
 import { GetAvailableDaysUseCase } from '@/application/usecases/get-available-days.usecase';
 import { GetAvailableSlotsUseCase } from '@/application/usecases/get-available-slots.usecase';
+import { CreateOrganizationUseCase } from '@/application/usecases/create-organization.usecase';
+import { GetOrganizationByIdUseCase } from '@/application/usecases/get-organization-by-id.usecase';
+import { GetOrganizationByOwnerUseCase } from '@/application/usecases/get-organization-by-owner.usecase';
+import { UpdateOrganizationUseCase } from '@/application/usecases/update-organization.usecase';
+import { CreateUnitUseCase } from '@/application/usecases/create-unit.usecase';
+import { GetUnitByIdUseCase } from '@/application/usecases/get-unit-by-id.usecase';
+import { ListUnitsByOrganizationUseCase } from '@/application/usecases/list-units-by-organization.usecase';
+import { UpdateUnitUseCase } from '@/application/usecases/update-unit.usecase';
+import { ListActiveUnitsUseCase } from '@/application/usecases/list-active-units.usecase';
 import type { Repositories } from './repositories.factory';
 import type { Services } from './services.factory';
 
@@ -68,6 +77,21 @@ export function createUseCases(repositories: Repositories, services: Services) {
       repositories.booking_exception_repository,
       repositories.booking_repository,
     ),
+
+    // Organization use cases
+    create_organization: new CreateOrganizationUseCase(repositories.organization_repository),
+    get_organization_by_id: new GetOrganizationByIdUseCase(repositories.organization_repository),
+    get_organization_by_owner: new GetOrganizationByOwnerUseCase(
+      repositories.organization_repository,
+    ),
+    update_organization: new UpdateOrganizationUseCase(repositories.organization_repository),
+
+    // Unit use cases
+    create_unit: new CreateUnitUseCase(repositories.unit_repository),
+    get_unit_by_id: new GetUnitByIdUseCase(repositories.unit_repository),
+    list_units_by_organization: new ListUnitsByOrganizationUseCase(repositories.unit_repository),
+    update_unit: new UpdateUnitUseCase(repositories.unit_repository),
+    list_active_units: new ListActiveUnitsUseCase(repositories.unit_repository),
   };
 }
 
