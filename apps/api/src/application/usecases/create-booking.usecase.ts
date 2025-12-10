@@ -29,7 +29,7 @@ class UseCase {
   async execute(input: UseCase.Input): UseCase.Output {
     const start = new Date(input.start_at);
     const end = new Date(input.end_at);
-    const date = formatDate(start);
+    const now = new Date();
 
     // 1. Create booking entity
     const booking = new BookingEntity({
@@ -94,7 +94,14 @@ class UseCase {
       }
     }
 
-    // 6. Check for overlapping bookings (double-booking protection)
+    // Prevent bookings in the past
+    if (start < now) {
+      throw new InvalidTimeRangeError(
+        `Cannot create booking in the past. Start time (${input.start_at}) is before current time`,
+      );
+    }
+
+    // 2. Check for overlapping bookings (double-booking protection)
     const overlapping = await this.booking_repository.find_overlapping(
       input.user_id,
       input.start_at,
