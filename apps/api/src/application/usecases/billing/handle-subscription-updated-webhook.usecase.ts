@@ -30,7 +30,10 @@ class UseCase {
     // 4. Update cancel_at_period_end if provided
     if (input.cancel_at_period_end !== undefined) {
       if (input.cancel_at_period_end) {
-        subscription.cancel(false);
+        subscription.cancel(false); // Cancel at period end
+      } else if (subscription.cancel_at_period_end) {
+        // If cancel_at_period_end was true and now is false, cancel immediately
+        subscription.cancel(true);
       }
     }
 

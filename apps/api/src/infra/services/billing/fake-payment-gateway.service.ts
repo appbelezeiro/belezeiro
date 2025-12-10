@@ -131,7 +131,7 @@ export class FakePaymentGatewayService implements IPaymentGateway {
     return invoice;
   }
 
-  verify_webhook_signature(payload: string, signature: string): boolean {
+  verify_webhook_signature(_payload: string, signature: string): boolean {
     // Fake implementation: always returns true for testing
     // In real implementation, verify HMAC signature
     return signature === 'fake_signature';

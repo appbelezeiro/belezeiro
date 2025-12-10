@@ -4,7 +4,7 @@ import { IPlanRepository } from '@/application/contracts/billing/i-plan-reposito
 class UseCase {
   constructor(private readonly plan_repository: IPlanRepository) {}
 
-  async execute(input: UseCase.Input): UseCase.Output {
+  async execute(_input: UseCase.Input): UseCase.Output {
     return this.plan_repository.list_active();
   }
 }

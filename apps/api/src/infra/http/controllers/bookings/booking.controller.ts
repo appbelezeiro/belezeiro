@@ -1,7 +1,6 @@
 import { Context } from 'hono';
 import type { Container } from '@/infra/di/factory-root';
 import { z } from 'zod';
-import { BookingMapper } from '@/application/dtos/mappers/bookings/booking.mapper';
 import { BookingNotFoundError } from '@/domain/errors/bookings/booking-not-found.error';
 import { BookingOverlapError } from '@/domain/errors/bookings/booking-overlap.error';
 import { InvalidTimeRangeError } from '@/domain/errors/bookings/invalid-time-range.error';

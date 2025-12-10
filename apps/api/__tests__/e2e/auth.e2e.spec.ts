@@ -24,7 +24,9 @@ describe('Auth E2E', () => {
       expect(response.body).toHaveProperty('status', 'Logged successful');
       expect(response.headers['set-cookie']).toBeDefined();
 
-      const cookies = response.headers['set-cookie'];
+      const cookies = Array.isArray(response.headers['set-cookie'])
+        ? response.headers['set-cookie']
+        : [response.headers['set-cookie']];
       expect(cookies.some((c: string) => c.startsWith('session_token='))).toBe(true);
       expect(cookies.some((c: string) => c.startsWith('refresh_token='))).toBe(true);
     });
@@ -87,7 +89,9 @@ describe('Auth E2E', () => {
         providerId: '103410879415972377342',
       });
 
-      const cookies = loginResponse.headers['set-cookie'];
+      const cookies = Array.isArray(loginResponse.headers['set-cookie'])
+        ? loginResponse.headers['set-cookie']
+        : [loginResponse.headers['set-cookie']];
       const refresh_token_cookie = cookies.find((c: string) => c.startsWith('refresh_token='));
 
       const response = await server
@@ -125,7 +129,9 @@ describe('Auth E2E', () => {
         providerId: '103410879415972377342',
       });
 
-      const cookies = loginResponse.headers['set-cookie'];
+      const cookies = Array.isArray(loginResponse.headers['set-cookie'])
+        ? loginResponse.headers['set-cookie']
+        : [loginResponse.headers['set-cookie']];
       const session_token_cookie = cookies.find((c: string) => c.startsWith('session_token='));
 
       const response = await server

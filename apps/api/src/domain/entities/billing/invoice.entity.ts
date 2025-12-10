@@ -36,7 +36,10 @@ type InvoiceEntityCreationProps = Omit<InvoiceEntityOwnProps, 'status'> &
   Partial<Pick<InvoiceEntityOwnProps, 'status'>> &
   BaseEntityCreationProps;
 
-type InvoiceEntityProps = Required<InvoiceEntityOwnProps> & BaseEntityProps;
+type InvoiceEntityProps = Omit<InvoiceEntityOwnProps, 'paid_at' | 'provider_invoice_id' | 'metadata'> &
+  Required<Pick<InvoiceEntityOwnProps, 'status'>> &
+  Pick<InvoiceEntityOwnProps, 'paid_at' | 'provider_invoice_id' | 'metadata'> &
+  BaseEntityProps;
 
 export class InvoiceEntity extends BaseEntity<InvoiceEntityProps> {
   protected prefix(): string {

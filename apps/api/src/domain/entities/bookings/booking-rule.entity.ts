@@ -16,7 +16,12 @@ type BookingRuleEntityOwnProps = {
 };
 
 type BookingRuleEntityCreationProps = BookingRuleEntityOwnProps & BaseEntityCreationProps;
-type BookingRuleEntityProps = Required<BookingRuleEntityOwnProps> & BaseEntityProps;
+type BookingRuleEntityProps = Omit<
+  BookingRuleEntityOwnProps,
+  'weekday' | 'date' | 'min_advance_minutes' | 'max_duration_minutes' | 'max_bookings_per_day' | 'max_bookings_per_client_per_day' | 'metadata'
+> &
+  Pick<BookingRuleEntityOwnProps, 'weekday' | 'date' | 'min_advance_minutes' | 'max_duration_minutes' | 'max_bookings_per_day' | 'max_bookings_per_client_per_day' | 'metadata'> &
+  BaseEntityProps;
 
 export class BookingRuleEntity extends BaseEntity<BookingRuleEntityProps> {
   protected prefix(): string {
@@ -26,11 +31,11 @@ export class BookingRuleEntity extends BaseEntity<BookingRuleEntityProps> {
   constructor(props: BookingRuleEntityCreationProps) {
     super({
       ...props,
-      metadata: props.metadata ?? {},
-      min_advance_minutes: props.min_advance_minutes ?? undefined,
-      max_duration_minutes: props.max_duration_minutes ?? undefined,
-      max_bookings_per_day: props.max_bookings_per_day ?? undefined,
-      max_bookings_per_client_per_day: props.max_bookings_per_client_per_day ?? undefined,
+      metadata: props.metadata,
+      min_advance_minutes: props.min_advance_minutes,
+      max_duration_minutes: props.max_duration_minutes,
+      max_bookings_per_day: props.max_bookings_per_day,
+      max_bookings_per_client_per_day: props.max_bookings_per_client_per_day,
     });
   }
 
@@ -62,7 +67,7 @@ export class BookingRuleEntity extends BaseEntity<BookingRuleEntityProps> {
     return this.props.slot_duration_minutes;
   }
 
-  get metadata(): Record<string, unknown> {
+  get metadata(): Record<string, unknown> | undefined {
     return this.props.metadata;
   }
 

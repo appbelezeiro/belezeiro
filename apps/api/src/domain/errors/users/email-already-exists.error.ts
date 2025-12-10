@@ -1,4 +1,4 @@
-import { DomainError } from './domain-error';
+import { DomainError } from '@/domain/errors/domain-error';
 
 export class EmailAlreadyExistsError extends DomainError {
   constructor(email: string) {

@@ -1,4 +1,4 @@
-import { DomainError } from './domain-error';
+import { DomainError } from '@/domain/errors/domain-error';
 
 export class PaymentFailedError extends DomainError {
   constructor(message: string = 'Payment failed') {

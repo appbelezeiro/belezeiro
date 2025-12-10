@@ -2,7 +2,6 @@ import { Context } from 'hono';
 import type { Container } from '@/infra/di/factory-root';
 import { z } from 'zod';
 import { SubscriptionMapper } from '@/application/dtos/mappers/billing/subscription.mapper';
-import { PlanMapper } from '@/application/dtos/mappers/billing/plan.mapper';
 import { SubscriptionNotFoundError } from '@/domain/errors/billing/subscription.errors';
 import { NotFoundError } from '../../errors/http-errors';
 
@@ -13,7 +12,7 @@ const CreateCheckoutSessionSchema = z.object({
   cancel_url: z.string().url(),
   coupon_code: z.string().optional(),
   trial_days: z.number().int().min(0).optional(),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 });
 
 const CancelSubscriptionSchema = z.object({

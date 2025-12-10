@@ -18,7 +18,7 @@ const CreateBookingRuleSchema = z.object({
   max_duration_minutes: z.number().positive().optional(),
   max_bookings_per_day: z.number().positive().int().optional(),
   max_bookings_per_client_per_day: z.number().positive().int().optional(),
-  metadata: z.record(z.unknown()).optional(),
+  metadata: z.record(z.string(), z.unknown()).optional(),
 });
 
 const UpdateBookingRuleSchema = z.object({
@@ -29,7 +29,7 @@ const UpdateBookingRuleSchema = z.object({
   max_duration_minutes: z.number().positive().optional(),
   max_bookings_per_day: z.number().positive().int().optional(),
   max_bookings_per_client_per_day: z.number().positive().int().optional(),
-  metadata: z.record(z.unknown()).optional(),
+  metadata: z.record(z.string(), z.unknown()).optional(),
 });
 
 export class BookingRuleController {
@@ -110,7 +110,7 @@ export class BookingRuleController {
 
       await this.container.use_cases.delete_booking_rule.execute({ id });
 
-      return c.json({ success: true }, 204);
+      return c.body(null, 204);
     } catch (error) {
       if (error instanceof RuleNotFoundError) {
         throw new NotFoundError(error.message);

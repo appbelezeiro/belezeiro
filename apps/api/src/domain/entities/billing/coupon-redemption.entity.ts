@@ -27,7 +27,7 @@ export class CouponRedemptionEntity extends BaseEntity<CouponRedemptionEntityPro
     super({
       ...props,
       redeemed_at: props.redeemed_at ?? new Date(),
-      metadata: props.metadata,
+      metadata: props.metadata ?? {},
     });
   }
 
@@ -47,7 +47,7 @@ export class CouponRedemptionEntity extends BaseEntity<CouponRedemptionEntityPro
     return this.props.redeemed_at;
   }
 
-  get metadata(): Record<string, any> | undefined {
+  get metadata(): Record<string, any> {
     return this.props.metadata;
   }
 }

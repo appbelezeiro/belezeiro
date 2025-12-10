@@ -97,7 +97,7 @@ export class BookingExceptionController {
 
       await this.container.use_cases.delete_booking_exception.execute({ id });
 
-      return c.json({ success: true }, 204);
+      return c.body(null, 204);
     } catch (error) {
       if (error instanceof ExceptionNotFoundError) {
         throw new NotFoundError(error.message);

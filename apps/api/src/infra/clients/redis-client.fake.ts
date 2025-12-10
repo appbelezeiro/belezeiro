@@ -8,10 +8,10 @@ export class RedisClientFake {
   async disconnect(): Promise<void> {
   }
 
-  async get(key: string): Promise<string | null> {
+  async get(_key: string): Promise<string | null> {
     return null;
   }
 
-  async set(key: string, value: string): Promise<void> {
+  async set(_key: string, _value: string): Promise<void> {
   }
 }
