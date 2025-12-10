@@ -1,4 +1,4 @@
-import { IWhatsAppProvider } from '@/application/contracts/i-whatsapp-provider.interface';
+import { IWhatsAppProvider } from '@/application/contracts/providers/i-whatsapp-provider.interface';
 import { v4 as uuidv4 } from 'uuid';
 
 type SentWhatsApp = {

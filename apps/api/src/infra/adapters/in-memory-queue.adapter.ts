@@ -1,4 +1,4 @@
-import { IQueue } from '@/application/contracts/i-queue.interface';
+import { IQueue } from '@/application/contracts/providers/i-queue.interface';
 
 type QueueHandler<T> = (message: T) => Promise<void>;
 

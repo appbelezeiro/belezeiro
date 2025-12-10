@@ -1,4 +1,4 @@
-import { IPushProvider } from '@/application/contracts/i-push-provider.interface';
+import { IPushProvider } from '@/application/contracts/providers/i-push-provider.interface';
 import { v4 as uuidv4 } from 'uuid';
 
 type SentPush = {

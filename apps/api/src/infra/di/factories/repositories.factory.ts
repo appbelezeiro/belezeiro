@@ -1,14 +1,14 @@
-import { InMemoryUserRepository } from '@/infra/repositories/in-memory/in-memory-user.repository';
-import { InMemoryBookingRuleRepository } from '@/infra/repositories/in-memory/in-memory-booking-rule.repository';
-import { InMemoryBookingExceptionRepository } from '@/infra/repositories/in-memory/in-memory-booking-exception.repository';
-import { InMemoryBookingRepository } from '@/infra/repositories/in-memory/in-memory-booking.repository';
-import { InMemoryOrganizationRepository } from '@/infra/repositories/in-memory/in-memory-organization.repository';
-import { InMemoryUnitRepository } from '@/infra/repositories/in-memory/in-memory-unit.repository';
-import { InMemoryPlanRepository } from '@/infra/repositories/in-memory/in-memory-plan.repository';
-import { InMemorySubscriptionRepository } from '@/infra/repositories/in-memory/in-memory-subscription.repository';
-import { InMemoryInvoiceRepository } from '@/infra/repositories/in-memory/in-memory-invoice.repository';
-import { InMemoryDiscountRepository } from '@/infra/repositories/in-memory/in-memory-discount.repository';
-import { InMemoryCouponRedemptionRepository } from '@/infra/repositories/in-memory/in-memory-coupon-redemption.repository';
+import { InMemoryUserRepository } from '@/infra/repositories/in-memory/users/in-memory-user.repository';
+import { InMemoryBookingRuleRepository } from '@/infra/repositories/in-memory/bookings/in-memory-booking-rule.repository';
+import { InMemoryBookingExceptionRepository } from '@/infra/repositories/in-memory/bookings/in-memory-booking-exception.repository';
+import { InMemoryBookingRepository } from '@/infra/repositories/in-memory/bookings/in-memory-booking.repository';
+import { InMemoryOrganizationRepository } from '@/infra/repositories/in-memory/organizations/in-memory-organization.repository';
+import { InMemoryUnitRepository } from '@/infra/repositories/in-memory/units/in-memory-unit.repository';
+import { InMemoryPlanRepository } from '@/infra/repositories/in-memory/billing/in-memory-plan.repository';
+import { InMemorySubscriptionRepository } from '@/infra/repositories/in-memory/billing/in-memory-subscription.repository';
+import { InMemoryInvoiceRepository } from '@/infra/repositories/in-memory/billing/in-memory-invoice.repository';
+import { InMemoryDiscountRepository } from '@/infra/repositories/in-memory/billing/in-memory-discount.repository';
+import { InMemoryCouponRedemptionRepository } from '@/infra/repositories/in-memory/billing/in-memory-coupon-redemption.repository';
 import type { Clients } from './clients.factory';
 
 export function createRepositories(_clients: Clients) {
