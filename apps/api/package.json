@@ -15,13 +15,18 @@
     "test:e2e": "vitest --config vitest.e2e.config.ts"
   },
   "dependencies": {
+    "@hono/node-server": "^1.19.7",
+    "hono": "^4.10.8",
+    "jose": "^6.1.3",
     "ulidx": "^2.4.1",
     "zod": "^4.1.13"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
+    "@types/supertest": "^6.0.3",
     "@vitest/coverage-v8": "^2.0.5",
     "@vitest/ui": "^2.0.5",
+    "supertest": "^7.1.4",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3",
     "vitest": "^2.0.5"
