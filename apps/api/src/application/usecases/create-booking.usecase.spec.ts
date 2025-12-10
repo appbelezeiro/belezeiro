@@ -39,135 +39,30 @@ describe('CreateBookingUseCase', () => {
     );
   });
 
-  it('should create a booking successfully', async () => {
-    // Use future date
-    const future_date = new Date();
-    future_date.setDate(future_date.getDate() + 7); // Next week
-    future_date.setHours(10, 0, 0, 0);
+  describe('Basic validations', () => {
+    it('should create a booking successfully', async () => {
+      await booking_rule_repository.create(
+        new BookingRuleEntity({
+          user_id: 'user_1',
+          type: 'weekly',
+          weekday: 2,
+          start_time: '2025-01-14T10:00:00.000Z',
+          end_time: '2025-01-14T18:00:00.000Z',
+          slot_duration_minutes: 60,
+        }),
+      );
 
-    const start_time = future_date.toISOString();
-    const end_time = new Date(future_date.getTime() + 3600000).toISOString(); // +1 hour
-
-    // Create a weekly rule for the weekday
-    await booking_rule_repository.create(
-      new BookingRuleEntity({
-        user_id: 'user_1',
-        type: 'weekly',
-        weekday: future_date.getDay(),
-        start_time: start_time,
-        end_time: new Date(future_date.getTime() + 8 * 3600000).toISOString(), // +8 hours
-        slot_duration_minutes: 60,
-      }),
-    );
-
-    const result = await sut.execute({
-      user_id: 'user_1',
-      client_id: 'client_1',
-      start_at: start_time,
-      end_at: end_time,
-    });
-
-    expect(result).toBeInstanceOf(BookingEntity);
-    expect(result.user_id).toBe('user_1');
-    expect(result.client_id).toBe('client_1');
-    expect(result.status).toBe('confirmed');
-  });
-
-  it('should throw InvalidTimeRangeError if start_at >= end_at', async () => {
-    const future_date = new Date();
-    future_date.setDate(future_date.getDate() + 7);
-
-    await expect(
-      sut.execute({
+      const result = await sut.execute({
         user_id: 'user_1',
         client_id: 'client_1',
-        start_at: new Date(future_date.getTime() + 3600000).toISOString(),
-        end_at: future_date.toISOString(),
-      }),
-    ).rejects.toThrow(InvalidTimeRangeError);
-  });
+        start_at: '2025-12-16T10:00:00.000Z',
+        end_at: '2025-12-16T11:00:00.000Z',
+      });
 
-  it('should throw InvalidTimeRangeError if booking is in the past', async () => {
-    const past_date = new Date();
-    past_date.setDate(past_date.getDate() - 1); // Yesterday
-
-    await expect(
-      sut.execute({
-        user_id: 'user_1',
-        client_id: 'client_1',
-        start_at: past_date.toISOString(),
-        end_at: new Date(past_date.getTime() + 3600000).toISOString(), // +1 hour
-      }),
-    ).rejects.toThrow(InvalidTimeRangeError);
-  });
-
-  it('should throw BookingOverlapError if booking overlaps with existing confirmed booking', async () => {
-    // Use future date
-    const future_date = new Date();
-    future_date.setDate(future_date.getDate() + 7);
-    future_date.setHours(10, 0, 0, 0);
-
-    const start_time = future_date.toISOString();
-    const end_time = new Date(future_date.getTime() + 3600000).toISOString();
-
-    // Create existing booking
-    await booking_repository.create(
-      new BookingEntity({
-        user_id: 'user_1',
-        client_id: 'client_1',
-        start_at: start_time,
-        end_at: end_time,
-      }),
-    );
-
-    // Try to create overlapping booking
-    await expect(
-      sut.execute({
-        user_id: 'user_1',
-        client_id: 'client_2',
-        start_at: new Date(future_date.getTime() + 1800000).toISOString(), // +30 min
-        end_at: new Date(future_date.getTime() + 5400000).toISOString(), // +90 min
-      }),
-    ).rejects.toThrow(BookingOverlapError);
-  });
-
-  it('should allow booking if existing booking is cancelled', async () => {
-    // Use future date
-    const future_date = new Date();
-    future_date.setDate(future_date.getDate() + 7);
-    future_date.setHours(10, 0, 0, 0);
-
-    const start_time = future_date.toISOString();
-    const end_time = new Date(future_date.getTime() + 3600000).toISOString();
-
-    // Create a rule
-    await booking_rule_repository.create(
-      new BookingRuleEntity({
-        user_id: 'user_1',
-        type: 'weekly',
-        weekday: future_date.getDay(),
-        start_time: start_time,
-        end_time: new Date(future_date.getTime() + 8 * 3600000).toISOString(),
-        slot_duration_minutes: 60,
-      }),
-    );
-
-    // Create cancelled booking
-    const cancelled_booking = new BookingEntity({
-      user_id: 'user_1',
-      client_id: 'client_1',
-      start_at: start_time,
-      end_at: end_time,
-    });
-    cancelled_booking.cancel();
-    await booking_repository.create(cancelled_booking);
-
-    // Should allow new booking in same slot
-    const result = await sut.execute({
-      user_id: 'user_1',
-      client_id: 'client_2',
-      start_at: start_time,
-      end_at: end_time,
+      expect(result).toBeInstanceOf(BookingEntity);
+      expect(result.user_id).toBe('user_1');
+      expect(result.client_id).toBe('client_1');
+      expect(result.status).toBe('confirmed');
     });
 
     it('should throw InvalidTimeRangeError if start_at >= end_at', async () => {
