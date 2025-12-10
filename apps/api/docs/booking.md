@@ -236,6 +236,7 @@ Criar um novo agendamento.
 
 **Validações:**
 - `start_at < end_at`
+- `start_at` não pode estar no passado
 - Não há overlapping com bookings confirmados existentes
 - Slot está disponível (dentro de rules/exceptions e não ocupado)
 
