@@ -23,6 +23,15 @@ import { GetUnitByIdUseCase } from '@/application/usecases/get-unit-by-id.usecas
 import { ListUnitsByOrganizationUseCase } from '@/application/usecases/list-units-by-organization.usecase';
 import { UpdateUnitUseCase } from '@/application/usecases/update-unit.usecase';
 import { ListActiveUnitsUseCase } from '@/application/usecases/list-active-units.usecase';
+import { CreatePlanUseCase } from '@/application/usecases/create-plan.usecase';
+import { ListActivePlansUseCase } from '@/application/usecases/list-active-plans.usecase';
+import { GetPlanByIdUseCase } from '@/application/usecases/get-plan-by-id.usecase';
+import { CreateCheckoutSessionUseCase } from '@/application/usecases/create-checkout-session.usecase';
+import { GetSubscriptionByUnitUseCase } from '@/application/usecases/get-subscription-by-unit.usecase';
+import { CancelSubscriptionUseCase } from '@/application/usecases/cancel-subscription.usecase';
+import { HandleCheckoutCompletedWebhookUseCase } from '@/application/usecases/handle-checkout-completed-webhook.usecase';
+import { HandleSubscriptionUpdatedWebhookUseCase } from '@/application/usecases/handle-subscription-updated-webhook.usecase';
+import { ValidateDiscountCodeUseCase } from '@/application/usecases/validate-discount-code.usecase';
 import type { Repositories } from './repositories.factory';
 import type { Services } from './services.factory';
 
@@ -92,6 +101,35 @@ export function createUseCases(repositories: Repositories, services: Services) {
     list_units_by_organization: new ListUnitsByOrganizationUseCase(repositories.unit_repository),
     update_unit: new UpdateUnitUseCase(repositories.unit_repository),
     list_active_units: new ListActiveUnitsUseCase(repositories.unit_repository),
+
+    // Billing - Plan use cases
+    create_plan: new CreatePlanUseCase(repositories.plan_repository),
+    list_active_plans: new ListActivePlansUseCase(repositories.plan_repository),
+    get_plan_by_id: new GetPlanByIdUseCase(repositories.plan_repository),
+
+    // Billing - Subscription use cases
+    create_checkout_session: new CreateCheckoutSessionUseCase(
+      repositories.plan_repository,
+      services.payment_gateway,
+    ),
+    get_subscription_by_unit: new GetSubscriptionByUnitUseCase(repositories.subscription_repository),
+    cancel_subscription: new CancelSubscriptionUseCase(
+      repositories.subscription_repository,
+      services.payment_gateway,
+    ),
+
+    // Billing - Webhook use cases
+    handle_checkout_completed_webhook: new HandleCheckoutCompletedWebhookUseCase(
+      repositories.subscription_repository,
+      repositories.plan_repository,
+      repositories.discount_repository,
+    ),
+    handle_subscription_updated_webhook: new HandleSubscriptionUpdatedWebhookUseCase(
+      repositories.subscription_repository,
+    ),
+
+    // Billing - Discount use cases
+    validate_discount_code: new ValidateDiscountCodeUseCase(repositories.discount_repository),
   };
 }
 
