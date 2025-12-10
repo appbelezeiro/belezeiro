@@ -15,6 +15,7 @@
     "test:e2e": "vitest --config vitest.e2e.config.ts"
   },
   "dependencies": {
+    "ulidx": "^2.4.1",
     "zod": "^4.1.13"
   },
   "devDependencies": {
