@@ -8,6 +8,8 @@ class UseCase {
     const user = new UserEntity({
       name: input.name,
       email: input.email,
+      providerId: input.providerId,
+      photoUrl: input.photoUrl,
     });
 
     return this.user_repository.create(user);
@@ -18,6 +20,8 @@ declare namespace UseCase {
   export type Input = {
     name: string;
     email: string;
+    providerId: string;
+    photoUrl?: string;
   };
 
   export type Output = Promise<UserEntity>;

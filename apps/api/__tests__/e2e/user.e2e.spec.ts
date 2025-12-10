@@ -15,6 +15,8 @@ describe('User E2E', () => {
         .send({
           name: 'John Doe',
           email: 'john@example.com',
+          providerId: 'test-provider-id',
+          photoUrl: 'https://example.com/photo.jpg',
         })
         .set('Content-Type', 'application/json');
 

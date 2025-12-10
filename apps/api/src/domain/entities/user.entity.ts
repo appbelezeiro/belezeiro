@@ -3,6 +3,8 @@ import { BaseEntity, BaseEntityCreationProps, BaseEntityProps } from './base.ent
 type UserEntityOwnProps = {
   name: string;
   email: string;
+  providerId: string;
+  photoUrl?: string;
 };
 
 type UserEntityCreationProps = UserEntityOwnProps & BaseEntityCreationProps;
@@ -25,6 +27,14 @@ export class UserEntity extends BaseEntity<UserEntityProps> {
     return this.props.email;
   }
 
+  get providerId(): string {
+    return this.props.providerId;
+  }
+
+  get photoUrl(): string | undefined {
+    return this.props.photoUrl;
+  }
+
   update_name(new_name: string): void {
     this.props.name = new_name;
     this.touch();
@@ -32,6 +42,11 @@ export class UserEntity extends BaseEntity<UserEntityProps> {
 
   update_email(new_email: string): void {
     this.props.email = new_email;
+    this.touch();
+  }
+
+  update_photo_url(new_photo_url: string | undefined): void {
+    this.props.photoUrl = new_photo_url;
     this.touch();
   }
 }
