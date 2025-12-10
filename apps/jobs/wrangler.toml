@@ -1,0 +1,36 @@
+name = "agenda-jobs"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+# Variáveis de ambiente (exemplo)
+[vars]
+ENVIRONMENT = "development"
+
+# Exemplo de Queue binding para Cloudflare Queues
+# [[queues.producers]]
+# queue = "notifications-email"
+# binding = "NOTIFICATIONS_EMAIL_QUEUE"
+#
+# [[queues.producers]]
+# queue = "notifications-whatsapp"
+# binding = "NOTIFICATIONS_WHATSAPP_QUEUE"
+#
+# [[queues.producers]]
+# queue = "notifications-push"
+# binding = "NOTIFICATIONS_PUSH_QUEUE"
+
+# Exemplo de Queue consumers
+# [[queues.consumers]]
+# queue = "notifications-email"
+# max_batch_size = 10
+# max_batch_timeout = 30
+#
+# [[queues.consumers]]
+# queue = "notifications-whatsapp"
+# max_batch_size = 10
+# max_batch_timeout = 30
+#
+# [[queues.consumers]]
+# queue = "notifications-push"
+# max_batch_size = 10
+# max_batch_timeout = 30
