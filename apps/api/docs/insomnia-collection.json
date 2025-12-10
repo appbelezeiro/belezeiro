@@ -1,0 +1,900 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-12-10T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "wrk_belezeiro",
+      "_type": "workspace",
+      "name": "BELEZEIRO",
+      "description": "API Collection do Belezeiro - Sistema de Agendamentos",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "name": "Base Environment",
+      "data": {
+        "BASE_URL": "http://localhost:3000",
+        "TOKEN": ""
+      },
+      "dataPropertyOrder": {
+        "&BASE_URL": 0,
+        "&TOKEN": 1
+      },
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "fld_health",
+      "_type": "request_group",
+      "name": "Health",
+      "description": "Health check endpoints",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "req_health_check",
+      "_type": "request",
+      "name": "Health Check",
+      "url": "{{ _.BASE_URL }}/health",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "description": "Verifica o status da API",
+      "parentId": "fld_health"
+    },
+    {
+      "_id": "fld_auth",
+      "_type": "request_group",
+      "name": "Auth",
+      "description": "Autenticação e autorização",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "req_auth_social_login",
+      "_type": "request",
+      "name": "Social Login",
+      "url": "{{ _.BASE_URL }}/api/auth/social-login",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"provider\": \"google\",\n  \"token\": \"google_oauth_token_here\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "description": "Login via provedores sociais (Google, Facebook, etc)",
+      "parentId": "fld_auth"
+    },
+    {
+      "_id": "req_auth_refresh",
+      "_type": "request",
+      "name": "Refresh Token",
+      "url": "{{ _.BASE_URL }}/api/auth/refresh",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"refresh_token\": \"your_refresh_token_here\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "description": "Atualiza o token de acesso",
+      "parentId": "fld_auth"
+    },
+    {
+      "_id": "req_auth_logout",
+      "_type": "request",
+      "name": "Logout",
+      "url": "{{ _.BASE_URL }}/api/auth/logout",
+      "method": "POST",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Realiza logout do usuário",
+      "parentId": "fld_auth"
+    },
+    {
+      "_id": "req_auth_me",
+      "_type": "request",
+      "name": "Get Current User",
+      "url": "{{ _.BASE_URL }}/api/auth/me",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Retorna os dados do usuário autenticado",
+      "parentId": "fld_auth"
+    },
+    {
+      "_id": "fld_users",
+      "_type": "request_group",
+      "name": "Users",
+      "description": "Gerenciamento de usuários",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "req_users_create",
+      "_type": "request",
+      "name": "Create User",
+      "url": "{{ _.BASE_URL }}/api/users",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"João Silva\",\n  \"email\": \"joao@example.com\",\n  \"phone\": \"+5511999999999\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "description": "Cria um novo usuário",
+      "parentId": "fld_users"
+    },
+    {
+      "_id": "fld_organizations",
+      "_type": "request_group",
+      "name": "Organizations",
+      "description": "Gerenciamento de organizações",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "req_organizations_create",
+      "_type": "request",
+      "name": "Create Organization",
+      "url": "{{ _.BASE_URL }}/api/organizations",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Salão de Beleza ABC\",\n  \"owner_id\": \"user_id_here\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Cria uma nova organização",
+      "parentId": "fld_organizations"
+    },
+    {
+      "_id": "req_organizations_get_by_id",
+      "_type": "request",
+      "name": "Get Organization by ID",
+      "url": "{{ _.BASE_URL }}/api/organizations/:id",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "id",
+          "value": "org_id_here",
+          "description": "ID da organização"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Busca organização por ID",
+      "parentId": "fld_organizations"
+    },
+    {
+      "_id": "req_organizations_get_by_owner",
+      "_type": "request",
+      "name": "Get Organizations by Owner",
+      "url": "{{ _.BASE_URL }}/api/organizations/owner/:ownerId",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "ownerId",
+          "value": "owner_id_here",
+          "description": "ID do proprietário"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Busca organizações por proprietário",
+      "parentId": "fld_organizations"
+    },
+    {
+      "_id": "req_organizations_update",
+      "_type": "request",
+      "name": "Update Organization",
+      "url": "{{ _.BASE_URL }}/api/organizations/:id",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Salão de Beleza XYZ\"\n}"
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "value": "org_id_here",
+          "description": "ID da organização"
+        }
+      ],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Atualiza uma organização",
+      "parentId": "fld_organizations"
+    },
+    {
+      "_id": "fld_units",
+      "_type": "request_group",
+      "name": "Units",
+      "description": "Gerenciamento de unidades",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "req_units_create",
+      "_type": "request",
+      "name": "Create Unit",
+      "url": "{{ _.BASE_URL }}/api/units",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Unidade Centro\",\n  \"organization_id\": \"org_id_here\",\n  \"address\": \"Rua Principal, 123\",\n  \"phone\": \"+5511888888888\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Cria uma nova unidade",
+      "parentId": "fld_units"
+    },
+    {
+      "_id": "req_units_list_active",
+      "_type": "request",
+      "name": "List Active Units",
+      "url": "{{ _.BASE_URL }}/api/units/active",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Lista todas as unidades ativas",
+      "parentId": "fld_units"
+    },
+    {
+      "_id": "req_units_get_by_id",
+      "_type": "request",
+      "name": "Get Unit by ID",
+      "url": "{{ _.BASE_URL }}/api/units/:id",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "id",
+          "value": "unit_id_here",
+          "description": "ID da unidade"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Busca unidade por ID",
+      "parentId": "fld_units"
+    },
+    {
+      "_id": "req_units_list_by_organization",
+      "_type": "request",
+      "name": "List Units by Organization",
+      "url": "{{ _.BASE_URL }}/api/units/organization/:organizationId",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "organizationId",
+          "value": "org_id_here",
+          "description": "ID da organização"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Lista unidades por organização",
+      "parentId": "fld_units"
+    },
+    {
+      "_id": "req_units_update",
+      "_type": "request",
+      "name": "Update Unit",
+      "url": "{{ _.BASE_URL }}/api/units/:id",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Unidade Centro - Atualizada\",\n  \"address\": \"Rua Principal, 456\"\n}"
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "value": "unit_id_here",
+          "description": "ID da unidade"
+        }
+      ],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Atualiza uma unidade",
+      "parentId": "fld_units"
+    },
+    {
+      "_id": "fld_bookings",
+      "_type": "request_group",
+      "name": "Bookings",
+      "description": "Gerenciamento de agendamentos",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "fld_booking_rules",
+      "_type": "request_group",
+      "name": "Booking Rules",
+      "description": "Regras de agendamento",
+      "parentId": "fld_bookings"
+    },
+    {
+      "_id": "req_booking_rules_create",
+      "_type": "request",
+      "name": "Create Booking Rule",
+      "url": "{{ _.BASE_URL }}/api/booking/rules",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unit_id\": \"unit_id_here\",\n  \"day_of_week\": 1,\n  \"start_time\": \"09:00\",\n  \"end_time\": \"18:00\",\n  \"slot_duration_minutes\": 30\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Cria uma regra de agendamento",
+      "parentId": "fld_booking_rules"
+    },
+    {
+      "_id": "req_booking_rules_list",
+      "_type": "request",
+      "name": "List Booking Rules",
+      "url": "{{ _.BASE_URL }}/api/booking/rules",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "unit_id",
+          "value": "unit_id_here",
+          "description": "ID da unidade"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Lista regras de agendamento",
+      "parentId": "fld_booking_rules"
+    },
+    {
+      "_id": "req_booking_rules_update",
+      "_type": "request",
+      "name": "Update Booking Rule",
+      "url": "{{ _.BASE_URL }}/api/booking/rules/:id",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"start_time\": \"08:00\",\n  \"end_time\": \"19:00\"\n}"
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "value": "rule_id_here",
+          "description": "ID da regra"
+        }
+      ],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Atualiza uma regra de agendamento",
+      "parentId": "fld_booking_rules"
+    },
+    {
+      "_id": "req_booking_rules_delete",
+      "_type": "request",
+      "name": "Delete Booking Rule",
+      "url": "{{ _.BASE_URL }}/api/booking/rules/:id",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [
+        {
+          "name": "id",
+          "value": "rule_id_here",
+          "description": "ID da regra"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Remove uma regra de agendamento",
+      "parentId": "fld_booking_rules"
+    },
+    {
+      "_id": "fld_booking_exceptions",
+      "_type": "request_group",
+      "name": "Booking Exceptions",
+      "description": "Exceções de agendamento",
+      "parentId": "fld_bookings"
+    },
+    {
+      "_id": "req_booking_exceptions_create",
+      "_type": "request",
+      "name": "Create Booking Exception",
+      "url": "{{ _.BASE_URL }}/api/booking/exceptions",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unit_id\": \"unit_id_here\",\n  \"date\": \"2025-12-25\",\n  \"reason\": \"Feriado - Natal\",\n  \"is_available\": false\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Cria uma exceção de agendamento",
+      "parentId": "fld_booking_exceptions"
+    },
+    {
+      "_id": "req_booking_exceptions_list",
+      "_type": "request",
+      "name": "List Booking Exceptions",
+      "url": "{{ _.BASE_URL }}/api/booking/exceptions",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "unit_id",
+          "value": "unit_id_here",
+          "description": "ID da unidade"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Lista exceções de agendamento",
+      "parentId": "fld_booking_exceptions"
+    },
+    {
+      "_id": "req_booking_exceptions_update",
+      "_type": "request",
+      "name": "Update Booking Exception",
+      "url": "{{ _.BASE_URL }}/api/booking/exceptions/:id",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"reason\": \"Feriado - Natal (Atualizado)\"\n}"
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "value": "exception_id_here",
+          "description": "ID da exceção"
+        }
+      ],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Atualiza uma exceção de agendamento",
+      "parentId": "fld_booking_exceptions"
+    },
+    {
+      "_id": "req_booking_exceptions_delete",
+      "_type": "request",
+      "name": "Delete Booking Exception",
+      "url": "{{ _.BASE_URL }}/api/booking/exceptions/:id",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [
+        {
+          "name": "id",
+          "value": "exception_id_here",
+          "description": "ID da exceção"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Remove uma exceção de agendamento",
+      "parentId": "fld_booking_exceptions"
+    },
+    {
+      "_id": "fld_booking_availability",
+      "_type": "request_group",
+      "name": "Availability",
+      "description": "Consulta de disponibilidade",
+      "parentId": "fld_bookings"
+    },
+    {
+      "_id": "req_booking_available_days",
+      "_type": "request",
+      "name": "Get Available Days",
+      "url": "{{ _.BASE_URL }}/api/booking/available-days",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "unit_id",
+          "value": "unit_id_here",
+          "description": "ID da unidade"
+        },
+        {
+          "name": "month",
+          "value": "2025-12",
+          "description": "Mês (formato: YYYY-MM)"
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "description": "Lista dias disponíveis para agendamento",
+      "parentId": "fld_booking_availability"
+    },
+    {
+      "_id": "req_booking_available_slots",
+      "_type": "request",
+      "name": "Get Available Slots",
+      "url": "{{ _.BASE_URL }}/api/booking/available-slots",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "unit_id",
+          "value": "unit_id_here",
+          "description": "ID da unidade"
+        },
+        {
+          "name": "date",
+          "value": "2025-12-10",
+          "description": "Data (formato: YYYY-MM-DD)"
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "description": "Lista horários disponíveis para uma data específica",
+      "parentId": "fld_booking_availability"
+    },
+    {
+      "_id": "fld_booking_management",
+      "_type": "request_group",
+      "name": "Booking Management",
+      "description": "Gerenciamento de agendamentos",
+      "parentId": "fld_bookings"
+    },
+    {
+      "_id": "req_bookings_create",
+      "_type": "request",
+      "name": "Create Booking",
+      "url": "{{ _.BASE_URL }}/api/booking",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unit_id\": \"unit_id_here\",\n  \"user_id\": \"user_id_here\",\n  \"date\": \"2025-12-15\",\n  \"start_time\": \"14:00\",\n  \"service_name\": \"Corte de Cabelo\",\n  \"customer_name\": \"Maria Santos\",\n  \"customer_phone\": \"+5511777777777\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Cria um novo agendamento",
+      "parentId": "fld_booking_management"
+    },
+    {
+      "_id": "req_bookings_cancel",
+      "_type": "request",
+      "name": "Cancel Booking",
+      "url": "{{ _.BASE_URL }}/api/booking/:id/cancel",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"reason\": \"Cliente solicitou cancelamento\"\n}"
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "value": "booking_id_here",
+          "description": "ID do agendamento"
+        }
+      ],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Cancela um agendamento",
+      "parentId": "fld_booking_management"
+    },
+    {
+      "_id": "fld_billing",
+      "_type": "request_group",
+      "name": "Billing",
+      "description": "Módulo de faturamento e assinaturas",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "fld_plans",
+      "_type": "request_group",
+      "name": "Plans",
+      "description": "Gerenciamento de planos",
+      "parentId": "fld_billing"
+    },
+    {
+      "_id": "req_plans_list",
+      "_type": "request",
+      "name": "List Active Plans",
+      "url": "{{ _.BASE_URL }}/api/plans",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "description": "Lista todos os planos ativos",
+      "parentId": "fld_plans"
+    },
+    {
+      "_id": "req_plans_get_by_id",
+      "_type": "request",
+      "name": "Get Plan by ID",
+      "url": "{{ _.BASE_URL }}/api/plans/:id",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "id",
+          "value": "plan_id_here",
+          "description": "ID do plano"
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "description": "Busca plano por ID",
+      "parentId": "fld_plans"
+    },
+    {
+      "_id": "fld_subscriptions",
+      "_type": "request_group",
+      "name": "Subscriptions",
+      "description": "Gerenciamento de assinaturas",
+      "parentId": "fld_billing"
+    },
+    {
+      "_id": "req_subscriptions_checkout",
+      "_type": "request",
+      "name": "Create Checkout",
+      "url": "{{ _.BASE_URL }}/api/subscriptions/checkout",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"plan_id\": \"plan_id_here\",\n  \"unit_id\": \"unit_id_here\",\n  \"discount_code\": \"PROMO2025\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Cria um checkout para assinatura",
+      "parentId": "fld_subscriptions"
+    },
+    {
+      "_id": "req_subscriptions_get_by_unit",
+      "_type": "request",
+      "name": "Get Subscription by Unit",
+      "url": "{{ _.BASE_URL }}/api/subscriptions/unit/:unit_id",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "unit_id",
+          "value": "unit_id_here",
+          "description": "ID da unidade"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Busca assinatura por unidade",
+      "parentId": "fld_subscriptions"
+    },
+    {
+      "_id": "req_subscriptions_cancel",
+      "_type": "request",
+      "name": "Cancel Subscription",
+      "url": "{{ _.BASE_URL }}/api/subscriptions/:id/cancel",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"reason\": \"Cliente solicitou cancelamento\"\n}"
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "value": "subscription_id_here",
+          "description": "ID da assinatura"
+        }
+      ],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.TOKEN }}"
+      },
+      "description": "Cancela uma assinatura",
+      "parentId": "fld_subscriptions"
+    },
+    {
+      "_id": "fld_discounts",
+      "_type": "request_group",
+      "name": "Discounts",
+      "description": "Gerenciamento de descontos",
+      "parentId": "fld_billing"
+    },
+    {
+      "_id": "req_discounts_validate",
+      "_type": "request",
+      "name": "Validate Discount Code",
+      "url": "{{ _.BASE_URL }}/api/discounts/validate/:code",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "code",
+          "value": "PROMO2025",
+          "description": "Código do desconto"
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "description": "Valida um código de desconto",
+      "parentId": "fld_discounts"
+    },
+    {
+      "_id": "fld_webhooks",
+      "_type": "request_group",
+      "name": "Webhooks",
+      "description": "Webhooks de integração",
+      "parentId": "fld_billing"
+    },
+    {
+      "_id": "req_webhooks_payment_provider",
+      "_type": "request",
+      "name": "Payment Provider Webhook",
+      "url": "{{ _.BASE_URL }}/api/webhooks/payment-provider",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"event\": \"payment.succeeded\",\n  \"data\": {}\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "description": "Webhook do provedor de pagamento",
+      "parentId": "fld_webhooks"
+    }
+  ]
+}
