@@ -1,15 +1,15 @@
 import type { Container } from '@/infra/di/factory-root';
 
 import { Hono } from 'hono';
-import { createUserRoutes } from './user.routes';
-import { createAuthRoutes } from './auth.routes';
-import { createBookingRoutes } from './booking.routes';
-import { createOrganizationRoutes } from './organization.routes';
-import { createUnitRoutes } from './unit.routes';
-import { createPlanRoutes } from './plan.routes';
-import { createSubscriptionRoutes } from './subscription.routes';
-import { createWebhookRoutes } from './webhook.routes';
-import { createDiscountRoutes } from './discount.routes';
+import { createUserRoutes } from './users/user.routes';
+import { createAuthRoutes } from './auth/auth.routes';
+import { createBookingRoutes } from './bookings/booking.routes';
+import { createOrganizationRoutes } from './organizations/organization.routes';
+import { createUnitRoutes } from './units/unit.routes';
+import { createPlanRoutes } from './billing/plan.routes';
+import { createSubscriptionRoutes } from './billing/subscription.routes';
+import { createWebhookRoutes } from './billing/webhook.routes';
+import { createDiscountRoutes } from './billing/discount.routes';
 
 export function createRoutes(container: Container) {
   const app = new Hono();

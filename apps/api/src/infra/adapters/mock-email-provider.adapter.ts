@@ -1,4 +1,4 @@
-import { IEmailProvider } from '@/application/contracts/i-email-provider.interface';
+import { IEmailProvider } from '@/application/contracts/providers/i-email-provider.interface';
 import { v4 as uuidv4 } from 'uuid';
 
 type SentEmail = {

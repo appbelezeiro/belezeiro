@@ -1,7 +1,7 @@
-import { JoseTokenService } from '@/infra/services/jose-token-service';
-import { FakePaymentGatewayService } from '@/infra/services/fake-payment-gateway.service';
-import { SubscriptionLifecycleService } from '@/infra/services/subscription-lifecycle.service';
-import { PlanLimitsValidatorService } from '@/infra/services/plan-limits-validator.service';
+import { JoseTokenService } from '@/infra/services/auth/jose-token-service';
+import { FakePaymentGatewayService } from '@/infra/services/billing/fake-payment-gateway.service';
+import { SubscriptionLifecycleService } from '@/infra/services/billing/subscription-lifecycle.service';
+import { PlanLimitsValidatorService } from '@/infra/services/billing/plan-limits-validator.service';
 
 export function createServices() {
   const token_service = new JoseTokenService();
