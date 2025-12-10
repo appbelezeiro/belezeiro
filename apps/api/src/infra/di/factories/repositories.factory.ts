@@ -1,20 +1,20 @@
 import { InMemoryUserRepository } from '@/infra/repositories/in-memory/in-memory-user.repository';
-import { InMemoryScheduleRuleRepository } from '@/infra/repositories/in-memory/in-memory-schedule-rule.repository';
-import { InMemoryScheduleExceptionRepository } from '@/infra/repositories/in-memory/in-memory-schedule-exception.repository';
-import { InMemoryScheduleRepository } from '@/infra/repositories/in-memory/in-memory-schedule.repository';
+import { InMemoryBookingRuleRepository } from '@/infra/repositories/in-memory/in-memory-booking-rule.repository';
+import { InMemoryBookingExceptionRepository } from '@/infra/repositories/in-memory/in-memory-booking-exception.repository';
+import { InMemoryBookingRepository } from '@/infra/repositories/in-memory/in-memory-booking.repository';
 import type { Clients } from './clients.factory';
 
 export function createRepositories(_clients: Clients) {
   const user_repository = new InMemoryUserRepository();
-  const schedule_rule_repository = new InMemoryScheduleRuleRepository();
-  const schedule_exception_repository = new InMemoryScheduleExceptionRepository();
-  const schedule_repository = new InMemoryScheduleRepository();
+  const booking_rule_repository = new InMemoryBookingRuleRepository();
+  const booking_exception_repository = new InMemoryBookingExceptionRepository();
+  const booking_repository = new InMemoryBookingRepository();
 
   return {
     user_repository,
-    schedule_rule_repository,
-    schedule_exception_repository,
-    schedule_repository,
+    booking_rule_repository,
+    booking_exception_repository,
+    booking_repository,
   };
 }
 
