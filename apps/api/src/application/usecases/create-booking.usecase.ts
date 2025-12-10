@@ -27,10 +27,18 @@ class UseCase {
     // 1. Validate time range
     const start = new Date(input.start_at);
     const end = new Date(input.end_at);
+    const now = new Date();
 
     if (start >= end) {
       throw new InvalidTimeRangeError(
         `Start time (${input.start_at}) must be before end time (${input.end_at})`,
+      );
+    }
+
+    // Prevent bookings in the past
+    if (start < now) {
+      throw new InvalidTimeRangeError(
+        `Cannot create booking in the past. Start time (${input.start_at}) is before current time`,
       );
     }
 
