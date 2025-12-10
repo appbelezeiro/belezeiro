@@ -111,4 +111,39 @@ export class InMemoryBookingRepository implements IBookingRepository {
       })
       .map(BookingDataMapper.toDomain);
   }
+
+  async count_by_user_and_date(user_id: string, date: string): Promise<number> {
+    // date format: YYYY-MM-DD
+    const date_start = new Date(`${date}T00:00:00.000Z`);
+    const date_end = new Date(`${date}T23:59:59.999Z`);
+
+    return this.items.filter((i) => {
+      if (i.user_id !== user_id) return false;
+      if (i.status !== 'confirmed') return false;
+
+      const booking_start = new Date(i.start_at);
+
+      return booking_start >= date_start && booking_start <= date_end;
+    }).length;
+  }
+
+  async count_by_client_and_user_and_date(
+    client_id: string,
+    user_id: string,
+    date: string,
+  ): Promise<number> {
+    // date format: YYYY-MM-DD
+    const date_start = new Date(`${date}T00:00:00.000Z`);
+    const date_end = new Date(`${date}T23:59:59.999Z`);
+
+    return this.items.filter((i) => {
+      if (i.user_id !== user_id) return false;
+      if (i.client_id !== client_id) return false;
+      if (i.status !== 'confirmed') return false;
+
+      const booking_start = new Date(i.start_at);
+
+      return booking_start >= date_start && booking_start <= date_end;
+    }).length;
+  }
 }

@@ -33,6 +33,10 @@ class UseCase {
       start_time: input.start_time,
       end_time: input.end_time,
       slot_duration_minutes: input.slot_duration_minutes,
+      min_advance_minutes: input.min_advance_minutes,
+      max_duration_minutes: input.max_duration_minutes,
+      max_bookings_per_day: input.max_bookings_per_day,
+      max_bookings_per_client_per_day: input.max_bookings_per_client_per_day,
       metadata: input.metadata,
     });
 
@@ -49,6 +53,10 @@ declare namespace UseCase {
     start_time: string;
     end_time: string;
     slot_duration_minutes: number;
+    min_advance_minutes?: number;
+    max_duration_minutes?: number;
+    max_bookings_per_day?: number;
+    max_bookings_per_client_per_day?: number;
     metadata?: Record<string, unknown>;
   };
 

@@ -6,6 +6,12 @@ import { BookingNotFoundError } from '@/domain/errors/booking-not-found.error';
 import { BookingOverlapError } from '@/domain/errors/booking-overlap.error';
 import { InvalidTimeRangeError } from '@/domain/errors/invalid-time-range.error';
 import { SlotNotAvailableError } from '@/domain/errors/slot-not-available.error';
+import { BookingInPastError } from '@/domain/errors/booking-in-past.error';
+import { BookingTooCloseError } from '@/domain/errors/booking-too-close.error';
+import { BookingExceedsMaxDurationError } from '@/domain/errors/booking-exceeds-max-duration.error';
+import { BookingInvalidDurationForSlotError } from '@/domain/errors/booking-invalid-duration-for-slot.error';
+import { DailyBookingLimitExceededError } from '@/domain/errors/daily-booking-limit-exceeded.error';
+import { ClientDailyBookingLimitExceededError } from '@/domain/errors/client-daily-booking-limit-exceeded.error';
 import { NotFoundError, BadRequestError, ConflictError } from '../errors/http-errors';
 
 const CreateBookingSchema = z.object({
@@ -38,15 +44,37 @@ export class BookingController {
         201,
       );
     } catch (error) {
+      // Conflict errors (409)
       if (error instanceof BookingOverlapError) {
         throw new ConflictError(error.message);
       }
+      if (error instanceof DailyBookingLimitExceededError) {
+        throw new ConflictError(error.message);
+      }
+      if (error instanceof ClientDailyBookingLimitExceededError) {
+        throw new ConflictError(error.message);
+      }
+
+      // Bad request errors (400)
       if (error instanceof InvalidTimeRangeError) {
         throw new BadRequestError(error.message);
       }
       if (error instanceof SlotNotAvailableError) {
         throw new BadRequestError(error.message);
       }
+      if (error instanceof BookingInPastError) {
+        throw new BadRequestError(error.message);
+      }
+      if (error instanceof BookingTooCloseError) {
+        throw new BadRequestError(error.message);
+      }
+      if (error instanceof BookingExceedsMaxDurationError) {
+        throw new BadRequestError(error.message);
+      }
+      if (error instanceof BookingInvalidDurationForSlotError) {
+        throw new BadRequestError(error.message);
+      }
+
       throw error;
     }
   }

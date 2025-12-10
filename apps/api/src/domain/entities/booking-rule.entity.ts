@@ -8,6 +8,10 @@ type BookingRuleEntityOwnProps = {
   start_time: string; // ISO timestamp normalized
   end_time: string; // ISO timestamp normalized
   slot_duration_minutes: number;
+  min_advance_minutes?: number; // minimum advance time in minutes to create a booking
+  max_duration_minutes?: number; // maximum duration allowed for a booking
+  max_bookings_per_day?: number; // maximum bookings per day for the schedule owner
+  max_bookings_per_client_per_day?: number; // maximum bookings per day for a single client
   metadata?: Record<string, unknown>;
 };
 
@@ -23,6 +27,10 @@ export class BookingRuleEntity extends BaseEntity<BookingRuleEntityProps> {
     super({
       ...props,
       metadata: props.metadata ?? {},
+      min_advance_minutes: props.min_advance_minutes ?? undefined,
+      max_duration_minutes: props.max_duration_minutes ?? undefined,
+      max_bookings_per_day: props.max_bookings_per_day ?? undefined,
+      max_bookings_per_client_per_day: props.max_bookings_per_client_per_day ?? undefined,
     });
   }
 
@@ -56,6 +64,22 @@ export class BookingRuleEntity extends BaseEntity<BookingRuleEntityProps> {
 
   get metadata(): Record<string, unknown> {
     return this.props.metadata;
+  }
+
+  get min_advance_minutes(): number | undefined {
+    return this.props.min_advance_minutes || undefined;
+  }
+
+  get max_duration_minutes(): number | undefined {
+    return this.props.max_duration_minutes || undefined;
+  }
+
+  get max_bookings_per_day(): number | undefined {
+    return this.props.max_bookings_per_day || undefined;
+  }
+
+  get max_bookings_per_client_per_day(): number | undefined {
+    return this.props.max_bookings_per_client_per_day || undefined;
   }
 
   update_times(start_time: string, end_time: string): void {

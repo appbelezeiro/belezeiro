@@ -14,6 +14,10 @@ const CreateBookingRuleSchema = z.object({
   start_time: z.string().min(1),
   end_time: z.string().min(1),
   slot_duration_minutes: z.number().positive(),
+  min_advance_minutes: z.number().nonnegative().optional(),
+  max_duration_minutes: z.number().positive().optional(),
+  max_bookings_per_day: z.number().positive().int().optional(),
+  max_bookings_per_client_per_day: z.number().positive().int().optional(),
   metadata: z.record(z.unknown()).optional(),
 });
 
@@ -21,6 +25,10 @@ const UpdateBookingRuleSchema = z.object({
   start_time: z.string().min(1).optional(),
   end_time: z.string().min(1).optional(),
   slot_duration_minutes: z.number().positive().optional(),
+  min_advance_minutes: z.number().nonnegative().optional(),
+  max_duration_minutes: z.number().positive().optional(),
+  max_bookings_per_day: z.number().positive().int().optional(),
+  max_bookings_per_client_per_day: z.number().positive().int().optional(),
   metadata: z.record(z.unknown()).optional(),
 });
 
@@ -40,6 +48,10 @@ export class BookingRuleController {
         start_time: payload.start_time,
         end_time: payload.end_time,
         slot_duration_minutes: payload.slot_duration_minutes,
+        min_advance_minutes: payload.min_advance_minutes,
+        max_duration_minutes: payload.max_duration_minutes,
+        max_bookings_per_day: payload.max_bookings_per_day,
+        max_bookings_per_client_per_day: payload.max_bookings_per_client_per_day,
         metadata: payload.metadata,
       });
 
