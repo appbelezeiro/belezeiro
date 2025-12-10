@@ -29,7 +29,7 @@ export const globalErrorHandler: ErrorHandler = (err: unknown, c: Context) => {
     if (err.details) {
       response.details = err.details;
     }
-    return c.json(response, err.statusCode);
+    return c.json(response, err.statusCode as any);
   }
 
   // Unknown errors

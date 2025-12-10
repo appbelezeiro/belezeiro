@@ -2,7 +2,6 @@ import { BookingEntity } from '@/domain/entities/bookings/booking.entity';
 import { IBookingRepository } from '@/application/contracts/bookings/i-booking-repository.interface';
 import { IBookingRuleRepository } from '@/application/contracts/bookings/i-booking-rule-repository.interface';
 import { IBookingExceptionRepository } from '@/application/contracts/bookings/i-booking-exception-repository.interface';
-import { InvalidTimeRangeError } from '@/domain/errors/bookings/invalid-time-range.error';
 import { BookingOverlapError } from '@/domain/errors/bookings/booking-overlap.error';
 import { SlotNotAvailableError } from '@/domain/errors/bookings/slot-not-available.error';
 import { DailyBookingLimitExceededError } from '@/domain/errors/bookings/daily-booking-limit-exceeded.error';
@@ -17,7 +16,7 @@ class UseCase {
   constructor(
     private readonly booking_repository: IBookingRepository,
     private readonly booking_rule_repository: IBookingRuleRepository,
-    private readonly booking_exception_repository: IBookingExceptionRepository,
+    booking_exception_repository: IBookingExceptionRepository,
   ) {
     this.availability_service = new AvailabilityService(
       booking_rule_repository,

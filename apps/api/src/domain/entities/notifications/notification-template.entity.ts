@@ -21,7 +21,11 @@ type NotificationTemplateEntityCreationProps = Omit<
   Partial<Pick<NotificationTemplateEntityOwnProps, 'version' | 'is_active'>> &
   BaseEntityCreationProps;
 
-type NotificationTemplateEntityProps = Required<NotificationTemplateEntityOwnProps> &
+type NotificationTemplateEntityProps = Omit<
+  NotificationTemplateEntityOwnProps,
+  'subject' | 'title_template' | 'metadata'
+> &
+  Pick<NotificationTemplateEntityOwnProps, 'subject' | 'title_template' | 'metadata'> &
   BaseEntityProps;
 
 export class NotificationTemplateEntity extends BaseEntity<NotificationTemplateEntityProps> {

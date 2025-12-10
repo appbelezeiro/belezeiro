@@ -41,7 +41,10 @@ type PlanEntityCreationProps = Omit<PlanEntityOwnProps, 'is_active'> &
   Partial<Pick<PlanEntityOwnProps, 'is_active'>> &
   BaseEntityCreationProps;
 
-type PlanEntityProps = Required<PlanEntityOwnProps> & BaseEntityProps;
+type PlanEntityProps = Omit<PlanEntityOwnProps, 'description' | 'trial_days' | 'metadata'> &
+  Required<Pick<PlanEntityOwnProps, 'is_active'>> &
+  Pick<PlanEntityOwnProps, 'description' | 'trial_days' | 'metadata'> &
+  BaseEntityProps;
 
 export class PlanEntity extends BaseEntity<PlanEntityProps> {
   protected prefix(): string {

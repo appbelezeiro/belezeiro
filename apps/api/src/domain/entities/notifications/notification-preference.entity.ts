@@ -18,8 +18,12 @@ type NotificationPreferenceEntityOwnProps = {
 type NotificationPreferenceEntityCreationProps =
   NotificationPreferenceEntityOwnProps & BaseEntityCreationProps;
 
-type NotificationPreferenceEntityProps =
-  Required<NotificationPreferenceEntityOwnProps> & BaseEntityProps;
+type NotificationPreferenceEntityProps = Omit<
+  NotificationPreferenceEntityOwnProps,
+  'metadata'
+> &
+  Pick<NotificationPreferenceEntityOwnProps, 'metadata'> &
+  BaseEntityProps;
 
 export class NotificationPreferenceEntity extends BaseEntity<NotificationPreferenceEntityProps> {
   protected prefix(): string {

@@ -1,4 +1,4 @@
-import { DomainError } from './domain-error';
+import { DomainError } from '@/domain/errors/domain-error';
 
 export class ProviderIdAlreadyLinkedError extends DomainError {
   constructor(providerId: string) {

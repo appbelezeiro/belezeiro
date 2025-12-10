@@ -1,4 +1,4 @@
-import { DomainError } from './domain-error';
+import { DomainError } from '@/domain/errors/domain-error';
 
 export class UserNotFoundError extends DomainError {
   constructor(identifier: string) {

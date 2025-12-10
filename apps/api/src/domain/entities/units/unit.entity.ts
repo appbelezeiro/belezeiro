@@ -73,7 +73,9 @@ type UnitEntityCreationProps = Omit<UnitEntityOwnProps, 'isActive' | 'gallery'> 
   Partial<Pick<UnitEntityOwnProps, 'isActive' | 'gallery'>> &
   BaseEntityCreationProps;
 
-type UnitEntityProps = Required<UnitEntityOwnProps> & BaseEntityProps;
+type UnitEntityProps = Omit<UnitEntityOwnProps, 'logo' | 'phone' | 'lunchBreak'> &
+  Pick<UnitEntityOwnProps, 'logo' | 'phone' | 'lunchBreak'> &
+  BaseEntityProps;
 
 export class UnitEntity extends BaseEntity<UnitEntityProps> {
   protected prefix(): string {

@@ -26,7 +26,14 @@ type NotificationEntityCreationProps = Omit<
   Partial<Pick<NotificationEntityOwnProps, 'status' | 'priority'>> &
   BaseEntityCreationProps;
 
-type NotificationEntityProps = Required<NotificationEntityOwnProps> &
+type NotificationEntityProps = Omit<
+  NotificationEntityOwnProps,
+  'provider_id' | 'error_message' | 'metadata' | 'sent_at' | 'delivered_at'
+> &
+  Pick<
+    NotificationEntityOwnProps,
+    'provider_id' | 'error_message' | 'metadata' | 'sent_at' | 'delivered_at'
+  > &
   BaseEntityProps;
 
 export class NotificationEntity extends BaseEntity<NotificationEntityProps> {

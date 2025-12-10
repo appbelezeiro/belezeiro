@@ -53,7 +53,7 @@ export class BookingRuleDataMapper {
       max_duration_minutes: entity.max_duration_minutes,
       max_bookings_per_day: entity.max_bookings_per_day,
       max_bookings_per_client_per_day: entity.max_bookings_per_client_per_day,
-      metadata: entity.metadata,
+      metadata: entity.metadata ?? {},
       created_at: entity.created_at,
       updated_at: entity.updated_at,
     };

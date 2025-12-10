@@ -1,4 +1,4 @@
-import { InvalidMoneyError, CurrencyMismatchError } from '@/domain/errors/money.errors';
+import { InvalidMoneyError, CurrencyMismatchError } from '@/domain/errors/billing/money.errors';
 
 export class Money {
   constructor(

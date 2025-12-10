@@ -42,7 +42,13 @@ type SubscriptionEntityCreationProps = Omit<
   Partial<Pick<SubscriptionEntityOwnProps, 'cancel_at_period_end' | 'status'>> &
   BaseEntityCreationProps;
 
-type SubscriptionEntityProps = Required<SubscriptionEntityOwnProps> & BaseEntityProps;
+type SubscriptionEntityProps = Omit<
+  SubscriptionEntityOwnProps,
+  'canceled_at' | 'trial_end' | 'discount_id' | 'provider_subscription_id' | 'metadata'
+> &
+  Required<Pick<SubscriptionEntityOwnProps, 'cancel_at_period_end' | 'status'>> &
+  Pick<SubscriptionEntityOwnProps, 'canceled_at' | 'trial_end' | 'discount_id' | 'provider_subscription_id' | 'metadata'> &
+  BaseEntityProps;
 
 export class SubscriptionEntity extends BaseEntity<SubscriptionEntityProps> {
   protected prefix(): string {

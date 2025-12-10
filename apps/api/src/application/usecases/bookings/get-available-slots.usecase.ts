@@ -8,9 +8,9 @@ class UseCase {
   private availability_service: AvailabilityService;
 
   constructor(
-    private readonly booking_rule_repository: IBookingRuleRepository,
-    private readonly booking_exception_repository: IBookingExceptionRepository,
-    private readonly booking_repository: IBookingRepository,
+    booking_rule_repository: IBookingRuleRepository,
+    booking_exception_repository: IBookingExceptionRepository,
+    booking_repository: IBookingRepository,
   ) {
     this.availability_service = new AvailabilityService(
       booking_rule_repository,

@@ -39,7 +39,13 @@ type DiscountEntityCreationProps = Omit<
   Partial<Pick<DiscountEntityOwnProps, 'redemptions_count' | 'is_active'>> &
   BaseEntityCreationProps;
 
-type DiscountEntityProps = Required<DiscountEntityOwnProps> & BaseEntityProps;
+type DiscountEntityProps = Omit<
+  DiscountEntityOwnProps,
+  'repeating_count' | 'assigned_to_user_id' | 'max_redemptions' | 'expires_at' | 'metadata'
+> &
+  Required<Pick<DiscountEntityOwnProps, 'redemptions_count' | 'is_active'>> &
+  Pick<DiscountEntityOwnProps, 'repeating_count' | 'assigned_to_user_id' | 'max_redemptions' | 'expires_at' | 'metadata'> &
+  BaseEntityProps;
 
 export class DiscountEntity extends BaseEntity<DiscountEntityProps> {
   protected prefix(): string {

@@ -8,7 +8,9 @@ type UserEntityOwnProps = {
 };
 
 type UserEntityCreationProps = UserEntityOwnProps & BaseEntityCreationProps;
-type UserEntityProps = Required<UserEntityOwnProps> & BaseEntityProps;
+type UserEntityProps = Omit<UserEntityOwnProps, 'photoUrl'> &
+  Pick<UserEntityOwnProps, 'photoUrl'> &
+  BaseEntityProps;
 
 export class UserEntity extends BaseEntity<UserEntityProps> {
   protected prefix(): string {

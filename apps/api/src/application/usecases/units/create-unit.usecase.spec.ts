@@ -131,7 +131,7 @@ describe('CreateUnitUseCase', () => {
         { id: 'serv_corte_feminino', name: 'Corte Feminino', professionId: 'prof_cabeleireiro' },
       ],
       serviceType: 'local' as const,
-      amenities: [] as const[],
+      amenities: [],
       workingHours: {
         monday: { enabled: true, open: '09:00', close: '18:00' },
         tuesday: { enabled: true, open: '09:00', close: '18:00' },
@@ -166,7 +166,7 @@ describe('CreateUnitUseCase', () => {
         { id: 'serv_corte_feminino', name: 'Corte Feminino', professionId: 'prof_cabeleireiro' },
       ],
       serviceType: 'local' as const,
-      amenities: [] as const[],
+      amenities: [],
       workingHours: {
         monday: { enabled: true, open: '18:00', close: '09:00' }, // Invalid
         tuesday: { enabled: true, open: '09:00', close: '18:00' },
@@ -202,7 +202,7 @@ describe('CreateUnitUseCase', () => {
         { id: 'serv_corte_barba', name: 'Corte + Barba', professionId: 'prof_barbeiro' },
       ],
       serviceType: 'local' as const,
-      amenities: [] as const[],
+      amenities: [],
       workingHours: {
         monday: { enabled: true, open: '09:00', close: '18:00' },
         tuesday: { enabled: true, open: '09:00', close: '18:00' },

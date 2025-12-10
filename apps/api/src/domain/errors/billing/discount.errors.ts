@@ -1,4 +1,4 @@
-import { DomainError } from './domain-error';
+import { DomainError } from '@/domain/errors/domain-error';
 
 export class DiscountNotFoundError extends DomainError {
   constructor(message: string = 'Discount not found') {

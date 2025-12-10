@@ -1,4 +1,4 @@
-import { DomainError } from './domain-error';
+import { DomainError } from '@/domain/errors/domain-error';
 
 export class UnitNotFoundError extends DomainError {
   constructor(message: string = 'Unit not found') {

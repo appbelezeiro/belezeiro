@@ -28,7 +28,8 @@ class UseCase {
     }
 
     // 3. Update subscription entity
-    subscription.cancel(input.cancel_at_period_end ?? false);
+    const immediate = !(input.cancel_at_period_end ?? false);
+    subscription.cancel(immediate);
 
     // 4. Save updated subscription
     return this.subscription_repository.update(subscription);

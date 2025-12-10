@@ -13,7 +13,6 @@ import {
   subtractIntervals,
 } from '@/application/utils/date.utils';
 import { BookingRuleEntity } from '@/domain/entities/bookings/booking-rule.entity';
-import { BookingExceptionEntity } from '@/domain/entities/bookings/booking-exception.entity';
 import { BookingEntity } from '@/domain/entities/bookings/booking.entity';
 
 export class AvailabilityService {
