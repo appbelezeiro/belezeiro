@@ -1,9 +1,10 @@
 import { UnitEntity } from '@/domain/entities/units/unit.entity';
 import type {
   Address,
-  ProfessionRef,
+  EspecialidadeRef,
   ServiceRef,
   ServiceType,
+  Subscription,
 } from '@/domain/entities/units/unit.entity';
 import type { AmenityId } from '@/domain/constants/amenities';
 import { IUnitRepository } from '@/application/contracts/units/i-unit-repository.interface';
@@ -21,12 +22,14 @@ class UseCase {
     const unit = new UnitEntity({
       organizationId: input.organizationId,
       name: input.name,
+      brandColor: input.brandColor,
+      subscription: input.subscription,
       logo: input.logo,
       gallery: input.gallery,
       whatsapp: input.whatsapp,
       phone: input.phone,
       address: input.address,
-      professions: input.professions,
+      especialidades: input.especialidades,
       services: input.services,
       serviceType: input.serviceType,
       amenities: input.amenities,
@@ -86,12 +89,14 @@ declare namespace UseCase {
   export type Input = {
     organizationId: string;
     name: string;
+    brandColor: string;
+    subscription?: Subscription;
     logo?: string;
     gallery?: string[];
     whatsapp: string;
     phone?: string;
     address: Address;
-    professions: ProfessionRef[];
+    especialidades: EspecialidadeRef[];
     services: ServiceRef[];
     serviceType: ServiceType;
     amenities: AmenityId[];

@@ -21,9 +21,7 @@ class UseCase {
 
     const organization = new OrganizationEntity({
       businessName: input.businessName,
-      brandColor: input.brandColor,
       ownerId: input.ownerId,
-      subscription: input.subscription,
     });
 
     const created_organization = await this.organization_repository.create(organization);
@@ -42,13 +40,7 @@ class UseCase {
 declare namespace UseCase {
   export type Input = {
     businessName: string;
-    brandColor: string;
     ownerId: string;
-    subscription?: {
-      plan: 'free' | 'pro' | 'enterprise';
-      status: 'active' | 'inactive' | 'suspended';
-      expiresAt?: Date;
-    };
   };
 
   export type Output = Promise<OrganizationEntity>;
