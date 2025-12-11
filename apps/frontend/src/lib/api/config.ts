@@ -57,6 +57,23 @@ export const API_ENDPOINTS = {
     PUBLIC: (id: string) => `/api/units/${id}/public`,
     BY_SLUG: (slug: string) => `/api/units/slug/${slug}`,
     SERVICES: (id: string) => `/api/units/${id}/services`,
+    SPECIALTIES: (id: string) => `/api/units/${id}/specialties`,
+    SPECIALTY: (unitId: string, specialtyId: string) => `/api/units/${unitId}/specialties/${specialtyId}`,
+    SERVICE: (unitId: string, serviceId: string) => `/api/units/${unitId}/services/${serviceId}`,
+  },
+
+  // Specialties
+  SPECIALTIES: {
+    BASE: '/api/specialties',
+    DETAIL: (id: string) => `/api/specialties/${id}`,
+    SEARCH: '/api/specialties/search',
+  },
+
+  // Services (Global)
+  SERVICES_GLOBAL: {
+    BASE: '/api/services',
+    DETAIL: (id: string) => `/api/services/${id}`,
+    SEARCH: '/api/services/search',
   },
 
   // Dashboard

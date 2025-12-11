@@ -10,6 +10,10 @@ import { createPlanRoutes } from './billing/plan.routes';
 import { createSubscriptionRoutes } from './billing/subscription.routes';
 import { createWebhookRoutes } from './billing/webhook.routes';
 import { createDiscountRoutes } from './billing/discount.routes';
+import { createSpecialtyRoutes } from './specialty.routes';
+import { createServiceRoutes } from './service.routes';
+import { createUnitSpecialtyRoutes } from './unit-specialty.routes';
+import { createUnitServiceRoutes } from './unit-service.routes';
 
 export function createRoutes(container: Container) {
   const app = new Hono();
@@ -19,6 +23,14 @@ export function createRoutes(container: Container) {
   app.route('/booking', createBookingRoutes(container));
   app.route('/organizations', createOrganizationRoutes(container));
   app.route('/units', createUnitRoutes(container));
+
+  // Specialties and Services routes
+  app.route('/specialties', createSpecialtyRoutes(container));
+  app.route('/services', createServiceRoutes(container));
+
+  // Unit-Specialty and Unit-Service routes (nested under /units)
+  app.route('/units', createUnitSpecialtyRoutes(container));
+  app.route('/units', createUnitServiceRoutes(container));
 
   // Billing routes
   app.route('/plans', createPlanRoutes(container));

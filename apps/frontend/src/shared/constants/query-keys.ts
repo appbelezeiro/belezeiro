@@ -33,6 +33,31 @@ export interface ServiceFilters {
 }
 
 /**
+ * Filtros de especialidades
+ */
+export interface SpecialtyFilters {
+  cursor?: string;
+  limit?: number;
+}
+
+/**
+ * Filtros de serviços globais
+ */
+export interface GlobalServiceFilters {
+  specialty_id?: string;
+  cursor?: string;
+  limit?: number;
+}
+
+/**
+ * Filtros de serviços de unidade
+ */
+export interface UnitServiceFilters {
+  cursor?: string;
+  limit?: number;
+}
+
+/**
  * Query keys organizadas por feature
  * Padrão: feature.scope.params
  */
@@ -102,6 +127,54 @@ export const queryKeys = {
     detail: (id: string) => [...queryKeys.units.details(), id] as const,
     bySlug: (slug: string) => [...queryKeys.units.all, 'slug', slug] as const,
     current: () => [...queryKeys.units.all, 'current'] as const,
+  },
+
+  // ========================================================================
+  // Specialties (Global)
+  // ========================================================================
+  specialties: {
+    all: ['specialties'] as const,
+    lists: () => [...queryKeys.specialties.all, 'list'] as const,
+    list: (filters: SpecialtyFilters = {}) =>
+      [...queryKeys.specialties.lists(), filters] as const,
+    details: () => [...queryKeys.specialties.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.specialties.details(), id] as const,
+    search: (query: string, filters: SpecialtyFilters = {}) =>
+      [...queryKeys.specialties.all, 'search', query, filters] as const,
+  },
+
+  // ========================================================================
+  // Services (Global)
+  // ========================================================================
+  servicesGlobal: {
+    all: ['services-global'] as const,
+    lists: () => [...queryKeys.servicesGlobal.all, 'list'] as const,
+    list: (filters: GlobalServiceFilters = {}) =>
+      [...queryKeys.servicesGlobal.lists(), filters] as const,
+    details: () => [...queryKeys.servicesGlobal.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.servicesGlobal.details(), id] as const,
+    search: (query: string, filters: GlobalServiceFilters = {}) =>
+      [...queryKeys.servicesGlobal.all, 'search', query, filters] as const,
+  },
+
+  // ========================================================================
+  // Unit Specialties
+  // ========================================================================
+  unitSpecialties: {
+    all: ['unit-specialties'] as const,
+    lists: () => [...queryKeys.unitSpecialties.all, 'list'] as const,
+    list: (unitId: string) =>
+      [...queryKeys.unitSpecialties.lists(), unitId] as const,
+  },
+
+  // ========================================================================
+  // Unit Services
+  // ========================================================================
+  unitServices: {
+    all: ['unit-services'] as const,
+    lists: () => [...queryKeys.unitServices.all, 'list'] as const,
+    list: (unitId: string, filters: UnitServiceFilters = {}) =>
+      [...queryKeys.unitServices.lists(), unitId, filters] as const,
   },
 
   // ========================================================================

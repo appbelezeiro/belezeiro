@@ -5,11 +5,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/shared/constants/query-keys";
 import { servicesService } from "../../api";
-import type { UpdateServiceRequest, Service } from "../../types";
+import type { UpdateServicePayload, Service } from "../../types/service.types";
 
 interface UpdateServiceParams {
   serviceId: string;
-  data: UpdateServiceRequest;
+  data: UpdateServicePayload;
 }
 
 /**
@@ -22,10 +22,13 @@ export function useUpdateService() {
     mutationFn: ({ serviceId, data }) =>
       servicesService.updateService(serviceId, data),
     onSuccess: (_, variables) => {
+      // Invalidate detail and lists
       queryClient.invalidateQueries({
-        queryKey: queryKeys.services.detail(variables.serviceId),
+        queryKey: queryKeys.servicesGlobal.detail(variables.serviceId),
       });
-      queryClient.invalidateQueries({ queryKey: queryKeys.services.lists() });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.servicesGlobal.lists(),
+      });
     },
   });
 }

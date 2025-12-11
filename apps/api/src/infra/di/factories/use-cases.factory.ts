@@ -33,6 +33,25 @@ import { CancelSubscriptionUseCase } from '@/application/usecases/billing/cancel
 import { HandleCheckoutCompletedWebhookUseCase } from '@/application/usecases/billing/handle-checkout-completed-webhook.usecase';
 import { HandleSubscriptionUpdatedWebhookUseCase } from '@/application/usecases/billing/handle-subscription-updated-webhook.usecase';
 import { ValidateDiscountCodeUseCase } from '@/application/usecases/billing/validate-discount-code.usecase';
+import { CreateSpecialtyUseCase } from '@/application/usecases/specialty/create-specialty.usecase';
+import { GetSpecialtyByIdUseCase } from '@/application/usecases/specialty/get-specialty-by-id.usecase';
+import { ListSpecialtiesUseCase } from '@/application/usecases/specialty/list-specialties.usecase';
+import { SearchSpecialtiesUseCase } from '@/application/usecases/specialty/search-specialties.usecase';
+import { SeedSpecialtiesUseCase } from '@/application/usecases/specialty/seed-specialties.usecase';
+import { CreateServiceUseCase } from '@/application/usecases/service/create-service.usecase';
+import { GetServiceByIdUseCase } from '@/application/usecases/service/get-service-by-id.usecase';
+import { ListServicesUseCase } from '@/application/usecases/service/list-services.usecase';
+import { SearchServicesUseCase } from '@/application/usecases/service/search-services.usecase';
+import { UpdateServiceUseCase } from '@/application/usecases/service/update-service.usecase';
+import { DeleteServiceUseCase } from '@/application/usecases/service/delete-service.usecase';
+import { SeedServicesUseCase } from '@/application/usecases/service/seed-services.usecase';
+import { LinkUnitSpecialtyUseCase } from '@/application/usecases/unit-specialty/link-unit-specialty.usecase';
+import { UnlinkUnitSpecialtyUseCase } from '@/application/usecases/unit-specialty/unlink-unit-specialty.usecase';
+import { GetUnitSpecialtiesUseCase } from '@/application/usecases/unit-specialty/get-unit-specialties.usecase';
+import { AddUnitServiceUseCase } from '@/application/usecases/unit-service/add-unit-service.usecase';
+import { RemoveUnitServiceUseCase } from '@/application/usecases/unit-service/remove-unit-service.usecase';
+import { UpdateUnitServiceConfigUseCase } from '@/application/usecases/unit-service/update-unit-service-config.usecase';
+import { GetUnitServicesUseCase } from '@/application/usecases/unit-service/get-unit-services.usecase';
 import type { Repositories } from './repositories.factory';
 import type { Services } from './services.factory';
 
@@ -132,6 +151,46 @@ export function createUseCases(repositories: Repositories, services: Services) {
 
     // Billing - Discount use cases
     validate_discount_code: new ValidateDiscountCodeUseCase(repositories.discount_repository),
+
+    // Specialty use cases
+    create_specialty: new CreateSpecialtyUseCase(repositories.specialty_repository),
+    get_specialty_by_id: new GetSpecialtyByIdUseCase(repositories.specialty_repository),
+    list_specialties: new ListSpecialtiesUseCase(repositories.specialty_repository),
+    search_specialties: new SearchSpecialtiesUseCase(repositories.specialty_repository),
+    seed_specialties: new SeedSpecialtiesUseCase(repositories.specialty_repository),
+
+    // Service use cases
+    create_service: new CreateServiceUseCase(
+      repositories.service_repository,
+      repositories.specialty_repository,
+    ),
+    get_service_by_id: new GetServiceByIdUseCase(repositories.service_repository),
+    list_services: new ListServicesUseCase(repositories.service_repository),
+    search_services: new SearchServicesUseCase(repositories.service_repository),
+    update_service: new UpdateServiceUseCase(repositories.service_repository),
+    delete_service: new DeleteServiceUseCase(repositories.service_repository),
+    seed_services: new SeedServicesUseCase(repositories.service_repository),
+
+    // Unit-Specialty use cases
+    link_unit_specialty: new LinkUnitSpecialtyUseCase(
+      repositories.unit_specialty_repository,
+      repositories.specialty_repository,
+      repositories.unit_repository,
+    ),
+    unlink_unit_specialty: new UnlinkUnitSpecialtyUseCase(repositories.unit_specialty_repository),
+    get_unit_specialties: new GetUnitSpecialtiesUseCase(repositories.unit_specialty_repository),
+
+    // Unit-Service use cases
+    add_unit_service: new AddUnitServiceUseCase(
+      repositories.unit_service_repository,
+      repositories.service_repository,
+      repositories.unit_repository,
+    ),
+    remove_unit_service: new RemoveUnitServiceUseCase(repositories.unit_service_repository),
+    update_unit_service_config: new UpdateUnitServiceConfigUseCase(
+      repositories.unit_service_repository,
+    ),
+    get_unit_services: new GetUnitServicesUseCase(repositories.unit_service_repository),
   };
 }
 

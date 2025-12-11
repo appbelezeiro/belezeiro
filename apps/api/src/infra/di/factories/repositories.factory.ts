@@ -9,6 +9,10 @@ import { InMemorySubscriptionRepository } from '@/infra/repositories/in-memory/b
 import { InMemoryInvoiceRepository } from '@/infra/repositories/in-memory/billing/in-memory-invoice.repository';
 import { InMemoryDiscountRepository } from '@/infra/repositories/in-memory/billing/in-memory-discount.repository';
 import { InMemoryCouponRedemptionRepository } from '@/infra/repositories/in-memory/billing/in-memory-coupon-redemption.repository';
+import { InMemorySpecialtyRepository } from '@/infra/repositories/in-memory/in-memory-specialty.repository';
+import { InMemoryServiceRepository } from '@/infra/repositories/in-memory/in-memory-service.repository';
+import { InMemoryUnitSpecialtyRepository } from '@/infra/repositories/in-memory/in-memory-unit-specialty.repository';
+import { InMemoryUnitServiceRepository } from '@/infra/repositories/in-memory/in-memory-unit-service.repository';
 import type { Clients } from './clients.factory';
 
 export function createRepositories(_clients: Clients) {
@@ -26,6 +30,12 @@ export function createRepositories(_clients: Clients) {
   const discount_repository = new InMemoryDiscountRepository();
   const coupon_redemption_repository = new InMemoryCouponRedemptionRepository();
 
+  // Specialties and Services repositories
+  const specialty_repository = new InMemorySpecialtyRepository();
+  const service_repository = new InMemoryServiceRepository();
+  const unit_specialty_repository = new InMemoryUnitSpecialtyRepository();
+  const unit_service_repository = new InMemoryUnitServiceRepository();
+
   return {
     user_repository,
     booking_rule_repository,
@@ -38,6 +48,10 @@ export function createRepositories(_clients: Clients) {
     invoice_repository,
     discount_repository,
     coupon_redemption_repository,
+    specialty_repository,
+    service_repository,
+    unit_specialty_repository,
+    unit_service_repository,
   };
 }
 
