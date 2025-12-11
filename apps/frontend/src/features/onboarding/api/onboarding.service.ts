@@ -3,6 +3,7 @@
 // ============================================================================
 
 import { privateClient } from '@/services/api/client';
+import { uploadService } from '@/features/upload/api/upload.service';
 import type {
   CreateOrganizationRequest,
   OrganizationDTO,
@@ -168,6 +169,79 @@ class OnboardingService {
     }
 
     return { organization, unit };
+  }
+
+  // ============================================================================
+  // Image Upload Helper
+  // ============================================================================
+
+  /**
+   * Upload images and update unit
+   * Handles logo and gallery uploads after unit creation
+   */
+  async uploadImagesAndUpdateUnit(params: {
+    unitId: string;
+    userId: string;
+    logoFile?: File | null;
+    galleryFiles?: File[];
+  }): Promise<{
+    logoUrl?: string;
+    galleryUrls?: string[];
+  }> {
+    const result: { logoUrl?: string; galleryUrls?: string[] } = {};
+
+    // Upload logo if exists
+    if (params.logoFile) {
+      try {
+        // 1. Generate pre-signed URL
+        const presigned = await uploadService.generateUploadUrl(
+          'logo',
+          params.logoFile.name,
+          params.logoFile.type
+        );
+
+        // 2. Upload to storage
+        await uploadService.uploadToStorage(presigned.upload_url, params.logoFile);
+
+        // 3. Confirm upload and get final URL
+        const confirmation = await uploadService.confirmUnitLogo(params.unitId, presigned.key);
+        result.logoUrl = confirmation.url;
+      } catch (error) {
+        console.error('Logo upload failed:', error);
+        // Continue even if logo upload fails
+      }
+    }
+
+    // Upload gallery if exists
+    if (params.galleryFiles && params.galleryFiles.length > 0) {
+      try {
+        // 1. Generate batch pre-signed URLs
+        const presignedBatch = await uploadService.generateBatchUploadUrls(
+          'gallery',
+          params.galleryFiles.map((file) => ({
+            fileName: file.name,
+            contentType: file.type,
+          }))
+        );
+
+        // 2. Upload all files to storage
+        await Promise.all(
+          presignedBatch.map((presigned, index) =>
+            uploadService.uploadToStorage(presigned.upload_url, params.galleryFiles![index])
+          )
+        );
+
+        // 3. Confirm batch upload and get final URLs
+        const keys = presignedBatch.map((p) => p.key);
+        const confirmation = await uploadService.confirmBatchGalleryUpload(params.unitId, keys);
+        result.galleryUrls = confirmation.urls;
+      } catch (error) {
+        console.error('Gallery upload failed:', error);
+        // Continue even if gallery upload fails
+      }
+    }
+
+    return result;
   }
 
   // ============================================================================

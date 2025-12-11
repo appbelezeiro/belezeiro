@@ -11,8 +11,10 @@ import { OnboardingStepAmenities } from "@/components/onboarding/OnboardingStepA
 import { OnboardingStepWorkingHours } from "@/components/onboarding/OnboardingStepWorkingHours";
 import { OnboardingStepPersonalization } from "@/components/onboarding/OnboardingStepPersonalization";
 import { useCurrentUser } from "@/features/auth";
-import { useSubmitOnboarding, type OnboardingSubmitData, type AmenityId, type WorkingHours } from "@/features/onboarding";
+import { useSubmitOnboarding, type OnboardingSubmitData, type AmenityId } from "@/features/onboarding";
 import { useOnboardingPersistence } from "@/shared/hooks";
+import { convertToAvailabilityRules } from "@/features/onboarding/utils/convert-to-availability-rules";
+import { base64ToFile, base64ArrayToFiles } from "@/features/onboarding/utils/base64-to-file";
 
 export interface OnboardingFormData {
   // Business
@@ -139,7 +141,8 @@ const Onboarding = () => {
     onSuccess: () => {
       // Clear persisted data on successful completion
       clearPersistence();
-      navigate("/onboarding/plans");
+      // Redirect to dashboard
+      navigate("/dashboard");
     },
   });
 
@@ -158,8 +161,8 @@ const Onboarding = () => {
       professionId: service.professionId,
     }));
 
-    // Transform working hours to the correct format
-    const workingHours: WorkingHours = {
+    // Convert working hours to availability rules
+    const workingHours = {
       monday: formData.workingHours.monday,
       tuesday: formData.workingHours.tuesday,
       wednesday: formData.workingHours.wednesday,
@@ -169,12 +172,17 @@ const Onboarding = () => {
       sunday: formData.workingHours.sunday,
     };
 
+    const { availability_rules, availability_exceptions } = convertToAvailabilityRules(
+      workingHours,
+      formData.lunchBreak.enabled ? formData.lunchBreak : undefined,
+      30 // Default slot duration: 30 minutes
+    );
+
     return {
       businessName: formData.businessName,
       brandColor: formData.brandColor,
       unitName: formData.unitName,
-      logo: formData.logo || undefined,
-      gallery: formData.gallery,
+      // Don't send logo/gallery URLs - we'll upload files after unit creation
       whatsapp: formData.whatsapp.replace(/\D/g, ''), // Remove non-digits
       phone: formData.phone ? formData.phone.replace(/\D/g, '') : undefined,
       address: {
@@ -190,8 +198,9 @@ const Onboarding = () => {
       services: servicesWithId,
       serviceType: formData.serviceType as 'local' | 'home' | 'both',
       amenities: formData.amenities as AmenityId[],
-      workingHours,
-      lunchBreak: formData.lunchBreak.enabled ? formData.lunchBreak : undefined,
+      // Use new availability rules system
+      availability_rules,
+      availability_exceptions,
     };
   };
 
@@ -202,7 +211,19 @@ const Onboarding = () => {
     }
 
     const submitData = transformFormDataToSubmit();
-    submitOnboarding.mutate({ data: submitData, userId: user.id });
+
+    // Prepare image files for upload (convert base64 to File objects)
+    const logoFile = formData.logo ? base64ToFile(formData.logo, 'logo.png') : null;
+    const galleryFiles = formData.gallery.length > 0
+      ? base64ArrayToFiles(formData.gallery, 'gallery')
+      : [];
+
+    submitOnboarding.mutate({
+      data: submitData,
+      userId: user.id,
+      logoFile,
+      galleryFiles,
+    });
   };
 
   const nextStep = () => {

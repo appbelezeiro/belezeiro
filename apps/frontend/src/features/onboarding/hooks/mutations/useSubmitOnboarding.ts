@@ -4,6 +4,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { onboardingService } from '../../api';
+import { privateClient } from '@/services/api/client';
 import type { OnboardingSubmitData, OnboardingResult } from '../../types';
 import { toast } from '@/shared/lib/toast';
 import { queryKeys } from '@/shared/constants/query-keys';
@@ -20,11 +21,33 @@ export function useSubmitOnboarding(options?: UseSubmitOnboardingOptions) {
     mutationFn: async ({
       data,
       userId,
+      logoFile,
+      galleryFiles,
     }: {
       data: OnboardingSubmitData;
       userId: string;
+      logoFile?: File | null;
+      galleryFiles?: File[];
     }): Promise<OnboardingResult> => {
-      return onboardingService.submitOnboarding(data, userId);
+      // Step 1: Create organization and unit
+      const result = await onboardingService.submitOnboarding(data, userId);
+
+      // Step 2: Upload images if they exist
+      if (logoFile || (galleryFiles && galleryFiles.length > 0)) {
+        await onboardingService.uploadImagesAndUpdateUnit({
+          unitId: result.unit.id,
+          userId,
+          logoFile,
+          galleryFiles,
+        });
+      }
+
+      // Step 3: Mark onboarding as complete
+      await privateClient.post('/api/users/complete-onboarding', {
+        userId,
+      });
+
+      return result;
     },
     onSuccess: (result) => {
       // Invalidate user cache to fetch updated onboardingCompleted
