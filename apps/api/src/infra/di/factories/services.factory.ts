@@ -15,12 +15,14 @@ export function createServices() {
   const plan_limits_validator_service = new PlanLimitsValidatorService();
 
   // Storage service
-  const is_production = process.env.NODE_ENV === 'production';
-  const storage_provider = process.env.STORAGE_PROVIDER || 'fake'; // 's3', 'r2', 'fake'
+  // STORAGE_PROVIDER: 's3', 'r2', ou 'fake'
+  // Use 'fake' para desenvolvimento sem cloud storage
+  // Use 'r2' ou 's3' para usar cloud storage (funciona em dev e prod)
+  const storage_provider = process.env.STORAGE_PROVIDER || 'fake';
 
   let storage_gateway;
 
-  if (is_production && storage_provider === 's3') {
+  if (storage_provider === 's3') {
     storage_gateway = new S3StorageGatewayService({
       region: process.env.AWS_REGION!,
       access_key_id: process.env.AWS_ACCESS_KEY_ID!,
@@ -28,7 +30,7 @@ export function createServices() {
       bucket_name: process.env.AWS_S3_BUCKET!,
       cdn_url: process.env.AWS_CLOUDFRONT_URL,
     });
-  } else if (is_production && storage_provider === 'r2') {
+  } else if (storage_provider === 'r2') {
     storage_gateway = new R2StorageGatewayService({
       account_id: process.env.CLOUDFLARE_ACCOUNT_ID!,
       access_key_id: process.env.CLOUDFLARE_ACCESS_KEY_ID!,
