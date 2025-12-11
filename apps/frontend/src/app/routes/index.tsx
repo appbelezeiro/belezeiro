@@ -8,40 +8,36 @@ import { ProtectedRoute } from './ProtectedRoute';
 import { PublicRoute } from './PublicRoute';
 
 // ============================================================================
-// Lazy Loading de Páginas
+// Lazy Loading de Páginas - Nova Arquitetura
 // ============================================================================
 
-// Auth
-const LoginPage = lazy(() =>
-  import('@/features/auth/components/LoginPage').then((m) => ({
-    default: m.LoginPage,
-  }))
-);
+// Auth Pages
+const LoginPage = lazy(() => import('@/pages/login/LoginPage'));
+const WelcomePage = lazy(() => import('@/pages/welcome/WelcomePage'));
 
 // Public Pages
-const LandingPage = lazy(() => import('@/pages/LandingPage'));
-const PublicUnit = lazy(() => import('@/pages/PublicUnit'));
-const PublicBooking = lazy(() => import('@/pages/PublicBooking'));
-const ReferralLanding = lazy(() => import('@/pages/ReferralLanding'));
-const AboutUs = lazy(() => import('@/pages/AboutUs'));
-const Blog = lazy(() => import('@/pages/Blog'));
-const Contact = lazy(() => import('@/pages/Contact'));
-const NotFound = lazy(() => import('@/pages/NotFound'));
+const LandingPage = lazy(() => import('@/pages/landing/LandingPage'));
+const PublicUnitPage = lazy(() => import('@/pages/public-unit/PublicUnitPage'));
+const PublicBookingPage = lazy(() => import('@/pages/public-booking/PublicBookingPage'));
+const ReferralLandingPage = lazy(() => import('@/pages/referral-landing/ReferralLandingPage'));
+const AboutUsPage = lazy(() => import('@/pages/about-us/AboutUsPage'));
+const BlogPage = lazy(() => import('@/pages/blog/BlogPage'));
+const ContactPage = lazy(() => import('@/pages/contact/ContactPage'));
+const NotFoundPage = lazy(() => import('@/pages/not-found/NotFoundPage'));
 
 // Protected Pages
-const Welcome = lazy(() => import('@/pages/Welcome'));
-const Onboarding = lazy(() => import('@/pages/Onboarding'));
-const OnboardingPlans = lazy(() => import('@/pages/OnboardingPlans'));
-const OnboardingSuccess = lazy(() => import('@/pages/OnboardingSuccess'));
-const Dashboard = lazy(() => import('@/pages/Dashboard'));
-const UnitSelection = lazy(() => import('@/pages/UnitSelection'));
-const NewUnit = lazy(() => import('@/pages/NewUnit'));
-const Agenda = lazy(() => import('@/pages/Agenda'));
-const Customers = lazy(() => import('@/pages/Customers'));
-const Services = lazy(() => import('@/pages/Services'));
-const Settings = lazy(() => import('@/pages/Settings'));
-const ReferralProgram = lazy(() => import('@/pages/ReferralProgram'));
-const HelpSupport = lazy(() => import('@/pages/HelpSupport'));
+const OnboardingPage = lazy(() => import('@/pages/onboarding/OnboardingPage'));
+const OnboardingPlansPage = lazy(() => import('@/pages/onboarding/OnboardingPlansPage'));
+const OnboardingSuccessPage = lazy(() => import('@/pages/onboarding/OnboardingSuccessPage'));
+const DashboardPage = lazy(() => import('@/pages/dashboard/DashboardPage'));
+const UnitSelectionPage = lazy(() => import('@/pages/unit-selection/UnitSelectionPage'));
+const NewUnitPage = lazy(() => import('@/pages/new-unit/NewUnitPage'));
+const AgendaPage = lazy(() => import('@/pages/agenda/AgendaPage'));
+const CustomersPage = lazy(() => import('@/pages/customers/CustomersPage'));
+const ServicesPage = lazy(() => import('@/pages/services/ServicesPage'));
+const SettingsPage = lazy(() => import('@/pages/settings/SettingsPage'));
+const ReferralProgramPage = lazy(() => import('@/pages/referral-program/ReferralProgramPage'));
+const HelpSupportPage = lazy(() => import('@/pages/help-support/HelpSupportPage'));
 
 // ============================================================================
 // Fallback de Loading
@@ -64,6 +60,11 @@ function LoadingFallback() {
 
 /**
  * Configuração de rotas da aplicação
+ *
+ * Fluxo: pages → features → shared (components/lib)
+ *
+ * As páginas são simples containers que delegam para as features.
+ * Cada feature tem tudo o que precisa: UI, hooks, services, types.
  */
 export function AppRoutes() {
   return (
@@ -73,12 +74,12 @@ export function AppRoutes() {
         {/* Public Routes (sem autenticação necessária)  */}
         {/* ============================================= */}
         <Route path="/" element={<LandingPage />} />
-        <Route path="/u/:slug" element={<PublicUnit />} />
-        <Route path="/agendar" element={<PublicBooking />} />
-        <Route path="/cadastro" element={<ReferralLanding />} />
-        <Route path="/sobre" element={<AboutUs />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/contato" element={<Contact />} />
+        <Route path="/u/:slug" element={<PublicUnitPage />} />
+        <Route path="/agendar" element={<PublicBookingPage />} />
+        <Route path="/cadastro" element={<ReferralLandingPage />} />
+        <Route path="/sobre" element={<AboutUsPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/contato" element={<ContactPage />} />
 
         {/* ============================================= */}
         {/* Auth Routes (apenas não autenticados)        */}
@@ -99,7 +100,7 @@ export function AppRoutes() {
           path="/bem-vindo"
           element={
             <ProtectedRoute>
-              <Welcome />
+              <WelcomePage />
             </ProtectedRoute>
           }
         />
@@ -107,7 +108,7 @@ export function AppRoutes() {
           path="/onboarding"
           element={
             <ProtectedRoute>
-              <Onboarding />
+              <OnboardingPage />
             </ProtectedRoute>
           }
         />
@@ -115,7 +116,7 @@ export function AppRoutes() {
           path="/onboarding/plans"
           element={
             <ProtectedRoute>
-              <OnboardingPlans />
+              <OnboardingPlansPage />
             </ProtectedRoute>
           }
         />
@@ -123,7 +124,7 @@ export function AppRoutes() {
           path="/onboarding/success"
           element={
             <ProtectedRoute>
-              <OnboardingSuccess />
+              <OnboardingSuccessPage />
             </ProtectedRoute>
           }
         />
@@ -131,7 +132,7 @@ export function AppRoutes() {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <DashboardPage />
             </ProtectedRoute>
           }
         />
@@ -139,7 +140,7 @@ export function AppRoutes() {
           path="/selecionar-unidade"
           element={
             <ProtectedRoute>
-              <UnitSelection />
+              <UnitSelectionPage />
             </ProtectedRoute>
           }
         />
@@ -147,7 +148,7 @@ export function AppRoutes() {
           path="/nova-unidade"
           element={
             <ProtectedRoute>
-              <NewUnit />
+              <NewUnitPage />
             </ProtectedRoute>
           }
         />
@@ -155,7 +156,7 @@ export function AppRoutes() {
           path="/agenda"
           element={
             <ProtectedRoute>
-              <Agenda />
+              <AgendaPage />
             </ProtectedRoute>
           }
         />
@@ -163,7 +164,7 @@ export function AppRoutes() {
           path="/clientes"
           element={
             <ProtectedRoute>
-              <Customers />
+              <CustomersPage />
             </ProtectedRoute>
           }
         />
@@ -171,7 +172,7 @@ export function AppRoutes() {
           path="/servicos"
           element={
             <ProtectedRoute>
-              <Services />
+              <ServicesPage />
             </ProtectedRoute>
           }
         />
@@ -179,7 +180,7 @@ export function AppRoutes() {
           path="/configuracoes"
           element={
             <ProtectedRoute>
-              <Settings />
+              <SettingsPage />
             </ProtectedRoute>
           }
         />
@@ -187,7 +188,7 @@ export function AppRoutes() {
           path="/indicacao"
           element={
             <ProtectedRoute>
-              <ReferralProgram />
+              <ReferralProgramPage />
             </ProtectedRoute>
           }
         />
@@ -195,7 +196,7 @@ export function AppRoutes() {
           path="/ajuda-suporte"
           element={
             <ProtectedRoute>
-              <HelpSupport />
+              <HelpSupportPage />
             </ProtectedRoute>
           }
         />
@@ -203,7 +204,7 @@ export function AppRoutes() {
         {/* ============================================= */}
         {/* 404 - Catch All                              */}
         {/* ============================================= */}
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>
   );
