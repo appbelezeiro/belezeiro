@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { UnitMapper } from '@/application/dtos/mappers/units/unit.mapper';
 import { UnitNotFoundError } from '@/domain/errors/units/unit.errors';
 import { NotFoundError } from '../../errors/http-errors';
+import type { AuthContext } from '../../middleware/auth.middleware';
 
 const DayScheduleSchema = z.object({
   enabled: z.boolean(),
@@ -110,6 +111,14 @@ export class UnitController {
         workingHours: payload.workingHours,
         lunchBreak: payload.lunchBreak,
       });
+
+      // Complete onboarding for the user after creating their first unit
+      const auth = c.get('auth') as AuthContext | undefined;
+      if (auth?.userId) {
+        await this.container.use_cases.complete_onboarding.execute({
+          userId: auth.userId,
+        });
+      }
 
       return c.json(UnitMapper.toDTO(unit), 201);
     } catch (error) {

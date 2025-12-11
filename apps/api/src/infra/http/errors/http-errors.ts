@@ -32,6 +32,13 @@ export class ForbiddenError extends HttpError {
   }
 }
 
+export class OnboardingRequiredError extends HttpError {
+  constructor(message: string = 'Onboarding required') {
+    super(message, 403, 'ONBOARDING_REQUIRED');
+    this.name = 'OnboardingRequiredError';
+  }
+}
+
 export class NotFoundError extends HttpError {
   constructor(message: string = 'Resource not found') {
     super(message, 404, 'NOT_FOUND');

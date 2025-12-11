@@ -13,6 +13,7 @@ export const userSchema = z.object({
   email: z.string().email('Email inválido'),
   photo: z.string().url('URL da foto inválida').optional(),
   isActive: z.boolean().optional().default(true),
+  onboardingCompleted: z.boolean(),
 });
 
 /**
@@ -31,7 +32,8 @@ export const loginRequestSchema = z.object({
 export const loginResponseSchema = z.object({
   user: userSchema,
   created: z.boolean().optional(),
-  pending_actions: z.record(z.string()).optional(),
+  /** Only present when onboarding is not completed (false means onboarding required) */
+  onboarding: z.boolean().optional(),
 });
 
 /**
@@ -39,6 +41,8 @@ export const loginResponseSchema = z.object({
  */
 export const meResponseSchema = z.object({
   user: userSchema,
+  /** Only present when onboarding is not completed (false means onboarding required) */
+  onboarding: z.boolean().optional(),
 });
 
 /**

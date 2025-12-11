@@ -1,4 +1,5 @@
 import { CreateUserUseCase } from '@/application/usecases/users/create-user.usecase';
+import { CompleteOnboardingUseCase } from '@/application/usecases/users/complete-onboarding.usecase';
 import { AuthenticateWithProviderUseCase } from '@/application/usecases/auth/authenticate-with-provider.usecase';
 import { RefreshTokensUseCase } from '@/application/usecases/auth/refresh-tokens.usecase';
 import { GetProfileUseCase } from '@/application/usecases/users/get-profile.usecase';
@@ -39,6 +40,7 @@ export function createUseCases(repositories: Repositories, services: Services) {
   return {
     // User use cases
     create_user: new CreateUserUseCase(repositories.user_repository),
+    complete_onboarding: new CompleteOnboardingUseCase(repositories.user_repository),
 
     // Auth use cases
     authenticate_with_provider: new AuthenticateWithProviderUseCase(repositories.user_repository),

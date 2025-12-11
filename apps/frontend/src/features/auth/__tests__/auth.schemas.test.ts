@@ -65,6 +65,7 @@ describe("Auth Schemas", () => {
         email: "john@example.com",
         photo: "https://example.com/photo.jpg",
         isActive: true,
+        onboardingCompleted: true,
       };
 
       const result = userSchema.safeParse(validUser);
@@ -76,6 +77,7 @@ describe("Auth Schemas", () => {
         id: "user-1",
         name: "John Doe",
         email: "john@example.com",
+        onboardingCompleted: false,
       };
 
       const result = userSchema.safeParse(validUser);
@@ -87,6 +89,7 @@ describe("Auth Schemas", () => {
         id: "user-1",
         name: "John Doe",
         email: "john@example.com",
+        onboardingCompleted: true,
       };
 
       const result = userSchema.parse(validUser);
@@ -101,6 +104,7 @@ describe("Auth Schemas", () => {
           id: "user-1",
           name: "John Doe",
           email: "john@example.com",
+          onboardingCompleted: true,
         },
       };
 
@@ -114,6 +118,7 @@ describe("Auth Schemas", () => {
           id: "user-1",
           name: "John Doe",
           email: "john@example.com",
+          onboardingCompleted: false,
         },
         created: true,
       };
@@ -131,6 +136,7 @@ describe("Auth Schemas", () => {
           name: "John Doe",
           email: "john@example.com",
           isActive: true,
+          onboardingCompleted: true,
         },
       };
 

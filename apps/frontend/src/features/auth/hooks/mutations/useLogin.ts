@@ -66,8 +66,8 @@ export function useLogin(options: UseLoginOptions = {}) {
 
       // Redireciona
       if (shouldRedirect) {
-        // Se tiver pending actions, redireciona para onboarding
-        if (data.pending_actions && Object.keys(data.pending_actions).length > 0) {
+        // Se onboarding não está completo, redireciona para onboarding
+        if (data.onboarding === false) {
           navigate('/onboarding');
         } else if (data.created) {
           // Se é primeiro login, redireciona para bem-vindo

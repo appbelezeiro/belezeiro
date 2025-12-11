@@ -11,6 +11,7 @@ export interface User {
   email: string;
   photo?: string;
   isActive: boolean;
+  onboardingCompleted: boolean;
 }
 
 /**
@@ -29,7 +30,8 @@ export interface LoginRequest {
 export interface LoginResponse {
   user: User;
   created?: boolean;
-  pending_actions?: Record<string, string>;
+  /** Only present when onboarding is not completed (false means onboarding required) */
+  onboarding?: boolean;
 }
 
 /**
@@ -51,6 +53,8 @@ export interface LogoutResponse {
  */
 export interface MeResponse {
   user: User;
+  /** Only present when onboarding is not completed (false means onboarding required) */
+  onboarding?: boolean;
 }
 
 /**

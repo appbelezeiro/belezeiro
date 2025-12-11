@@ -31,6 +31,7 @@ export class UserMapper {
       email: entity.email,
       photo: entity.photoUrl,
       isActive: true, // Users that exist are considered active
+      onboardingCompleted: entity.onboardingCompleted,
     };
   }
 

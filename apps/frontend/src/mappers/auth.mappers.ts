@@ -75,5 +75,6 @@ export function sanitizeUserForStorage(user: User): User {
     email: user.email,
     photo: user.photo,
     isActive: user.isActive,
+    onboardingCompleted: user.onboardingCompleted,
   };
 }

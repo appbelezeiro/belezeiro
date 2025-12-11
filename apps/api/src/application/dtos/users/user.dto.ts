@@ -22,4 +22,5 @@ export interface UserAuthDTO {
   email: string;
   photo?: string;
   isActive: boolean;
+  onboardingCompleted: boolean;
 }

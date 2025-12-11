@@ -16,6 +16,7 @@ export const mockUser = {
   name: "Test User",
   photo: "https://example.com/avatar.jpg",
   isActive: true,
+  onboardingCompleted: true,
 };
 
 export const mockCustomer = {
