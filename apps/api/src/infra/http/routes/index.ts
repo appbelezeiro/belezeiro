@@ -14,6 +14,7 @@ import { createSpecialtyRoutes } from './specialty.routes';
 import { createServiceRoutes } from './service.routes';
 import { createUnitSpecialtyRoutes } from './unit-specialty.routes';
 import { createUnitServiceRoutes } from './unit-service.routes';
+import { createUploadRoutes } from './upload.routes';
 import { createAmenityRoutes } from './amenity.routes';
 import { createUnitAmenityRoutes } from './unit-amenity.routes';
 
@@ -25,6 +26,7 @@ export function createRoutes(container: Container) {
   app.route('/booking', createBookingRoutes(container));
   app.route('/organizations', createOrganizationRoutes(container));
   app.route('/units', createUnitRoutes(container));
+  app.route('/upload', createUploadRoutes(container));
 
   // Specialties and Services routes
   app.route('/specialties', createSpecialtyRoutes(container));

@@ -52,6 +52,13 @@ import { AddUnitServiceUseCase } from '@/application/usecases/unit-service/add-u
 import { RemoveUnitServiceUseCase } from '@/application/usecases/unit-service/remove-unit-service.usecase';
 import { UpdateUnitServiceConfigUseCase } from '@/application/usecases/unit-service/update-unit-service-config.usecase';
 import { GetUnitServicesUseCase } from '@/application/usecases/unit-service/get-unit-services.usecase';
+import { GenerateUploadUrlUseCase } from '@/application/usecases/storage/generate-upload-url.usecase';
+import { GenerateBatchUploadUrlsUseCase } from '@/application/usecases/storage/generate-batch-upload-urls.usecase';
+import { UpdateUserPhotoUseCase } from '@/application/usecases/users/update-user-photo.usecase';
+import { UpdateUnitLogoUseCase } from '@/application/usecases/units/update-unit-logo.usecase';
+import { AddUnitGalleryPhotoUseCase } from '@/application/usecases/units/add-unit-gallery-photo.usecase';
+import { AddBatchUnitGalleryPhotosUseCase } from '@/application/usecases/units/add-batch-unit-gallery-photos.usecase';
+import { RemoveUnitGalleryPhotoUseCase } from '@/application/usecases/units/remove-unit-gallery-photo.usecase';
 import { CreateAmenityUseCase } from '@/application/usecases/amenity/create-amenity.usecase';
 import { GetAmenityByIdUseCase } from '@/application/usecases/amenity/get-amenity-by-id.usecase';
 import { ListAmenitiesUseCase } from '@/application/usecases/amenity/list-amenities.usecase';
@@ -202,6 +209,30 @@ export function createUseCases(repositories: Repositories, services: Services) {
       repositories.unit_service_repository,
     ),
     get_unit_services: new GetUnitServicesUseCase(repositories.unit_service_repository),
+
+    // Storage use cases
+    generate_upload_url: new GenerateUploadUrlUseCase(services.storage_gateway),
+    generate_batch_upload_urls: new GenerateBatchUploadUrlsUseCase(services.storage_gateway),
+    update_user_photo: new UpdateUserPhotoUseCase(
+      repositories.user_repository,
+      services.storage_gateway
+    ),
+    update_unit_logo: new UpdateUnitLogoUseCase(
+      repositories.unit_repository,
+      services.storage_gateway
+    ),
+    add_unit_gallery_photo: new AddUnitGalleryPhotoUseCase(
+      repositories.unit_repository,
+      services.storage_gateway
+    ),
+    add_batch_unit_gallery_photos: new AddBatchUnitGalleryPhotosUseCase(
+      repositories.unit_repository,
+      services.storage_gateway
+    ),
+    remove_unit_gallery_photo: new RemoveUnitGalleryPhotoUseCase(
+      repositories.unit_repository,
+      services.storage_gateway
+    ),
 
     // Amenity use cases
     create_amenity: new CreateAmenityUseCase(repositories.amenity_repository),
