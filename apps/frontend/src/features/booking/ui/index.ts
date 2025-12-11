@@ -7,3 +7,4 @@ export { ConfirmationStep } from "./ConfirmationStep";
 export { SuccessStep } from "./SuccessStep";
 export { BookingProgress } from "./BookingProgress";
 export { BookingSummary } from "./BookingSummary";
+export { PublicBookingView } from "./PublicBookingView";
