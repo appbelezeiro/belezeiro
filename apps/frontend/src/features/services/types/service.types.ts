@@ -1,104 +1,47 @@
-// ============================================================================
-// SERVICE TYPES - Domain Types for Services Feature
-// ============================================================================
-
-/**
- * Service Entity
- */
 export interface Service {
   id: string;
+  specialty_id: string;
+  code: string;
   name: string;
   description?: string;
-  duration: number; // minutes
-  price: number;
-  category: string;
-  color: string;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
+  default_duration_minutes: number;
+  default_price_cents: number;
+  is_predefined: boolean;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
 }
 
-/**
- * Service Category
- */
-export interface ServiceCategory {
-  id: string;
+export interface ServiceWithSpecialty extends Service {
+  specialty: {
+    id: string;
+    code: string;
+    name: string;
+    icon: string;
+  };
+}
+
+export interface CreateServicePayload {
+  specialty_id: string;
+  code: string;
   name: string;
   description?: string;
-  order: number;
-  servicesCount: number;
+  default_duration_minutes: number;
+  default_price_cents: number;
 }
 
-/**
- * Service with Stats
- */
-export interface ServiceWithStats extends Service {
-  appointmentsCount: number;
-  revenue: number;
-  averageRating?: number;
-}
-
-/**
- * Create Service Request
- */
-export interface CreateServiceRequest {
-  name: string;
-  description?: string;
-  duration: number;
-  price: number;
-  category: string;
-  color?: string;
-}
-
-/**
- * Update Service Request
- */
-export interface UpdateServiceRequest {
+export interface UpdateServicePayload {
   name?: string;
   description?: string;
-  duration?: number;
-  price?: number;
-  category?: string;
-  color?: string;
-  isActive?: boolean;
+  default_duration_minutes?: number;
+  default_price_cents?: number;
+  is_active?: boolean;
 }
 
-/**
- * Services List Response
- */
-export interface ServicesListResponse {
-  services: ServiceWithStats[];
-  total: number;
-  page: number;
-  limit: number;
+export interface CursorPaginatedResponse<T> {
+  items: T[];
+  next_cursor: string | null;
+  has_more: boolean;
 }
 
-/**
- * Service Filters
- */
-export interface ServiceFilters {
-  category?: string;
-  isActive?: boolean;
-  search?: string;
-  page?: number;
-  limit?: number;
-  sortBy?: "name" | "price" | "duration" | "appointmentsCount";
-  sortOrder?: "asc" | "desc";
-}
-
-/**
- * Create Category Request
- */
-export interface CreateCategoryRequest {
-  name: string;
-  description?: string;
-}
-
-/**
- * Update Category Request
- */
-export interface UpdateCategoryRequest {
-  name?: string;
-  description?: string;
-  order?: number;
-}
+export type ServicesResponse = CursorPaginatedResponse<Service>;
