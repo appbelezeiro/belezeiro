@@ -6,6 +6,7 @@ export interface UserPersistence {
   email: string;
   providerId: string;
   photoUrl?: string;
+  onboardingCompleted: boolean;
   created_at: Date;
   updated_at: Date;
 }
@@ -18,6 +19,7 @@ export class UserDataMapper {
       email: raw.email,
       providerId: raw.providerId,
       photoUrl: raw.photoUrl,
+      onboardingCompleted: raw.onboardingCompleted,
       created_at: raw.created_at,
       updated_at: raw.updated_at,
     });
@@ -30,6 +32,7 @@ export class UserDataMapper {
       email: entity.email,
       providerId: entity.providerId,
       photoUrl: entity.photoUrl,
+      onboardingCompleted: entity.onboardingCompleted,
       created_at: entity.created_at,
       updated_at: entity.updated_at,
     };

@@ -1,12 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { GoogleIcon } from "@/components/GoogleIcon";
 import { FlowDebugControl } from "@/components/debug/FlowDebugControl";
-import { useGoogleLogin } from "@/hooks/use-google-login";
+import { GoogleLoginButton, useGoogleLogin } from "@/features/auth";
 import loginImage from "@/assets/login-spa-image.jpg";
-import { OAuthGoogleLoginButton } from "@/features/auth/ui/oauth-google-login-button";
 
-const Index = () => {
-  const { handleLogin, isLoading } = useGoogleLogin();
+const Login = () => {
+  const { login, isLoading, isError, error } = useGoogleLogin();
 
   return (
     <main className="min-h-screen flex flex-col lg:flex-row">
@@ -18,7 +15,7 @@ const Index = () => {
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ocean-calm/10 to-transparent" />
-        
+
         {/* Floating badge */}
         <div className="absolute bottom-8 left-8 right-8 animate-float">
           <div className="bg-card/90 backdrop-blur-sm rounded-2xl p-6 shadow-card max-w-sm">
@@ -65,7 +62,13 @@ const Index = () => {
 
           {/* Login Button */}
           <div className="space-y-4">
-            <OAuthGoogleLoginButton />
+            <GoogleLoginButton onClick={login} isLoading={isLoading} />
+
+            {isError && error && (
+              <p className="text-center text-sm text-destructive">
+                {error.message}
+              </p>
+            )}
 
             <p className="text-center text-xs text-muted-foreground">
               Faça login ou crie sua conta em segundos
@@ -108,4 +111,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Login;

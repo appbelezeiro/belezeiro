@@ -7,7 +7,8 @@
  */
 export interface LoginAPIResponse {
   created: boolean;
-  pending_actions?: Record<string, string>;
+  /** Only present when onboarding is not completed (false means onboarding required) */
+  onboarding?: boolean;
 }
 
 /**
@@ -18,7 +19,8 @@ export interface User {
   name: string;
   email: string;
   photo?: string;
-  isActive: boolean;
+  isActive?: boolean;
+  onboardingCompleted: boolean;
 }
 
 /**

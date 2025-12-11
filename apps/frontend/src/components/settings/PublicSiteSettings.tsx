@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { 
-  Globe, 
-  ExternalLink, 
-  Instagram, 
-  Facebook, 
+import {
+  Globe,
+  ExternalLink,
+  Instagram,
+  Facebook,
   MessageCircle,
   Link2,
   Eye,
@@ -14,15 +14,16 @@ import {
   Crown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { PublicSitePreview } from "./PublicSitePreview";
 import { usePlan } from "@/contexts/AppContext";
+import { FormInput, FormTextarea } from "@/shared/components/form";
+import { publicSiteSchema } from "@/shared/schemas/settings.schemas";
+import { z } from "zod";
 
 export const PublicSiteSettings = () => {
   const { toast } = useToast();
@@ -46,6 +47,19 @@ export const PublicSiteSettings = () => {
   const [hasChanges, setHasChanges] = useState(false);
   const [initialState, setInitialState] = useState<string>("");
 
+  // Validation errors
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const clearError = (field: string) => {
+    if (errors[field]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  };
+
   useEffect(() => {
     const currentState = JSON.stringify({
       isSiteEnabled, siteTitle, siteHeadline, 
@@ -60,15 +74,37 @@ export const PublicSiteSettings = () => {
   }, [isSiteEnabled, siteTitle, siteHeadline, aboutUs, instagram, facebook, whatsappLink, externalSite, initialState]);
 
   const handleSave = () => {
-    toast({
-      title: "Configurações salvas!",
-      description: "As configurações do site público foram atualizadas.",
-    });
-    setInitialState(JSON.stringify({
-      isSiteEnabled, siteTitle, siteHeadline, 
-      aboutUs, instagram, facebook, whatsappLink, externalSite
-    }));
-    setHasChanges(false);
+    try {
+      publicSiteSchema.parse({
+        siteTitle: siteTitle.trim() || undefined,
+        siteHeadline: siteHeadline.trim() || undefined,
+        aboutUs: aboutUs.trim() || undefined,
+        instagram: instagram.trim() || undefined,
+        facebook: facebook.trim() || undefined,
+        whatsappLink: whatsappLink.trim() || undefined,
+        externalSite: externalSite.trim() || undefined,
+      });
+      setErrors({});
+      toast({
+        title: "Configurações salvas!",
+        description: "As configurações do site público foram atualizadas.",
+      });
+      setInitialState(JSON.stringify({
+        isSiteEnabled, siteTitle, siteHeadline,
+        aboutUs, instagram, facebook, whatsappLink, externalSite
+      }));
+      setHasChanges(false);
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        const newErrors: Record<string, string> = {};
+        err.errors.forEach((e) => {
+          if (e.path[0]) {
+            newErrors[e.path[0] as string] = e.message;
+          }
+        });
+        setErrors(newErrors);
+      }
+    }
   };
 
   const siteUrl = `belezeiro.com/studio-julia-alves`;
@@ -136,43 +172,45 @@ export const PublicSiteSettings = () => {
             </div>
             
             <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="site-title">Título principal</Label>
-                <Input
-                  id="site-title"
-                  placeholder="Ex: Studio Julia Alves — Estética Avançada"
-                  value={siteTitle}
-                  onChange={(e) => setSiteTitle(e.target.value)}
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="site-headline">Headline curta</Label>
-                <Textarea
-                  id="site-headline"
-                  placeholder="Uma frase impactante que aparece logo abaixo do título..."
-                  value={siteHeadline}
-                  onChange={(e) => setSiteHeadline(e.target.value)}
-                  rows={2}
-                />
-                <p className="text-xs text-muted-foreground">
-                  Esse é o primeiro texto que o visitante lê após o título. Capriche nas palavras para causar uma boa primeira impressão e mostrar seu diferencial.
-                </p>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="about-us">Sobre nós</Label>
-                <Textarea
-                  id="about-us"
-                  placeholder="Conte a história do seu negócio, sua experiência, diferenciais..."
-                  value={aboutUs}
-                  onChange={(e) => setAboutUs(e.target.value)}
-                  rows={5}
-                />
-                <p className="text-xs text-muted-foreground">
-                  Aqui você pode detalhar mais sobre sua trajetória, equipe, valores e tudo que faz seu trabalho único. Esse texto aparece na seção "Sobre" do seu site.
-                </p>
-              </div>
+              <FormInput
+                label="Título principal"
+                id="site-title"
+                placeholder="Ex: Studio Julia Alves — Estética Avançada"
+                value={siteTitle}
+                onChange={(e) => {
+                  setSiteTitle(e.target.value);
+                  clearError("siteTitle");
+                }}
+                error={errors.siteTitle}
+              />
+
+              <FormTextarea
+                label="Headline curta"
+                id="site-headline"
+                placeholder="Uma frase impactante que aparece logo abaixo do título..."
+                value={siteHeadline}
+                onChange={(e) => {
+                  setSiteHeadline(e.target.value);
+                  clearError("siteHeadline");
+                }}
+                rows={2}
+                error={errors.siteHeadline}
+                hint="Esse é o primeiro texto que o visitante lê após o título. Capriche nas palavras para causar uma boa primeira impressão e mostrar seu diferencial."
+              />
+
+              <FormTextarea
+                label="Sobre nós"
+                id="about-us"
+                placeholder="Conte a história do seu negócio, sua experiência, diferenciais..."
+                value={aboutUs}
+                onChange={(e) => {
+                  setAboutUs(e.target.value);
+                  clearError("aboutUs");
+                }}
+                rows={5}
+                error={errors.aboutUs}
+                hint="Aqui você pode detalhar mais sobre sua trajetória, equipe, valores e tudo que faz seu trabalho único. Esse texto aparece na seção &quot;Sobre&quot; do seu site."
+              />
             </div>
           </div>
 
@@ -200,61 +238,77 @@ export const PublicSiteSettings = () => {
             <h3 className="font-medium text-foreground">Redes Sociais</h3>
             
             <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="instagram" className="flex items-center gap-2">
-                  <Instagram className="h-4 w-4" />
-                  Instagram
-                </Label>
-                <Input
-                  id="instagram"
-                  placeholder="https://instagram.com/seuusuario"
-                  value={instagram}
-                  onChange={(e) => setInstagram(e.target.value)}
-                  disabled={!isPro}
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="facebook" className="flex items-center gap-2">
-                  <Facebook className="h-4 w-4" />
-                  Facebook
-                </Label>
-                <Input
-                  id="facebook"
-                  placeholder="https://facebook.com/suapagina"
-                  value={facebook}
-                  onChange={(e) => setFacebook(e.target.value)}
-                  disabled={!isPro}
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="whatsapp" className="flex items-center gap-2">
-                  <MessageCircle className="h-4 w-4" />
-                  WhatsApp (wa.me)
-                </Label>
-                <Input
-                  id="whatsapp"
-                  placeholder="https://wa.me/5511999999999"
-                  value={whatsappLink}
-                  onChange={(e) => setWhatsappLink(e.target.value)}
-                  disabled={!isPro}
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="external-site" className="flex items-center gap-2">
-                  <Link2 className="h-4 w-4" />
-                  Site externo (opcional)
-                </Label>
-                <Input
-                  id="external-site"
-                  placeholder="https://seusite.com.br"
-                  value={externalSite}
-                  onChange={(e) => setExternalSite(e.target.value)}
-                  disabled={!isPro}
-                />
-              </div>
+              <FormInput
+                label={
+                  <span className="flex items-center gap-2">
+                    <Instagram className="h-4 w-4" />
+                    Instagram
+                  </span>
+                }
+                id="instagram"
+                placeholder="https://instagram.com/seuusuario"
+                value={instagram}
+                onChange={(e) => {
+                  setInstagram(e.target.value);
+                  clearError("instagram");
+                }}
+                disabled={!isPro}
+                error={errors.instagram}
+              />
+
+              <FormInput
+                label={
+                  <span className="flex items-center gap-2">
+                    <Facebook className="h-4 w-4" />
+                    Facebook
+                  </span>
+                }
+                id="facebook"
+                placeholder="https://facebook.com/suapagina"
+                value={facebook}
+                onChange={(e) => {
+                  setFacebook(e.target.value);
+                  clearError("facebook");
+                }}
+                disabled={!isPro}
+                error={errors.facebook}
+              />
+
+              <FormInput
+                label={
+                  <span className="flex items-center gap-2">
+                    <MessageCircle className="h-4 w-4" />
+                    WhatsApp (wa.me)
+                  </span>
+                }
+                id="whatsapp"
+                placeholder="https://wa.me/5511999999999"
+                value={whatsappLink}
+                onChange={(e) => {
+                  setWhatsappLink(e.target.value);
+                  clearError("whatsappLink");
+                }}
+                disabled={!isPro}
+                error={errors.whatsappLink}
+              />
+
+              <FormInput
+                label={
+                  <span className="flex items-center gap-2">
+                    <Link2 className="h-4 w-4" />
+                    Site externo (opcional)
+                  </span>
+                }
+                id="external-site"
+                placeholder="https://seusite.com.br"
+                value={externalSite}
+                onChange={(e) => {
+                  setExternalSite(e.target.value);
+                  clearError("externalSite");
+                }}
+                disabled={!isPro}
+                error={errors.externalSite}
+              />
             </div>
           </div>
 

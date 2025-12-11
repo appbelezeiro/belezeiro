@@ -5,12 +5,14 @@ type UserEntityOwnProps = {
   email: string;
   providerId: string;
   photoUrl?: string;
+  onboardingCompleted: boolean;
 };
 
-type UserEntityCreationProps = UserEntityOwnProps & BaseEntityCreationProps;
-type UserEntityProps = Omit<UserEntityOwnProps, 'photoUrl'> &
-  Pick<UserEntityOwnProps, 'photoUrl'> &
-  BaseEntityProps;
+type UserEntityCreationProps = Omit<UserEntityOwnProps, 'onboardingCompleted'> &
+  Partial<Pick<UserEntityOwnProps, 'onboardingCompleted'>> &
+  BaseEntityCreationProps;
+
+type UserEntityProps = UserEntityOwnProps & BaseEntityProps;
 
 export class UserEntity extends BaseEntity<UserEntityProps> {
   protected prefix(): string {
@@ -18,7 +20,10 @@ export class UserEntity extends BaseEntity<UserEntityProps> {
   }
 
   constructor(props: UserEntityCreationProps) {
-    super(props);
+    super({
+      ...props,
+      onboardingCompleted: props.onboardingCompleted ?? false,
+    });
   }
 
   get name(): string {
@@ -37,6 +42,10 @@ export class UserEntity extends BaseEntity<UserEntityProps> {
     return this.props.photoUrl;
   }
 
+  get onboardingCompleted(): boolean {
+    return this.props.onboardingCompleted;
+  }
+
   update_name(new_name: string): void {
     this.props.name = new_name;
     this.touch();
@@ -49,6 +58,11 @@ export class UserEntity extends BaseEntity<UserEntityProps> {
 
   update_photo_url(new_photo_url: string | undefined): void {
     this.props.photoUrl = new_photo_url;
+    this.touch();
+  }
+
+  complete_onboarding(): void {
+    this.props.onboardingCompleted = true;
     this.touch();
   }
 }

@@ -38,10 +38,13 @@ function processQueue(error: Error | null = null) {
 
 /**
  * Attempt to refresh the access token
+ * Uses publicClient with credentials to send refresh_token cookie
  */
 async function refreshAccessToken(): Promise<void> {
   try {
-    await publicClient.post("/auth/refresh");
+    await publicClient.post("/api/auth/refresh", {}, {
+      withCredentials: true, // Send refresh_token cookie
+    });
   } catch (error) {
     console.error("[Interceptor] Failed to refresh token:", error);
     throw error;

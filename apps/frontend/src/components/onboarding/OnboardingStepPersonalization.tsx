@@ -1,4 +1,4 @@
-import { Palette, Check } from "lucide-react";
+import { Palette, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +10,7 @@ interface OnboardingStepPersonalizationProps {
   onUpdate: (data: Partial<OnboardingFormData>) => void;
   onNext: () => void;
   onBack: () => void;
+  isSubmitting?: boolean;
 }
 
 const presetColors = [
@@ -25,7 +26,7 @@ const presetColors = [
   { name: "Esmeralda", value: "#10b981" },
 ];
 
-export const OnboardingStepPersonalization = ({ data, onUpdate, onNext, onBack }: OnboardingStepPersonalizationProps) => {
+export const OnboardingStepPersonalization = ({ data, onUpdate, onNext, onBack, isSubmitting = false }: OnboardingStepPersonalizationProps) => {
   const handleColorChange = (color: string) => {
     onUpdate({ brandColor: color });
   };
@@ -145,11 +146,18 @@ export const OnboardingStepPersonalization = ({ data, onUpdate, onNext, onBack }
 
       {/* Actions */}
       <div className="flex gap-3 pt-4">
-        <Button variant="outline" onClick={onBack} className="flex-1 h-12">
+        <Button variant="outline" onClick={onBack} disabled={isSubmitting} className="flex-1 h-12">
           Voltar
         </Button>
-        <Button onClick={onNext} className="flex-1 h-12 text-base">
-          Finalizar configuração
+        <Button onClick={onNext} disabled={isSubmitting} className="flex-1 h-12 text-base">
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Salvando...
+            </>
+          ) : (
+            "Finalizar configuração"
+          )}
         </Button>
       </div>
     </div>

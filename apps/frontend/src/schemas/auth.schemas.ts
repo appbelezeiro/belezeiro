@@ -12,6 +12,8 @@ export const userSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email format"),
   photo: z.string().url("Invalid photo URL").optional(),
+  isActive: z.boolean().optional().default(true),
+  onboardingCompleted: z.boolean(),
 });
 
 /**
@@ -29,20 +31,23 @@ export const loginRequestSchema = z.object({
  */
 export const loginResponseSchema = z.object({
   user: userSchema,
+  created: z.boolean().optional(),
+  /** Only present when onboarding is not completed (false means onboarding required) */
+  onboarding: z.boolean().optional(),
 });
 
 /**
  * Refresh token response schema
  */
 export const refreshTokenResponseSchema = z.object({
-  message: z.string(),
+  status: z.string(),
 });
 
 /**
  * Logout response schema
  */
 export const logoutResponseSchema = z.object({
-  message: z.string(),
+  status: z.string(),
 });
 
 /**
@@ -50,6 +55,8 @@ export const logoutResponseSchema = z.object({
  */
 export const meResponseSchema = z.object({
   user: userSchema,
+  /** Only present when onboarding is not completed (false means onboarding required) */
+  onboarding: z.boolean().optional(),
 });
 
 /**

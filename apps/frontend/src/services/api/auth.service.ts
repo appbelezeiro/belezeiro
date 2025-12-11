@@ -28,7 +28,7 @@ import { mapApiUserToUser } from "@/mappers/auth.mappers";
 class AuthService {
   /**
    * Login user with OAuth provider data
-   * Endpoint: POST /auth/login
+   * Endpoint: POST /api/auth/social-login
    * Client: Public (no credentials needed for login)
    */
   async login(request: LoginRequest): Promise<User> {
@@ -37,7 +37,7 @@ class AuthService {
 
     // Make API call - MUST use withCredentials to receive httpOnly cookies
     const response = await publicClient.post<LoginResponse>(
-      "/auth/login",
+      "/api/auth/social-login",
       validatedRequest,
       {
         withCredentials: true, // ✅ Receive accessToken and refreshToken cookies
@@ -51,14 +51,14 @@ class AuthService {
 
   /**
    * Refresh access token using refresh token (from cookie)
-   * Endpoint: POST /auth/refresh
+   * Endpoint: POST /api/auth/refresh
    * Client: Public (refresh token is in httpOnly cookie)
    *
    * Note: Uses publicClient but WITH credentials
    */
   async refreshToken(): Promise<void> {
     const response = await publicClient.post<RefreshTokenResponse>(
-      "/auth/refresh",
+      "/api/auth/refresh",
       {},
       {
         withCredentials: true, // Send refresh token cookie
@@ -71,11 +71,11 @@ class AuthService {
 
   /**
    * Logout current user
-   * Endpoint: POST /auth/logout
+   * Endpoint: POST /api/auth/logout
    * Client: Private (requires access token)
    */
   async logout(): Promise<void> {
-    const response = await privateClient.post<LogoutResponse>("/auth/logout");
+    const response = await privateClient.post<LogoutResponse>("/api/auth/logout");
 
     // Validate response
     validateData(logoutResponseSchema, response.data);
@@ -83,11 +83,11 @@ class AuthService {
 
   /**
    * Get current authenticated user
-   * Endpoint: GET /auth/me
+   * Endpoint: GET /api/auth/me
    * Client: Private (requires access token)
    */
   async getCurrentUser(): Promise<User> {
-    const response = await privateClient.get<MeResponse>("/auth/me");
+    const response = await privateClient.get<MeResponse>("/api/auth/me");
 
     // Validate and map response
     const validatedResponse = validateData(meResponseSchema, response.data);

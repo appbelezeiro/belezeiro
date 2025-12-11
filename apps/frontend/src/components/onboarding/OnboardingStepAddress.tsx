@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { OnboardingFormData } from "@/pages/Onboarding";
+import { FormInput, CepInput } from "@/shared/components/form";
+import { addressStepSchema } from "@/shared/schemas/onboarding.schemas";
+import { type Address } from "@/services/api/cep.service";
+import { formatCep } from "@/services/api/cep.service";
+import { z } from "zod";
 
 interface OnboardingStepAddressProps {
   data: OnboardingFormData;
@@ -13,40 +16,63 @@ interface OnboardingStepAddressProps {
 }
 
 export const OnboardingStepAddress = ({ data, onUpdate, onNext, onBack }: OnboardingStepAddressProps) => {
-  const [isLoadingCep, setIsLoadingCep] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleCepChange = async (cep: string) => {
-    const cleanCep = cep.replace(/\D/g, "");
-    onUpdate({ cep: cleanCep });
+  const clearError = (field: string) => {
+    if (errors[field]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  };
 
-    if (cleanCep.length === 8) {
-      setIsLoadingCep(true);
-      try {
-        const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`);
-        const result = await response.json();
-        if (!result.erro) {
-          onUpdate({
-            street: result.logradouro || "",
-            neighborhood: result.bairro || "",
-            city: result.localidade || "",
-            state: result.uf || "",
-          });
-        }
-      } catch (error) {
-        console.error("Erro ao buscar CEP:", error);
-      } finally {
-        setIsLoadingCep(false);
+  const handleAddressFound = (address: Address) => {
+    onUpdate({
+      street: address.street,
+      neighborhood: address.neighborhood,
+      city: address.city,
+      state: address.state,
+    });
+    // Clear related errors
+    setErrors((prev) => {
+      const newErrors = { ...prev };
+      delete newErrors.street;
+      delete newErrors.neighborhood;
+      delete newErrors.city;
+      delete newErrors.state;
+      return newErrors;
+    });
+  };
+
+  const handleNext = () => {
+    try {
+      addressStepSchema.parse({
+        cep: formatCep(data.cep),
+        street: data.street,
+        number: data.number,
+        complement: data.complement,
+        neighborhood: data.neighborhood,
+        city: data.city,
+        state: data.state,
+      });
+      setErrors({});
+      onNext();
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        const newErrors: Record<string, string> = {};
+        err.errors.forEach((e) => {
+          if (e.path[0]) {
+            newErrors[e.path[0] as string] = e.message;
+          }
+        });
+        setErrors(newErrors);
       }
     }
   };
 
-  const formatCep = (value: string) => {
-    const clean = value.replace(/\D/g, "");
-    if (clean.length <= 5) return clean;
-    return `${clean.slice(0, 5)}-${clean.slice(5, 8)}`;
-  };
-
-  const isValid = data.cep.length === 8 && data.number && data.street;
+  const isValid = data.cep.replace(/\D/g, "").length === 8 && data.number && data.street;
 
   return (
     <div className="space-y-8">
@@ -66,86 +92,89 @@ export const OnboardingStepAddress = ({ data, onUpdate, onNext, onBack }: Onboar
       {/* Form */}
       <div className="space-y-4">
         {/* CEP */}
-        <div className="space-y-2">
-          <Label htmlFor="cep">CEP</Label>
-          <Input
-            id="cep"
-            placeholder="00000-000"
-            value={formatCep(data.cep)}
-            onChange={(e) => handleCepChange(e.target.value)}
-            maxLength={9}
-            className={isLoadingCep ? "animate-pulse" : ""}
-          />
-        </div>
+        <CepInput
+          label="CEP"
+          value={formatCep(data.cep)}
+          onValueChange={(value) => {
+            onUpdate({ cep: value.replace(/\D/g, "") });
+            clearError("cep");
+          }}
+          onAddressFound={handleAddressFound}
+          error={errors.cep}
+        />
 
         {/* Street */}
-        <div className="space-y-2">
-          <Label htmlFor="street">Rua</Label>
-          <Input
-            id="street"
-            placeholder="Nome da rua"
-            value={data.street}
-            onChange={(e) => onUpdate({ street: e.target.value })}
-            disabled={isLoadingCep}
-          />
-        </div>
+        <FormInput
+          label="Rua"
+          placeholder="Nome da rua"
+          value={data.street}
+          onChange={(e) => {
+            onUpdate({ street: e.target.value });
+            clearError("street");
+          }}
+          error={errors.street}
+        />
 
         {/* Number and Complement */}
         <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="number">Número *</Label>
-            <Input
-              id="number"
-              placeholder="123"
-              value={data.number}
-              onChange={(e) => onUpdate({ number: e.target.value })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="complement">Complemento</Label>
-            <Input
-              id="complement"
-              placeholder="Sala 101"
-              value={data.complement}
-              onChange={(e) => onUpdate({ complement: e.target.value })}
-            />
-          </div>
+          <FormInput
+            label="Número *"
+            placeholder="123"
+            value={data.number}
+            onChange={(e) => {
+              onUpdate({ number: e.target.value });
+              clearError("number");
+            }}
+            error={errors.number}
+          />
+          <FormInput
+            label="Complemento"
+            placeholder="Sala 101"
+            value={data.complement}
+            onChange={(e) => {
+              onUpdate({ complement: e.target.value });
+              clearError("complement");
+            }}
+            error={errors.complement}
+          />
         </div>
 
         {/* Neighborhood and City */}
         <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="neighborhood">Bairro</Label>
-            <Input
-              id="neighborhood"
-              placeholder="Bairro"
-              value={data.neighborhood}
-              onChange={(e) => onUpdate({ neighborhood: e.target.value })}
-              disabled={isLoadingCep}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="city">Cidade</Label>
-            <Input
-              id="city"
-              placeholder="Cidade"
-              value={data.city}
-              onChange={(e) => onUpdate({ city: e.target.value })}
-              disabled={isLoadingCep}
-            />
-          </div>
+          <FormInput
+            label="Bairro"
+            placeholder="Bairro"
+            value={data.neighborhood}
+            onChange={(e) => {
+              onUpdate({ neighborhood: e.target.value });
+              clearError("neighborhood");
+            }}
+            error={errors.neighborhood}
+          />
+          <FormInput
+            label="Cidade"
+            placeholder="Cidade"
+            value={data.city}
+            onChange={(e) => {
+              onUpdate({ city: e.target.value });
+              clearError("city");
+            }}
+            error={errors.city}
+          />
         </div>
 
         {/* State */}
-        <div className="space-y-2 max-w-[100px]">
-          <Label htmlFor="state">Estado</Label>
-          <Input
-            id="state"
+        <div className="max-w-[100px]">
+          <FormInput
+            label="Estado"
             placeholder="UF"
             value={data.state}
-            onChange={(e) => onUpdate({ state: e.target.value })}
-            disabled={isLoadingCep}
+            onChange={(e) => {
+              onUpdate({ state: e.target.value.toUpperCase() });
+              clearError("state");
+            }}
             maxLength={2}
+            error={errors.state}
           />
         </div>
       </div>
@@ -156,7 +185,7 @@ export const OnboardingStepAddress = ({ data, onUpdate, onNext, onBack }: Onboar
           Voltar
         </Button>
         <Button
-          onClick={onNext}
+          onClick={handleNext}
           disabled={!isValid}
           className="flex-1 h-12 text-base"
         >

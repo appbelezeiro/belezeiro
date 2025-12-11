@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { GoogleIcon } from "@/components/GoogleIcon";
+import { FormInput, PhoneInput } from "@/shared/components/form";
+import { personalProfileSchema } from "@/shared/schemas/settings.schemas";
+import { z } from "zod";
 
 export const PersonalProfileSettings = () => {
   const { toast } = useToast();
@@ -14,12 +15,40 @@ export const PersonalProfileSettings = () => {
     email: "joao.silva@gmail.com",
     phone: "(11) 99999-9999",
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const clearError = (field: string) => {
+    if (errors[field]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  };
 
   const handleSave = () => {
-    toast({
-      title: "Alterações salvas",
-      description: "Seu perfil foi atualizado com sucesso.",
-    });
+    try {
+      personalProfileSchema.parse({
+        name: formData.name.trim(),
+        phone: formData.phone || undefined,
+      });
+      setErrors({});
+      toast({
+        title: "Alterações salvas",
+        description: "Seu perfil foi atualizado com sucesso.",
+      });
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        const newErrors: Record<string, string> = {};
+        err.errors.forEach((e) => {
+          if (e.path[0]) {
+            newErrors[e.path[0] as string] = e.message;
+          }
+        });
+        setErrors(newErrors);
+      }
+    }
   };
 
   return (
@@ -50,20 +79,20 @@ export const PersonalProfileSettings = () => {
 
       {/* Form Fields */}
       <div className="space-y-5">
-        <div className="space-y-2">
-          <Label htmlFor="name">Nome completo</Label>
-          <Input
-            id="name"
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            placeholder="Seu nome completo"
-          />
-        </div>
+        <FormInput
+          label="Nome completo"
+          value={formData.name}
+          onChange={(e) => {
+            setFormData({ ...formData, name: e.target.value });
+            clearError("name");
+          }}
+          placeholder="Seu nome completo"
+          error={errors.name}
+        />
 
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
+          <FormInput
+            label="Email"
             type="email"
             value={formData.email}
             disabled
@@ -74,16 +103,15 @@ export const PersonalProfileSettings = () => {
           </p>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="phone">Telefone</Label>
-          <Input
-            id="phone"
-            type="tel"
-            value={formData.phone}
-            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            placeholder="(00) 00000-0000"
-          />
-        </div>
+        <PhoneInput
+          label="Telefone"
+          value={formData.phone}
+          onValueChange={(value) => {
+            setFormData({ ...formData, phone: value });
+            clearError("phone");
+          }}
+          error={errors.phone}
+        />
       </div>
 
       {/* Connection Method */}

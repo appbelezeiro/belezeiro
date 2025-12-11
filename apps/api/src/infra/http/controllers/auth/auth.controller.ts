@@ -54,12 +54,22 @@ export class AuthController {
 
       const status = result.is_new_user ? 201 : 200;
 
-      return c.json(
-        {
-          status: 'Logged successful',
-        },
-        status,
-      );
+      // Build response - only include onboarding: false when user hasn't completed it
+      const response: {
+        user: ReturnType<typeof UserMapper.toAuth>;
+        created: boolean;
+        onboarding?: boolean;
+      } = {
+        user: UserMapper.toAuth(result.user),
+        created: result.is_new_user,
+      };
+
+      // Only return onboarding: false when user needs to complete onboarding
+      if (!result.user.onboardingCompleted) {
+        response.onboarding = false;
+      }
+
+      return c.json(response, status);
     } catch (error) {
       if (error instanceof EmailAlreadyExistsError) {
         throw new ConflictError(error.message);
@@ -132,7 +142,19 @@ export class AuthController {
         user_id: auth.userId,
       });
 
-      return c.json(UserMapper.toProfile(user), 200);
+      // Build response - only include onboarding: false when user hasn't completed it
+      const response: {
+        user: ReturnType<typeof UserMapper.toAuth>;
+        onboarding?: boolean;
+      } = {
+        user: UserMapper.toAuth(user),
+      };
+
+      if (!user.onboardingCompleted) {
+        response.onboarding = false;
+      }
+
+      return c.json(response, 200);
     } catch (error) {
       if (error instanceof UserNotFoundError) {
         throw new NotFoundError(error.message);

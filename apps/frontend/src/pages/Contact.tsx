@@ -2,15 +2,12 @@ import { LandingHeader } from "@/components/landing/LandingHeader";
 import { LandingFooter } from "@/components/landing/LandingFooter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { 
-  Mail, 
-  MessageSquare, 
-  Phone, 
-  MapPin, 
-  Clock, 
+import {
+  Mail,
+  MessageSquare,
+  Phone,
+  MapPin,
+  Clock,
   Send,
   HelpCircle,
   Headphones,
@@ -22,6 +19,9 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { FormInput, FormTextarea, PhoneInput } from "@/shared/components/form";
+import { contactFormSchema } from "@/shared/schemas/contact.schemas";
+import { z } from "zod";
 
 const contactInfo = [
   {
@@ -98,18 +98,50 @@ const Contact = () => {
     subject: "",
     message: ""
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const clearError = (field: string) => {
+    if (errors[field]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Mensagem enviada!",
-      description: "Entraremos em contato em breve. Obrigado!",
-    });
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    try {
+      contactFormSchema.parse({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone || undefined,
+        subject: formData.subject.trim(),
+        message: formData.message.trim(),
+      });
+      setErrors({});
+      toast({
+        title: "Mensagem enviada!",
+        description: "Entraremos em contato em breve. Obrigado!",
+      });
+      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        const newErrors: Record<string, string> = {};
+        err.errors.forEach((e) => {
+          if (e.path[0]) {
+            newErrors[e.path[0] as string] = e.message;
+          }
+        });
+        setErrors(newErrors);
+      }
+    }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    clearError(field);
   };
 
   return (
@@ -168,67 +200,47 @@ const Contact = () => {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Nome completo</Label>
-                      <Input 
-                        id="name" 
-                        name="name"
-                        placeholder="Seu nome" 
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">E-mail</Label>
-                      <Input 
-                        id="email" 
-                        name="email"
-                        type="email" 
-                        placeholder="seu@email.com" 
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
+                    <FormInput
+                      label="Nome completo"
+                      placeholder="Seu nome"
+                      value={formData.name}
+                      onChange={(e) => handleChange("name", e.target.value)}
+                      error={errors.name}
+                    />
+                    <FormInput
+                      label="E-mail"
+                      type="email"
+                      placeholder="seu@email.com"
+                      value={formData.email}
+                      onChange={(e) => handleChange("email", e.target.value)}
+                      error={errors.email}
+                    />
                   </div>
 
                   <div className="grid sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Telefone (opcional)</Label>
-                      <Input 
-                        id="phone" 
-                        name="phone"
-                        placeholder="(00) 00000-0000" 
-                        value={formData.phone}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="subject">Assunto</Label>
-                      <Input 
-                        id="subject" 
-                        name="subject"
-                        placeholder="Como podemos ajudar?" 
-                        value={formData.subject}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Mensagem</Label>
-                    <Textarea 
-                      id="message" 
-                      name="message"
-                      placeholder="Descreva sua dúvida ou mensagem..." 
-                      className="min-h-[150px]"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
+                    <PhoneInput
+                      label="Telefone (opcional)"
+                      value={formData.phone}
+                      onValueChange={(value) => handleChange("phone", value)}
+                      error={errors.phone}
+                    />
+                    <FormInput
+                      label="Assunto"
+                      placeholder="Como podemos ajudar?"
+                      value={formData.subject}
+                      onChange={(e) => handleChange("subject", e.target.value)}
+                      error={errors.subject}
                     />
                   </div>
+
+                  <FormTextarea
+                    label="Mensagem"
+                    placeholder="Descreva sua dúvida ou mensagem..."
+                    className="min-h-[150px]"
+                    value={formData.message}
+                    onChange={(e) => handleChange("message", e.target.value)}
+                    error={errors.message}
+                  />
 
                   <Button type="submit" size="lg" className="w-full gap-2">
                     <Send className="w-4 h-4" />

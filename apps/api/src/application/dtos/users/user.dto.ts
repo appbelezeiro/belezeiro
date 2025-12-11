@@ -11,3 +11,16 @@ export interface UserProfileDTO {
   name: string;
   photoUrl?: string;
 }
+
+/**
+ * User data for auth responses (login, /me endpoint)
+ * Format matches frontend User type expectations
+ */
+export interface UserAuthDTO {
+  id: string;
+  name: string;
+  email: string;
+  photo?: string;
+  isActive: boolean;
+  onboardingCompleted: boolean;
+}

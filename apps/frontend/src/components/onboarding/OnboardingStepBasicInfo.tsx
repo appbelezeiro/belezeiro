@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Upload, X, Plus, Phone, Building2, Store, Lock, Eye, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { OnboardingFormData } from "@/pages/Onboarding";
 import { cn } from "@/lib/utils";
+import { FormInput, PhoneInput } from "@/shared/components/form";
+import { basicInfoSchema, onboardingErrors } from "@/shared/schemas/onboarding.schemas";
+import { z } from "zod";
 
 interface OnboardingStepBasicInfoProps {
   data: OnboardingFormData;
@@ -13,6 +15,8 @@ interface OnboardingStepBasicInfoProps {
 }
 
 export const OnboardingStepBasicInfo = ({ data, onUpdate, onNext }: OnboardingStepBasicInfoProps) => {
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -47,6 +51,41 @@ export const OnboardingStepBasicInfo = ({ data, onUpdate, onNext }: OnboardingSt
     onUpdate({ gallery: newGallery });
   };
 
+  const clearError = (field: string) => {
+    if (errors[field]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  };
+
+  const handleNext = () => {
+    try {
+      basicInfoSchema.parse({
+        businessName: data.businessName,
+        unitName: data.unitName,
+        logo: data.logo,
+        gallery: data.gallery,
+        whatsapp: data.whatsapp,
+        phone: data.phone,
+      });
+      setErrors({});
+      onNext();
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        const newErrors: Record<string, string> = {};
+        err.errors.forEach((e) => {
+          if (e.path[0]) {
+            newErrors[e.path[0] as string] = e.message;
+          }
+        });
+        setErrors(newErrors);
+      }
+    }
+  };
+
   const isValid = data.businessName && data.unitName && data.whatsapp;
 
   return (
@@ -77,11 +116,15 @@ export const OnboardingStepBasicInfo = ({ data, onUpdate, onNext }: OnboardingSt
               </p>
             </div>
           </div>
-          <Input
+          <FormInput
             placeholder="Ex: Meu Salão de Beleza"
             value={data.businessName}
-            onChange={(e) => onUpdate({ businessName: e.target.value })}
+            onChange={(e) => {
+              onUpdate({ businessName: e.target.value });
+              clearError("businessName");
+            }}
             className="h-12"
+            error={errors.businessName}
           />
         </div>
 
@@ -131,14 +174,17 @@ export const OnboardingStepBasicInfo = ({ data, onUpdate, onNext }: OnboardingSt
             </div>
 
             {/* Unit Name */}
-            <div className="flex-1 space-y-2">
-              <Label htmlFor="unitName">Nome da unidade</Label>
-              <Input
-                id="unitName"
+            <div className="flex-1">
+              <FormInput
+                label="Nome da unidade"
                 placeholder="Ex: Unidade Jardins"
                 value={data.unitName}
-                onChange={(e) => onUpdate({ unitName: e.target.value })}
+                onChange={(e) => {
+                  onUpdate({ unitName: e.target.value });
+                  clearError("unitName");
+                }}
                 className="h-12"
+                error={errors.unitName}
               />
             </div>
           </div>
@@ -157,7 +203,7 @@ export const OnboardingStepBasicInfo = ({ data, onUpdate, onNext }: OnboardingSt
           <p className="text-sm text-muted-foreground">
             Adicione fotos do ambiente, atendimentos, serviços e mais
           </p>
-          
+
           <div className="grid grid-cols-4 sm:grid-cols-5 gap-2 mt-3">
             {(data.gallery || []).map((img, index) => (
               <div key={index} className="relative aspect-square rounded-lg overflow-hidden group">
@@ -174,7 +220,7 @@ export const OnboardingStepBasicInfo = ({ data, onUpdate, onNext }: OnboardingSt
                 </button>
               </div>
             ))}
-            
+
             <div
               className={cn(
                 "relative aspect-square border-2 border-dashed rounded-lg transition-colors cursor-pointer hover:border-primary/50 flex flex-col items-center justify-center gap-1",
@@ -201,27 +247,31 @@ export const OnboardingStepBasicInfo = ({ data, onUpdate, onNext }: OnboardingSt
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="whatsapp">WhatsApp *</Label>
-              <Input
-                id="whatsapp"
-                placeholder="(11) 99999-9999"
+            <div>
+              <PhoneInput
+                label="WhatsApp *"
                 value={data.whatsapp}
-                onChange={(e) => onUpdate({ whatsapp: e.target.value })}
+                onValueChange={(value) => {
+                  onUpdate({ whatsapp: value });
+                  clearError("whatsapp");
+                }}
+                error={errors.whatsapp}
               />
-              <p className="text-xs text-muted-foreground">
+              <p className="mt-1 text-xs text-muted-foreground">
                 Principal meio de contato
               </p>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="phone">Telefone secundário</Label>
-              <Input
-                id="phone"
-                placeholder="(11) 3333-4444"
+            <div>
+              <PhoneInput
+                label="Telefone secundário"
                 value={data.phone}
-                onChange={(e) => onUpdate({ phone: e.target.value })}
+                onValueChange={(value) => {
+                  onUpdate({ phone: value });
+                  clearError("phone");
+                }}
+                error={errors.phone}
               />
-              <p className="text-xs text-muted-foreground">
+              <p className="mt-1 text-xs text-muted-foreground">
                 Opcional - fixo ou celular
               </p>
             </div>
@@ -232,7 +282,7 @@ export const OnboardingStepBasicInfo = ({ data, onUpdate, onNext }: OnboardingSt
       {/* Actions */}
       <div className="pt-4">
         <Button
-          onClick={onNext}
+          onClick={handleNext}
           disabled={!isValid}
           className="w-full h-12 text-base"
         >

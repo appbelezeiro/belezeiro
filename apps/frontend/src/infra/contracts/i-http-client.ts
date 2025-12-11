@@ -29,6 +29,7 @@ export interface HttpError extends Error {
   response?: HttpResponse;
   isNetworkError?: boolean;
   isTimeoutError?: boolean;
+  cause?: unknown;
 }
 
 /**

@@ -1,5 +1,5 @@
 import { UserEntity } from '@/domain/entities/users/user.entity';
-import { UserDTO, UserProfileDTO } from '../../users/user.dto';
+import { UserDTO, UserProfileDTO, UserAuthDTO } from '../../users/user.dto';
 
 export class UserMapper {
   static toDTO(entity: UserEntity): UserDTO {
@@ -17,6 +17,21 @@ export class UserMapper {
       email: entity.email,
       name: entity.name,
       photoUrl: entity.photoUrl,
+    };
+  }
+
+  /**
+   * Returns user data formatted for auth responses (login, /me endpoint)
+   * This format matches the frontend User type expectations
+   */
+  static toAuth(entity: UserEntity): UserAuthDTO {
+    return {
+      id: entity.id,
+      name: entity.name,
+      email: entity.email,
+      photo: entity.photoUrl,
+      isActive: true, // Users that exist are considered active
+      onboardingCompleted: entity.onboardingCompleted,
     };
   }
 
