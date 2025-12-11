@@ -10,6 +10,7 @@ import {
   MAX_PAGINATION_LIMIT,
 } from '@/application/types/cursor-pagination.types';
 import { encodeCursor, decodeCursor } from '@/application/utils/cursor.util';
+import { fuzzySearchMatch } from '@/application/utils/fuzzy-search.util';
 
 export class InMemoryAmenityRepository implements IAmenityRepository {
   private items: AmenityPersistence[] = [];
@@ -106,15 +107,23 @@ export class InMemoryAmenityRepository implements IAmenityRepository {
     limit: number = DEFAULT_PAGINATION_LIMIT
   ): Promise<CursorPaginatedResponse<AmenityEntity>> {
     const validLimit = Math.min(limit, MAX_PAGINATION_LIMIT);
-    const lowerQuery = query.toLowerCase();
 
-    let filtered = this.items
-      .filter(
-        (item) =>
-          item.name.toLowerCase().includes(lowerQuery) ||
-          item.description?.toLowerCase().includes(lowerQuery)
-      )
-      .sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
+    // Use fuzzy search to find matches with scores
+    const itemsWithScores = this.items
+      .map((item) => {
+        const result = fuzzySearchMatch(query, item.name, item.description);
+        return { item, ...result };
+      })
+      .filter((entry) => entry.matches)
+      // Sort by score (best matches first), then by created_at
+      .sort((a, b) => {
+        if (b.score !== a.score) {
+          return b.score - a.score;
+        }
+        return b.item.created_at.getTime() - a.item.created_at.getTime();
+      });
+
+    let filtered = itemsWithScores.map((entry) => entry.item);
 
     if (cursor) {
       const decoded = decodeCursor(cursor);

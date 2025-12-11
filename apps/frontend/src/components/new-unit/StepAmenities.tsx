@@ -1,13 +1,14 @@
 import { useState, useMemo } from "react";
 import * as LucideIcons from "lucide-react";
-import { Search, Loader2, AlertCircle } from "lucide-react";
+import { Search, Loader2, AlertCircle, SearchX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { UnitFormData } from "@/pages/NewUnit";
 import { cn } from "@/lib/utils";
-import { useAmenities } from "@/features/amenities";
+import { useAmenities, useSearchAmenities } from "@/features/amenities";
 import { CreateAmenityDialog } from "@/features/amenities/components/CreateAmenityDialog";
+import { useDebounce } from "@/shared/hooks";
 
 interface StepAmenitiesProps {
   data: UnitFormData;
@@ -45,25 +46,43 @@ export const StepAmenities = ({
   onBack,
 }: StepAmenitiesProps) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300);
 
-  // Fetch amenities from API
-  const { data: amenitiesData, isLoading, isError } = useAmenities({ limit: 100 });
+  // Determine if we should use search or list
+  const isSearching = debouncedSearchQuery.length > 0;
 
-  // Flatten all pages of amenities
-  const allAmenities = useMemo(() => {
-    if (!amenitiesData?.pages) return [];
-    return amenitiesData.pages.flatMap(page => page.items);
-  }, [amenitiesData]);
+  // Fetch all amenities (when not searching)
+  const {
+    data: amenitiesData,
+    isLoading: isLoadingAll,
+    isError: isErrorAll,
+    error: errorAll,
+  } = useAmenities({ limit: 100, enabled: !isSearching });
 
-  // Filter amenities by search query
-  const filteredAmenities = useMemo(() => {
-    if (!searchQuery.trim()) return allAmenities;
-    const query = searchQuery.toLowerCase();
-    return allAmenities.filter(amenity =>
-      amenity.name.toLowerCase().includes(query) ||
-      amenity.description?.toLowerCase().includes(query)
-    );
-  }, [allAmenities, searchQuery]);
+  // Search amenities (when searching)
+  const {
+    data: searchData,
+    isLoading: isLoadingSearch,
+    isFetching: isFetchingSearch,
+    isError: isErrorSearch,
+    error: errorSearch,
+  } = useSearchAmenities(debouncedSearchQuery, {
+    limit: 100,
+    enabled: isSearching,
+  });
+
+  // Determine loading and error states
+  const isLoading = isSearching ? isLoadingSearch : isLoadingAll;
+  const isSearchLoading = isSearching && isFetchingSearch;
+  const isError = isSearching ? isErrorSearch : isErrorAll;
+  const error = isSearching ? errorSearch : errorAll;
+
+  // Flatten amenities from all pages
+  const amenities = useMemo(() => {
+    const sourceData = isSearching ? searchData : amenitiesData;
+    if (!sourceData?.pages) return [];
+    return sourceData.pages.flatMap((page) => page.items);
+  }, [isSearching, searchData, amenitiesData]);
 
   const toggleAmenity = (amenityId: string) => {
     const isSelected = data.amenities.includes(amenityId);
@@ -74,15 +93,28 @@ export const StepAmenities = ({
     }
   };
 
+  // Handler for when a new amenity is created - auto-select it
+  const handleAmenityCreated = (amenityId: string) => {
+    if (!data.amenities.includes(amenityId)) {
+      onUpdate({ amenities: [...data.amenities, amenityId] });
+    }
+  };
+
+  // Get error message
+  const getErrorMessage = () => {
+    if (error?.message) {
+      return error.message;
+    }
+    return "Erro ao carregar comodidades. Tente novamente.";
+  };
+
   return (
     <div className="space-y-8">
       {/* Title */}
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold text-foreground">
-          Comodidades
-        </h2>
+        <h2 className="text-2xl font-bold text-foreground">Comodidades</h2>
         <p className="text-muted-foreground">
-          Quais comodidades esta unidade oferece aos clientes?
+          Selecione as comodidades oferecidas na sua unidade
         </p>
       </div>
 
@@ -94,42 +126,79 @@ export const StepAmenities = ({
             placeholder="Buscar comodidades..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9"
+            className="pl-9 pr-9"
           />
+          {/* Search loading indicator inside input */}
+          {isSearchLoading && (
+            <Loader2 className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 animate-spin text-muted-foreground" />
+          )}
         </div>
-        <CreateAmenityDialog />
+        <CreateAmenityDialog onAmenityCreated={handleAmenityCreated} />
       </div>
 
-      {/* Loading State */}
-      {isLoading && (
-        <div className="flex items-center justify-center py-12">
+      {/* Initial Loading State */}
+      {isLoading && !isSearchLoading && (
+        <div className="flex flex-col items-center justify-center py-12 gap-3">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <p className="text-sm text-muted-foreground">
+            Carregando comodidades...
+          </p>
         </div>
       )}
 
       {/* Error State */}
       {isError && (
-        <div className="flex items-center justify-center gap-2 py-12 text-destructive">
-          <AlertCircle className="h-5 w-5" />
-          <p>Erro ao carregar comodidades. Tente novamente.</p>
+        <div className="flex flex-col items-center justify-center gap-3 py-12">
+          <div className="w-12 h-12 rounded-full bg-destructive/10 flex items-center justify-center">
+            <AlertCircle className="h-6 w-6 text-destructive" />
+          </div>
+          <div className="text-center">
+            <p className="font-medium text-destructive">
+              Erro ao carregar comodidades
+            </p>
+            <p className="text-sm text-muted-foreground mt-1">
+              {getErrorMessage()}
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => window.location.reload()}
+            className="mt-2"
+          >
+            Tentar novamente
+          </Button>
         </div>
       )}
 
       {/* Amenities Grid */}
       {!isLoading && !isError && (
         <>
-          {filteredAmenities.length === 0 ? (
-            <div className="text-center py-12 text-muted-foreground">
-              <p>Nenhuma comodidade encontrada.</p>
-              {searchQuery && (
-                <p className="text-sm mt-2">
-                  Tente buscar com outros termos ou crie uma nova comodidade.
+          {amenities.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 gap-3">
+              <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+                <SearchX className="h-6 w-6 text-muted-foreground" />
+              </div>
+              <div className="text-center">
+                <p className="font-medium text-foreground">
+                  Nenhuma comodidade encontrada
                 </p>
-              )}
+                {searchQuery ? (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Não encontramos resultados para "{searchQuery}".
+                    <br />
+                    Tente buscar com outros termos ou crie uma nova comodidade.
+                  </p>
+                ) : (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Crie a primeira comodidade para sua unidade.
+                  </p>
+                )}
+              </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {filteredAmenities.map((amenity) => {
+              {amenities.map((amenity) => {
                 const isSelected = data.amenities.includes(amenity.id);
                 const IconComponent = getIconComponent(amenity.icon);
 
@@ -138,13 +207,13 @@ export const StepAmenities = ({
                     key={amenity.id}
                     onClick={() => toggleAmenity(amenity.id)}
                     className={cn(
-                      "flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all",
+                      "flex items-start justify-between p-4 rounded-xl border-2 cursor-pointer transition-all",
                       isSelected
                         ? "border-primary bg-primary/5"
                         : "border-border hover:border-primary/30"
                     )}
                   >
-                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <div className="flex items-start gap-3 flex-1 min-w-0">
                       <div
                         className={cn(
                           "w-10 h-10 rounded-lg flex items-center justify-center transition-colors shrink-0",
@@ -161,14 +230,14 @@ export const StepAmenities = ({
                       <div className="flex-1 min-w-0">
                         <span
                           className={cn(
-                            "font-medium transition-colors block truncate",
+                            "font-medium transition-colors block",
                             isSelected ? "text-foreground" : "text-muted-foreground"
                           )}
                         >
                           {amenity.name}
                         </span>
                         {amenity.description && (
-                          <span className="text-xs text-muted-foreground block truncate">
+                          <span className="text-xs text-muted-foreground block line-clamp-3 mt-0.5">
                             {amenity.description}
                           </span>
                         )}
@@ -177,6 +246,7 @@ export const StepAmenities = ({
                     <Switch
                       checked={isSelected}
                       onCheckedChange={() => toggleAmenity(amenity.id)}
+                      className="shrink-0 ml-2"
                     />
                   </div>
                 );

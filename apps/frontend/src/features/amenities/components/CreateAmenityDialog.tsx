@@ -52,9 +52,10 @@ function slugify(text: string): string {
 
 interface CreateAmenityDialogProps {
   trigger?: React.ReactNode;
+  onAmenityCreated?: (amenityId: string) => void;
 }
 
-export const CreateAmenityDialog = ({ trigger }: CreateAmenityDialogProps) => {
+export const CreateAmenityDialog = ({ trigger, onAmenityCreated }: CreateAmenityDialogProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -98,7 +99,7 @@ export const CreateAmenityDialog = ({ trigger }: CreateAmenityDialogProps) => {
 
     try {
       const code = slugify(name);
-      await createAmenity.mutateAsync({
+      const createdAmenity = await createAmenity.mutateAsync({
         code,
         name: name.trim(),
         description: description.trim() || undefined,
@@ -109,6 +110,11 @@ export const CreateAmenityDialog = ({ trigger }: CreateAmenityDialogProps) => {
         title: "Comodidade criada",
         description: "A nova comodidade foi criada com sucesso.",
       });
+
+      // Call the callback to auto-select the new amenity
+      if (onAmenityCreated && createdAmenity?.id) {
+        onAmenityCreated(createdAmenity.id);
+      }
 
       resetForm();
       setIsOpen(false);
