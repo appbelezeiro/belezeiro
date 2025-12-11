@@ -7,6 +7,7 @@ import { useGoogleLogin as useGoogleOAuthLogin } from '@react-oauth/google';
 import { getGoogleOAuthService } from '../api';
 import { useLogin } from './mutations/useLogin';
 import type { UseLoginOptions } from './mutations/useLogin';
+import { toast } from '@/shared/lib/toast';
 
 /**
  * Estado do login com Google
@@ -62,9 +63,14 @@ export function useGoogleLogin(options: UseGoogleLoginOptions = {}) {
 
         setState({ isLoading: false, error: null });
       } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Erro no login';
         setState({
           isLoading: false,
           error: error instanceof Error ? error : new Error('Erro no login'),
+        });
+        toast.error({
+          title: 'Erro no login',
+          description: errorMessage,
         });
       }
     },
@@ -80,6 +86,10 @@ export function useGoogleLogin(options: UseGoogleLoginOptions = {}) {
       setState({
         isLoading: false,
         error: new Error(errorMessage),
+      });
+      toast.error({
+        title: 'Erro no login',
+        description: errorMessage,
       });
     },
     []

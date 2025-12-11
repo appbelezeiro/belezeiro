@@ -105,7 +105,7 @@ const OnboardingSuccess = () => {
   const navigate = useNavigate();
 
   const handleGoToDashboard = () => {
-    navigate("/");
+    navigate("/dashboard");
   };
 
   return (

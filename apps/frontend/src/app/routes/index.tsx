@@ -99,7 +99,7 @@ export function AppRoutes() {
         <Route
           path="/bem-vindo"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requireOnboarding={false}>
               <WelcomePage />
             </ProtectedRoute>
           }
@@ -107,7 +107,7 @@ export function AppRoutes() {
         <Route
           path="/onboarding"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requireOnboarding={false}>
               <OnboardingPage />
             </ProtectedRoute>
           }
@@ -115,7 +115,7 @@ export function AppRoutes() {
         <Route
           path="/onboarding/plans"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requireOnboarding={false}>
               <OnboardingPlansPage />
             </ProtectedRoute>
           }
@@ -123,7 +123,7 @@ export function AppRoutes() {
         <Route
           path="/onboarding/success"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requireOnboarding={false}>
               <OnboardingSuccessPage />
             </ProtectedRoute>
           }

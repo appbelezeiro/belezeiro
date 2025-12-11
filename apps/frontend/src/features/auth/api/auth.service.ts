@@ -53,10 +53,13 @@ export class AuthService {
 
   /**
    * Busca dados do usuário autenticado
+   * Usa publicClient (sem auth-interceptor) para evitar loop de refresh
+   * quando o usuário não está autenticado
    */
   async getCurrentUser(): Promise<User> {
-    const response = await this.privateClient.get<MeResponse>(
-      API_ENDPOINTS.AUTH.ME
+    const response = await this.publicClient.get<MeResponse>(
+      API_ENDPOINTS.AUTH.ME,
+      { withCredentials: true }
     );
 
     const validatedResponse = meResponseSchema.parse(response.data);

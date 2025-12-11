@@ -10,6 +10,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { Toaster as Sonner } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import { AppProvider } from '@/contexts/AppContext';
 
 interface AppProvidersProps {
   children: ReactNode;
@@ -25,13 +26,15 @@ export function AppProviders({ children }: AppProvidersProps) {
   return (
     <QueryProvider>
       <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-        <ThemeProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>{children}</BrowserRouter>
-          </TooltipProvider>
-        </ThemeProvider>
+        <AppProvider>
+          <ThemeProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>{children}</BrowserRouter>
+            </TooltipProvider>
+          </ThemeProvider>
+        </AppProvider>
       </GoogleOAuthProvider>
     </QueryProvider>
   );

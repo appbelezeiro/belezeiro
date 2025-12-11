@@ -12,7 +12,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useAuth } from "@/contexts/AuthContext";
+import { useCurrentUser, useLogout } from "@/features/auth";
 
 function getInitials(name: string): string {
   if (!name) return "?";
@@ -25,11 +25,11 @@ function getInitials(name: string): string {
 
 export function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const isMobile = useIsMobile();
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
-  const { user, logout } = useAuth();
+  const { data: user } = useCurrentUser();
+  const logoutMutation = useLogout();
 
   const userName = user?.name ?? "Usuário";
   const userPhoto = user?.photo ?? "";
@@ -39,14 +39,11 @@ export function UserMenu() {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
-  const handleLogout = async () => {
-    setIsLoggingOut(true);
-    try {
-      await logout();
-    } finally {
-      setIsLoggingOut(false);
-    }
+  const handleLogout = () => {
+    logoutMutation.mutate();
   };
+
+  const isLoggingOut = logoutMutation.isPending;
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>

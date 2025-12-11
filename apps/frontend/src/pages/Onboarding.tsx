@@ -10,7 +10,7 @@ import { OnboardingStepServiceType } from "@/components/onboarding/OnboardingSte
 import { OnboardingStepAmenities } from "@/components/onboarding/OnboardingStepAmenities";
 import { OnboardingStepWorkingHours } from "@/components/onboarding/OnboardingStepWorkingHours";
 import { OnboardingStepPersonalization } from "@/components/onboarding/OnboardingStepPersonalization";
-import { useAuth } from "@/contexts/AuthContext";
+import { useCurrentUser } from "@/features/auth";
 import { useSubmitOnboarding, type OnboardingSubmitData, type AmenityId, type WorkingHours } from "@/features/onboarding";
 
 export interface OnboardingFormData {
@@ -86,7 +86,7 @@ const TOTAL_STEPS = 7;
 
 const Onboarding = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { data: user } = useCurrentUser();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<OnboardingFormData>(initialFormData);
 

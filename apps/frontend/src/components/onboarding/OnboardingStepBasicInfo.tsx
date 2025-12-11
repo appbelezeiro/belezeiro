@@ -75,6 +75,7 @@ export const OnboardingStepBasicInfo = ({ data, onUpdate, onNext }: OnboardingSt
       onNext();
     } catch (err) {
       if (err instanceof z.ZodError) {
+        console.error('[Onboarding] Validation errors:', err.errors);
         const newErrors: Record<string, string> = {};
         err.errors.forEach((e) => {
           if (e.path[0]) {

@@ -33,6 +33,7 @@ export function useCurrentUser(options: UseCurrentUserOptions = {}) {
     staleTime: 5 * 60 * 1000, // 5 minutos
     gcTime: 10 * 60 * 1000, // 10 minutos
     retry: false, // Não retry em erros de auth
+    throwOnError: false, // Não lança erro, deixa isError ser true
   });
 }
 

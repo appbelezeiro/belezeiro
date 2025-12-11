@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { onboardingService } from '../../api';
 import type { OnboardingSubmitData, OnboardingResult } from '../../types';
 import { toast } from '@/shared/lib/toast';
+import { queryKeys } from '@/shared/constants/query-keys';
 
 interface UseSubmitOnboardingOptions {
   onSuccess?: (data: OnboardingResult) => void;
@@ -26,6 +27,9 @@ export function useSubmitOnboarding(options?: UseSubmitOnboardingOptions) {
       return onboardingService.submitOnboarding(data, userId);
     },
     onSuccess: (result) => {
+      // Invalidate user cache to fetch updated onboardingCompleted
+      queryClient.invalidateQueries({ queryKey: queryKeys.auth.me() });
+
       // Invalidate relevant queries
       queryClient.invalidateQueries({ queryKey: ['organization'] });
       queryClient.invalidateQueries({ queryKey: ['units'] });

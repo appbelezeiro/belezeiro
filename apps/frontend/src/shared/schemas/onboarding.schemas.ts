@@ -19,7 +19,7 @@ import {
 export const basicInfoSchema = z.object({
   businessName: requiredString(2, 100),
   unitName: requiredString(2, 100),
-  logo: z.string().optional(),
+  logo: z.string().nullable().optional(),
   gallery: z.array(z.string()).optional(),
   whatsapp: phoneSchema,
   phone: optionalPhoneSchema,

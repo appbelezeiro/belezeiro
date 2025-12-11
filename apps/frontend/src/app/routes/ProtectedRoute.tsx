@@ -16,6 +16,11 @@ interface ProtectedRouteProps {
    * @default '/login'
    */
   redirectTo?: string;
+  /**
+   * Se deve exigir que o onboarding esteja completo
+   * @default true
+   */
+  requireOnboarding?: boolean;
 }
 
 /**
@@ -52,6 +57,7 @@ function LoadingState() {
 export function ProtectedRoute({
   children,
   redirectTo = '/login',
+  requireOnboarding = true,
 }: ProtectedRouteProps) {
   const { data: user, isLoading, isError } = useCurrentUser();
   const location = useLocation();
@@ -66,6 +72,11 @@ export function ProtectedRoute({
     return <Navigate to={redirectTo} state={{ from: location }} replace />;
   }
 
-  // Usuário autenticado, renderiza conteúdo
+  // Redireciona para onboarding se não completou e é obrigatório
+  if (requireOnboarding && !user.onboardingCompleted) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
+  // Usuário autenticado e com onboarding válido, renderiza conteúdo
   return <>{children}</>;
 }
