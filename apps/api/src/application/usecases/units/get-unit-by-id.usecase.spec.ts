@@ -28,14 +28,24 @@ describe('GetUnitByIdUseCase', () => {
       address: {
         street: 'Main St',
         number: '123',
+        neighborhood: 'Downtown',
         city: 'São Paulo',
         state: 'SP',
         cep: '01000-000',
-        country: 'BR',
       },
       professions: [],
       services: [],
-      serviceType: 'in_person',
+      serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     await unit_repository.create(unit);
@@ -72,23 +82,29 @@ describe('GetUnitByIdUseCase', () => {
       address: {
         street: 'Complete St',
         number: '789',
+        neighborhood: 'Central',
         city: 'São Paulo',
         state: 'SP',
         cep: '03000-000',
-        country: 'BR',
         complement: 'Suite 100',
       },
-      professions: [{ id: 'prof_1', name: 'Hairdresser' }],
-      services: [{ id: 'svc_1', name: 'Haircut', price: 5000 }],
-      serviceType: 'hybrid',
+      professions: [{ id: 'prof_1', name: 'Hairdresser', icon: 'scissors' }],
+      services: [{ id: 'svc_1', name: 'Haircut', professionId: 'prof_1' }],
+      serviceType: 'both',
       amenities: ['wifi', 'parking'],
       workingHours: {
-        monday: { open: '09:00', close: '18:00' },
-        tuesday: { open: '09:00', close: '18:00' },
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
       },
       lunchBreak: {
         start: '12:00',
         end: '13:00',
+        enabled: true,
       },
     });
 
@@ -105,7 +121,7 @@ describe('GetUnitByIdUseCase', () => {
     expect(result?.gallery).toHaveLength(2);
     expect(result?.professions).toHaveLength(1);
     expect(result?.services).toHaveLength(1);
-    expect(result?.serviceType).toBe('hybrid');
+    expect(result?.serviceType).toBe('both');
     expect(result?.amenities).toContain('wifi');
     expect(result?.workingHours).toBeDefined();
     expect(result?.lunchBreak).toBeDefined();
@@ -119,14 +135,24 @@ describe('GetUnitByIdUseCase', () => {
       address: {
         street: 'Main St',
         number: '123',
+        neighborhood: 'Downtown',
         city: 'São Paulo',
         state: 'SP',
         cep: '01000-000',
-        country: 'BR',
       },
       professions: [],
       services: [],
-      serviceType: 'in_person',
+      serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     await unit_repository.create(unit);
@@ -148,14 +174,24 @@ describe('GetUnitByIdUseCase', () => {
       address: {
         street: 'Main St',
         number: '123',
+        neighborhood: 'Downtown',
         city: 'São Paulo',
         state: 'SP',
         cep: '01000-000',
-        country: 'BR',
       },
       professions: [],
       services: [],
-      serviceType: 'in_person',
+      serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     unit.deactivate();
@@ -171,7 +207,7 @@ describe('GetUnitByIdUseCase', () => {
   });
 
   it('should return unit with different service types', async () => {
-    const serviceTypes = ['in_person', 'remote', 'hybrid'] as const;
+    const serviceTypes = ['local', 'home', 'both'] as const;
 
     for (const serviceType of serviceTypes) {
       const unit = new UnitEntity({
@@ -181,14 +217,24 @@ describe('GetUnitByIdUseCase', () => {
         address: {
           street: 'Main St',
           number: '123',
+          neighborhood: 'Downtown',
           city: 'São Paulo',
           state: 'SP',
           cep: '01000-000',
-          country: 'BR',
         },
         professions: [],
         services: [],
         serviceType,
+        amenities: [],
+        workingHours: {
+          monday: { open: '09:00', close: '18:00', enabled: true },
+          tuesday: { open: '09:00', close: '18:00', enabled: true },
+          wednesday: { open: '09:00', close: '18:00', enabled: true },
+          thursday: { open: '09:00', close: '18:00', enabled: true },
+          friday: { open: '09:00', close: '18:00', enabled: true },
+          saturday: { open: '09:00', close: '18:00', enabled: true },
+          sunday: { open: '09:00', close: '18:00', enabled: false },
+        },
       });
 
       await unit_repository.create(unit);

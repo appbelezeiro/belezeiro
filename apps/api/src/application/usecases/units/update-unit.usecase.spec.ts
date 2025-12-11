@@ -2,7 +2,6 @@ import { describe, it, expect, beforeEach, beforeAll } from 'vitest';
 import { UpdateUnitUseCase } from './update-unit.usecase';
 import { InMemoryUnitRepository } from '@/infra/repositories/in-memory/units/in-memory-unit.repository';
 import { UnitEntity } from '@/domain/entities/units/unit.entity';
-import type { ServiceType } from '@/domain/entities/units/unit.entity';
 import { BaseEntity } from '@/domain/entities/base.entity';
 import { ULIDXIDGeneratorService } from '@/infra/services/ulidx-id-generator.service';
 import { UnitNotFoundError } from '@/domain/errors/units/unit.errors';
@@ -35,11 +34,20 @@ describe('UpdateUnitUseCase', () => {
         city: 'São Paulo',
         state: 'SP',
         cep: '01000-000',
-        country: 'Brazil',
       },
       professions: [],
       services: [],
       serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     await unit_repository.create(unit);
@@ -65,11 +73,20 @@ describe('UpdateUnitUseCase', () => {
         city: 'São Paulo',
         state: 'SP',
         cep: '01000-000',
-        country: 'Brazil',
       },
       professions: [],
       services: [],
       serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     await unit_repository.create(unit);
@@ -96,11 +113,20 @@ describe('UpdateUnitUseCase', () => {
         city: 'São Paulo',
         state: 'SP',
         cep: '01000-000',
-        country: 'Brazil',
       },
       professions: [],
       services: [],
       serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     await unit_repository.create(unit);
@@ -127,11 +153,20 @@ describe('UpdateUnitUseCase', () => {
         city: 'São Paulo',
         state: 'SP',
         cep: '01000-000',
-        country: 'Brazil',
       },
       professions: [],
       services: [],
       serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     await unit_repository.create(unit);
@@ -157,11 +192,20 @@ describe('UpdateUnitUseCase', () => {
         city: 'São Paulo',
         state: 'SP',
         cep: '01000-000',
-        country: 'Brazil',
       },
       professions: [],
       services: [],
       serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     await unit_repository.create(unit);
@@ -189,11 +233,20 @@ describe('UpdateUnitUseCase', () => {
         city: 'São Paulo',
         state: 'SP',
         cep: '01000-000',
-        country: 'Brazil',
       },
       professions: [],
       services: [],
       serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     await unit_repository.create(unit);

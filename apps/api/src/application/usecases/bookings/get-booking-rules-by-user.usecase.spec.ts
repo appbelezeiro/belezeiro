@@ -23,17 +23,19 @@ describe('GetBookingRulesByUserUseCase', () => {
   it('should return all rules for user', async () => {
     const rule1 = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1, // Monday
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
     const rule2 = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [6],
-      start_time: '10:00',
-      end_time: '14:00',
+      type: 'weekly',
+      weekday: 6, // Saturday
+      start_time: '2024-01-01T10:00:00Z',
+      end_time: '2024-01-01T14:00:00Z',
       slot_duration_minutes: 30,
     });
 
@@ -64,17 +66,19 @@ describe('GetBookingRulesByUserUseCase', () => {
   it('should not return rules from other users', async () => {
     const rule1 = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
     const rule2 = new BookingRuleEntity({
       user_id: 'user_456',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -94,9 +98,10 @@ describe('GetBookingRulesByUserUseCase', () => {
   it('should return rules with all properties', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 3, 5],
-      start_time: '08:00',
-      end_time: '17:00',
+      type: 'weekly',
+      weekday: 1, // Monday
+      start_time: '2024-01-01T08:00:00Z',
+      end_time: '2024-01-01T17:00:00Z',
       slot_duration_minutes: 45,
       metadata: {
         service_type: 'consultation',
@@ -111,9 +116,10 @@ describe('GetBookingRulesByUserUseCase', () => {
 
     const result = await sut.execute(input);
 
-    expect(result[0].weekdays).toEqual([1, 3, 5]);
-    expect(result[0].start_time).toBe('08:00');
-    expect(result[0].end_time).toBe('17:00');
+    expect(result[0].type).toBe('weekly');
+    expect(result[0].weekday).toBe(1);
+    expect(result[0].start_time).toBe('2024-01-01T08:00:00Z');
+    expect(result[0].end_time).toBe('2024-01-01T17:00:00Z');
     expect(result[0].slot_duration_minutes).toBe(45);
     expect(result[0].metadata).toEqual({ service_type: 'consultation' });
   });

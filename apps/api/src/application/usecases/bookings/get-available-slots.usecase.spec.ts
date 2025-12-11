@@ -33,9 +33,10 @@ describe('GetAvailableSlotsUseCase', () => {
   it('should return available slots for a date', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '12:00',
+      type: 'weekly',
+      weekday: 1, // Monday
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T12:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -68,9 +69,10 @@ describe('GetAvailableSlotsUseCase', () => {
   it('should return date in response', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -89,9 +91,10 @@ describe('GetAvailableSlotsUseCase', () => {
   it('should handle ISO date format YYYY-MM-DD', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 

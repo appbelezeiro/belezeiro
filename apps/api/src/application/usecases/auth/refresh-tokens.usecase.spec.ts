@@ -21,7 +21,7 @@ class MockTokenService implements ITokenService {
     };
   }
 
-  async verify_session_token(token: string): Promise<TokenPayload> {
+  async verify_session_token(_token: string): Promise<TokenPayload> {
     return {
       sub: 'user_123',
       email: 'test@example.com',

@@ -3,17 +3,18 @@ import { BaseEntity, BaseEntityCreationProps, BaseEntityProps } from './base.ent
 type SpecialtyEntityOwnProps = {
   code: string;
   name: string;
-  description?: string;
+  description: string | undefined;
   icon: string;
   is_predefined: boolean;
   is_active: boolean;
 };
 
-type SpecialtyEntityCreationProps = Omit<SpecialtyEntityOwnProps, 'is_active'> &
+type SpecialtyEntityCreationProps = Omit<SpecialtyEntityOwnProps, 'is_active' | 'description'> &
   Partial<Pick<SpecialtyEntityOwnProps, 'is_active'>> &
+  { description?: string } &
   BaseEntityCreationProps;
 
-type SpecialtyEntityProps = Required<SpecialtyEntityOwnProps> & BaseEntityProps;
+type SpecialtyEntityProps = SpecialtyEntityOwnProps & BaseEntityProps;
 
 export class SpecialtyEntity extends BaseEntity<SpecialtyEntityProps> {
   protected prefix(): string {
@@ -23,6 +24,7 @@ export class SpecialtyEntity extends BaseEntity<SpecialtyEntityProps> {
   constructor(props: SpecialtyEntityCreationProps) {
     super({
       ...props,
+      description: props.description,
       is_active: props.is_active ?? true,
     });
   }

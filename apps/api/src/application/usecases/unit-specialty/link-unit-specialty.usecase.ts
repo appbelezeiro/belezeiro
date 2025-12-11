@@ -1,10 +1,10 @@
 import { UnitSpecialtyEntity } from '@/domain/entities/unit-specialty.entity';
 import { IUnitSpecialtyRepository } from '@/application/contracts/i-unit-specialty-repository.interface';
 import { ISpecialtyRepository } from '@/application/contracts/i-specialty-repository.interface';
-import { IUnitRepository } from '@/application/contracts/i-unit-repository.interface';
+import { IUnitRepository } from '@/application/contracts/units/i-unit-repository.interface';
 import { UnitSpecialtyAlreadyLinkedError } from '@/domain/errors/unit-specialty-already-linked.error';
 import { SpecialtyNotFoundError } from '@/domain/errors/specialty-not-found.error';
-import { UnitNotFoundError } from '@/domain/errors/unit-not-found.error';
+import { UnitNotFoundError } from '@/domain/errors/units/unit.errors';
 
 class UseCase {
   constructor(

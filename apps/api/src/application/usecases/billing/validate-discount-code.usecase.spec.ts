@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, beforeAll } from 'vitest';
 import { ValidateDiscountCodeUseCase } from './validate-discount-code.usecase';
 import { InMemoryDiscountRepository } from '@/infra/repositories/in-memory/billing/in-memory-discount.repository';
-import { DiscountEntity } from '@/domain/entities/billing/discount.entity';
+import { DiscountEntity, DiscountType, DiscountDuration } from '@/domain/entities/billing/discount.entity';
 import { BaseEntity } from '@/domain/entities/base.entity';
 import { ULIDXIDGeneratorService } from '@/infra/services/ulidx-id-generator.service';
 import { DiscountNotFoundError } from '@/domain/errors/billing/discount.errors';
@@ -24,11 +24,11 @@ describe('ValidateDiscountCodeUseCase', () => {
   it('should validate valid discount code', async () => {
     const discount = new DiscountEntity({
       code: 'SAVE20',
-      type: 'percentage',
+      type: DiscountType.PERCENTAGE,
       value: 20,
+      duration: DiscountDuration.ONCE,
       max_redemptions: 100,
-      valid_from: new Date(Date.now() - 24 * 60 * 60 * 1000),
-      valid_until: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
     });
 
     await discount_repository.create(discount);
@@ -56,11 +56,11 @@ describe('ValidateDiscountCodeUseCase', () => {
   it('should throw error when discount is expired', async () => {
     const discount = new DiscountEntity({
       code: 'EXPIRED',
-      type: 'percentage',
+      type: DiscountType.PERCENTAGE,
       value: 20,
+      duration: DiscountDuration.ONCE,
       max_redemptions: 100,
-      valid_from: new Date(Date.now() - 48 * 60 * 60 * 1000),
-      valid_until: new Date(Date.now() - 24 * 60 * 60 * 1000),
+      expires_at: new Date(Date.now() - 24 * 60 * 60 * 1000),
     });
 
     await discount_repository.create(discount);
@@ -76,11 +76,11 @@ describe('ValidateDiscountCodeUseCase', () => {
   it('should throw error when discount has no more redemptions', async () => {
     const discount = new DiscountEntity({
       code: 'MAXED',
-      type: 'percentage',
+      type: DiscountType.PERCENTAGE,
       value: 20,
+      duration: DiscountDuration.ONCE,
       max_redemptions: 1,
-      valid_from: new Date(Date.now() - 24 * 60 * 60 * 1000),
-      valid_until: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
     });
 
     discount.redeem();
@@ -97,10 +97,10 @@ describe('ValidateDiscountCodeUseCase', () => {
   it('should validate discount with unlimited redemptions', async () => {
     const discount = new DiscountEntity({
       code: 'UNLIMITED',
-      type: 'fixed',
+      type: DiscountType.FIXED,
       value: 1000,
-      valid_from: new Date(Date.now() - 24 * 60 * 60 * 1000),
-      valid_until: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      duration: DiscountDuration.ONCE,
+      expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
     });
 
     await discount_repository.create(discount);
@@ -118,12 +118,12 @@ describe('ValidateDiscountCodeUseCase', () => {
   it('should validate discount with allowed user', async () => {
     const discount = new DiscountEntity({
       code: 'USER_SPECIFIC',
-      type: 'percentage',
+      type: DiscountType.PERCENTAGE,
       value: 30,
+      duration: DiscountDuration.ONCE,
       max_redemptions: 10,
-      valid_from: new Date(Date.now() - 24 * 60 * 60 * 1000),
-      valid_until: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      allowed_user_ids: ['user_123', 'user_456'],
+      expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      assigned_to_user_id: 'user_123',
     });
 
     await discount_repository.create(discount);
@@ -141,12 +141,12 @@ describe('ValidateDiscountCodeUseCase', () => {
   it('should throw error when user is not in allowed list', async () => {
     const discount = new DiscountEntity({
       code: 'RESTRICTED',
-      type: 'percentage',
+      type: DiscountType.PERCENTAGE,
       value: 30,
+      duration: DiscountDuration.ONCE,
       max_redemptions: 10,
-      valid_from: new Date(Date.now() - 24 * 60 * 60 * 1000),
-      valid_until: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      allowed_user_ids: ['user_456', 'user_789'],
+      expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      assigned_to_user_id: 'user_456',
     });
 
     await discount_repository.create(discount);
@@ -162,12 +162,11 @@ describe('ValidateDiscountCodeUseCase', () => {
   it('should return discount with all properties', async () => {
     const discount = new DiscountEntity({
       code: 'COMPLETE',
-      type: 'percentage',
+      type: DiscountType.PERCENTAGE,
       value: 25,
+      duration: DiscountDuration.ONCE,
       max_redemptions: 50,
-      valid_from: new Date(Date.now() - 24 * 60 * 60 * 1000),
-      valid_until: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      allowed_plan_ids: ['plan_123', 'plan_456'],
+      expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
       metadata: {
         campaign: 'black_friday',
       },
@@ -183,7 +182,7 @@ describe('ValidateDiscountCodeUseCase', () => {
     const result = await sut.execute(input);
 
     expect(result.discount.code).toBe('COMPLETE');
-    expect(result.discount.type).toBe('percentage');
+    expect(result.discount.type).toBe(DiscountType.PERCENTAGE);
     expect(result.discount.value).toBe(25);
     expect(result.is_valid).toBe(true);
   });

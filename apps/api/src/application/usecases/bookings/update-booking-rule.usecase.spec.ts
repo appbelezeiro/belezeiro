@@ -25,9 +25,10 @@ describe('UpdateBookingRuleUseCase', () => {
   it('should update rule times', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -35,22 +36,23 @@ describe('UpdateBookingRuleUseCase', () => {
 
     const input = {
       id: rule.id,
-      start_time: '08:00',
-      end_time: '17:00',
+      start_time: '2024-01-01T08:00:00Z',
+      end_time: '2024-01-01T17:00:00Z',
     };
 
     const result = await sut.execute(input);
 
-    expect(result.start_time).toBe('08:00');
-    expect(result.end_time).toBe('17:00');
+    expect(result.start_time).toBe('2024-01-01T08:00:00Z');
+    expect(result.end_time).toBe('2024-01-01T17:00:00Z');
   });
 
   it('should update slot duration', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -69,9 +71,10 @@ describe('UpdateBookingRuleUseCase', () => {
   it('should update metadata', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
       metadata: {
         service_type: 'consultation',
@@ -99,8 +102,8 @@ describe('UpdateBookingRuleUseCase', () => {
   it('should throw RuleNotFoundError when rule does not exist', async () => {
     const input = {
       id: 'non_existent_id',
-      start_time: '08:00',
-      end_time: '17:00',
+      start_time: '2024-01-01T08:00:00Z',
+      end_time: '2024-01-01T17:00:00Z',
     };
 
     await expect(sut.execute(input)).rejects.toThrow(RuleNotFoundError);
@@ -109,9 +112,10 @@ describe('UpdateBookingRuleUseCase', () => {
   it('should throw InvalidTimeRangeError when start_time is after end_time', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -119,8 +123,8 @@ describe('UpdateBookingRuleUseCase', () => {
 
     const input = {
       id: rule.id,
-      start_time: '18:00',
-      end_time: '09:00',
+      start_time: '2024-01-01T18:00:00Z',
+      end_time: '2024-01-01T09:00:00Z',
     };
 
     await expect(sut.execute(input)).rejects.toThrow(InvalidTimeRangeError);
@@ -129,9 +133,10 @@ describe('UpdateBookingRuleUseCase', () => {
   it('should throw InvalidTimeRangeError when start_time equals end_time', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -139,8 +144,8 @@ describe('UpdateBookingRuleUseCase', () => {
 
     const input = {
       id: rule.id,
-      start_time: '10:00',
-      end_time: '10:00',
+      start_time: '2024-01-01T10:00:00Z',
+      end_time: '2024-01-01T10:00:00Z',
     };
 
     await expect(sut.execute(input)).rejects.toThrow(InvalidTimeRangeError);
@@ -149,9 +154,10 @@ describe('UpdateBookingRuleUseCase', () => {
   it('should update only times without changing slot duration', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -159,23 +165,24 @@ describe('UpdateBookingRuleUseCase', () => {
 
     const input = {
       id: rule.id,
-      start_time: '08:00',
-      end_time: '17:00',
+      start_time: '2024-01-01T08:00:00Z',
+      end_time: '2024-01-01T17:00:00Z',
     };
 
     const result = await sut.execute(input);
 
-    expect(result.start_time).toBe('08:00');
-    expect(result.end_time).toBe('17:00');
+    expect(result.start_time).toBe('2024-01-01T08:00:00Z');
+    expect(result.end_time).toBe('2024-01-01T17:00:00Z');
     expect(result.slot_duration_minutes).toBe(60);
   });
 
   it('should update only slot duration without changing times', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -189,16 +196,17 @@ describe('UpdateBookingRuleUseCase', () => {
     const result = await sut.execute(input);
 
     expect(result.slot_duration_minutes).toBe(45);
-    expect(result.start_time).toBe('09:00');
-    expect(result.end_time).toBe('18:00');
+    expect(result.start_time).toBe('2024-01-01T09:00:00Z');
+    expect(result.end_time).toBe('2024-01-01T18:00:00Z');
   });
 
   it('should update multiple properties at once', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -206,8 +214,8 @@ describe('UpdateBookingRuleUseCase', () => {
 
     const input = {
       id: rule.id,
-      start_time: '08:00',
-      end_time: '17:00',
+      start_time: '2024-01-01T08:00:00Z',
+      end_time: '2024-01-01T17:00:00Z',
       slot_duration_minutes: 30,
       metadata: {
         updated: true,
@@ -216,18 +224,19 @@ describe('UpdateBookingRuleUseCase', () => {
 
     const result = await sut.execute(input);
 
-    expect(result.start_time).toBe('08:00');
-    expect(result.end_time).toBe('17:00');
+    expect(result.start_time).toBe('2024-01-01T08:00:00Z');
+    expect(result.end_time).toBe('2024-01-01T17:00:00Z');
     expect(result.slot_duration_minutes).toBe(30);
     expect(result.metadata).toEqual({ updated: true });
   });
 
-  it('should preserve weekdays when updating', async () => {
+  it('should preserve weekday when updating', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 3, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1, // Monday
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -235,12 +244,13 @@ describe('UpdateBookingRuleUseCase', () => {
 
     const input = {
       id: rule.id,
-      start_time: '08:00',
-      end_time: '17:00',
+      start_time: '2024-01-01T08:00:00Z',
+      end_time: '2024-01-01T17:00:00Z',
     };
 
     const result = await sut.execute(input);
 
-    expect(result.weekdays).toEqual([1, 3, 5]);
+    expect(result.type).toBe('weekly');
+    expect(result.weekday).toBe(1);
   });
 });

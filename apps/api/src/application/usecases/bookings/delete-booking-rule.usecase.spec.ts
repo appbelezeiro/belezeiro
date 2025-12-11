@@ -24,9 +24,10 @@ describe('DeleteBookingRuleUseCase', () => {
   it('should delete booking rule', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -52,9 +53,10 @@ describe('DeleteBookingRuleUseCase', () => {
   it('should remove rule from repository', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 

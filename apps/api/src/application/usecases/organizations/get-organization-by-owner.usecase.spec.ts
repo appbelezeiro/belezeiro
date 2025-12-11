@@ -77,8 +77,8 @@ describe('GetOrganizationByOwnerUseCase', () => {
 
     expect(result?.businessName).toBe('Premium Spa');
     expect(result?.brandColor).toBe('#4ECDC4');
-    expect(result?.subscription.plan).toBe('enterprise');
-    expect(result?.subscription.status).toBe('active');
+    expect(result?.subscription?.plan).toBe('enterprise');
+    expect(result?.subscription?.status).toBe('active');
   });
 
   it('should return only one organization per owner', async () => {

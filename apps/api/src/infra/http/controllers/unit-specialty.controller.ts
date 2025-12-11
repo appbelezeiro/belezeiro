@@ -2,11 +2,10 @@ import { Context } from 'hono';
 import { z } from 'zod';
 import type { Container } from '@/infra/di/factory-root';
 import { UnitSpecialtyMapper } from '@/application/dtos/mappers/unit-specialty.mapper';
-import { SpecialtyMapper } from '@/application/dtos/mappers/specialty.mapper';
 import { BadRequestError, NotFoundError } from '../errors/http-errors';
 import { UnitSpecialtyAlreadyLinkedError } from '@/domain/errors/unit-specialty-already-linked.error';
 import { SpecialtyNotFoundError } from '@/domain/errors/specialty-not-found.error';
-import { UnitNotFoundError } from '@/domain/errors/unit-not-found.error';
+import { UnitNotFoundError } from '@/domain/errors/units/unit.errors';
 
 const LinkUnitSpecialtySchema = z.object({
   specialty_id: z.string().min(1),

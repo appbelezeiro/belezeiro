@@ -5,7 +5,7 @@ import { UnitServiceMapper } from '@/application/dtos/mappers/unit-service.mappe
 import { BadRequestError, NotFoundError } from '../errors/http-errors';
 import { UnitServiceAlreadyAddedError } from '@/domain/errors/unit-service-already-added.error';
 import { ServiceNotFoundError } from '@/domain/errors/service-not-found.error';
-import { UnitNotFoundError } from '@/domain/errors/unit-not-found.error';
+import { UnitNotFoundError } from '@/domain/errors/units/unit.errors';
 
 const AddUnitServiceSchema = z.object({
   service_id: z.string().min(1),

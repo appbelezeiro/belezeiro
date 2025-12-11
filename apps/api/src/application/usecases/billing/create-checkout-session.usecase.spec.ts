@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, beforeAll } from 'vitest';
 import { CreateCheckoutSessionUseCase } from './create-checkout-session.usecase';
 import { InMemoryPlanRepository } from '@/infra/repositories/in-memory/billing/in-memory-plan.repository';
-import { PlanEntity } from '@/domain/entities/billing/plan.entity';
+import { PlanEntity, RenewalInterval, PlanFeatures, PlanLimits } from '@/domain/entities/billing/plan.entity';
 import { BaseEntity } from '@/domain/entities/base.entity';
 import { ULIDXIDGeneratorService } from '@/infra/services/ulidx-id-generator.service';
 import { PlanNotFoundError, PlanNotActiveError } from '@/domain/errors/billing/plan.errors';
@@ -16,6 +16,23 @@ import {
   ProviderInvoice,
 } from '@/domain/services/billing/i-payment-gateway.service';
 
+const defaultFeatures: PlanFeatures = {
+  advanced_booking: true,
+  custom_branding: true,
+  analytics: true,
+  api_access: false,
+  priority_support: false,
+  custom_integrations: false,
+};
+
+const defaultLimits: PlanLimits = {
+  max_bookings_per_month: 1000,
+  max_concurrent_bookings: 50,
+  max_booking_rules: 10,
+  max_team_members: 20,
+  max_locations: 5,
+};
+
 class MockPaymentGateway implements IPaymentGateway {
   async create_checkout_session(params: CreateCheckoutSessionParams): Promise<CheckoutSession> {
     return {
@@ -26,7 +43,7 @@ class MockPaymentGateway implements IPaymentGateway {
     };
   }
 
-  async create_subscription(params: CreateSubscriptionParams): Promise<ProviderSubscription> {
+  async create_subscription(_params: CreateSubscriptionParams): Promise<ProviderSubscription> {
     return {
       id: 'sub_provider_123',
       status: 'active',
@@ -38,7 +55,7 @@ class MockPaymentGateway implements IPaymentGateway {
 
   async update_subscription(
     subscription_id: string,
-    params: UpdateSubscriptionParams,
+    _params: UpdateSubscriptionParams,
   ): Promise<ProviderSubscription> {
     return {
       id: subscription_id,
@@ -80,11 +97,11 @@ class MockPaymentGateway implements IPaymentGateway {
     };
   }
 
-  verify_webhook_signature(payload: string, signature: string): boolean {
+  verify_webhook_signature(_payload: string, _signature: string): boolean {
     return true;
   }
 
-  parse_webhook_event(payload: string): any {
+  parse_webhook_event(_payload: string): any {
     return {};
   }
 }
@@ -111,16 +128,9 @@ describe('CreateCheckoutSessionUseCase', () => {
       name: 'Pro Plan',
       price: 9900,
       currency: 'BRL',
-      interval: 'monthly',
-      features: {
-        professionals: 10,
-        bookings_per_month: 1000,
-        custom_branding: true,
-      },
-      limits: {
-        max_units: 5,
-        max_users_per_unit: 20,
-      },
+      interval: RenewalInterval.MONTHLY,
+      features: defaultFeatures,
+      limits: defaultLimits,
     });
 
     await plan_repository.create(plan);
@@ -156,16 +166,9 @@ describe('CreateCheckoutSessionUseCase', () => {
       name: 'Inactive Plan',
       price: 9900,
       currency: 'BRL',
-      interval: 'monthly',
-      features: {
-        professionals: 10,
-        bookings_per_month: 1000,
-        custom_branding: true,
-      },
-      limits: {
-        max_units: 5,
-        max_users_per_unit: 20,
-      },
+      interval: RenewalInterval.MONTHLY,
+      features: defaultFeatures,
+      limits: defaultLimits,
     });
 
     plan.deactivate();
@@ -186,16 +189,9 @@ describe('CreateCheckoutSessionUseCase', () => {
       name: 'Pro Plan',
       price: 9900,
       currency: 'BRL',
-      interval: 'monthly',
-      features: {
-        professionals: 10,
-        bookings_per_month: 1000,
-        custom_branding: true,
-      },
-      limits: {
-        max_units: 5,
-        max_users_per_unit: 20,
-      },
+      interval: RenewalInterval.MONTHLY,
+      features: defaultFeatures,
+      limits: defaultLimits,
     });
 
     await plan_repository.create(plan);
@@ -218,16 +214,9 @@ describe('CreateCheckoutSessionUseCase', () => {
       name: 'Pro Plan',
       price: 9900,
       currency: 'BRL',
-      interval: 'monthly',
-      features: {
-        professionals: 10,
-        bookings_per_month: 1000,
-        custom_branding: true,
-      },
-      limits: {
-        max_units: 5,
-        max_users_per_unit: 20,
-      },
+      interval: RenewalInterval.MONTHLY,
+      features: defaultFeatures,
+      limits: defaultLimits,
       trial_days: 7,
     });
 
@@ -251,16 +240,9 @@ describe('CreateCheckoutSessionUseCase', () => {
       name: 'Pro Plan',
       price: 9900,
       currency: 'BRL',
-      interval: 'monthly',
-      features: {
-        professionals: 10,
-        bookings_per_month: 1000,
-        custom_branding: true,
-      },
-      limits: {
-        max_units: 5,
-        max_users_per_unit: 20,
-      },
+      interval: RenewalInterval.MONTHLY,
+      features: defaultFeatures,
+      limits: defaultLimits,
     });
 
     await plan_repository.create(plan);

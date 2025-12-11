@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, beforeAll, vi } from 'vitest';
+import { describe, it, expect, beforeEach, beforeAll } from 'vitest';
 import { GetAvailableDaysUseCase } from './get-available-days.usecase';
 import { InMemoryBookingRuleRepository } from '@/infra/repositories/in-memory/bookings/in-memory-booking-rule.repository';
 import { InMemoryBookingExceptionRepository } from '@/infra/repositories/in-memory/bookings/in-memory-booking-exception.repository';
@@ -33,9 +33,10 @@ describe('GetAvailableDaysUseCase', () => {
   it('should return available days for user with rules', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5], // Monday to Friday
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1, // Monday
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -64,9 +65,10 @@ describe('GetAvailableDaysUseCase', () => {
   it('should use default days_ahead of 45 when not provided', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -84,9 +86,10 @@ describe('GetAvailableDaysUseCase', () => {
   it('should use custom days_ahead when provided', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 
@@ -105,9 +108,10 @@ describe('GetAvailableDaysUseCase', () => {
   it('should return days in YYYY-MM-DD format', async () => {
     const rule = new BookingRuleEntity({
       user_id: 'user_123',
-      weekdays: [1, 2, 3, 4, 5],
-      start_time: '09:00',
-      end_time: '18:00',
+      type: 'weekly',
+      weekday: 1,
+      start_time: '2024-01-01T09:00:00Z',
+      end_time: '2024-01-01T18:00:00Z',
       slot_duration_minutes: 60,
     });
 

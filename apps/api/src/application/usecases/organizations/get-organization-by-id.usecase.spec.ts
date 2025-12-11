@@ -78,9 +78,9 @@ describe('GetOrganizationByIdUseCase', () => {
     expect(result?.ownerId).toBe('owner_123');
     expect(result?.businessName).toBe('Premium Spa');
     expect(result?.brandColor).toBe('#4ECDC4');
-    expect(result?.subscription.plan).toBe('enterprise');
-    expect(result?.subscription.status).toBe('active');
-    expect(result?.subscription.expiresAt).toBeInstanceOf(Date);
+    expect(result?.subscription?.plan).toBe('enterprise');
+    expect(result?.subscription?.status).toBe('active');
+    expect(result?.subscription?.expiresAt).toBeInstanceOf(Date);
   });
 
   it('should return organization with suspended subscription', async () => {
@@ -102,7 +102,7 @@ describe('GetOrganizationByIdUseCase', () => {
 
     const result = await sut.execute(input);
 
-    expect(result?.subscription.status).toBe('suspended');
+    expect(result?.subscription?.status).toBe('suspended');
   });
 
   it('should return organization with inactive subscription', async () => {
@@ -124,7 +124,7 @@ describe('GetOrganizationByIdUseCase', () => {
 
     const result = await sut.execute(input);
 
-    expect(result?.subscription.status).toBe('inactive');
+    expect(result?.subscription?.status).toBe('inactive');
   });
 
   it('should return organization with different plans', async () => {
@@ -149,7 +149,7 @@ describe('GetOrganizationByIdUseCase', () => {
 
       const result = await sut.execute(input);
 
-      expect(result?.subscription.plan).toBe(plan);
+      expect(result?.subscription?.plan).toBe(plan);
     }
   });
 });

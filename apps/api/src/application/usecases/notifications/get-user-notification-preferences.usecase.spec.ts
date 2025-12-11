@@ -127,7 +127,7 @@ describe('GetUserNotificationPreferencesUseCase', () => {
   });
 
   it('should return preferences for different categories', async () => {
-    const categories = ['transactional', 'marketing', 'promotional'] as const;
+    const categories = ['transactional', 'marketing', 'billing'] as const;
 
     for (const category of categories) {
       const preference = new NotificationPreferenceEntity({
@@ -152,7 +152,7 @@ describe('GetUserNotificationPreferencesUseCase', () => {
     expect(result.map((p) => p.category)).toEqual([
       'transactional',
       'marketing',
-      'promotional',
+      'billing',
     ]);
   });
 
@@ -203,7 +203,7 @@ describe('GetUserNotificationPreferencesUseCase', () => {
 
     const preference3 = new NotificationPreferenceEntity({
       user_id: 'user_123',
-      category: 'promotional',
+      category: 'billing',
       channels: {
         email: true,
         whatsapp: false,

@@ -3,8 +3,8 @@ import { HandleCheckoutCompletedWebhookUseCase } from './handle-checkout-complet
 import { InMemorySubscriptionRepository } from '@/infra/repositories/in-memory/billing/in-memory-subscription.repository';
 import { InMemoryPlanRepository } from '@/infra/repositories/in-memory/billing/in-memory-plan.repository';
 import { InMemoryDiscountRepository } from '@/infra/repositories/in-memory/billing/in-memory-discount.repository';
-import { PlanEntity } from '@/domain/entities/billing/plan.entity';
-import { DiscountEntity } from '@/domain/entities/billing/discount.entity';
+import { PlanEntity, RenewalInterval } from '@/domain/entities/billing/plan.entity';
+import { DiscountEntity, DiscountType, DiscountDuration } from '@/domain/entities/billing/discount.entity';
 import { SubscriptionStatus } from '@/domain/entities/billing/subscription.entity';
 import { BaseEntity } from '@/domain/entities/base.entity';
 import { ULIDXIDGeneratorService } from '@/infra/services/ulidx-id-generator.service';
@@ -38,15 +38,21 @@ describe('HandleCheckoutCompletedWebhookUseCase', () => {
       name: 'Pro Plan',
       price: 9900,
       currency: 'BRL',
-      interval: 'monthly',
+      interval: RenewalInterval.MONTHLY,
       features: {
-        professionals: 10,
-        bookings_per_month: 1000,
+        advanced_booking: true,
         custom_branding: true,
+        analytics: true,
+        api_access: false,
+        priority_support: false,
+        custom_integrations: false,
       },
       limits: {
-        max_units: 5,
-        max_users_per_unit: 20,
+        max_bookings_per_month: 1000,
+        max_concurrent_bookings: 50,
+        max_booking_rules: 10,
+        max_team_members: 20,
+        max_locations: 5,
       },
     });
 
@@ -96,15 +102,21 @@ describe('HandleCheckoutCompletedWebhookUseCase', () => {
       name: 'Pro Plan',
       price: 9900,
       currency: 'BRL',
-      interval: 'monthly',
+      interval: RenewalInterval.MONTHLY,
       features: {
-        professionals: 10,
-        bookings_per_month: 1000,
+        advanced_booking: true,
         custom_branding: true,
+        analytics: true,
+        api_access: false,
+        priority_support: false,
+        custom_integrations: false,
       },
       limits: {
-        max_units: 5,
-        max_users_per_unit: 20,
+        max_bookings_per_month: 1000,
+        max_concurrent_bookings: 50,
+        max_booking_rules: 10,
+        max_team_members: 20,
+        max_locations: 5,
       },
       trial_days: 14,
     });
@@ -136,25 +148,31 @@ describe('HandleCheckoutCompletedWebhookUseCase', () => {
       name: 'Pro Plan',
       price: 9900,
       currency: 'BRL',
-      interval: 'monthly',
+      interval: RenewalInterval.MONTHLY,
       features: {
-        professionals: 10,
-        bookings_per_month: 1000,
+        advanced_booking: true,
         custom_branding: true,
+        analytics: true,
+        api_access: false,
+        priority_support: false,
+        custom_integrations: false,
       },
       limits: {
-        max_units: 5,
-        max_users_per_unit: 20,
+        max_bookings_per_month: 1000,
+        max_concurrent_bookings: 50,
+        max_booking_rules: 10,
+        max_team_members: 20,
+        max_locations: 5,
       },
     });
 
     const discount = new DiscountEntity({
       code: 'SAVE20',
-      type: 'percentage',
+      type: DiscountType.PERCENTAGE,
       value: 20,
+      duration: DiscountDuration.ONCE,
       max_redemptions: 100,
-      valid_from: new Date(Date.now() - 24 * 60 * 60 * 1000),
-      valid_until: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
     });
 
     await plan_repository.create(plan);
@@ -184,31 +202,37 @@ describe('HandleCheckoutCompletedWebhookUseCase', () => {
       name: 'Pro Plan',
       price: 9900,
       currency: 'BRL',
-      interval: 'monthly',
+      interval: RenewalInterval.MONTHLY,
       features: {
-        professionals: 10,
-        bookings_per_month: 1000,
+        advanced_booking: true,
         custom_branding: true,
+        analytics: true,
+        api_access: false,
+        priority_support: false,
+        custom_integrations: false,
       },
       limits: {
-        max_units: 5,
-        max_users_per_unit: 20,
+        max_bookings_per_month: 1000,
+        max_concurrent_bookings: 50,
+        max_booking_rules: 10,
+        max_team_members: 20,
+        max_locations: 5,
       },
     });
 
     const discount = new DiscountEntity({
       code: 'SAVE20',
-      type: 'percentage',
+      type: DiscountType.PERCENTAGE,
       value: 20,
+      duration: DiscountDuration.ONCE,
       max_redemptions: 100,
-      valid_from: new Date(Date.now() - 24 * 60 * 60 * 1000),
-      valid_until: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
     });
 
     await plan_repository.create(plan);
     await discount_repository.create(discount);
 
-    const initial_redemptions = discount.current_redemptions;
+    const initial_redemptions = discount.redemptions_count;
 
     const now = new Date();
     const period_end = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
@@ -227,7 +251,7 @@ describe('HandleCheckoutCompletedWebhookUseCase', () => {
     await sut.execute(input);
 
     const updated_discount = await discount_repository.find_by_code('SAVE20');
-    expect(updated_discount?.current_redemptions).toBe(initial_redemptions + 1);
+    expect(updated_discount?.redemptions_count).toBe(initial_redemptions + 1);
   });
 
   it('should not apply invalid discount', async () => {
@@ -235,15 +259,21 @@ describe('HandleCheckoutCompletedWebhookUseCase', () => {
       name: 'Pro Plan',
       price: 9900,
       currency: 'BRL',
-      interval: 'monthly',
+      interval: RenewalInterval.MONTHLY,
       features: {
-        professionals: 10,
-        bookings_per_month: 1000,
+        advanced_booking: true,
         custom_branding: true,
+        analytics: true,
+        api_access: false,
+        priority_support: false,
+        custom_integrations: false,
       },
       limits: {
-        max_units: 5,
-        max_users_per_unit: 20,
+        max_bookings_per_month: 1000,
+        max_concurrent_bookings: 50,
+        max_booking_rules: 10,
+        max_team_members: 20,
+        max_locations: 5,
       },
     });
 
@@ -273,15 +303,21 @@ describe('HandleCheckoutCompletedWebhookUseCase', () => {
       name: 'Pro Plan',
       price: 9900,
       currency: 'BRL',
-      interval: 'monthly',
+      interval: RenewalInterval.MONTHLY,
       features: {
-        professionals: 10,
-        bookings_per_month: 1000,
+        advanced_booking: true,
         custom_branding: true,
+        analytics: true,
+        api_access: false,
+        priority_support: false,
+        custom_integrations: false,
       },
       limits: {
-        max_units: 5,
-        max_users_per_unit: 20,
+        max_bookings_per_month: 1000,
+        max_concurrent_bookings: 50,
+        max_booking_rules: 10,
+        max_team_members: 20,
+        max_locations: 5,
       },
     });
 
@@ -317,15 +353,21 @@ describe('HandleCheckoutCompletedWebhookUseCase', () => {
       name: 'Annual Plan',
       price: 99000,
       currency: 'BRL',
-      interval: 'yearly',
+      interval: RenewalInterval.YEARLY,
       features: {
-        professionals: 10,
-        bookings_per_month: 1000,
+        advanced_booking: true,
         custom_branding: true,
+        analytics: true,
+        api_access: false,
+        priority_support: false,
+        custom_integrations: false,
       },
       limits: {
-        max_units: 5,
-        max_users_per_unit: 20,
+        max_bookings_per_month: 1000,
+        max_concurrent_bookings: 50,
+        max_booking_rules: 10,
+        max_team_members: 20,
+        max_locations: 5,
       },
     });
 

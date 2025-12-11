@@ -5,6 +5,7 @@ import { SubscriptionEntity, SubscriptionStatus } from '@/domain/entities/billin
 import { BaseEntity } from '@/domain/entities/base.entity';
 import { ULIDXIDGeneratorService } from '@/infra/services/ulidx-id-generator.service';
 import { SubscriptionNotFoundError } from '@/domain/errors/billing/subscription.errors';
+import { RenewalInterval } from '@/domain/entities/billing/plan.entity';
 
 describe('HandleSubscriptionUpdatedWebhookUseCase', () => {
   let sut: HandleSubscriptionUpdatedWebhookUseCase;
@@ -30,7 +31,7 @@ describe('HandleSubscriptionUpdatedWebhookUseCase', () => {
       start_date: new Date(),
       current_period_start: new Date(),
       current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      renewal_interval: 'monthly',
+      renewal_interval: RenewalInterval.MONTHLY,
       provider_subscription_id: 'sub_provider_123',
     });
 
@@ -55,7 +56,7 @@ describe('HandleSubscriptionUpdatedWebhookUseCase', () => {
       start_date: new Date(),
       current_period_start: new Date(),
       current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      renewal_interval: 'monthly',
+      renewal_interval: RenewalInterval.MONTHLY,
       provider_subscription_id: 'sub_provider_123',
     });
 
@@ -85,7 +86,7 @@ describe('HandleSubscriptionUpdatedWebhookUseCase', () => {
       start_date: new Date(),
       current_period_start: new Date(),
       current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      renewal_interval: 'monthly',
+      renewal_interval: RenewalInterval.MONTHLY,
       provider_subscription_id: 'sub_provider_123',
     });
 
@@ -112,7 +113,7 @@ describe('HandleSubscriptionUpdatedWebhookUseCase', () => {
       start_date: new Date(),
       current_period_start: new Date(),
       current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      renewal_interval: 'monthly',
+      renewal_interval: RenewalInterval.MONTHLY,
       provider_subscription_id: 'sub_provider_123',
     });
 
@@ -137,7 +138,7 @@ describe('HandleSubscriptionUpdatedWebhookUseCase', () => {
       start_date: new Date(),
       current_period_start: new Date(),
       current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      renewal_interval: 'monthly',
+      renewal_interval: RenewalInterval.MONTHLY,
       provider_subscription_id: 'sub_provider_123',
     });
 
@@ -171,7 +172,7 @@ describe('HandleSubscriptionUpdatedWebhookUseCase', () => {
       start_date: new Date(),
       current_period_start: new Date(),
       current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      renewal_interval: 'monthly',
+      renewal_interval: RenewalInterval.MONTHLY,
       provider_subscription_id: 'sub_provider_123',
     });
 
@@ -205,7 +206,7 @@ describe('HandleSubscriptionUpdatedWebhookUseCase', () => {
       start_date: new Date(),
       current_period_start: new Date(),
       current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      renewal_interval: 'monthly',
+      renewal_interval: RenewalInterval.MONTHLY,
       provider_subscription_id: 'sub_provider_123',
     });
 
@@ -230,7 +231,7 @@ describe('HandleSubscriptionUpdatedWebhookUseCase', () => {
       start_date: new Date(),
       current_period_start: new Date(),
       current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      renewal_interval: 'monthly',
+      renewal_interval: RenewalInterval.MONTHLY,
       provider_subscription_id: 'sub_provider_123',
     });
 

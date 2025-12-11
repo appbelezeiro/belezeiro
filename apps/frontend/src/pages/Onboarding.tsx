@@ -266,7 +266,7 @@ const Onboarding = () => {
                 {hasSavedData && metadata && (
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                     <Clock className="h-3 w-3" />
-                    <span>Salvo automaticamente • Expira em {metadata.remainingTimeFormatted}</span>
+                    <span>Salvo automaticamente</span>
                   </div>
                 )}
               </div>

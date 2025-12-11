@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, beforeAll } from 'vitest';
 import { CancelSubscriptionUseCase } from './cancel-subscription.usecase';
 import { InMemorySubscriptionRepository } from '@/infra/repositories/in-memory/billing/in-memory-subscription.repository';
 import { SubscriptionEntity, SubscriptionStatus } from '@/domain/entities/billing/subscription.entity';
+import { RenewalInterval } from '@/domain/entities/billing/plan.entity';
 import { BaseEntity } from '@/domain/entities/base.entity';
 import { ULIDXIDGeneratorService } from '@/infra/services/ulidx-id-generator.service';
 import { SubscriptionNotFoundError } from '@/domain/errors/billing/subscription.errors';
@@ -84,11 +85,11 @@ class MockPaymentGateway implements IPaymentGateway {
     };
   }
 
-  verify_webhook_signature(payload: string, signature: string): boolean {
+  verify_webhook_signature(_payload: string, _signature: string): boolean {
     return true;
   }
 
-  parse_webhook_event(payload: string): any {
+  parse_webhook_event(_payload: string): any {
     return {};
   }
 }
@@ -119,7 +120,7 @@ describe('CancelSubscriptionUseCase', () => {
       start_date: new Date(),
       current_period_start: new Date(),
       current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      renewal_interval: 'monthly',
+      renewal_interval: RenewalInterval.MONTHLY,
       provider_subscription_id: 'sub_provider_123',
     });
 
@@ -146,7 +147,7 @@ describe('CancelSubscriptionUseCase', () => {
       start_date: new Date(),
       current_period_start: new Date(),
       current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      renewal_interval: 'monthly',
+      renewal_interval: RenewalInterval.MONTHLY,
       provider_subscription_id: 'sub_provider_123',
     });
 
@@ -173,7 +174,7 @@ describe('CancelSubscriptionUseCase', () => {
       start_date: new Date(),
       current_period_start: new Date(),
       current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      renewal_interval: 'monthly',
+      renewal_interval: RenewalInterval.MONTHLY,
       provider_subscription_id: 'sub_provider_123',
     });
 
@@ -209,7 +210,7 @@ describe('CancelSubscriptionUseCase', () => {
       start_date: new Date(),
       current_period_start: new Date(),
       current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      renewal_interval: 'monthly',
+      renewal_interval: RenewalInterval.MONTHLY,
     });
 
     await subscription_repository.create(subscription);
@@ -233,7 +234,7 @@ describe('CancelSubscriptionUseCase', () => {
       start_date: new Date(),
       current_period_start: new Date(),
       current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      renewal_interval: 'monthly',
+      renewal_interval: RenewalInterval.MONTHLY,
       provider_subscription_id: 'sub_provider_123',
     });
 

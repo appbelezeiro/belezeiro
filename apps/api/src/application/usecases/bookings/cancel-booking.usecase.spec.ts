@@ -23,12 +23,10 @@ describe('CancelBookingUseCase', () => {
 
   it('should cancel booking', async () => {
     const booking = new BookingEntity({
-      professional_id: 'prof_123',
+      user_id: 'user_123',
       client_id: 'client_123',
-      unit_id: 'unit_123',
-      service_id: 'service_123',
-      start_time: new Date('2024-12-15T10:00:00Z'),
-      end_time: new Date('2024-12-15T11:00:00Z'),
+      start_at: '2024-12-15T10:00:00Z',
+      end_at: '2024-12-15T11:00:00Z',
       status: 'confirmed',
     });
 
@@ -54,12 +52,10 @@ describe('CancelBookingUseCase', () => {
 
   it('should update booking in repository', async () => {
     const booking = new BookingEntity({
-      professional_id: 'prof_123',
+      user_id: 'user_123',
       client_id: 'client_123',
-      unit_id: 'unit_123',
-      service_id: 'service_123',
-      start_time: new Date('2024-12-15T10:00:00Z'),
-      end_time: new Date('2024-12-15T11:00:00Z'),
+      start_at: '2024-12-15T10:00:00Z',
+      end_at: '2024-12-15T11:00:00Z',
       status: 'confirmed',
     });
 
@@ -77,12 +73,10 @@ describe('CancelBookingUseCase', () => {
 
   it('should handle already cancelled booking', async () => {
     const booking = new BookingEntity({
-      professional_id: 'prof_123',
+      user_id: 'user_123',
       client_id: 'client_123',
-      unit_id: 'unit_123',
-      service_id: 'service_123',
-      start_time: new Date('2024-12-15T10:00:00Z'),
-      end_time: new Date('2024-12-15T11:00:00Z'),
+      start_at: '2024-12-15T10:00:00Z',
+      end_at: '2024-12-15T11:00:00Z',
       status: 'cancelled',
     });
 

@@ -4,18 +4,19 @@ type ServiceEntityOwnProps = {
   specialty_id: string;
   code: string;
   name: string;
-  description?: string;
+  description: string | undefined;
   default_duration_minutes: number;
   default_price_cents: number;
   is_predefined: boolean;
   is_active: boolean;
 };
 
-type ServiceEntityCreationProps = Omit<ServiceEntityOwnProps, 'is_active'> &
+type ServiceEntityCreationProps = Omit<ServiceEntityOwnProps, 'is_active' | 'description'> &
   Partial<Pick<ServiceEntityOwnProps, 'is_active'>> &
+  { description?: string } &
   BaseEntityCreationProps;
 
-type ServiceEntityProps = Required<ServiceEntityOwnProps> & BaseEntityProps;
+type ServiceEntityProps = ServiceEntityOwnProps & BaseEntityProps;
 
 export class ServiceEntity extends BaseEntity<ServiceEntityProps> {
   protected prefix(): string {
@@ -25,6 +26,7 @@ export class ServiceEntity extends BaseEntity<ServiceEntityProps> {
   constructor(props: ServiceEntityCreationProps) {
     super({
       ...props,
+      description: props.description,
       is_active: props.is_active ?? true,
     });
   }

@@ -1,5 +1,6 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Search, Plus, Briefcase, Check, X, Loader2 } from "lucide-react";
+import { useQueries } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,8 +8,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { OnboardingFormData } from "@/pages/Onboarding";
 import { cn } from "@/lib/utils";
 import { useSpecialties, useSearchSpecialties } from "@/features/specialties/hooks";
-import { useServices } from "@/features/services/hooks/queries/useServices";
+import { queryKeys } from "@/shared/constants/query-keys";
+import { servicesService } from "@/features/services/api";
 import type { Specialty } from "@/features/specialties/types/specialty.types";
+import type { ServicesResponse } from "@/features/services/types/service.types";
 
 interface OnboardingStepSpecialtiesProps {
   data: OnboardingFormData;
@@ -20,6 +23,9 @@ interface OnboardingStepSpecialtiesProps {
 export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: OnboardingStepSpecialtiesProps) => {
   const [specialtySearch, setSpecialtySearch] = useState("");
   const [serviceSearch, setServiceSearch] = useState("");
+
+  // Track which specialties have had their services auto-selected
+  const autoSelectedSpecialtiesRef = useRef<Set<string>>(new Set());
 
   // Fetch specialties from API (with or without search)
   const shouldSearch = specialtySearch.trim().length > 0;
@@ -59,10 +65,14 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
   // Get selected specialty IDs for fetching services
   const selectedSpecialtyIds = data.professions.map((p) => p.id);
 
-  // Fetch services for each selected specialty
-  const servicesQueries = selectedSpecialtyIds.map((specialtyId) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    return useServices({ specialtyId, enabled: !!specialtyId });
+  // Fetch services for each selected specialty using useQueries (handles dynamic array)
+  const servicesQueries = useQueries({
+    queries: selectedSpecialtyIds.map((specialtyId) => ({
+      queryKey: queryKeys.servicesGlobal.list({ specialty_id: specialtyId, limit: 20 }),
+      queryFn: () => servicesService.getServices(specialtyId, undefined, 20),
+      enabled: !!specialtyId,
+      staleTime: 5 * 60 * 1000,
+    })),
   });
 
   // Combine all services from selected specialties
@@ -73,11 +83,13 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
       const specialtyId = selectedSpecialtyIds[index];
       const specialty = data.professions.find((p) => p.id === specialtyId);
 
-      if (!query.data?.pages || !specialty) return;
+      // useQueries returns data directly (not pages like infinite query)
+      const response = query.data as ServicesResponse | undefined;
+      if (!response?.items || !specialty) return;
 
-      const services = query.data.pages.flatMap((page) => page.items);
-      services.forEach((service) => {
-        const key = `${service.id}-${specialtyId}`;
+      response.items.forEach((service) => {
+        // Use name+professionId as key to avoid duplicates
+        const key = `${service.name}-${specialtyId}`;
         if (!servicesMap.has(key)) {
           servicesMap.set(key, {
             name: service.name,
@@ -88,9 +100,10 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
       });
     });
 
-    // Include custom services already added
+    // Include custom services that are NOT from API (custom specialties only)
     data.services.forEach((s) => {
-      const key = `custom-${s.name}-${s.professionId}`;
+      const key = `${s.name}-${s.professionId}`;
+      // Only add if not already in map (prevents duplicates)
       if (!servicesMap.has(key)) {
         const profession = data.professions.find((p) => p.id === s.professionId);
         if (profession) {
@@ -105,6 +118,50 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
 
     return Array.from(servicesMap.values());
   }, [servicesQueries, selectedSpecialtyIds, data.professions, data.services]);
+
+  // Auto-select all services when a new specialty is selected and its services are loaded
+  useEffect(() => {
+    const newServices: { name: string; professionId: string }[] = [];
+
+    servicesQueries.forEach((query, index) => {
+      const specialtyId = selectedSpecialtyIds[index];
+
+      // Skip if already auto-selected or still loading
+      if (autoSelectedSpecialtiesRef.current.has(specialtyId) || query.isLoading || !query.data) {
+        return;
+      }
+
+      const response = query.data as ServicesResponse | undefined;
+      if (!response?.items) return;
+
+      // Mark as auto-selected
+      autoSelectedSpecialtiesRef.current.add(specialtyId);
+
+      // Add all services from this specialty
+      response.items.forEach((service) => {
+        const alreadySelected = data.services.some(
+          (s) => s.name === service.name && s.professionId === specialtyId
+        );
+        if (!alreadySelected) {
+          newServices.push({ name: service.name, professionId: specialtyId });
+        }
+      });
+    });
+
+    if (newServices.length > 0) {
+      onUpdate({ services: [...data.services, ...newServices] });
+    }
+  }, [servicesQueries, selectedSpecialtyIds, data.services, onUpdate]);
+
+  // Clean up auto-selected tracking when specialty is deselected
+  useEffect(() => {
+    const currentIds = new Set(selectedSpecialtyIds);
+    autoSelectedSpecialtiesRef.current.forEach((id) => {
+      if (!currentIds.has(id)) {
+        autoSelectedSpecialtiesRef.current.delete(id);
+      }
+    });
+  }, [selectedSpecialtyIds]);
 
   // Filter services by search
   const filteredServices = useMemo(() => {

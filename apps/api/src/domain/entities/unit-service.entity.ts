@@ -3,16 +3,17 @@ import { BaseEntity, BaseEntityCreationProps, BaseEntityProps } from './base.ent
 type UnitServiceEntityOwnProps = {
   unit_id: string;
   service_id: string;
-  custom_price_cents?: number;
-  custom_duration_minutes?: number;
+  custom_price_cents: number | undefined;
+  custom_duration_minutes: number | undefined;
   is_active: boolean;
 };
 
-type UnitServiceEntityCreationProps = Omit<UnitServiceEntityOwnProps, 'is_active'> &
+type UnitServiceEntityCreationProps = Omit<UnitServiceEntityOwnProps, 'is_active' | 'custom_price_cents' | 'custom_duration_minutes'> &
   Partial<Pick<UnitServiceEntityOwnProps, 'is_active'>> &
+  { custom_price_cents?: number; custom_duration_minutes?: number } &
   BaseEntityCreationProps;
 
-type UnitServiceEntityProps = Required<UnitServiceEntityOwnProps> & BaseEntityProps;
+type UnitServiceEntityProps = UnitServiceEntityOwnProps & BaseEntityProps;
 
 export class UnitServiceEntity extends BaseEntity<UnitServiceEntityProps> {
   protected prefix(): string {
@@ -22,6 +23,8 @@ export class UnitServiceEntity extends BaseEntity<UnitServiceEntityProps> {
   constructor(props: UnitServiceEntityCreationProps) {
     super({
       ...props,
+      custom_price_cents: props.custom_price_cents,
+      custom_duration_minutes: props.custom_duration_minutes,
       is_active: props.is_active ?? true,
     });
   }

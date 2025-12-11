@@ -1,10 +1,10 @@
 import { UnitServiceEntity } from '@/domain/entities/unit-service.entity';
 import { IUnitServiceRepository } from '@/application/contracts/i-unit-service-repository.interface';
 import { IServiceRepository } from '@/application/contracts/i-service-repository.interface';
-import { IUnitRepository } from '@/application/contracts/i-unit-repository.interface';
+import { IUnitRepository } from '@/application/contracts/units/i-unit-repository.interface';
 import { UnitServiceAlreadyAddedError } from '@/domain/errors/unit-service-already-added.error';
 import { ServiceNotFoundError } from '@/domain/errors/service-not-found.error';
-import { UnitNotFoundError } from '@/domain/errors/unit-not-found.error';
+import { UnitNotFoundError } from '@/domain/errors/units/unit.errors';
 
 class UseCase {
   constructor(

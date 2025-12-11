@@ -18,11 +18,11 @@ class UseCase {
     }
 
     if (input.custom_price_cents !== undefined) {
-      unit_service.update_custom_price(input.custom_price_cents);
+      unit_service.update_custom_price(input.custom_price_cents ?? undefined);
     }
 
     if (input.custom_duration_minutes !== undefined) {
-      unit_service.update_custom_duration(input.custom_duration_minutes);
+      unit_service.update_custom_duration(input.custom_duration_minutes ?? undefined);
     }
 
     if (input.is_active !== undefined) {

@@ -28,14 +28,24 @@ describe('ListUnitsByOrganizationUseCase', () => {
       address: {
         street: 'Main St',
         number: '123',
+        neighborhood: 'Downtown',
         city: 'São Paulo',
         state: 'SP',
         cep: '01000-000',
-        country: 'BR',
       },
       professions: [],
       services: [],
-      serviceType: 'in_person',
+      serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     const unit2 = new UnitEntity({
@@ -45,14 +55,24 @@ describe('ListUnitsByOrganizationUseCase', () => {
       address: {
         street: 'Second St',
         number: '456',
+        neighborhood: 'Uptown',
         city: 'São Paulo',
         state: 'SP',
         cep: '02000-000',
-        country: 'BR',
       },
       professions: [],
       services: [],
-      serviceType: 'in_person',
+      serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     await unit_repository.create(unit1);
@@ -87,14 +107,24 @@ describe('ListUnitsByOrganizationUseCase', () => {
       address: {
         street: 'Main St',
         number: '123',
+        neighborhood: 'Downtown',
         city: 'São Paulo',
         state: 'SP',
         cep: '01000-000',
-        country: 'BR',
       },
       professions: [],
       services: [],
-      serviceType: 'in_person',
+      serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     const unit2 = new UnitEntity({
@@ -104,14 +134,24 @@ describe('ListUnitsByOrganizationUseCase', () => {
       address: {
         street: 'Second St',
         number: '456',
+        neighborhood: 'Uptown',
         city: 'São Paulo',
         state: 'SP',
         cep: '02000-000',
-        country: 'BR',
       },
       professions: [],
       services: [],
-      serviceType: 'in_person',
+      serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     await unit_repository.create(unit1);
@@ -138,15 +178,24 @@ describe('ListUnitsByOrganizationUseCase', () => {
       address: {
         street: 'Complete St',
         number: '789',
+        neighborhood: 'Central',
         city: 'São Paulo',
         state: 'SP',
         cep: '03000-000',
-        country: 'BR',
       },
-      professions: [{ id: 'prof_1', name: 'Hairdresser' }],
-      services: [{ id: 'svc_1', name: 'Haircut', price: 5000 }],
-      serviceType: 'hybrid',
+      professions: [{ id: 'prof_1', name: 'Hairdresser', icon: 'scissors' }],
+      services: [{ id: 'svc_1', name: 'Haircut', professionId: 'prof_1' }],
+      serviceType: 'both',
       amenities: ['wifi', 'parking'],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     await unit_repository.create(unit);
@@ -174,14 +223,24 @@ describe('ListUnitsByOrganizationUseCase', () => {
       address: {
         street: 'Main St',
         number: '123',
+        neighborhood: 'Downtown',
         city: 'São Paulo',
         state: 'SP',
         cep: '01000-000',
-        country: 'BR',
       },
       professions: [],
       services: [],
-      serviceType: 'in_person',
+      serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     const inactive_unit = new UnitEntity({
@@ -191,14 +250,24 @@ describe('ListUnitsByOrganizationUseCase', () => {
       address: {
         street: 'Second St',
         number: '456',
+        neighborhood: 'Uptown',
         city: 'São Paulo',
         state: 'SP',
         cep: '02000-000',
-        country: 'BR',
       },
       professions: [],
       services: [],
-      serviceType: 'in_person',
+      serviceType: 'local',
+      amenities: [],
+      workingHours: {
+        monday: { open: '09:00', close: '18:00', enabled: true },
+        tuesday: { open: '09:00', close: '18:00', enabled: true },
+        wednesday: { open: '09:00', close: '18:00', enabled: true },
+        thursday: { open: '09:00', close: '18:00', enabled: true },
+        friday: { open: '09:00', close: '18:00', enabled: true },
+        saturday: { open: '09:00', close: '18:00', enabled: true },
+        sunday: { open: '09:00', close: '18:00', enabled: false },
+      },
     });
 
     inactive_unit.deactivate();

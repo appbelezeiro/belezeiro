@@ -3,10 +3,28 @@ import { CreatePlanUseCase } from './create-plan.usecase';
 import { InMemoryPlanRepository } from '@/infra/repositories/in-memory/billing/in-memory-plan.repository';
 import { BaseEntity } from '@/domain/entities/base.entity';
 import { ULIDXIDGeneratorService } from '@/infra/services/ulidx-id-generator.service';
+import { RenewalInterval, PlanFeatures, PlanLimits } from '@/domain/entities/billing/plan.entity';
 
 describe('CreatePlanUseCase', () => {
   let sut: CreatePlanUseCase;
   let plan_repository: InMemoryPlanRepository;
+
+  const defaultFeatures: PlanFeatures = {
+    advanced_booking: true,
+    custom_branding: true,
+    analytics: true,
+    api_access: false,
+    priority_support: false,
+    custom_integrations: false,
+  };
+
+  const defaultLimits: PlanLimits = {
+    max_bookings_per_month: 1000,
+    max_concurrent_bookings: 50,
+    max_booking_rules: 10,
+    max_team_members: 20,
+    max_locations: 5,
+  };
 
   beforeAll(() => {
     BaseEntity.configure({
@@ -25,16 +43,9 @@ describe('CreatePlanUseCase', () => {
       description: 'Professional plan for growing businesses',
       price: 9900,
       currency: 'BRL',
-      interval: 'monthly' as const,
-      features: {
-        professionals: 10,
-        bookings_per_month: 1000,
-        custom_branding: true,
-      },
-      limits: {
-        max_units: 5,
-        max_users_per_unit: 20,
-      },
+      interval: RenewalInterval.MONTHLY,
+      features: defaultFeatures,
+      limits: defaultLimits,
     };
 
     const result = await sut.execute(input);
@@ -53,15 +64,17 @@ describe('CreatePlanUseCase', () => {
       name: 'Basic Plan',
       price: 4900,
       currency: 'BRL',
-      interval: 'monthly' as const,
+      interval: RenewalInterval.MONTHLY,
       features: {
-        professionals: 5,
-        bookings_per_month: 500,
+        ...defaultFeatures,
+        advanced_booking: false,
         custom_branding: false,
       },
       limits: {
-        max_units: 1,
-        max_users_per_unit: 10,
+        ...defaultLimits,
+        max_bookings_per_month: 500,
+        max_team_members: 10,
+        max_locations: 1,
       },
     };
 
@@ -77,16 +90,9 @@ describe('CreatePlanUseCase', () => {
       name: 'Trial Plan',
       price: 9900,
       currency: 'BRL',
-      interval: 'monthly' as const,
-      features: {
-        professionals: 10,
-        bookings_per_month: 1000,
-        custom_branding: true,
-      },
-      limits: {
-        max_units: 5,
-        max_users_per_unit: 20,
-      },
+      interval: RenewalInterval.MONTHLY,
+      features: defaultFeatures,
+      limits: defaultLimits,
       trial_days: 14,
     };
 
@@ -100,15 +106,18 @@ describe('CreatePlanUseCase', () => {
       name: 'Enterprise Plan',
       price: 29900,
       currency: 'BRL',
-      interval: 'yearly' as const,
+      interval: RenewalInterval.YEARLY,
       features: {
-        professionals: 50,
-        bookings_per_month: 10000,
-        custom_branding: true,
+        ...defaultFeatures,
+        api_access: true,
+        priority_support: true,
+        custom_integrations: true,
       },
       limits: {
-        max_units: 20,
-        max_users_per_unit: 100,
+        ...defaultLimits,
+        max_bookings_per_month: 10000,
+        max_team_members: 100,
+        max_locations: 20,
       },
       metadata: {
         tier: 'enterprise',
@@ -125,7 +134,7 @@ describe('CreatePlanUseCase', () => {
   });
 
   it('should create plan with different intervals', async () => {
-    const intervals = ['monthly', 'yearly'] as const;
+    const intervals = [RenewalInterval.MONTHLY, RenewalInterval.YEARLY];
 
     for (const interval of intervals) {
       const input = {
@@ -133,15 +142,8 @@ describe('CreatePlanUseCase', () => {
         price: 9900,
         currency: 'BRL',
         interval,
-        features: {
-          professionals: 10,
-          bookings_per_month: 1000,
-          custom_branding: true,
-        },
-        limits: {
-          max_units: 5,
-          max_users_per_unit: 20,
-        },
+        features: defaultFeatures,
+        limits: defaultLimits,
       };
 
       const result = await sut.execute(input);
@@ -158,16 +160,9 @@ describe('CreatePlanUseCase', () => {
         name: `Plan ${currency}`,
         price: 9900,
         currency,
-        interval: 'monthly' as const,
-        features: {
-          professionals: 10,
-          bookings_per_month: 1000,
-          custom_branding: true,
-        },
-        limits: {
-          max_units: 5,
-          max_users_per_unit: 20,
-        },
+        interval: RenewalInterval.MONTHLY,
+        features: defaultFeatures,
+        limits: defaultLimits,
       };
 
       const result = await sut.execute(input);
@@ -181,25 +176,31 @@ describe('CreatePlanUseCase', () => {
       name: 'Custom Plan',
       price: 19900,
       currency: 'BRL',
-      interval: 'monthly' as const,
+      interval: RenewalInterval.MONTHLY,
       features: {
-        professionals: 25,
-        bookings_per_month: 5000,
+        advanced_booking: true,
         custom_branding: true,
+        analytics: true,
         api_access: true,
-        white_label: true,
+        priority_support: true,
+        custom_integrations: false,
       },
       limits: {
-        max_units: 10,
-        max_users_per_unit: 50,
+        max_bookings_per_month: 5000,
+        max_concurrent_bookings: 100,
+        max_booking_rules: 20,
+        max_team_members: 50,
+        max_locations: 10,
       },
     };
 
     const result = await sut.execute(input);
 
-    expect(result.features.professionals).toBe(25);
-    expect(result.features.bookings_per_month).toBe(5000);
+    expect(result.features.advanced_booking).toBe(true);
     expect(result.features.custom_branding).toBe(true);
+    expect(result.features.api_access).toBe(true);
+    expect(result.limits.max_bookings_per_month).toBe(5000);
+    expect(result.limits.max_team_members).toBe(50);
   });
 
   it('should create active plan by default', async () => {
@@ -207,15 +208,18 @@ describe('CreatePlanUseCase', () => {
       name: 'Starter Plan',
       price: 2900,
       currency: 'BRL',
-      interval: 'monthly' as const,
+      interval: RenewalInterval.MONTHLY,
       features: {
-        professionals: 3,
-        bookings_per_month: 200,
+        ...defaultFeatures,
+        advanced_booking: false,
         custom_branding: false,
+        analytics: false,
       },
       limits: {
-        max_units: 1,
-        max_users_per_unit: 5,
+        ...defaultLimits,
+        max_bookings_per_month: 200,
+        max_team_members: 5,
+        max_locations: 1,
       },
     };
 

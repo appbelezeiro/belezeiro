@@ -91,8 +91,8 @@ describe('UpdateOrganizationUseCase', () => {
 
     const result = await sut.execute(input);
 
-    expect(result.subscription.plan).toBe('pro');
-    expect(result.subscription.expiresAt).toBeInstanceOf(Date);
+    expect(result.subscription?.plan).toBe('pro');
+    expect(result.subscription?.expiresAt).toBeInstanceOf(Date);
   });
 
   it('should throw OrganizationNotFoundError when organization does not exist', async () => {
@@ -132,8 +132,8 @@ describe('UpdateOrganizationUseCase', () => {
 
     expect(result.businessName).toBe('New Name');
     expect(result.brandColor).toBe('#4ECDC4');
-    expect(result.subscription.plan).toBe('enterprise');
-    expect(result.subscription.status).toBe('active');
+    expect(result.subscription?.plan).toBe('enterprise');
+    expect(result.subscription?.status).toBe('active');
   });
 
   it('should update only business name without changing other properties', async () => {
@@ -158,7 +158,7 @@ describe('UpdateOrganizationUseCase', () => {
 
     expect(result.businessName).toBe('New Name');
     expect(result.brandColor).toBe('#FF6B6B');
-    expect(result.subscription.plan).toBe('pro');
+    expect(result.subscription?.plan).toBe('pro');
   });
 
   it('should handle subscription status changes', async () => {
@@ -187,7 +187,7 @@ describe('UpdateOrganizationUseCase', () => {
 
       const result = await sut.execute(input);
 
-      expect(result.subscription.status).toBe(status);
+      expect(result.subscription?.status).toBe(status);
     }
   });
 
@@ -215,7 +215,7 @@ describe('UpdateOrganizationUseCase', () => {
 
     const result = await sut.execute(input);
 
-    expect(result.subscription.plan).toBe('enterprise');
+    expect(result.subscription?.plan).toBe('enterprise');
   });
 
   it('should update updated_at timestamp', async () => {
