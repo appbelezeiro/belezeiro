@@ -148,6 +148,34 @@ export const queryKeys = {
     invites: () => [...queryKeys.referral.all, 'invites'] as const,
     history: () => [...queryKeys.referral.all, 'history'] as const,
   },
+
+  // ========================================================================
+  // Public Booking (for customers booking appointments)
+  // ========================================================================
+  booking: {
+    all: ['public-booking'] as const,
+    unit: (unitId: string) => [...queryKeys.booking.all, 'unit', unitId] as const,
+    unitBySlug: (slug: string) =>
+      [...queryKeys.booking.all, 'unit', 'slug', slug] as const,
+    services: (unitId: string) =>
+      [...queryKeys.booking.all, 'services', unitId] as const,
+    availability: (unitId: string, date: string, serviceIds: string[]) =>
+      [...queryKeys.booking.all, 'availability', { unitId, date, serviceIds }] as const,
+    weekAvailability: (
+      unitId: string,
+      startDate: string,
+      endDate: string,
+      serviceIds: string[]
+    ) =>
+      [
+        ...queryKeys.booking.all,
+        'availability',
+        'week',
+        { unitId, startDate, endDate, serviceIds },
+      ] as const,
+    checkPhone: (phone: string, unitId: string) =>
+      [...queryKeys.booking.all, 'check-phone', { phone, unitId }] as const,
+  },
 } as const;
 
 /**

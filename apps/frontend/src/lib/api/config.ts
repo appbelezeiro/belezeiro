@@ -67,6 +67,19 @@ export const API_ENDPOINTS = {
     BUSINESS: '/settings/business',
     NOTIFICATIONS: '/settings/notifications',
   },
+
+  // OTP (Phone Verification)
+  OTP: {
+    SEND: '/otp/send',
+    VERIFY: '/otp/verify',
+  },
+
+  // Clients
+  CLIENTS: {
+    BASE: '/clients',
+    DETAIL: (id: string) => `/clients/${id}`,
+    BY_PHONE: '/clients/by-phone',
+  },
 } as const;
 
 /**
