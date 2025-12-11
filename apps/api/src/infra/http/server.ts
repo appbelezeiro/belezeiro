@@ -5,6 +5,7 @@ import { createRoutes } from './routes';
 import { BaseEntity } from '@/domain/entities/base.entity';
 import { ULIDXIDGeneratorService } from '../services/ulidx-id-generator.service';
 import { globalErrorHandler } from './middleware/global-error.middleware';
+import { runSeeds } from '../database/seeds/seed';
 
 export function createServer() {
   const app = new Hono();
@@ -24,6 +25,14 @@ export function createServer() {
   });
 
   const di_container = container();
+
+  // Run database seeds on startup
+  runSeeds(di_container.use_cases.seed_specialties, di_container.use_cases.seed_services).catch(
+    (error) => {
+      console.error('Failed to run database seeds:', error);
+      // Don't throw - allow server to start even if seeds fail
+    }
+  );
 
   app.onError(globalErrorHandler);
 
