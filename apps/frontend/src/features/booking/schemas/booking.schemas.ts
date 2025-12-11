@@ -125,7 +125,7 @@ export const bookingSchema = z.object({
  */
 export const checkPhoneResponseSchema = z.object({
   exists: z.boolean(),
-  clientName: z.string().optional(),
+  clientName: z.string().nullable().optional(),
 });
 
 /**

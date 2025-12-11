@@ -180,7 +180,7 @@ export interface CheckPhoneRequest {
  */
 export interface CheckPhoneResponse {
   exists: boolean;
-  clientName?: string;
+  clientName?: string | null;
 }
 
 /**

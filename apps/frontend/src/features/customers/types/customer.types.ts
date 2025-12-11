@@ -10,8 +10,8 @@ export interface Customer {
   name: string;
   email?: string;
   phone: string;
-  photo?: string;
-  birthDate?: string;
+  photo?: string | null;
+  birthDate?: string | null;
   notes?: string;
   tags: string[];
   createdAt: string;
