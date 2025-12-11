@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { OnboardingStepBasicInfo } from "@/components/onboarding/OnboardingStepBasicInfo";
@@ -12,6 +12,7 @@ import { OnboardingStepWorkingHours } from "@/components/onboarding/OnboardingSt
 import { OnboardingStepPersonalization } from "@/components/onboarding/OnboardingStepPersonalization";
 import { useCurrentUser } from "@/features/auth";
 import { useSubmitOnboarding, type OnboardingSubmitData, type AmenityId, type WorkingHours } from "@/features/onboarding";
+import { useOnboardingPersistence } from "@/shared/hooks";
 
 export interface OnboardingFormData {
   // Business
@@ -89,9 +90,55 @@ const Onboarding = () => {
   const { data: user } = useCurrentUser();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<OnboardingFormData>(initialFormData);
+  const [isRestored, setIsRestored] = useState(false);
+  const isFirstRender = useRef(true);
+
+  // Initialize persistence hook
+  const {
+    saveFormData,
+    saveStep,
+    clear: clearPersistence,
+    hasSavedData,
+    metadata,
+    initialData,
+    isLoaded,
+  } = useOnboardingPersistence({
+    userId: user?.id,
+  });
+
+  // Restore persisted data on initial load
+  useEffect(() => {
+    if (isLoaded && initialData && !isRestored) {
+      setFormData(initialData.formData);
+      setCurrentStep(initialData.currentStep);
+      setIsRestored(true);
+    } else if (isLoaded && !initialData) {
+      setIsRestored(true);
+    }
+  }, [isLoaded, initialData, isRestored]);
+
+  // Auto-save form data when it changes (skip first render and until restored)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    if (!isRestored) return;
+
+    saveFormData(formData);
+  }, [formData, saveFormData, isRestored]);
+
+  // Auto-save step when it changes (skip until restored)
+  useEffect(() => {
+    if (!isRestored) return;
+    saveStep(currentStep);
+  }, [currentStep, saveStep, isRestored]);
 
   const submitOnboarding = useSubmitOnboarding({
     onSuccess: () => {
+      // Clear persisted data on successful completion
+      clearPersistence();
       navigate("/onboarding/plans");
     },
   });
@@ -183,6 +230,18 @@ const Onboarding = () => {
     "Personalização",
   ];
 
+  // Show loading state while restoring data
+  if (!isLoaded || !isRestored) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4" />
+          <p className="text-muted-foreground">Carregando...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -200,9 +259,17 @@ const Onboarding = () => {
               </Button>
             )}
             <div className="flex-1">
-              <h1 className="text-lg font-semibold text-foreground">
-                Configuração inicial
-              </h1>
+              <div className="flex items-center justify-between">
+                <h1 className="text-lg font-semibold text-foreground">
+                  Configuração inicial
+                </h1>
+                {hasSavedData && metadata && (
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Clock className="h-3 w-3" />
+                    <span>Salvo automaticamente • Expira em {metadata.remainingTimeFormatted}</span>
+                  </div>
+                )}
+              </div>
               <p className="text-sm text-muted-foreground">
                 Etapa {currentStep} de {TOTAL_STEPS} — {stepTitles[currentStep - 1]}
               </p>

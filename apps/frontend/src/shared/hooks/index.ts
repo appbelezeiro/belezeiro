@@ -9,3 +9,6 @@ export {
   useIntersectionObserver,
   useInfiniteScroll,
 } from "./useIntersectionObserver";
+
+// Persistence hooks
+export { useOnboardingPersistence } from "./useOnboardingPersistence";
