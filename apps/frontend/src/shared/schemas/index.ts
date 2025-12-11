@@ -6,3 +6,4 @@ export * from './common.schemas';
 export * from './onboarding.schemas';
 export * from './customer.schemas';
 export * from './contact.schemas';
+export * from './settings.schemas';

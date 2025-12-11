@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 
 export interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
-  label?: string;
+  label?: React.ReactNode;
 }
 
 const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(

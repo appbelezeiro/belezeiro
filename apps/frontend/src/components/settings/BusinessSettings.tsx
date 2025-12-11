@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { 
-  Building2, 
-  MapPin, 
-  Upload, 
-  X, 
-  Plus, 
-  Phone, 
-  Clock, 
+import {
+  Building2,
+  MapPin,
+  Upload,
+  X,
+  Plus,
+  Phone,
+  Clock,
   Briefcase,
   Wifi,
   Car,
@@ -22,10 +22,18 @@ import {
   Copy
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
+import { FormInput, PhoneInput, CepInput } from "@/shared/components/form";
+import { type Address, formatCep } from "@/services/api/cep.service";
+import {
+  businessNameSchema,
+  unitBasicInfoSchema,
+  contactInfoSchema,
+  addressInfoSchema,
+} from "@/shared/schemas/settings.schemas";
+import { z } from "zod";
 import {
   Select,
   SelectContent,
@@ -76,24 +84,36 @@ const timeOptions = Array.from({ length: 48 }, (_, i) => {
 
 export const BusinessSettings = () => {
   const { toast } = useToast();
-  
+
+  // Validation errors
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
   // Business data
   const [businessName, setBusinessName] = useState("Salão Reis");
-  
+
   // Unit data (mock - would come from selected unit)
   const [unitName, setUnitName] = useState("Unidade Centro");
   const [logo, setLogo] = useState<string | null>(null);
   const [gallery, setGallery] = useState<string[]>([]);
   const [whatsapp, setWhatsapp] = useState("(11) 99999-9999");
   const [phone, setPhone] = useState("");
-  const [cep, setCep] = useState("01310-100");
+  const [cep, setCep] = useState("01310100");
   const [street, setStreet] = useState("Av. Paulista");
   const [number, setNumber] = useState("1000");
   const [complement, setComplement] = useState("Sala 101");
   const [neighborhood, setNeighborhood] = useState("Bela Vista");
   const [city, setCity] = useState("São Paulo");
   const [state, setState] = useState("SP");
-  const [isLoadingCep, setIsLoadingCep] = useState(false);
+
+  const clearError = (field: string) => {
+    if (errors[field]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  };
   
   // Specialties & Services
   const [selectedProfessions, setSelectedProfessions] = useState([
@@ -154,33 +174,20 @@ export const BusinessSettings = () => {
     setGallery((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handleCepChange = async (value: string) => {
-    const cleanCep = value.replace(/\D/g, "");
-    setCep(cleanCep);
-
-    if (cleanCep.length === 8) {
-      setIsLoadingCep(true);
-      try {
-        const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`);
-        const result = await response.json();
-        if (!result.erro) {
-          setStreet(result.logradouro || "");
-          setNeighborhood(result.bairro || "");
-          setCity(result.localidade || "");
-          setState(result.uf || "");
-        }
-      } catch (error) {
-        console.error("Erro ao buscar CEP:", error);
-      } finally {
-        setIsLoadingCep(false);
-      }
-    }
-  };
-
-  const formatCep = (value: string) => {
-    const clean = value.replace(/\D/g, "");
-    if (clean.length <= 5) return clean;
-    return `${clean.slice(0, 5)}-${clean.slice(5, 8)}`;
+  const handleAddressFound = (address: Address) => {
+    setStreet(address.street);
+    setNeighborhood(address.neighborhood);
+    setCity(address.city);
+    setState(address.state);
+    // Clear related errors
+    setErrors((prev) => {
+      const newErrors = { ...prev };
+      delete newErrors.street;
+      delete newErrors.neighborhood;
+      delete newErrors.city;
+      delete newErrors.state;
+      return newErrors;
+    });
   };
 
   const toggleAmenity = (id: string) => {
@@ -208,6 +215,57 @@ export const BusinessSettings = () => {
       return updated;
     });
     toast({ title: "Horários copiados para todos os dias" });
+  };
+
+  const validateAndSave = (section: string, schema: z.ZodSchema, data: object) => {
+    try {
+      schema.parse(data);
+      // Clear errors for this section
+      setErrors({});
+      toast({
+        title: "Alterações salvas",
+        description: `As configurações de ${section} foram atualizadas.`,
+      });
+      return true;
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        const newErrors: Record<string, string> = {};
+        err.errors.forEach((e) => {
+          if (e.path[0]) {
+            newErrors[e.path[0] as string] = e.message;
+          }
+        });
+        setErrors(newErrors);
+      }
+      return false;
+    }
+  };
+
+  const handleSaveBusinessName = () => {
+    validateAndSave("negócio", businessNameSchema, { businessName: businessName.trim() });
+  };
+
+  const handleSaveBasicInfo = () => {
+    validateAndSave("informações básicas", unitBasicInfoSchema, { unitName: unitName.trim() });
+  };
+
+  const handleSaveContact = () => {
+    validateAndSave("contato", contactInfoSchema, {
+      whatsapp,
+      phone: phone || undefined,
+    });
+  };
+
+  const handleSaveAddress = () => {
+    validateAndSave("endereço", addressInfoSchema, {
+      cep: formatCep(cep),
+      street: street.trim(),
+      number: number.trim(),
+      complement: complement.trim() || undefined,
+      neighborhood: neighborhood.trim(),
+      city: city.trim(),
+      state: state.trim(),
+    });
   };
 
   const handleSave = (section: string) => {
@@ -242,19 +300,22 @@ export const BusinessSettings = () => {
         </div>
 
         <div className="space-y-3">
-          <Label htmlFor="business-name">Nome do negócio</Label>
-          <Input
-            id="business-name"
+          <FormInput
+            label="Nome do negócio"
             value={businessName}
-            onChange={(e) => setBusinessName(e.target.value)}
+            onChange={(e) => {
+              setBusinessName(e.target.value);
+              clearError("businessName");
+            }}
             placeholder="Nome do seu negócio"
+            error={errors.businessName}
           />
           <p className="text-xs text-muted-foreground">
             Este nome é interno e não é exibido aos seus clientes.
           </p>
         </div>
 
-        <Button onClick={() => handleSave("negócio")} size="sm" className="gap-2">
+        <Button onClick={handleSaveBusinessName} size="sm" className="gap-2">
           <Save className="h-4 w-4" />
           Salvar
         </Button>
@@ -325,15 +386,18 @@ export const BusinessSettings = () => {
           </div>
 
           {/* Unit Name */}
-          <div className="flex-1 space-y-2">
-            <Label htmlFor="unit-name">Nome da unidade</Label>
-            <Input
-              id="unit-name"
+          <div className="flex-1">
+            <FormInput
+              label="Nome da unidade"
               value={unitName}
-              onChange={(e) => setUnitName(e.target.value)}
+              onChange={(e) => {
+                setUnitName(e.target.value);
+                clearError("unitName");
+              }}
               placeholder="Ex: Unidade Jardins"
+              error={errors.unitName}
             />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground mt-1">
               Este nome é público e será exibido aos seus clientes.
             </p>
           </div>
@@ -367,7 +431,7 @@ export const BusinessSettings = () => {
           </div>
         </div>
 
-        <Button onClick={() => handleSave("informações básicas")} size="sm" className="gap-2">
+        <Button onClick={handleSaveBasicInfo} size="sm" className="gap-2">
           <Save className="h-4 w-4" />
           Salvar
         </Button>
@@ -381,29 +445,29 @@ export const BusinessSettings = () => {
           <Phone className="h-4 w-4 text-primary" />
           Contato
         </h3>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="whatsapp">WhatsApp</Label>
-            <Input
-              id="whatsapp"
-              value={whatsapp}
-              onChange={(e) => setWhatsapp(e.target.value)}
-              placeholder="(11) 99999-9999"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="phone-secondary">Telefone secundário</Label>
-            <Input
-              id="phone-secondary"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="(11) 3333-4444"
-            />
-          </div>
+          <PhoneInput
+            label="WhatsApp"
+            value={whatsapp}
+            onValueChange={(value) => {
+              setWhatsapp(value);
+              clearError("whatsapp");
+            }}
+            error={errors.whatsapp}
+          />
+          <PhoneInput
+            label="Telefone secundário"
+            value={phone}
+            onValueChange={(value) => {
+              setPhone(value);
+              clearError("phone");
+            }}
+            error={errors.phone}
+          />
         </div>
 
-        <Button onClick={() => handleSave("contato")} size="sm" className="gap-2">
+        <Button onClick={handleSaveContact} size="sm" className="gap-2">
           <Save className="h-4 w-4" />
           Salvar
         </Button>
@@ -419,84 +483,87 @@ export const BusinessSettings = () => {
         </h3>
 
         <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="cep">CEP</Label>
-            <Input
-              id="cep"
-              placeholder="00000-000"
-              value={formatCep(cep)}
-              onChange={(e) => handleCepChange(e.target.value)}
-              maxLength={9}
-              className={isLoadingCep ? "animate-pulse" : ""}
-            />
-          </div>
+          <CepInput
+            label="CEP"
+            value={formatCep(cep)}
+            onValueChange={(value) => {
+              setCep(value.replace(/\D/g, ""));
+              clearError("cep");
+            }}
+            onAddressFound={handleAddressFound}
+            error={errors.cep}
+          />
 
-          <div className="space-y-2">
-            <Label htmlFor="street">Rua</Label>
-            <Input
-              id="street"
-              value={street}
-              onChange={(e) => setStreet(e.target.value)}
-              placeholder="Nome da rua"
-              disabled={isLoadingCep}
+          <FormInput
+            label="Rua"
+            value={street}
+            onChange={(e) => {
+              setStreet(e.target.value);
+              clearError("street");
+            }}
+            placeholder="Nome da rua"
+            error={errors.street}
+          />
+
+          <div className="grid grid-cols-2 gap-4">
+            <FormInput
+              label="Número"
+              value={number}
+              onChange={(e) => {
+                setNumber(e.target.value);
+                clearError("number");
+              }}
+              placeholder="123"
+              error={errors.number}
+            />
+            <FormInput
+              label="Complemento"
+              value={complement}
+              onChange={(e) => {
+                setComplement(e.target.value);
+                clearError("complement");
+              }}
+              placeholder="Sala 101"
+              error={errors.complement}
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="number">Número</Label>
-              <Input
-                id="number"
-                value={number}
-                onChange={(e) => setNumber(e.target.value)}
-                placeholder="123"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="complement">Complemento</Label>
-              <Input
-                id="complement"
-                value={complement}
-                onChange={(e) => setComplement(e.target.value)}
-                placeholder="Sala 101"
-              />
-            </div>
+            <FormInput
+              label="Bairro"
+              value={neighborhood}
+              onChange={(e) => {
+                setNeighborhood(e.target.value);
+                clearError("neighborhood");
+              }}
+              error={errors.neighborhood}
+            />
+            <FormInput
+              label="Cidade"
+              value={city}
+              onChange={(e) => {
+                setCity(e.target.value);
+                clearError("city");
+              }}
+              error={errors.city}
+            />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="neighborhood">Bairro</Label>
-              <Input
-                id="neighborhood"
-                value={neighborhood}
-                onChange={(e) => setNeighborhood(e.target.value)}
-                disabled={isLoadingCep}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="city">Cidade</Label>
-              <Input
-                id="city"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                disabled={isLoadingCep}
-              />
-            </div>
-          </div>
-
-          <div className="space-y-2 max-w-[100px]">
-            <Label htmlFor="state">Estado</Label>
-            <Input
-              id="state"
+          <div className="max-w-[100px]">
+            <FormInput
+              label="Estado"
               value={state}
-              onChange={(e) => setState(e.target.value)}
+              onChange={(e) => {
+                setState(e.target.value.toUpperCase());
+                clearError("state");
+              }}
               maxLength={2}
-              disabled={isLoadingCep}
+              error={errors.state}
             />
           </div>
         </div>
 
-        <Button onClick={() => handleSave("endereço")} size="sm" className="gap-2">
+        <Button onClick={handleSaveAddress} size="sm" className="gap-2">
           <Save className="h-4 w-4" />
           Salvar
         </Button>

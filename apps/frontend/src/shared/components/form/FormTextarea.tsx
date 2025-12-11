@@ -9,10 +9,11 @@ export interface FormTextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   error?: string;
   label?: string;
+  hint?: string;
 }
 
 const FormTextarea = React.forwardRef<HTMLTextAreaElement, FormTextareaProps>(
-  ({ className, error, label, id, ...props }, ref) => {
+  ({ className, error, label, hint, id, ...props }, ref) => {
     const textareaId = id || React.useId();
 
     return (
@@ -42,7 +43,7 @@ const FormTextarea = React.forwardRef<HTMLTextAreaElement, FormTextareaProps>(
           )}
           ref={ref}
           aria-invalid={!!error}
-          aria-describedby={error ? `${textareaId}-error` : undefined}
+          aria-describedby={error ? `${textareaId}-error` : hint ? `${textareaId}-hint` : undefined}
           {...props}
         />
         {error && (
@@ -51,6 +52,14 @@ const FormTextarea = React.forwardRef<HTMLTextAreaElement, FormTextareaProps>(
             className="mt-1 text-xs text-destructive"
           >
             {error}
+          </p>
+        )}
+        {hint && !error && (
+          <p
+            id={`${textareaId}-hint`}
+            className="mt-1 text-xs text-muted-foreground"
+          >
+            {hint}
           </p>
         )}
       </div>
