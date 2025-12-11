@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Belezeiro - Calm Blue Theme */
+    --background: 200 33% 98%;
+    --foreground: 210 25% 20%;
+
+    /* Content width */
+    --content-max-width: 1100px;
+    --content-padding-x: 16px;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 25% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 25% 20%;
+
+    --primary: 195 70% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 195 40% 95%;
+    --secondary-foreground: 195 50% 30%;
+
+    --muted: 200 20% 94%;
+    --muted-foreground: 210 15% 50%;
+
+    --accent: 180 50% 90%;
+    --accent-foreground: 195 60% 30%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 200 25% 88%;
+    --input: 200 25% 88%;
+    --ring: 195 70% 45%;
+
+    --radius: 0.75rem;
+
+    /* Custom Belezeiro tokens */
+    --sky-soft: 195 80% 96%;
+    --sky-light: 195 70% 88%;
+    --sky-medium: 195 65% 70%;
+    --ocean-calm: 195 70% 45%;
+    --ocean-deep: 200 60% 35%;
+    
+    /* Gradients */
+    --gradient-calm: linear-gradient(135deg, hsl(195 80% 96%) 0%, hsl(200 70% 92%) 100%);
+    --gradient-ocean: linear-gradient(180deg, hsl(195 70% 45%) 0%, hsl(200 60% 35%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(200 40% 70% / 0.3);
+    --shadow-card: 0 8px 32px -8px hsl(200 40% 60% / 0.2);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark theme - Elegant deep blue */
+    --background: 222 25% 8%;
+    --foreground: 210 20% 95%;
+
+    --card: 222 22% 11%;
+    --card-foreground: 210 20% 95%;
+
+    --popover: 222 22% 11%;
+    --popover-foreground: 210 20% 95%;
+
+    --primary: 195 85% 52%;
+    --primary-foreground: 222 25% 8%;
+
+    --secondary: 222 20% 16%;
+    --secondary-foreground: 210 20% 90%;
+
+    --muted: 222 18% 15%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 195 45% 18%;
+    --accent-foreground: 195 80% 75%;
+
+    --destructive: 0 65% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 222 18% 18%;
+    --input: 222 18% 18%;
+    --ring: 195 85% 52%;
+
+    /* Custom Belezeiro dark tokens */
+    --sky-soft: 222 25% 12%;
+    --sky-light: 222 22% 16%;
+    --sky-medium: 195 60% 40%;
+    --ocean-calm: 195 85% 52%;
+    --ocean-deep: 200 70% 42%;
+
+    /* Dark gradients */
+    --gradient-calm: linear-gradient(135deg, hsl(222 25% 10%) 0%, hsl(222 22% 14%) 100%);
+    --gradient-ocean: linear-gradient(180deg, hsl(195 85% 52%) 0%, hsl(200 70% 42%) 100%);
+
+    /* Dark shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(222 40% 5% / 0.5);
+    --shadow-card: 0 8px 32px -8px hsl(222 40% 5% / 0.4);
+
+    --sidebar-background: 222 25% 8%;
+    --sidebar-foreground: 210 20% 95%;
+    --sidebar-primary: 195 85% 52%;
+    --sidebar-primary-foreground: 222 25% 8%;
+    --sidebar-accent: 222 20% 14%;
+    --sidebar-accent-foreground: 210 20% 95%;
+    --sidebar-border: 222 18% 18%;
+    --sidebar-ring: 195 85% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  /* Smooth theme transitions */
+  html,
+  html *,
+  html *::before,
+  html *::after {
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Disable transitions on page load to prevent flash */
+  html.no-transitions,
+  html.no-transitions *,
+  html.no-transitions *::before,
+  html.no-transitions *::after {
+    transition: none !important;
+  }
+}
+
+@layer utilities {
+  .gradient-calm {
+    background: var(--gradient-calm);
+  }
+
+  .gradient-ocean {
+    background: var(--gradient-ocean);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .content-container {
+    width: 100%;
+    max-width: var(--content-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--content-padding-x);
+    padding-right: var(--content-padding-x);
+  }
+}
+
+/* Content container responsive */
+@media (max-width: 1132px) {
+  .content-container {
+    max-width: 100%;
+  }
+}
+
+/* Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes firework {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes sheen {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-confetti-fall {
+  animation: confetti-fall 5s ease-out forwards;
+}
+
+.animate-firework {
+  animation: firework 2s ease-out forwards;
+}
+
+/* Plan card popular effect */
+.plan-card-popular {
+  position: relative;
+  overflow: hidden;
+}
+
+.plan-card-popular::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(195 70% 60% / 0.4),
+    hsl(195 70% 70% / 0.6),
+    hsl(195 70% 60% / 0.4),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: sheen 3s ease-in-out infinite;
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Glow effect for popular plan */
+.plan-card-popular {
+  box-shadow: 
+    0 0 20px hsl(195 70% 45% / 0.15),
+    0 8px 32px -8px hsl(200 40% 60% / 0.2);
+}

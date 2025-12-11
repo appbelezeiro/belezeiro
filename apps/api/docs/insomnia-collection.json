@@ -12,20 +12,6 @@
       "scope": "collection"
     },
     {
-      "_id": "env_base",
-      "_type": "environment",
-      "name": "Base Environment",
-      "data": {
-        "BASE_URL": "http://localhost:3000",
-        "TOKEN": ""
-      },
-      "dataPropertyOrder": {
-        "&BASE_URL": 0,
-        "&TOKEN": 1
-      },
-      "parentId": "wrk_belezeiro"
-    },
-    {
       "_id": "fld_health",
       "_type": "request_group",
       "name": "Health",
@@ -103,11 +89,8 @@
       "body": {},
       "parameters": [],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Realiza logout do usuário",
+      "authentication": {},
+      "description": "Realiza logout do usuário (usa cookies)",
       "parentId": "fld_auth"
     },
     {
@@ -119,11 +102,8 @@
       "body": {},
       "parameters": [],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Retorna os dados do usuário autenticado",
+      "authentication": {},
+      "description": "Retorna os dados do usuário autenticado (usa cookies)",
       "parentId": "fld_auth"
     },
     {
@@ -178,85 +158,55 @@
           "value": "application/json"
         }
       ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Cria uma nova organização",
+      "authentication": {},
+      "description": "Cria uma nova organização (usa cookies)",
       "parentId": "fld_organizations"
     },
     {
       "_id": "req_organizations_get_by_id",
       "_type": "request",
       "name": "Get Organization by ID",
-      "url": "{{ _.BASE_URL }}/api/organizations/:id",
+      "url": "{{ _.BASE_URL }}/api/organizations/org_id_here",
       "method": "GET",
       "body": {},
-      "parameters": [
-        {
-          "name": "id",
-          "value": "org_id_here",
-          "description": "ID da organização"
-        }
-      ],
+      "parameters": [],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Busca organização por ID",
+      "authentication": {},
+      "description": "Busca organização por ID (usa cookies)",
       "parentId": "fld_organizations"
     },
     {
       "_id": "req_organizations_get_by_owner",
       "_type": "request",
       "name": "Get Organizations by Owner",
-      "url": "{{ _.BASE_URL }}/api/organizations/owner/:ownerId",
+      "url": "{{ _.BASE_URL }}/api/organizations/owner/owner_id_here",
       "method": "GET",
       "body": {},
-      "parameters": [
-        {
-          "name": "ownerId",
-          "value": "owner_id_here",
-          "description": "ID do proprietário"
-        }
-      ],
+      "parameters": [],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Busca organizações por proprietário",
+      "authentication": {},
+      "description": "Busca organizações por proprietário (usa cookies)",
       "parentId": "fld_organizations"
     },
     {
       "_id": "req_organizations_update",
       "_type": "request",
       "name": "Update Organization",
-      "url": "{{ _.BASE_URL }}/api/organizations/:id",
+      "url": "{{ _.BASE_URL }}/api/organizations/org_id_here",
       "method": "PUT",
       "body": {
         "mimeType": "application/json",
         "text": "{\n  \"name\": \"Salão de Beleza XYZ\"\n}"
       },
-      "parameters": [
-        {
-          "name": "id",
-          "value": "org_id_here",
-          "description": "ID da organização"
-        }
-      ],
+      "parameters": [],
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
         }
       ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Atualiza uma organização",
+      "authentication": {},
+      "description": "Atualiza uma organização (usa cookies)",
       "parentId": "fld_organizations"
     },
     {
@@ -283,11 +233,8 @@
           "value": "application/json"
         }
       ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Cria uma nova unidade",
+      "authentication": {},
+      "description": "Cria uma nova unidade (usa cookies)",
       "parentId": "fld_units"
     },
     {
@@ -299,85 +246,55 @@
       "body": {},
       "parameters": [],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Lista todas as unidades ativas",
+      "authentication": {},
+      "description": "Lista todas as unidades ativas (usa cookies)",
       "parentId": "fld_units"
     },
     {
       "_id": "req_units_get_by_id",
       "_type": "request",
       "name": "Get Unit by ID",
-      "url": "{{ _.BASE_URL }}/api/units/:id",
+      "url": "{{ _.BASE_URL }}/api/units/unit_id_here",
       "method": "GET",
       "body": {},
-      "parameters": [
-        {
-          "name": "id",
-          "value": "unit_id_here",
-          "description": "ID da unidade"
-        }
-      ],
+      "parameters": [],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Busca unidade por ID",
+      "authentication": {},
+      "description": "Busca unidade por ID (usa cookies)",
       "parentId": "fld_units"
     },
     {
       "_id": "req_units_list_by_organization",
       "_type": "request",
       "name": "List Units by Organization",
-      "url": "{{ _.BASE_URL }}/api/units/organization/:organizationId",
+      "url": "{{ _.BASE_URL }}/api/units/organization/org_id_here",
       "method": "GET",
       "body": {},
-      "parameters": [
-        {
-          "name": "organizationId",
-          "value": "org_id_here",
-          "description": "ID da organização"
-        }
-      ],
+      "parameters": [],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Lista unidades por organização",
+      "authentication": {},
+      "description": "Lista unidades por organização (usa cookies)",
       "parentId": "fld_units"
     },
     {
       "_id": "req_units_update",
       "_type": "request",
       "name": "Update Unit",
-      "url": "{{ _.BASE_URL }}/api/units/:id",
+      "url": "{{ _.BASE_URL }}/api/units/unit_id_here",
       "method": "PUT",
       "body": {
         "mimeType": "application/json",
         "text": "{\n  \"name\": \"Unidade Centro - Atualizada\",\n  \"address\": \"Rua Principal, 456\"\n}"
       },
-      "parameters": [
-        {
-          "name": "id",
-          "value": "unit_id_here",
-          "description": "ID da unidade"
-        }
-      ],
+      "parameters": [],
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
         }
       ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Atualiza uma unidade",
+      "authentication": {},
+      "description": "Atualiza uma unidade (usa cookies)",
       "parentId": "fld_units"
     },
     {
@@ -411,11 +328,8 @@
           "value": "application/json"
         }
       ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Cria uma regra de agendamento",
+      "authentication": {},
+      "description": "Cria uma regra de agendamento (usa cookies)",
       "parentId": "fld_booking_rules"
     },
     {
@@ -433,63 +347,42 @@
         }
       ],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Lista regras de agendamento",
+      "authentication": {},
+      "description": "Lista regras de agendamento (usa cookies)",
       "parentId": "fld_booking_rules"
     },
     {
       "_id": "req_booking_rules_update",
       "_type": "request",
       "name": "Update Booking Rule",
-      "url": "{{ _.BASE_URL }}/api/booking/rules/:id",
+      "url": "{{ _.BASE_URL }}/api/booking/rules/rule_id_here",
       "method": "PUT",
       "body": {
         "mimeType": "application/json",
         "text": "{\n  \"start_time\": \"08:00\",\n  \"end_time\": \"19:00\"\n}"
       },
-      "parameters": [
-        {
-          "name": "id",
-          "value": "rule_id_here",
-          "description": "ID da regra"
-        }
-      ],
+      "parameters": [],
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
         }
       ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Atualiza uma regra de agendamento",
+      "authentication": {},
+      "description": "Atualiza uma regra de agendamento (usa cookies)",
       "parentId": "fld_booking_rules"
     },
     {
       "_id": "req_booking_rules_delete",
       "_type": "request",
       "name": "Delete Booking Rule",
-      "url": "{{ _.BASE_URL }}/api/booking/rules/:id",
+      "url": "{{ _.BASE_URL }}/api/booking/rules/rule_id_here",
       "method": "DELETE",
       "body": {},
-      "parameters": [
-        {
-          "name": "id",
-          "value": "rule_id_here",
-          "description": "ID da regra"
-        }
-      ],
+      "parameters": [],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Remove uma regra de agendamento",
+      "authentication": {},
+      "description": "Remove uma regra de agendamento (usa cookies)",
       "parentId": "fld_booking_rules"
     },
     {
@@ -516,11 +409,8 @@
           "value": "application/json"
         }
       ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Cria uma exceção de agendamento",
+      "authentication": {},
+      "description": "Cria uma exceção de agendamento (usa cookies)",
       "parentId": "fld_booking_exceptions"
     },
     {
@@ -538,63 +428,42 @@
         }
       ],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Lista exceções de agendamento",
+      "authentication": {},
+      "description": "Lista exceções de agendamento (usa cookies)",
       "parentId": "fld_booking_exceptions"
     },
     {
       "_id": "req_booking_exceptions_update",
       "_type": "request",
       "name": "Update Booking Exception",
-      "url": "{{ _.BASE_URL }}/api/booking/exceptions/:id",
+      "url": "{{ _.BASE_URL }}/api/booking/exceptions/exception_id_here",
       "method": "PUT",
       "body": {
         "mimeType": "application/json",
         "text": "{\n  \"reason\": \"Feriado - Natal (Atualizado)\"\n}"
       },
-      "parameters": [
-        {
-          "name": "id",
-          "value": "exception_id_here",
-          "description": "ID da exceção"
-        }
-      ],
+      "parameters": [],
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
         }
       ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Atualiza uma exceção de agendamento",
+      "authentication": {},
+      "description": "Atualiza uma exceção de agendamento (usa cookies)",
       "parentId": "fld_booking_exceptions"
     },
     {
       "_id": "req_booking_exceptions_delete",
       "_type": "request",
       "name": "Delete Booking Exception",
-      "url": "{{ _.BASE_URL }}/api/booking/exceptions/:id",
+      "url": "{{ _.BASE_URL }}/api/booking/exceptions/exception_id_here",
       "method": "DELETE",
       "body": {},
-      "parameters": [
-        {
-          "name": "id",
-          "value": "exception_id_here",
-          "description": "ID da exceção"
-        }
-      ],
+      "parameters": [],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Remove uma exceção de agendamento",
+      "authentication": {},
+      "description": "Remove uma exceção de agendamento (usa cookies)",
       "parentId": "fld_booking_exceptions"
     },
     {
@@ -676,41 +545,29 @@
           "value": "application/json"
         }
       ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Cria um novo agendamento",
+      "authentication": {},
+      "description": "Cria um novo agendamento (usa cookies)",
       "parentId": "fld_booking_management"
     },
     {
       "_id": "req_bookings_cancel",
       "_type": "request",
       "name": "Cancel Booking",
-      "url": "{{ _.BASE_URL }}/api/booking/:id/cancel",
+      "url": "{{ _.BASE_URL }}/api/booking/booking_id_here/cancel",
       "method": "POST",
       "body": {
         "mimeType": "application/json",
         "text": "{\n  \"reason\": \"Cliente solicitou cancelamento\"\n}"
       },
-      "parameters": [
-        {
-          "name": "id",
-          "value": "booking_id_here",
-          "description": "ID do agendamento"
-        }
-      ],
+      "parameters": [],
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
         }
       ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Cancela um agendamento",
+      "authentication": {},
+      "description": "Cancela um agendamento (usa cookies)",
       "parentId": "fld_booking_management"
     },
     {
@@ -744,16 +601,10 @@
       "_id": "req_plans_get_by_id",
       "_type": "request",
       "name": "Get Plan by ID",
-      "url": "{{ _.BASE_URL }}/api/plans/:id",
+      "url": "{{ _.BASE_URL }}/api/plans/plan_id_here",
       "method": "GET",
       "body": {},
-      "parameters": [
-        {
-          "name": "id",
-          "value": "plan_id_here",
-          "description": "ID do plano"
-        }
-      ],
+      "parameters": [],
       "headers": [],
       "authentication": {},
       "description": "Busca plano por ID",
@@ -783,63 +634,42 @@
           "value": "application/json"
         }
       ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Cria um checkout para assinatura",
+      "authentication": {},
+      "description": "Cria um checkout para assinatura (usa cookies)",
       "parentId": "fld_subscriptions"
     },
     {
       "_id": "req_subscriptions_get_by_unit",
       "_type": "request",
       "name": "Get Subscription by Unit",
-      "url": "{{ _.BASE_URL }}/api/subscriptions/unit/:unit_id",
+      "url": "{{ _.BASE_URL }}/api/subscriptions/unit/unit_id_here",
       "method": "GET",
       "body": {},
-      "parameters": [
-        {
-          "name": "unit_id",
-          "value": "unit_id_here",
-          "description": "ID da unidade"
-        }
-      ],
+      "parameters": [],
       "headers": [],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Busca assinatura por unidade",
+      "authentication": {},
+      "description": "Busca assinatura por unidade (usa cookies)",
       "parentId": "fld_subscriptions"
     },
     {
       "_id": "req_subscriptions_cancel",
       "_type": "request",
       "name": "Cancel Subscription",
-      "url": "{{ _.BASE_URL }}/api/subscriptions/:id/cancel",
+      "url": "{{ _.BASE_URL }}/api/subscriptions/subscription_id_here/cancel",
       "method": "POST",
       "body": {
         "mimeType": "application/json",
         "text": "{\n  \"reason\": \"Cliente solicitou cancelamento\"\n}"
       },
-      "parameters": [
-        {
-          "name": "id",
-          "value": "subscription_id_here",
-          "description": "ID da assinatura"
-        }
-      ],
+      "parameters": [],
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
         }
       ],
-      "authentication": {
-        "type": "bearer",
-        "token": "{{ _.TOKEN }}"
-      },
-      "description": "Cancela uma assinatura",
+      "authentication": {},
+      "description": "Cancela uma assinatura (usa cookies)",
       "parentId": "fld_subscriptions"
     },
     {
@@ -853,16 +683,10 @@
       "_id": "req_discounts_validate",
       "_type": "request",
       "name": "Validate Discount Code",
-      "url": "{{ _.BASE_URL }}/api/discounts/validate/:code",
+      "url": "{{ _.BASE_URL }}/api/discounts/validate/PROMO2025",
       "method": "GET",
       "body": {},
-      "parameters": [
-        {
-          "name": "code",
-          "value": "PROMO2025",
-          "description": "Código do desconto"
-        }
-      ],
+      "parameters": [],
       "headers": [],
       "authentication": {},
       "description": "Valida um código de desconto",
