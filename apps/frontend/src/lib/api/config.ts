@@ -60,6 +60,8 @@ export const API_ENDPOINTS = {
     SPECIALTIES: (id: string) => `/api/units/${id}/specialties`,
     SPECIALTY: (unitId: string, specialtyId: string) => `/api/units/${unitId}/specialties/${specialtyId}`,
     SERVICE: (unitId: string, serviceId: string) => `/api/units/${unitId}/services/${serviceId}`,
+    AMENITIES: (id: string) => `/api/units/${id}/amenities`,
+    AMENITY: (unitId: string, amenityId: string) => `/api/units/${unitId}/amenities/${amenityId}`,
   },
 
   // Specialties
@@ -67,6 +69,14 @@ export const API_ENDPOINTS = {
     BASE: '/api/specialties',
     DETAIL: (id: string) => `/api/specialties/${id}`,
     SEARCH: '/api/specialties/search',
+  },
+
+  // Amenities
+  AMENITIES: {
+    BASE: '/api/amenities',
+    DETAIL: (id: string) => `/api/amenities/${id}`,
+    SEARCH: '/api/amenities/search',
+    SEED: '/api/amenities/seed',
   },
 
   // Services (Global)

@@ -178,6 +178,27 @@ export const queryKeys = {
   },
 
   // ========================================================================
+  // Amenities (Global)
+  // ========================================================================
+  amenities: {
+    all: ['amenities'] as const,
+    lists: () => [...queryKeys.amenities.all, 'list'] as const,
+    list: (filters = {}) => [...queryKeys.amenities.lists(), filters] as const,
+    details: () => [...queryKeys.amenities.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.amenities.details(), id] as const,
+    search: (query: string, filters = {}) => [...queryKeys.amenities.all, 'search', query, filters] as const,
+  },
+
+  // ========================================================================
+  // Unit Amenities
+  // ========================================================================
+  unitAmenities: {
+    all: ['unit-amenities'] as const,
+    lists: () => [...queryKeys.unitAmenities.all, 'list'] as const,
+    list: (unitId: string) => [...queryKeys.unitAmenities.lists(), unitId] as const,
+  },
+
+  // ========================================================================
   // Dashboard
   // ========================================================================
   dashboard: {

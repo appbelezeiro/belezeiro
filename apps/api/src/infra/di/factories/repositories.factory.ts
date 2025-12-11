@@ -13,6 +13,8 @@ import { InMemorySpecialtyRepository } from '@/infra/repositories/in-memory/in-m
 import { InMemoryServiceRepository } from '@/infra/repositories/in-memory/in-memory-service.repository';
 import { InMemoryUnitSpecialtyRepository } from '@/infra/repositories/in-memory/in-memory-unit-specialty.repository';
 import { InMemoryUnitServiceRepository } from '@/infra/repositories/in-memory/in-memory-unit-service.repository';
+import { InMemoryAmenityRepository } from '@/infra/repositories/in-memory/in-memory-amenity.repository';
+import { InMemoryUnitAmenityRepository } from '@/infra/repositories/in-memory/in-memory-unit-amenity.repository';
 import type { Clients } from './clients.factory';
 
 export function createRepositories(_clients: Clients) {
@@ -36,6 +38,10 @@ export function createRepositories(_clients: Clients) {
   const unit_specialty_repository = new InMemoryUnitSpecialtyRepository();
   const unit_service_repository = new InMemoryUnitServiceRepository();
 
+  // Amenities repositories
+  const amenity_repository = new InMemoryAmenityRepository();
+  const unit_amenity_repository = new InMemoryUnitAmenityRepository();
+
   return {
     user_repository,
     booking_rule_repository,
@@ -52,6 +58,8 @@ export function createRepositories(_clients: Clients) {
     service_repository,
     unit_specialty_repository,
     unit_service_repository,
+    amenity_repository,
+    unit_amenity_repository,
   };
 }
 
