@@ -45,14 +45,14 @@ export const meResponseSchema = z.object({
  * Schema de resposta de refresh token
  */
 export const refreshTokenResponseSchema = z.object({
-  message: z.string(),
+  status: z.string(),
 });
 
 /**
  * Schema de resposta de logout
  */
 export const logoutResponseSchema = z.object({
-  message: z.string(),
+  status: z.string(),
 });
 
 /**

@@ -112,19 +112,19 @@ export const mockBooking = {
 // ============================================================================
 
 const authHandlers = [
-  http.post(`${API_URL}/auth/login`, async () => {
+  http.post(`${API_URL}/api/auth/social-login`, async () => {
     return HttpResponse.json({ user: mockUser });
   }),
 
-  http.post(`${API_URL}/auth/logout`, async () => {
-    return HttpResponse.json({ message: "Logged out successfully" });
+  http.post(`${API_URL}/api/auth/logout`, async () => {
+    return HttpResponse.json({ status: "Logged out successfully" });
   }),
 
-  http.post(`${API_URL}/auth/refresh`, async () => {
-    return HttpResponse.json({ message: "Token refreshed" });
+  http.post(`${API_URL}/api/auth/refresh`, async () => {
+    return HttpResponse.json({ status: "Tokens refreshed successfully" });
   }),
 
-  http.get(`${API_URL}/auth/me`, async () => {
+  http.get(`${API_URL}/api/auth/me`, async () => {
     return HttpResponse.json({ user: mockUser });
   }),
 ];
@@ -134,7 +134,7 @@ const authHandlers = [
 // ============================================================================
 
 const customerHandlers = [
-  http.get(`${API_URL}/customers`, async () => {
+  http.get(`${API_URL}/api/customers`, async () => {
     return HttpResponse.json({
       customers: [mockCustomer],
       total: 1,
@@ -144,11 +144,11 @@ const customerHandlers = [
     });
   }),
 
-  http.get(`${API_URL}/customers/:id`, async ({ params }) => {
+  http.get(`${API_URL}/api/customers/:id`, async ({ params }) => {
     return HttpResponse.json({ ...mockCustomer, id: params.id });
   }),
 
-  http.post(`${API_URL}/customers`, async ({ request }) => {
+  http.post(`${API_URL}/api/customers`, async ({ request }) => {
     const body = await request.json();
     return HttpResponse.json({
       ...mockCustomer,
@@ -157,7 +157,7 @@ const customerHandlers = [
     });
   }),
 
-  http.patch(`${API_URL}/customers/:id`, async ({ params, request }) => {
+  http.patch(`${API_URL}/api/customers/:id`, async ({ params, request }) => {
     const body = await request.json();
     return HttpResponse.json({
       ...mockCustomer,
@@ -166,15 +166,15 @@ const customerHandlers = [
     });
   }),
 
-  http.delete(`${API_URL}/customers/:id`, async () => {
+  http.delete(`${API_URL}/api/customers/:id`, async () => {
     return new HttpResponse(null, { status: 204 });
   }),
 
-  http.get(`${API_URL}/customers/search`, async () => {
+  http.get(`${API_URL}/api/customers/search`, async () => {
     return HttpResponse.json([mockCustomer]);
   }),
 
-  http.get(`${API_URL}/customers/:id/history`, async () => {
+  http.get(`${API_URL}/api/customers/:id/history`, async () => {
     return HttpResponse.json([
       {
         id: "history-1",
@@ -187,7 +187,7 @@ const customerHandlers = [
     ]);
   }),
 
-  http.get(`${API_URL}/customers/tags`, async () => {
+  http.get(`${API_URL}/api/customers/tags`, async () => {
     return HttpResponse.json([
       { id: "tag-1", name: "VIP", color: "#FFD700", count: 5 },
       { id: "tag-2", name: "Novo", color: "#00FF00", count: 10 },
@@ -200,7 +200,7 @@ const customerHandlers = [
 // ============================================================================
 
 const serviceHandlers = [
-  http.get(`${API_URL}/services`, async () => {
+  http.get(`${API_URL}/api/services`, async () => {
     return HttpResponse.json({
       services: [mockService],
       total: 1,
@@ -209,15 +209,15 @@ const serviceHandlers = [
     });
   }),
 
-  http.get(`${API_URL}/services/active`, async () => {
+  http.get(`${API_URL}/api/services/active`, async () => {
     return HttpResponse.json([mockService]);
   }),
 
-  http.get(`${API_URL}/services/:id`, async ({ params }) => {
+  http.get(`${API_URL}/api/services/:id`, async ({ params }) => {
     return HttpResponse.json({ ...mockService, id: params.id });
   }),
 
-  http.post(`${API_URL}/services`, async ({ request }) => {
+  http.post(`${API_URL}/api/services`, async ({ request }) => {
     const body = await request.json();
     return HttpResponse.json({
       ...mockService,
@@ -226,7 +226,7 @@ const serviceHandlers = [
     });
   }),
 
-  http.patch(`${API_URL}/services/:id`, async ({ params, request }) => {
+  http.patch(`${API_URL}/api/services/:id`, async ({ params, request }) => {
     const body = await request.json();
     return HttpResponse.json({
       ...mockService,
@@ -235,11 +235,11 @@ const serviceHandlers = [
     });
   }),
 
-  http.delete(`${API_URL}/services/:id`, async () => {
+  http.delete(`${API_URL}/api/services/:id`, async () => {
     return new HttpResponse(null, { status: 204 });
   }),
 
-  http.get(`${API_URL}/services/categories`, async () => {
+  http.get(`${API_URL}/api/services/categories`, async () => {
     return HttpResponse.json([
       { id: "cat-1", name: "Cabelo", description: "", order: 1, servicesCount: 5 },
       { id: "cat-2", name: "Barba", description: "", order: 2, servicesCount: 3 },
@@ -252,18 +252,18 @@ const serviceHandlers = [
 // ============================================================================
 
 const dashboardHandlers = [
-  http.get(`${API_URL}/dashboard/stats`, async () => {
+  http.get(`${API_URL}/api/dashboard/stats`, async () => {
     return HttpResponse.json(mockDashboardStats);
   }),
 
-  http.get(`${API_URL}/dashboard/recent-bookings`, async () => {
+  http.get(`${API_URL}/api/dashboard/recent-bookings`, async () => {
     return HttpResponse.json({
       appointments: [mockAppointment],
       total: 1,
     });
   }),
 
-  http.get(`${API_URL}/dashboard/stats/secretary`, async () => {
+  http.get(`${API_URL}/api/dashboard/stats/secretary`, async () => {
     return HttpResponse.json({
       status: "active",
       messagesHandled: 150,
@@ -274,7 +274,7 @@ const dashboardHandlers = [
     });
   }),
 
-  http.get(`${API_URL}/dashboard/stats/plan`, async () => {
+  http.get(`${API_URL}/api/dashboard/stats/plan`, async () => {
     return HttpResponse.json({
       plan: "professional",
       planName: "Profissional",
@@ -285,7 +285,7 @@ const dashboardHandlers = [
     });
   }),
 
-  http.get(`${API_URL}/dashboard/stats/notifications`, async () => {
+  http.get(`${API_URL}/api/dashboard/stats/notifications`, async () => {
     return HttpResponse.json([
       {
         id: "notif-1",
@@ -298,7 +298,7 @@ const dashboardHandlers = [
     ]);
   }),
 
-  http.get(`${API_URL}/dashboard/stats/revenue`, async () => {
+  http.get(`${API_URL}/api/dashboard/stats/revenue`, async () => {
     return HttpResponse.json({
       period: "month",
       total: 15000,
@@ -316,26 +316,26 @@ const dashboardHandlers = [
 // ============================================================================
 
 const bookingHandlers = [
-  http.get(`${API_URL}/units/:id/public`, async () => {
+  http.get(`${API_URL}/api/units/:id/public`, async () => {
     return HttpResponse.json(mockUnitInfo);
   }),
 
-  http.get(`${API_URL}/units/slug/:slug`, async () => {
+  http.get(`${API_URL}/api/units/slug/:slug`, async () => {
     return HttpResponse.json(mockUnitInfo);
   }),
 
-  http.get(`${API_URL}/units/:id/services`, async () => {
+  http.get(`${API_URL}/api/units/:id/services`, async () => {
     return HttpResponse.json([mockService]);
   }),
 
-  http.post(`${API_URL}/bookings/check-phone`, async () => {
+  http.post(`${API_URL}/api/bookings/check-phone`, async () => {
     return HttpResponse.json({
       exists: false,
       clientName: null,
     });
   }),
 
-  http.get(`${API_URL}/bookings/slots`, async () => {
+  http.get(`${API_URL}/api/bookings/slots`, async () => {
     return HttpResponse.json({
       date: "2024-12-15",
       slots: [
@@ -347,15 +347,15 @@ const bookingHandlers = [
     });
   }),
 
-  http.post(`${API_URL}/bookings`, async () => {
+  http.post(`${API_URL}/api/bookings`, async () => {
     return HttpResponse.json(mockBooking);
   }),
 
-  http.get(`${API_URL}/bookings/:id`, async ({ params }) => {
+  http.get(`${API_URL}/api/bookings/:id`, async ({ params }) => {
     return HttpResponse.json({ ...mockBooking, id: params.id });
   }),
 
-  http.delete(`${API_URL}/bookings/:id`, async () => {
+  http.delete(`${API_URL}/api/bookings/:id`, async () => {
     return new HttpResponse(null, { status: 204 });
   }),
 ];
@@ -365,7 +365,7 @@ const bookingHandlers = [
 // ============================================================================
 
 const otpHandlers = [
-  http.post(`${API_URL}/otp/send`, async () => {
+  http.post(`${API_URL}/api/otp/send`, async () => {
     return HttpResponse.json({
       success: true,
       message: "OTP sent successfully",
@@ -373,7 +373,7 @@ const otpHandlers = [
     });
   }),
 
-  http.post(`${API_URL}/otp/verify`, async () => {
+  http.post(`${API_URL}/api/otp/verify`, async () => {
     return HttpResponse.json({
       success: true,
       isNewClient: true,
@@ -387,7 +387,7 @@ const otpHandlers = [
 // ============================================================================
 
 const clientHandlers = [
-  http.post(`${API_URL}/clients`, async ({ request }) => {
+  http.post(`${API_URL}/api/clients`, async ({ request }) => {
     const body = await request.json();
     return HttpResponse.json({
       clientId: "new-client-1",
@@ -395,7 +395,7 @@ const clientHandlers = [
     });
   }),
 
-  http.get(`${API_URL}/clients/by-phone`, async () => {
+  http.get(`${API_URL}/api/clients/by-phone`, async () => {
     return HttpResponse.json({
       clientId: "client-1",
       name: "John Doe",

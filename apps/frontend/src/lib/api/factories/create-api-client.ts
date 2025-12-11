@@ -83,7 +83,7 @@ export function createApiClient(options: CreateApiClientOptions = {}): IHttpClie
   if (enableAuthInterceptor) {
     setupAuthInterceptor(
       client,
-      '/auth/refresh',
+      '/api/auth/refresh',
       authCallbacks ?? globalAuthCallbacks
     );
   }

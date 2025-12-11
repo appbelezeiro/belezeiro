@@ -19,66 +19,70 @@ export const API_WITH_CREDENTIALS = true;
 
 /**
  * Endpoints da API
+ * Nota: Todos os endpoints incluem o prefixo /api
  */
 export const API_ENDPOINTS = {
   // Auth
   AUTH: {
-    LOGIN: '/auth/login',
-    LOGOUT: '/auth/logout',
-    REFRESH: '/auth/refresh',
-    ME: '/auth/me',
+    LOGIN: '/api/auth/social-login',
+    LOGOUT: '/api/auth/logout',
+    REFRESH: '/api/auth/refresh',
+    ME: '/api/auth/me',
   },
 
   // Customers
   CUSTOMERS: {
-    BASE: '/customers',
-    DETAIL: (id: string) => `/customers/${id}`,
+    BASE: '/api/customers',
+    DETAIL: (id: string) => `/api/customers/${id}`,
   },
 
   // Services
   SERVICES: {
-    BASE: '/services',
-    DETAIL: (id: string) => `/services/${id}`,
+    BASE: '/api/services',
+    DETAIL: (id: string) => `/api/services/${id}`,
   },
 
   // Bookings
   BOOKINGS: {
-    BASE: '/bookings',
-    DETAIL: (id: string) => `/bookings/${id}`,
-    SLOTS: '/bookings/slots',
+    BASE: '/api/bookings',
+    DETAIL: (id: string) => `/api/bookings/${id}`,
+    SLOTS: '/api/bookings/slots',
+    CHECK_PHONE: '/api/bookings/check-phone',
   },
 
   // Units
   UNITS: {
-    BASE: '/units',
-    DETAIL: (id: string) => `/units/${id}`,
-    BY_SLUG: (slug: string) => `/units/slug/${slug}`,
+    BASE: '/api/units',
+    DETAIL: (id: string) => `/api/units/${id}`,
+    PUBLIC: (id: string) => `/api/units/${id}/public`,
+    BY_SLUG: (slug: string) => `/api/units/slug/${slug}`,
+    SERVICES: (id: string) => `/api/units/${id}/services`,
   },
 
   // Dashboard
   DASHBOARD: {
-    STATS: '/dashboard/stats',
-    RECENT_BOOKINGS: '/dashboard/recent-bookings',
+    STATS: '/api/dashboard/stats',
+    RECENT_BOOKINGS: '/api/dashboard/recent-bookings',
   },
 
   // Settings
   SETTINGS: {
-    PROFILE: '/settings/profile',
-    BUSINESS: '/settings/business',
-    NOTIFICATIONS: '/settings/notifications',
+    PROFILE: '/api/settings/profile',
+    BUSINESS: '/api/settings/business',
+    NOTIFICATIONS: '/api/settings/notifications',
   },
 
   // OTP (Phone Verification)
   OTP: {
-    SEND: '/otp/send',
-    VERIFY: '/otp/verify',
+    SEND: '/api/otp/send',
+    VERIFY: '/api/otp/verify',
   },
 
   // Clients
   CLIENTS: {
-    BASE: '/clients',
-    DETAIL: (id: string) => `/clients/${id}`,
-    BY_PHONE: '/clients/by-phone',
+    BASE: '/api/clients',
+    DETAIL: (id: string) => `/api/clients/${id}`,
+    BY_PHONE: '/api/clients/by-phone',
   },
 } as const;
 

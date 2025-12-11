@@ -59,7 +59,7 @@ function processQueue(
  */
 export function setupAuthInterceptor(
   client: IHttpClient,
-  refreshEndpoint: string = '/auth/refresh',
+  refreshEndpoint: string = '/api/auth/refresh',
   callbacks: AuthInterceptorCallbacks = {}
 ): number {
   const state = createRefreshState();

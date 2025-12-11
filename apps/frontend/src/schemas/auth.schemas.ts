@@ -36,14 +36,14 @@ export const loginResponseSchema = z.object({
  * Refresh token response schema
  */
 export const refreshTokenResponseSchema = z.object({
-  message: z.string(),
+  status: z.string(),
 });
 
 /**
  * Logout response schema
  */
 export const logoutResponseSchema = z.object({
-  message: z.string(),
+  status: z.string(),
 });
 
 /**
