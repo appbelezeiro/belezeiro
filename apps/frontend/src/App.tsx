@@ -10,6 +10,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { GlobalDebugControl } from "@/components/debug/GlobalDebugControl";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { PublicRoute } from "@/components/PublicRoute";
+import { ToastFeedbackModule } from "@/shared/lib/toast";
 import LandingPage from "./pages/LandingPage";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
@@ -45,6 +46,7 @@ const App = () => (
           <TooltipProvider>
             <Toaster />
             <Sonner />
+            <ToastFeedbackModule />
             <BrowserRouter>
               <AuthProvider>
                 <Routes>
