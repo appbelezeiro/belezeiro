@@ -14,6 +14,8 @@ import { createSpecialtyRoutes } from './specialty.routes';
 import { createServiceRoutes } from './service.routes';
 import { createUnitSpecialtyRoutes } from './unit-specialty.routes';
 import { createUnitServiceRoutes } from './unit-service.routes';
+import { createAmenityRoutes } from './amenity.routes';
+import { createUnitAmenityRoutes } from './unit-amenity.routes';
 
 export function createRoutes(container: Container) {
   const app = new Hono();
@@ -28,9 +30,15 @@ export function createRoutes(container: Container) {
   app.route('/specialties', createSpecialtyRoutes(container));
   app.route('/services', createServiceRoutes(container));
 
+  // Amenities routes
+  app.route('/amenities', createAmenityRoutes(container));
+
   // Unit-Specialty and Unit-Service routes (nested under /units)
   app.route('/units', createUnitSpecialtyRoutes(container));
   app.route('/units', createUnitServiceRoutes(container));
+
+  // Unit-Amenity routes (nested under /units)
+  app.route('/units', createUnitAmenityRoutes(container));
 
   // Billing routes
   app.route('/plans', createPlanRoutes(container));

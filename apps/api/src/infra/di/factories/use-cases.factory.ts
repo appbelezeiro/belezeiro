@@ -52,6 +52,17 @@ import { AddUnitServiceUseCase } from '@/application/usecases/unit-service/add-u
 import { RemoveUnitServiceUseCase } from '@/application/usecases/unit-service/remove-unit-service.usecase';
 import { UpdateUnitServiceConfigUseCase } from '@/application/usecases/unit-service/update-unit-service-config.usecase';
 import { GetUnitServicesUseCase } from '@/application/usecases/unit-service/get-unit-services.usecase';
+import { CreateAmenityUseCase } from '@/application/usecases/amenity/create-amenity.usecase';
+import { GetAmenityByIdUseCase } from '@/application/usecases/amenity/get-amenity-by-id.usecase';
+import { ListAmenitiesUseCase } from '@/application/usecases/amenity/list-amenities.usecase';
+import { SearchAmenitiesUseCase } from '@/application/usecases/amenity/search-amenities.usecase';
+import { UpdateAmenityUseCase } from '@/application/usecases/amenity/update-amenity.usecase';
+import { ActivateAmenityUseCase } from '@/application/usecases/amenity/activate-amenity.usecase';
+import { DeactivateAmenityUseCase } from '@/application/usecases/amenity/deactivate-amenity.usecase';
+import { SeedAmenitiesUseCase } from '@/application/usecases/amenity/seed-amenities.usecase';
+import { LinkUnitAmenityUseCase } from '@/application/usecases/unit-amenity/link-unit-amenity.usecase';
+import { UnlinkUnitAmenityUseCase } from '@/application/usecases/unit-amenity/unlink-unit-amenity.usecase';
+import { GetUnitAmenitiesUseCase } from '@/application/usecases/unit-amenity/get-unit-amenities.usecase';
 import type { Repositories } from './repositories.factory';
 import type { Services } from './services.factory';
 
@@ -191,6 +202,25 @@ export function createUseCases(repositories: Repositories, services: Services) {
       repositories.unit_service_repository,
     ),
     get_unit_services: new GetUnitServicesUseCase(repositories.unit_service_repository),
+
+    // Amenity use cases
+    create_amenity: new CreateAmenityUseCase(repositories.amenity_repository),
+    get_amenity_by_id: new GetAmenityByIdUseCase(repositories.amenity_repository),
+    list_amenities: new ListAmenitiesUseCase(repositories.amenity_repository),
+    search_amenities: new SearchAmenitiesUseCase(repositories.amenity_repository),
+    update_amenity: new UpdateAmenityUseCase(repositories.amenity_repository),
+    activate_amenity: new ActivateAmenityUseCase(repositories.amenity_repository),
+    deactivate_amenity: new DeactivateAmenityUseCase(repositories.amenity_repository),
+    seed_amenities: new SeedAmenitiesUseCase(repositories.amenity_repository),
+
+    // Unit-Amenity use cases
+    link_unit_amenity: new LinkUnitAmenityUseCase(
+      repositories.unit_amenity_repository,
+      repositories.amenity_repository,
+      repositories.unit_repository,
+    ),
+    unlink_unit_amenity: new UnlinkUnitAmenityUseCase(repositories.unit_amenity_repository),
+    get_unit_amenities: new GetUnitAmenitiesUseCase(repositories.unit_amenity_repository),
   };
 }
 
