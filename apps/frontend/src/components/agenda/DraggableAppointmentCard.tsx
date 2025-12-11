@@ -33,10 +33,10 @@ export const DraggableAppointmentCard = ({
     transition: isDragging ? "none" : "all 0.2s ease",
   };
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = (e?: React.MouseEvent) => {
     // Only trigger click if not dragging
     if (!isDragging) {
-      e.stopPropagation();
+      e?.stopPropagation();
       onClick();
     }
   };

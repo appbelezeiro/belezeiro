@@ -1,5 +1,6 @@
-import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
+// ============================================================================
+// MAIN - Ponto de entrada da aplicação (re-export para compatibilidade)
+// ============================================================================
 
-createRoot(document.getElementById("root")!).render(<App />);
+// Re-exporta do novo local
+import './app/main';

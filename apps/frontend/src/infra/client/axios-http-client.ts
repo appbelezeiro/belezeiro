@@ -109,7 +109,7 @@ export class AxiosHttpClient implements IHttpClient {
           headers: axiosConfig.headers as Record<string, string>,
           params: axiosConfig.params,
           timeout: axiosConfig.timeout,
-          signal: axiosConfig.signal,
+          signal: axiosConfig.signal as AbortSignal | undefined,
           withCredentials: axiosConfig.withCredentials,
         };
 

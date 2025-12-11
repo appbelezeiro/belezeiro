@@ -24,17 +24,17 @@ export interface ProcessedError {
  * Check if error is an API error from backend
  */
 export function isApiError(error: unknown): error is AxiosError<ApiError> {
-  return (
-    typeof error === "object" &&
-    error !== null &&
-    "response" in error &&
-    typeof (error as AxiosError).response === "object" &&
-    (error as AxiosError).response !== null &&
-    "data" in (error as AxiosError).response! &&
-    typeof (error as AxiosError).response!.data === "object" &&
-    (error as AxiosError).response!.data !== null &&
-    "error" in (error as AxiosError).response!.data!
-  );
+  if (typeof error !== "object" || error === null) return false;
+  if (!("response" in error)) return false;
+
+  const axiosError = error as AxiosError;
+  if (typeof axiosError.response !== "object" || axiosError.response === null) return false;
+  if (!("data" in axiosError.response)) return false;
+
+  const data = axiosError.response.data;
+  if (typeof data !== "object" || data === null) return false;
+
+  return "error" in (data as object);
 }
 
 /**
