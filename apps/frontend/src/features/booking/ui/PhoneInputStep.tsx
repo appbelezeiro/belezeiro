@@ -4,7 +4,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Card,
   CardContent,
@@ -14,6 +13,8 @@ import {
 } from "@/components/ui/card";
 import { Phone, ArrowRight, Loader2 } from "lucide-react";
 import { phoneSchema } from "../schemas";
+import { PhoneInput } from "@/shared/components/form";
+import { extractDigits } from "@/lib/utils/phone";
 
 interface PhoneInputStepProps {
   onSubmit: (phone: string) => void;
@@ -29,23 +30,8 @@ export function PhoneInputStep({
   const [phone, setPhone] = useState("");
   const [validationError, setValidationError] = useState<string | null>(null);
 
-  const formatPhone = (value: string) => {
-    // Remove non-digits
-    const digits = value.replace(/\D/g, "");
-
-    // Format as (XX) XXXXX-XXXX
-    if (digits.length <= 2) {
-      return digits;
-    }
-    if (digits.length <= 7) {
-      return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
-    }
-    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
-  };
-
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatPhone(e.target.value);
-    setPhone(formatted);
+  const handlePhoneChange = (value: string) => {
+    setPhone(value);
     setValidationError(null);
   };
 
@@ -53,7 +39,7 @@ export function PhoneInputStep({
     e.preventDefault();
 
     // Extract digits only for validation
-    const digits = phone.replace(/\D/g, "");
+    const digits = extractDigits(phone);
 
     const result = phoneSchema.safeParse(digits);
     if (!result.success) {
@@ -63,6 +49,8 @@ export function PhoneInputStep({
 
     onSubmit(digits);
   };
+
+  const displayError = validationError || error || undefined;
 
   return (
     <Card className="border-0 shadow-lg">
@@ -77,28 +65,19 @@ export function PhoneInputStep({
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Input
-              type="tel"
-              placeholder="(11) 99999-9999"
-              value={phone}
-              onChange={handlePhoneChange}
-              className="h-12 text-center text-lg"
-              maxLength={16}
-              autoFocus
-              disabled={isLoading}
-            />
-            {(validationError || error) && (
-              <p className="text-center text-sm text-destructive">
-                {validationError || error}
-              </p>
-            )}
-          </div>
+          <PhoneInput
+            value={phone}
+            onValueChange={handlePhoneChange}
+            error={displayError}
+            className="h-12 text-center text-lg"
+            autoFocus
+            disabled={isLoading}
+          />
 
           <Button
             type="submit"
             className="w-full h-12"
-            disabled={phone.replace(/\D/g, "").length < 10 || isLoading}
+            disabled={extractDigits(phone).length < 10 || isLoading}
           >
             {isLoading ? (
               <>

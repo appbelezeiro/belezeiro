@@ -4,8 +4,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
@@ -15,6 +13,7 @@ import {
 } from "@/components/ui/card";
 import { UserPlus, ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 import { clientRegistrationSchema } from "../schemas";
+import { FormInput } from "@/shared/components/form";
 import { z } from "zod";
 
 interface RegistrationStepProps {
@@ -71,42 +70,30 @@ export function RegistrationStep({
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">Nome completo *</Label>
-            <Input
-              id="name"
-              type="text"
-              placeholder="Seu nome"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="h-12"
-              autoFocus
-              disabled={isLoading}
-            />
-            {validationErrors.name && (
-              <p className="text-sm text-destructive">
-                {validationErrors.name}
-              </p>
-            )}
-          </div>
+          <FormInput
+            label="Nome completo *"
+            type="text"
+            placeholder="Seu nome"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="h-12"
+            autoFocus
+            disabled={isLoading}
+            error={validationErrors.name}
+          />
 
-          <div className="space-y-2">
-            <Label htmlFor="email">E-mail (opcional)</Label>
-            <Input
-              id="email"
+          <div>
+            <FormInput
+              label="E-mail (opcional)"
               type="email"
               placeholder="seu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="h-12"
               disabled={isLoading}
+              error={validationErrors.email}
             />
-            {validationErrors.email && (
-              <p className="text-sm text-destructive">
-                {validationErrors.email}
-              </p>
-            )}
-            <p className="text-xs text-muted-foreground">
+            <p className="mt-1 text-xs text-muted-foreground">
               Você receberá confirmação e lembretes do agendamento
             </p>
           </div>
