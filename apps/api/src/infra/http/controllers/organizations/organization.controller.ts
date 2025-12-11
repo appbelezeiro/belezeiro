@@ -7,27 +7,11 @@ import { NotFoundError, ConflictError } from '../../errors/http-errors';
 
 const CreateOrganizationSchema = z.object({
   businessName: z.string().min(2).max(100),
-  brandColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/),
   ownerId: z.string().min(1),
-  subscription: z
-    .object({
-      plan: z.enum(['free', 'pro', 'enterprise']),
-      status: z.enum(['active', 'inactive', 'suspended']),
-      expiresAt: z.string().datetime().optional(),
-    })
-    .optional(),
 });
 
 const UpdateOrganizationSchema = z.object({
   businessName: z.string().min(2).max(100).optional(),
-  brandColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/).optional(),
-  subscription: z
-    .object({
-      plan: z.enum(['free', 'pro', 'enterprise']),
-      status: z.enum(['active', 'inactive', 'suspended']),
-      expiresAt: z.string().datetime().optional(),
-    })
-    .optional(),
 });
 
 export class OrganizationController {
@@ -40,16 +24,7 @@ export class OrganizationController {
 
       const organization = await this.container.use_cases.create_organization.execute({
         businessName: payload.businessName,
-        brandColor: payload.brandColor,
         ownerId: payload.ownerId,
-        subscription: payload.subscription
-          ? {
-              ...payload.subscription,
-              expiresAt: payload.subscription.expiresAt
-                ? new Date(payload.subscription.expiresAt)
-                : undefined,
-            }
-          : undefined,
       });
 
       return c.json(OrganizationMapper.toDTO(organization), 201);
@@ -96,15 +71,6 @@ export class OrganizationController {
       const organization = await this.container.use_cases.update_organization.execute({
         id,
         businessName: payload.businessName,
-        brandColor: payload.brandColor,
-        subscription: payload.subscription
-          ? {
-              ...payload.subscription,
-              expiresAt: payload.subscription.expiresAt
-                ? new Date(payload.subscription.expiresAt)
-                : undefined,
-            }
-          : undefined,
       });
 
       return c.json(OrganizationMapper.toDTO(organization));

@@ -3,10 +3,11 @@ import type {
   DaySchedule,
   ServiceType,
   Address,
-  ProfessionRef,
+  EspecialidadeRef,
   ServiceRef,
   LunchBreak,
   WorkingHours,
+  Subscription,
 } from '@/domain/entities/units/unit.entity';
 import type { AmenityId } from '@/domain/constants/amenities';
 
@@ -14,13 +15,15 @@ export interface UnitDTO {
   id: string;
   organizationId: string;
   name: string;
+  brandColor: string;
+  subscription?: Subscription;
   logo?: string;
   gallery: string[];
   isActive: boolean;
   whatsapp: string;
   phone?: string;
   address: Address;
-  professions: ProfessionRef[];
+  especialidades: EspecialidadeRef[];
   services: ServiceRef[];
   serviceType: ServiceType;
   amenities: AmenityId[];
@@ -55,7 +58,7 @@ export type {
   DaySchedule,
   ServiceType,
   Address,
-  ProfessionRef,
+  EspecialidadeRef,
   ServiceRef,
   LunchBreak,
   WorkingHours,

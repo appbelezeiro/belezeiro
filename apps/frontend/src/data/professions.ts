@@ -1,4 +1,4 @@
-export interface Profession {
+export interface Especialidade {
   id: string;
   name: string;
   icon: string;
@@ -7,20 +7,20 @@ export interface Profession {
 export interface Service {
   id: string;
   name: string;
-  professionIds: string[];
+  especialidadeIds: string[];
 }
 
-export const professions: Profession[] = [
-  { id: "cabeleireiro", name: "Cabeleireiro(a)", icon: "✂️" },
-  { id: "barbeiro", name: "Barbeiro(a)", icon: "💈" },
-  { id: "manicure", name: "Manicure", icon: "💅" },
-  { id: "esteticista", name: "Esteticista", icon: "✨" },
-  { id: "massagista", name: "Massagista", icon: "💆" },
-  { id: "sobrancelha", name: "Designer de Sobrancelhas", icon: "👁️" },
-  { id: "maquiador", name: "Maquiador(a)", icon: "💄" },
-  { id: "depilador", name: "Depilador(a)", icon: "🌸" },
-  { id: "podologa", name: "Podólogo(a)", icon: "🦶" },
-  { id: "lash", name: "Lash Designer", icon: "👁️‍🗨️" },
+export const especialidades: Especialidade[] = [
+  { id: "spec_cabeleireiro", name: "Cabeleireiro(a)", icon: "✂️" },
+  { id: "spec_barbeiro", name: "Barbeiro(a)", icon: "💈" },
+  { id: "spec_manicure", name: "Manicure", icon: "💅" },
+  { id: "spec_esteticista", name: "Esteticista", icon: "✨" },
+  { id: "spec_massagista", name: "Massagista", icon: "💆" },
+  { id: "spec_designer_sobrancelhas", name: "Designer de Sobrancelhas", icon: "👁️" },
+  { id: "spec_maquiador", name: "Maquiador(a)", icon: "💄" },
+  { id: "spec_depilador", name: "Depilador(a)", icon: "🌸" },
+  { id: "spec_podologo", name: "Podólogo(a)", icon: "🦶" },
+  { id: "spec_lash_designer", name: "Lash Designer", icon: "👁️‍🗨️" },
 ];
 
 export const services: Service[] = [
@@ -92,6 +92,11 @@ export const services: Service[] = [
   { id: "manutencao-cilios", name: "Manutenção de Cílios", professionIds: ["lash"] },
 ];
 
-export const getServicesByProfession = (professionId: string): Service[] => {
-  return services.filter(service => service.professionIds.includes(professionId));
+export const getServicesByEspecialidade = (especialidadeId: string): Service[] => {
+  return services.filter(service => service.especialidadeIds.includes(especialidadeId));
 };
+
+// Legacy compatibility
+export const professions = especialidades;
+export type Profession = Especialidade;
+export const getServicesByProfession = getServicesByEspecialidade;

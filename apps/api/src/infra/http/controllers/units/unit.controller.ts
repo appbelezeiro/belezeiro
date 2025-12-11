@@ -16,7 +16,7 @@ const AddressSchema = z.object({
   state: z.string().length(2),
 });
 
-const ProfessionRefSchema = z.object({
+const EspecialidadeRefSchema = z.object({
   id: z.string(),
   name: z.string(),
   icon: z.string(),
@@ -25,7 +25,7 @@ const ProfessionRefSchema = z.object({
 const ServiceRefSchema = z.object({
   id: z.string(),
   name: z.string(),
-  professionId: z.string(),
+  especialidadeId: z.string(),
 });
 
 const AvailabilityRuleInputSchema = z.object({
@@ -51,12 +51,20 @@ const AvailabilityExceptionInputSchema = z.object({
 const CreateUnitSchema = z.object({
   organizationId: z.string().min(1),
   name: z.string().min(1),
+  brandColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/),
+  subscription: z
+    .object({
+      plan: z.enum(['free', 'pro', 'enterprise']),
+      status: z.enum(['active', 'inactive', 'suspended']),
+      expiresAt: z.string().datetime().optional(),
+    })
+    .optional(),
   logo: z.string().url().optional(),
   gallery: z.array(z.string().url()).optional(),
   whatsapp: z.string().min(10),
   phone: z.string().min(10).optional(),
   address: AddressSchema,
-  professions: z.array(ProfessionRefSchema).min(1),
+  especialidades: z.array(EspecialidadeRefSchema).min(1),
   services: z.array(ServiceRefSchema).min(1),
   serviceType: z.enum(['local', 'home', 'both']),
   // Amenities are now dynamic - accept any amenity ID string
@@ -69,13 +77,21 @@ const CreateUnitSchema = z.object({
 
 const UpdateUnitSchema = z.object({
   name: z.string().min(1).optional(),
+  brandColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/).optional(),
+  subscription: z
+    .object({
+      plan: z.enum(['free', 'pro', 'enterprise']),
+      status: z.enum(['active', 'inactive', 'suspended']),
+      expiresAt: z.string().datetime().optional(),
+    })
+    .optional(),
   logo: z.string().url().optional(),
   gallery: z.array(z.string().url()).optional(),
   isActive: z.boolean().optional(),
   whatsapp: z.string().min(10).optional(),
   phone: z.string().min(10).optional(),
   address: AddressSchema.optional(),
-  professions: z.array(ProfessionRefSchema).min(1).optional(),
+  especialidades: z.array(EspecialidadeRefSchema).min(1).optional(),
   services: z.array(ServiceRefSchema).min(1).optional(),
   serviceType: z.enum(['local', 'home', 'both']).optional(),
   // Amenities are now dynamic - accept any amenity ID string
@@ -93,12 +109,21 @@ export class UnitController {
       const unit = await this.container.use_cases.create_unit.execute({
         organizationId: payload.organizationId,
         name: payload.name,
+        brandColor: payload.brandColor,
+        subscription: payload.subscription
+          ? {
+              ...payload.subscription,
+              expiresAt: payload.subscription.expiresAt
+                ? new Date(payload.subscription.expiresAt)
+                : undefined,
+            }
+          : undefined,
         logo: payload.logo,
         gallery: payload.gallery,
         whatsapp: payload.whatsapp,
         phone: payload.phone,
         address: payload.address,
-        professions: payload.professions,
+        especialidades: payload.especialidades,
         services: payload.services,
         serviceType: payload.serviceType,
         amenities: payload.amenities,
@@ -163,13 +188,22 @@ export class UnitController {
       const unit = await this.container.use_cases.update_unit.execute({
         id,
         name: payload.name,
+        brandColor: payload.brandColor,
+        subscription: payload.subscription
+          ? {
+              ...payload.subscription,
+              expiresAt: payload.subscription.expiresAt
+                ? new Date(payload.subscription.expiresAt)
+                : undefined,
+            }
+          : undefined,
         logo: payload.logo,
         gallery: payload.gallery,
         isActive: payload.isActive,
         whatsapp: payload.whatsapp,
         phone: payload.phone,
         address: payload.address,
-        professions: payload.professions,
+        especialidades: payload.especialidades,
         services: payload.services,
         serviceType: payload.serviceType,
         amenities: payload.amenities,

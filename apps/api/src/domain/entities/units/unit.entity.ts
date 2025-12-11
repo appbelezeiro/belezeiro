@@ -4,17 +4,27 @@ import {
   InvalidCepError,
   InvalidPhoneError,
   InvalidServiceTypeError,
-  InvalidProfessionError,
+  InvalidEspecialidadeError,
   InvalidServiceError,
   InvalidAmenityError,
+  InvalidBrandColorError,
 } from '@/domain/errors/units/unit.errors';
-import { PREDEFINED_PROFESSIONS } from '@/domain/constants/professions';
+import { PREDEFINED_ESPECIALIDADES } from '@/domain/constants/professions';
 import { PREDEFINED_SERVICES } from '@/domain/constants/services';
 import { PREDEFINED_AMENITIES, AmenityId } from '@/domain/constants/amenities';
 
 type DayOfWeek = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
 
 type ServiceType = 'local' | 'home' | 'both';
+
+type SubscriptionPlan = 'free' | 'pro' | 'enterprise';
+type SubscriptionStatus = 'active' | 'inactive' | 'suspended';
+
+interface Subscription {
+  plan: SubscriptionPlan;
+  status: SubscriptionStatus;
+  expiresAt?: Date;
+}
 
 interface DaySchedule {
   enabled: boolean;
@@ -32,7 +42,7 @@ interface Address {
   state: string;
 }
 
-interface ProfessionRef {
+interface EspecialidadeRef {
   id: string;
   name: string;
   icon: string;
@@ -41,7 +51,7 @@ interface ProfessionRef {
 interface ServiceRef {
   id: string;
   name: string;
-  professionId: string;
+  especialidadeId: string;
 }
 
 interface LunchBreak {
@@ -55,16 +65,18 @@ type WorkingHours = Record<DayOfWeek, DaySchedule>;
 type UnitEntityOwnProps = {
   organizationId: string;
   name: string;
+  brandColor: string;
   logo?: string;
   gallery: string[];
   isActive: boolean;
   whatsapp: string;
   phone?: string;
   address: Address;
-  professions: ProfessionRef[];
+  especialidades: EspecialidadeRef[];
   services: ServiceRef[];
   serviceType: ServiceType;
   amenities: AmenityId[];
+  subscription?: Subscription;
 };
 
 type UnitEntityCreationProps = Omit<UnitEntityOwnProps, 'isActive' | 'gallery'> &
@@ -81,14 +93,15 @@ export class UnitEntity extends BaseEntity<UnitEntityProps> {
   }
 
   constructor(props: UnitEntityCreationProps) {
+    UnitEntity.validateBrandColor(props.brandColor);
     UnitEntity.validateCep(props.address.cep);
     UnitEntity.validatePhone(props.whatsapp);
     if (props.phone) {
       UnitEntity.validatePhone(props.phone);
     }
     UnitEntity.validateServiceType(props.serviceType);
-    UnitEntity.validateProfessions(props.professions);
-    UnitEntity.validateServices(props.services, props.professions);
+    UnitEntity.validateEspecialidades(props.especialidades);
+    UnitEntity.validateServices(props.services, props.especialidades);
     UnitEntity.validateAmenities(props.amenities);
 
     super({
@@ -96,6 +109,13 @@ export class UnitEntity extends BaseEntity<UnitEntityProps> {
       isActive: props.isActive ?? true,
       gallery: props.gallery ?? [],
     });
+  }
+
+  private static validateBrandColor(color: string): void {
+    const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+    if (!hexColorRegex.test(color)) {
+      throw new InvalidBrandColorError('Brand color must be a valid hex color (e.g., #FF0000)');
+    }
   }
 
   private static validateCep(cep: string): void {
@@ -119,37 +139,37 @@ export class UnitEntity extends BaseEntity<UnitEntityProps> {
     }
   }
 
-  private static validateProfessions(professions: ProfessionRef[]): void {
-    if (professions.length === 0) {
-      throw new InvalidProfessionError('At least one profession must be selected');
+  private static validateEspecialidades(especialidades: EspecialidadeRef[]): void {
+    if (especialidades.length === 0) {
+      throw new InvalidEspecialidadeError('At least one especialidade must be selected');
     }
 
-    const validProfessionIds = PREDEFINED_PROFESSIONS.map((p) => p.id);
+    const validEspecialidadeIds = PREDEFINED_ESPECIALIDADES.map((e) => e.id);
 
-    for (const prof of professions) {
-      if (!validProfessionIds.includes(prof.id)) {
-        throw new InvalidProfessionError(`Invalid profession ID: ${prof.id}`);
+    for (const espec of especialidades) {
+      if (!validEspecialidadeIds.includes(espec.id)) {
+        throw new InvalidEspecialidadeError(`Invalid especialidade ID: ${espec.id}`);
       }
     }
   }
 
-  private static validateServices(services: ServiceRef[], professions: ProfessionRef[]): void {
+  private static validateServices(services: ServiceRef[], especialidades: EspecialidadeRef[]): void {
     if (services.length === 0) {
       throw new InvalidServiceError('At least one service must be selected');
     }
 
     const validServiceIds = PREDEFINED_SERVICES.map((s) => s.id);
-    const professionIds = professions.map((p) => p.id);
+    const especialidadeIds = especialidades.map((e) => e.id);
 
     for (const service of services) {
       if (!validServiceIds.includes(service.id)) {
         throw new InvalidServiceError(`Invalid service ID: ${service.id}`);
       }
 
-      // Validate that the service's profession is in the selected professions
-      if (!professionIds.includes(service.professionId)) {
+      // Validate that the service's especialidade is in the selected especialidades
+      if (!especialidadeIds.includes(service.especialidadeId)) {
         throw new InvalidServiceError(
-          `Service ${service.id} requires profession ${service.professionId} which is not selected`
+          `Service ${service.id} requires especialidade ${service.especialidadeId} which is not selected`
         );
       }
     }
@@ -173,6 +193,14 @@ export class UnitEntity extends BaseEntity<UnitEntityProps> {
 
   get name(): string {
     return this.props.name;
+  }
+
+  get brandColor(): string {
+    return this.props.brandColor;
+  }
+
+  get subscription(): Subscription | undefined {
+    return this.props.subscription;
   }
 
   get logo(): string | undefined {
@@ -199,8 +227,8 @@ export class UnitEntity extends BaseEntity<UnitEntityProps> {
     return this.props.address;
   }
 
-  get professions(): ProfessionRef[] {
-    return this.props.professions;
+  get especialidades(): EspecialidadeRef[] {
+    return this.props.especialidades;
   }
 
   get services(): ServiceRef[] {
@@ -231,6 +259,29 @@ export class UnitEntity extends BaseEntity<UnitEntityProps> {
     }
     this.props.name = newName;
     this.touch();
+  }
+
+  update_brand_color(newColor: string): void {
+    UnitEntity.validateBrandColor(newColor);
+    this.props.brandColor = newColor;
+    this.touch();
+  }
+
+  update_subscription(subscription: Subscription): void {
+    this.props.subscription = subscription;
+    this.touch();
+  }
+
+  has_active_subscription(): boolean {
+    return this.props.subscription?.status === 'active';
+  }
+
+  is_subscription_expired(): boolean {
+    if (!this.props.subscription || !this.props.subscription.expiresAt) {
+      return false;
+    }
+
+    return this.props.subscription.expiresAt < new Date();
   }
 
   update_logo(logoUrl: string | undefined): void {
@@ -269,16 +320,16 @@ export class UnitEntity extends BaseEntity<UnitEntityProps> {
     this.touch();
   }
 
-  update_professions(professions: ProfessionRef[]): void {
-    UnitEntity.validateProfessions(professions);
-    // Re-validate services when professions change
-    UnitEntity.validateServices(this.props.services, professions);
-    this.props.professions = professions;
+  update_especialidades(especialidades: EspecialidadeRef[]): void {
+    UnitEntity.validateEspecialidades(especialidades);
+    // Re-validate services when especialidades change
+    UnitEntity.validateServices(this.props.services, especialidades);
+    this.props.especialidades = especialidades;
     this.touch();
   }
 
   update_services(services: ServiceRef[]): void {
-    UnitEntity.validateServices(services, this.props.professions);
+    UnitEntity.validateServices(services, this.props.especialidades);
     this.props.services = services;
     this.touch();
   }
@@ -319,8 +370,11 @@ export type {
   DaySchedule,
   ServiceType,
   Address,
-  ProfessionRef,
+  EspecialidadeRef,
   ServiceRef,
   LunchBreak,
   WorkingHours,
+  Subscription,
+  SubscriptionPlan,
+  SubscriptionStatus,
 };

@@ -1,11 +1,12 @@
 import { UnitEntity } from '@/domain/entities/units/unit.entity';
 import type {
   Address,
-  ProfessionRef,
+  EspecialidadeRef,
   ServiceRef,
   ServiceType,
   WorkingHours,
   LunchBreak,
+  Subscription,
 } from '@/domain/entities/units/unit.entity';
 import type { AmenityId } from '@/domain/constants/amenities';
 import { IUnitRepository } from '@/application/contracts/units/i-unit-repository.interface';
@@ -23,6 +24,14 @@ class UseCase {
 
     if (input.name !== undefined) {
       unit.update_name(input.name);
+    }
+
+    if (input.brandColor !== undefined) {
+      unit.update_brand_color(input.brandColor);
+    }
+
+    if (input.subscription !== undefined) {
+      unit.update_subscription(input.subscription);
     }
 
     if (input.logo !== undefined) {
@@ -49,8 +58,8 @@ class UseCase {
       unit.update_address(input.address);
     }
 
-    if (input.professions !== undefined) {
-      unit.update_professions(input.professions);
+    if (input.especialidades !== undefined) {
+      unit.update_especialidades(input.especialidades);
     }
 
     if (input.services !== undefined) {
@@ -81,13 +90,15 @@ declare namespace UseCase {
   export type Input = {
     id: string;
     name?: string;
+    brandColor?: string;
+    subscription?: Subscription;
     logo?: string;
     gallery?: string[];
     isActive?: boolean;
     whatsapp?: string;
     phone?: string;
     address?: Address;
-    professions?: ProfessionRef[];
+    especialidades?: EspecialidadeRef[];
     services?: ServiceRef[];
     serviceType?: ServiceType;
     amenities?: AmenityId[];

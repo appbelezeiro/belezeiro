@@ -16,14 +16,6 @@ class UseCase {
       organization.update_business_name(input.businessName);
     }
 
-    if (input.brandColor !== undefined) {
-      organization.update_brand_color(input.brandColor);
-    }
-
-    if (input.subscription !== undefined) {
-      organization.update_subscription(input.subscription);
-    }
-
     return this.organization_repository.update(organization);
   }
 }
@@ -32,12 +24,6 @@ declare namespace UseCase {
   export type Input = {
     id: string;
     businessName?: string;
-    brandColor?: string;
-    subscription?: {
-      plan: 'free' | 'pro' | 'enterprise';
-      status: 'active' | 'inactive' | 'suspended';
-      expiresAt?: Date;
-    };
   };
 
   export type Output = Promise<OrganizationEntity>;

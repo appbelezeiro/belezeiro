@@ -30,8 +30,8 @@ export class InvalidServiceTypeError extends DomainError {
   }
 }
 
-export class InvalidProfessionError extends DomainError {
-  constructor(message: string = 'Invalid profession ID') {
+export class InvalidEspecialidadeError extends DomainError {
+  constructor(message: string = 'Invalid especialidade ID') {
     super(message);
   }
 }
@@ -44,6 +44,12 @@ export class InvalidServiceError extends DomainError {
 
 export class InvalidAmenityError extends DomainError {
   constructor(message: string = 'Invalid amenity ID') {
+    super(message);
+  }
+}
+
+export class InvalidBrandColorError extends DomainError {
+  constructor(message: string = 'Invalid brand color') {
     super(message);
   }
 }

@@ -6,9 +6,7 @@ export class OrganizationMapper {
     return {
       id: entity.id,
       businessName: entity.businessName,
-      brandColor: entity.brandColor,
       ownerId: entity.ownerId,
-      subscription: entity.subscription,
       created_at: entity.created_at,
       updated_at: entity.updated_at,
     };
@@ -18,7 +16,6 @@ export class OrganizationMapper {
     return {
       id: entity.id,
       businessName: entity.businessName,
-      brandColor: entity.brandColor,
     };
   }
 

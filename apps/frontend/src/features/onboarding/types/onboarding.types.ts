@@ -19,17 +19,13 @@ export interface Subscription {
 
 export interface CreateOrganizationRequest {
   businessName: string;
-  brandColor: string;
   ownerId: string;
-  subscription?: Subscription;
 }
 
 export interface OrganizationDTO {
   id: string;
   businessName: string;
-  brandColor: string;
   ownerId: string;
-  subscription?: Subscription;
   created_at: string;
   updated_at: string;
 }
@@ -58,7 +54,7 @@ export interface Address {
   state: string;
 }
 
-export interface ProfessionRef {
+export interface EspecialidadeRef {
   id: string;
   name: string;
   icon: string;
@@ -67,8 +63,11 @@ export interface ProfessionRef {
 export interface ServiceRef {
   id: string;
   name: string;
-  professionId: string;
+  especialidadeId: string;
 }
+
+// Legacy compatibility
+export type ProfessionRef = EspecialidadeRef;
 
 export interface LunchBreak {
   enabled: boolean;
@@ -81,12 +80,14 @@ export type WorkingHours = Record<DayOfWeek, DaySchedule>;
 export interface CreateUnitRequest {
   organizationId: string;
   name: string;
+  brandColor: string;
+  subscription?: Subscription;
   logo?: string;
   gallery?: string[];
   whatsapp: string;
   phone?: string;
   address: Address;
-  professions: ProfessionRef[];
+  especialidades: EspecialidadeRef[];
   services: ServiceRef[];
   serviceType: ServiceType;
   amenities: AmenityId[];
@@ -99,13 +100,15 @@ export interface UnitDTO {
   id: string;
   organizationId: string;
   name: string;
+  brandColor: string;
+  subscription?: Subscription;
   logo?: string;
   gallery: string[];
   isActive: boolean;
   whatsapp: string;
   phone?: string;
   address: Address;
-  professions: ProfessionRef[];
+  especialidades: EspecialidadeRef[];
   services: ServiceRef[];
   serviceType: ServiceType;
   amenities: AmenityId[];
@@ -125,16 +128,16 @@ export interface UnitListResponse {
 export interface OnboardingSubmitData {
   // Organization
   businessName: string;
-  brandColor: string;
 
   // Unit
   unitName: string;
+  brandColor: string;
   logo?: string;
   gallery: string[];
   whatsapp: string;
   phone?: string;
   address: Address;
-  professions: ProfessionRef[];
+  especialidades: EspecialidadeRef[];
   services: ServiceRef[];
   serviceType: ServiceType;
   amenities: AmenityId[];
