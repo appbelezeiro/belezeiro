@@ -15,95 +15,14 @@ import { useSubmitOnboarding, type OnboardingSubmitData, type AmenityId } from "
 import { useOnboardingPersistence } from "@/shared/hooks";
 import type { AvailabilityRuleInput, AvailabilityExceptionInput } from "@/features/units/types/unit-availability.types";
 
-// ============================================================================
-// Inline Helpers - Base64 to File Conversion
-// ============================================================================
-
-/**
- * Convert base64 string to File object
- */
-function base64ToFile(base64: string, filename: string): File {
-  const arr = base64.split(',');
-  const mimeMatch = arr[0].match(/:(.*?);/);
-  const mime = mimeMatch ? mimeMatch[1] : 'image/png';
-  const bstr = atob(arr[1]);
-  let n = bstr.length;
-  const u8arr = new Uint8Array(n);
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-  return new File([u8arr], filename, { type: mime });
-}
-
-/**
- * Convert array of base64 strings to File objects
- */
-function base64ArrayToFiles(base64Array: string[], baseFilename: string): File[] {
-  return base64Array.map((base64, index) => {
-    const extension = base64.startsWith('data:image/png') ? 'png' : 'jpg';
-    return base64ToFile(base64, `${baseFilename}_${index}.${extension}`);
-  });
-}
-
-// ============================================================================
-// Inline Helpers - Working Hours to Availability Rules Conversion
-// ============================================================================
-
-/**
- * Map day names to weekday numbers (0 = Sunday, 1 = Monday, etc.)
- */
-const DAY_TO_WEEKDAY: Record<string, number> = {
-  sunday: 0,
-  monday: 1,
-  tuesday: 2,
-  wednesday: 3,
-  thursday: 4,
-  friday: 5,
-  saturday: 6,
-};
-
-/**
- * Convert workingHours format to availability_rules format
- */
-function convertWorkingHoursToAvailabilityRules(
-  workingHours: Record<string, { open: string; close: string; enabled: boolean }>,
-  lunchBreak?: { enabled: boolean; start: string; end: string },
-  slotDurationMinutes: number = 30
-): {
-  availability_rules: AvailabilityRuleInput[];
-  availability_exceptions: AvailabilityExceptionInput[];
-} {
-  const availability_rules: AvailabilityRuleInput[] = [];
-
-  // Convert each enabled day to a weekly availability rule
-  Object.entries(workingHours).forEach(([day, schedule]) => {
-    if (schedule.enabled) {
-      availability_rules.push({
-        type: 'weekly',
-        weekday: DAY_TO_WEEKDAY[day],
-        start_time: schedule.open,
-        end_time: schedule.close,
-        slot_duration_minutes: slotDurationMinutes,
-        is_active: true,
-      });
-    }
-  });
-
-  // For now, we don't convert lunch breaks to exceptions
-  // This can be handled later if needed
-  const availability_exceptions: AvailabilityExceptionInput[] = [];
-
-  return { availability_rules, availability_exceptions };
-}
-
 export interface OnboardingFormData {
   // Business
   businessName: string;
-  
+
   // Unit Basic Info
   unitName: string;
-  logo: string | null;
-  gallery: string[];
+  logo: File | null;
+  gallery: File[];
   whatsapp: string;
   phone: string;
   
@@ -125,11 +44,11 @@ export interface OnboardingFormData {
   
   // Amenities
   amenities: string[];
-  
-  // Working Hours
-  workingHours: Record<string, { open: string; close: string; enabled: boolean }>;
-  lunchBreak: { enabled: boolean; start: string; end: string };
-  
+
+  // Availability Rules (instead of working hours)
+  availability_rules: AvailabilityRuleInput[];
+  availability_exceptions: AvailabilityExceptionInput[];
+
   // Personalization
   brandColor: string;
 }
@@ -152,16 +71,16 @@ const initialFormData: OnboardingFormData = {
   services: [],
   serviceType: null,
   amenities: [],
-  workingHours: {
-    monday: { open: "09:00", close: "18:00", enabled: true },
-    tuesday: { open: "09:00", close: "18:00", enabled: true },
-    wednesday: { open: "09:00", close: "18:00", enabled: true },
-    thursday: { open: "09:00", close: "18:00", enabled: true },
-    friday: { open: "09:00", close: "18:00", enabled: true },
-    saturday: { open: "09:00", close: "13:00", enabled: true },
-    sunday: { open: "09:00", close: "18:00", enabled: false },
-  },
-  lunchBreak: { enabled: false, start: "12:00", end: "13:00" },
+  availability_rules: [
+    // Default: Monday to Friday 9AM-6PM
+    { type: 'weekly' as const, weekday: 1, start_time: '09:00', end_time: '18:00', slot_duration_minutes: 30, is_active: true },
+    { type: 'weekly' as const, weekday: 2, start_time: '09:00', end_time: '18:00', slot_duration_minutes: 30, is_active: true },
+    { type: 'weekly' as const, weekday: 3, start_time: '09:00', end_time: '18:00', slot_duration_minutes: 30, is_active: true },
+    { type: 'weekly' as const, weekday: 4, start_time: '09:00', end_time: '18:00', slot_duration_minutes: 30, is_active: true },
+    { type: 'weekly' as const, weekday: 5, start_time: '09:00', end_time: '18:00', slot_duration_minutes: 30, is_active: true },
+    { type: 'weekly' as const, weekday: 6, start_time: '09:00', end_time: '13:00', slot_duration_minutes: 30, is_active: true },
+  ],
+  availability_exceptions: [],
   brandColor: "#3b82f6",
 };
 
@@ -241,13 +160,6 @@ const Onboarding = () => {
       professionId: service.professionId,
     }));
 
-    // Convert working hours to availability rules (inline conversion)
-    const { availability_rules, availability_exceptions } = convertWorkingHoursToAvailabilityRules(
-      formData.workingHours,
-      formData.lunchBreak.enabled ? formData.lunchBreak : undefined,
-      30 // Default slot duration: 30 minutes
-    );
-
     return {
       businessName: formData.businessName,
       brandColor: formData.brandColor,
@@ -269,9 +181,9 @@ const Onboarding = () => {
       services: servicesWithId,
       serviceType: formData.serviceType as 'local' | 'home' | 'both',
       amenities: formData.amenities as AmenityId[],
-      // Use new availability rules system
-      availability_rules,
-      availability_exceptions,
+      // Pass availability rules directly - no conversion needed
+      availability_rules: formData.availability_rules,
+      availability_exceptions: formData.availability_exceptions,
     };
   };
 
@@ -283,17 +195,12 @@ const Onboarding = () => {
 
     const submitData = transformFormDataToSubmit();
 
-    // Prepare image files for upload (convert base64 to File objects)
-    const logoFile = formData.logo ? base64ToFile(formData.logo, 'logo.png') : null;
-    const galleryFiles = formData.gallery.length > 0
-      ? base64ArrayToFiles(formData.gallery, 'gallery')
-      : [];
-
+    // Files are already in the correct format - no conversion needed
     submitOnboarding.mutate({
       data: submitData,
       userId: user.id,
-      logoFile,
-      galleryFiles,
+      logoFile: formData.logo,
+      galleryFiles: formData.gallery,
     });
   };
 

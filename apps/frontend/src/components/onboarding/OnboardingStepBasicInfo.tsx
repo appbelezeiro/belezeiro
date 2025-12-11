@@ -20,28 +20,15 @@ export const OnboardingStepBasicInfo = ({ data, onUpdate, onNext }: OnboardingSt
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        onUpdate({ logo: reader.result as string });
-      };
-      reader.readAsDataURL(file);
+      onUpdate({ logo: file });
     }
   };
 
   const handleGalleryUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
-      const newImages: string[] = [];
-      Array.from(files).forEach((file) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          newImages.push(reader.result as string);
-          if (newImages.length === files.length) {
-            onUpdate({ gallery: [...(data.gallery || []), ...newImages] });
-          }
-        };
-        reader.readAsDataURL(file);
-      });
+      const newFiles = Array.from(files);
+      onUpdate({ gallery: [...(data.gallery || []), ...newFiles] });
     }
   };
 
@@ -162,7 +149,7 @@ export const OnboardingStepBasicInfo = ({ data, onUpdate, onNext }: OnboardingSt
                 />
                 {data.logo ? (
                   <img
-                    src={data.logo}
+                    src={URL.createObjectURL(data.logo)}
                     alt="Logo"
                     className="w-full h-full object-cover"
                   />
@@ -206,10 +193,10 @@ export const OnboardingStepBasicInfo = ({ data, onUpdate, onNext }: OnboardingSt
           </p>
 
           <div className="grid grid-cols-4 sm:grid-cols-5 gap-2 mt-3">
-            {(data.gallery || []).map((img, index) => (
+            {(data.gallery || []).map((file, index) => (
               <div key={index} className="relative aspect-square rounded-lg overflow-hidden group">
                 <img
-                  src={img}
+                  src={URL.createObjectURL(file)}
                   alt={`Galeria ${index + 1}`}
                   className="w-full h-full object-cover"
                 />
