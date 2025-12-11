@@ -6,12 +6,6 @@ import { UnitNotFoundError } from '@/domain/errors/units/unit.errors';
 import { NotFoundError } from '../../errors/http-errors';
 import type { AuthContext } from '../../middleware/auth.middleware';
 
-const DayScheduleSchema = z.object({
-  enabled: z.boolean(),
-  open: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/),
-  close: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/),
-});
-
 const AddressSchema = z.object({
   cep: z.string().regex(/^\d{5}-?\d{3}$/),
   street: z.string().min(1),
@@ -34,20 +28,24 @@ const ServiceRefSchema = z.object({
   professionId: z.string(),
 });
 
-const LunchBreakSchema = z.object({
-  enabled: z.boolean(),
-  start: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/),
-  end: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/),
+const AvailabilityRuleInputSchema = z.object({
+  type: z.enum(['weekly', 'specific_date']),
+  weekday: z.number().min(0).max(6).optional(),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  start_time: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/),
+  end_time: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/),
+  slot_duration_minutes: z.number().positive(),
+  is_active: z.boolean().optional(),
+  metadata: z.record(z.string(), z.unknown()).optional(),
 });
 
-const WorkingHoursSchema = z.object({
-  monday: DayScheduleSchema,
-  tuesday: DayScheduleSchema,
-  wednesday: DayScheduleSchema,
-  thursday: DayScheduleSchema,
-  friday: DayScheduleSchema,
-  saturday: DayScheduleSchema,
-  sunday: DayScheduleSchema,
+const AvailabilityExceptionInputSchema = z.object({
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  type: z.enum(['block', 'override']),
+  start_time: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/).optional(),
+  end_time: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/).optional(),
+  slot_duration_minutes: z.number().positive().optional(),
+  reason: z.string().optional(),
 });
 
 const CreateUnitSchema = z.object({
@@ -64,8 +62,10 @@ const CreateUnitSchema = z.object({
   amenities: z.array(
     z.enum(['wifi', 'parking', 'coffee', 'ac', 'snacks', 'waiting-room', 'accessibility'])
   ),
-  workingHours: WorkingHoursSchema,
-  lunchBreak: LunchBreakSchema.optional(),
+
+  // Availability rules are now the primary way to define availability
+  availability_rules: z.array(AvailabilityRuleInputSchema).optional(),
+  availability_exceptions: z.array(AvailabilityExceptionInputSchema).optional(),
 });
 
 const UpdateUnitSchema = z.object({
@@ -84,8 +84,6 @@ const UpdateUnitSchema = z.object({
       z.enum(['wifi', 'parking', 'coffee', 'ac', 'snacks', 'waiting-room', 'accessibility'])
     )
     .optional(),
-  workingHours: WorkingHoursSchema.optional(),
-  lunchBreak: LunchBreakSchema.optional(),
 });
 
 export class UnitController {
@@ -108,8 +106,8 @@ export class UnitController {
         services: payload.services,
         serviceType: payload.serviceType,
         amenities: payload.amenities,
-        workingHours: payload.workingHours,
-        lunchBreak: payload.lunchBreak,
+        availability_rules: payload.availability_rules,
+        availability_exceptions: payload.availability_exceptions,
       });
 
       // Complete onboarding for the user after creating their first unit
@@ -179,8 +177,6 @@ export class UnitController {
         services: payload.services,
         serviceType: payload.serviceType,
         amenities: payload.amenities,
-        workingHours: payload.workingHours,
-        lunchBreak: payload.lunchBreak,
       });
 
       return c.json(UnitMapper.toDTO(unit));

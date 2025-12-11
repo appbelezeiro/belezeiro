@@ -70,6 +70,18 @@ import { SeedAmenitiesUseCase } from '@/application/usecases/amenity/seed-amenit
 import { LinkUnitAmenityUseCase } from '@/application/usecases/unit-amenity/link-unit-amenity.usecase';
 import { UnlinkUnitAmenityUseCase } from '@/application/usecases/unit-amenity/unlink-unit-amenity.usecase';
 import { GetUnitAmenitiesUseCase } from '@/application/usecases/unit-amenity/get-unit-amenities.usecase';
+import { CreateUnitAvailabilityRuleUseCase } from '@/application/usecases/units/availability/create-unit-availability-rule.usecase';
+import { GetUnitAvailabilityRulesByUnitUseCase } from '@/application/usecases/units/availability/get-unit-availability-rules-by-unit.usecase';
+import { UpdateUnitAvailabilityRuleUseCase } from '@/application/usecases/units/availability/update-unit-availability-rule.usecase';
+import { DeleteUnitAvailabilityRuleUseCase } from '@/application/usecases/units/availability/delete-unit-availability-rule.usecase';
+import { BulkCreateUnitAvailabilityRulesUseCase } from '@/application/usecases/units/availability/bulk-create-unit-availability-rules.usecase';
+import { CreateUnitAvailabilityExceptionUseCase } from '@/application/usecases/units/availability/create-unit-availability-exception.usecase';
+import { GetUnitAvailabilityExceptionsByUnitUseCase } from '@/application/usecases/units/availability/get-unit-availability-exceptions-by-unit.usecase';
+import { UpdateUnitAvailabilityExceptionUseCase } from '@/application/usecases/units/availability/update-unit-availability-exception.usecase';
+import { DeleteUnitAvailabilityExceptionUseCase } from '@/application/usecases/units/availability/delete-unit-availability-exception.usecase';
+import { BulkCreateUnitAvailabilityExceptionsUseCase } from '@/application/usecases/units/availability/bulk-create-unit-availability-exceptions.usecase';
+import { GetUnitAvailableSlotsUseCase } from '@/application/usecases/units/availability/get-unit-available-slots.usecase';
+import { MigrateUnitToAvailabilityRulesUseCase } from '@/application/usecases/units/availability/migrate-unit-to-availability-rules.usecase';
 import type { Repositories } from './repositories.factory';
 import type { Services } from './services.factory';
 
@@ -134,8 +146,60 @@ export function createUseCases(repositories: Repositories, services: Services) {
     ),
     update_organization: new UpdateOrganizationUseCase(repositories.organization_repository),
 
-    // Unit use cases
-    create_unit: new CreateUnitUseCase(repositories.unit_repository),
+    // Unit Availability Rules use cases
+    create_unit_availability_rule: new CreateUnitAvailabilityRuleUseCase(
+      repositories.unit_availability_rule_repository,
+    ),
+    get_unit_availability_rules_by_unit: new GetUnitAvailabilityRulesByUnitUseCase(
+      repositories.unit_availability_rule_repository,
+    ),
+    update_unit_availability_rule: new UpdateUnitAvailabilityRuleUseCase(
+      repositories.unit_availability_rule_repository,
+    ),
+    delete_unit_availability_rule: new DeleteUnitAvailabilityRuleUseCase(
+      repositories.unit_availability_rule_repository,
+    ),
+    bulk_create_unit_availability_rules: new BulkCreateUnitAvailabilityRulesUseCase(
+      repositories.unit_availability_rule_repository,
+    ),
+
+    // Unit Availability Exceptions use cases
+    create_unit_availability_exception: new CreateUnitAvailabilityExceptionUseCase(
+      repositories.unit_availability_exception_repository,
+    ),
+    get_unit_availability_exceptions_by_unit: new GetUnitAvailabilityExceptionsByUnitUseCase(
+      repositories.unit_availability_exception_repository,
+    ),
+    update_unit_availability_exception: new UpdateUnitAvailabilityExceptionUseCase(
+      repositories.unit_availability_exception_repository,
+    ),
+    delete_unit_availability_exception: new DeleteUnitAvailabilityExceptionUseCase(
+      repositories.unit_availability_exception_repository,
+    ),
+    bulk_create_unit_availability_exceptions: new BulkCreateUnitAvailabilityExceptionsUseCase(
+      repositories.unit_availability_exception_repository,
+    ),
+
+    // Unit Availability Slots use case
+    get_unit_available_slots: new GetUnitAvailableSlotsUseCase(
+      repositories.unit_availability_rule_repository,
+      repositories.unit_availability_exception_repository,
+    ),
+
+    // Unit Availability Migration use case
+    migrate_unit_to_availability_rules: new MigrateUnitToAvailabilityRulesUseCase(
+      repositories.unit_repository,
+      repositories.unit_availability_rule_repository,
+    ),
+
+    // Unit use cases (updated with availability dependencies)
+    create_unit: new CreateUnitUseCase(
+      repositories.unit_repository,
+      new BulkCreateUnitAvailabilityRulesUseCase(repositories.unit_availability_rule_repository),
+      new BulkCreateUnitAvailabilityExceptionsUseCase(
+        repositories.unit_availability_exception_repository,
+      ),
+    ),
     get_unit_by_id: new GetUnitByIdUseCase(repositories.unit_repository),
     list_units_by_organization: new ListUnitsByOrganizationUseCase(repositories.unit_repository),
     update_unit: new UpdateUnitUseCase(repositories.unit_repository),

@@ -129,8 +129,9 @@ class OnboardingService {
       services: data.services,
       serviceType: data.serviceType,
       amenities: data.amenities,
-      workingHours: data.workingHours,
-      lunchBreak: data.lunchBreak,
+      // Availability is now defined through availability_rules and availability_exceptions
+      availability_rules: data.availability_rules,
+      availability_exceptions: data.availability_exceptions,
     });
 
     // Step 3: Link specialties to unit (new API)

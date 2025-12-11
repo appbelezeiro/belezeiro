@@ -2,6 +2,8 @@
 // ONBOARDING TYPES - Tipos para integração com API
 // ============================================================================
 
+import type { AvailabilityRuleInput, AvailabilityExceptionInput } from '../../units/types/unit-availability.types';
+
 // ============================================================================
 // Organization Types
 // ============================================================================
@@ -88,8 +90,9 @@ export interface CreateUnitRequest {
   services: ServiceRef[];
   serviceType: ServiceType;
   amenities: AmenityId[];
-  workingHours: WorkingHours;
-  lunchBreak?: LunchBreak;
+  // Availability is now defined through availability_rules and availability_exceptions
+  availability_rules?: AvailabilityRuleInput[];
+  availability_exceptions?: AvailabilityExceptionInput[];
 }
 
 export interface UnitDTO {
@@ -106,8 +109,6 @@ export interface UnitDTO {
   services: ServiceRef[];
   serviceType: ServiceType;
   amenities: AmenityId[];
-  workingHours: WorkingHours;
-  lunchBreak?: LunchBreak;
   created_at: string;
   updated_at: string;
 }
@@ -137,8 +138,9 @@ export interface OnboardingSubmitData {
   services: ServiceRef[];
   serviceType: ServiceType;
   amenities: AmenityId[];
-  workingHours: WorkingHours;
-  lunchBreak?: LunchBreak;
+  // Availability is now defined through availability_rules and availability_exceptions
+  availability_rules?: AvailabilityRuleInput[];
+  availability_exceptions?: AvailabilityExceptionInput[];
 }
 
 export interface OnboardingResult {

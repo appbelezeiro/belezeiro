@@ -65,16 +65,14 @@ type UnitEntityOwnProps = {
   services: ServiceRef[];
   serviceType: ServiceType;
   amenities: AmenityId[];
-  workingHours: WorkingHours;
-  lunchBreak?: LunchBreak;
 };
 
 type UnitEntityCreationProps = Omit<UnitEntityOwnProps, 'isActive' | 'gallery'> &
   Partial<Pick<UnitEntityOwnProps, 'isActive' | 'gallery'>> &
   BaseEntityCreationProps;
 
-type UnitEntityProps = Omit<UnitEntityOwnProps, 'logo' | 'phone' | 'lunchBreak'> &
-  Pick<UnitEntityOwnProps, 'logo' | 'phone' | 'lunchBreak'> &
+type UnitEntityProps = Omit<UnitEntityOwnProps, 'logo' | 'phone'> &
+  Pick<UnitEntityOwnProps, 'logo' | 'phone'> &
   BaseEntityProps;
 
 export class UnitEntity extends BaseEntity<UnitEntityProps> {
@@ -89,14 +87,9 @@ export class UnitEntity extends BaseEntity<UnitEntityProps> {
       UnitEntity.validatePhone(props.phone);
     }
     UnitEntity.validateServiceType(props.serviceType);
-    UnitEntity.validateWorkingHours(props.workingHours);
     UnitEntity.validateProfessions(props.professions);
     UnitEntity.validateServices(props.services, props.professions);
     UnitEntity.validateAmenities(props.amenities);
-
-    if (props.lunchBreak) {
-      UnitEntity.validateLunchBreak(props.lunchBreak);
-    }
 
     super({
       ...props,
@@ -123,58 +116,6 @@ export class UnitEntity extends BaseEntity<UnitEntityProps> {
     const validTypes: ServiceType[] = ['local', 'home', 'both'];
     if (!validTypes.includes(serviceType as ServiceType)) {
       throw new InvalidServiceTypeError('Service type must be: local, home, or both');
-    }
-  }
-
-  private static validateTimeFormat(time: string, fieldName: string): void {
-    const timeRegex = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
-    if (!timeRegex.test(time)) {
-      throw new InvalidWorkingHoursError(
-        `${fieldName} must be in HH:MM format (e.g., 09:00, 18:30)`
-      );
-    }
-  }
-
-  private static validateWorkingHours(workingHours: WorkingHours): void {
-    const days: DayOfWeek[] = [
-      'monday',
-      'tuesday',
-      'wednesday',
-      'thursday',
-      'friday',
-      'saturday',
-      'sunday',
-    ];
-
-    for (const day of days) {
-      const schedule = workingHours[day];
-      if (!schedule) {
-        throw new InvalidWorkingHoursError(`Missing schedule for ${day}`);
-      }
-
-      if (schedule.enabled) {
-        UnitEntity.validateTimeFormat(schedule.open, `${day} open time`);
-        UnitEntity.validateTimeFormat(schedule.close, `${day} close time`);
-
-        if (schedule.open >= schedule.close) {
-          throw new InvalidWorkingHoursError(
-            `${day}: open time (${schedule.open}) must be before close time (${schedule.close})`
-          );
-        }
-      }
-    }
-  }
-
-  private static validateLunchBreak(lunchBreak: LunchBreak): void {
-    if (lunchBreak.enabled) {
-      UnitEntity.validateTimeFormat(lunchBreak.start, 'lunch break start');
-      UnitEntity.validateTimeFormat(lunchBreak.end, 'lunch break end');
-
-      if (lunchBreak.start >= lunchBreak.end) {
-        throw new InvalidWorkingHoursError(
-          `Lunch break: start time (${lunchBreak.start}) must be before end time (${lunchBreak.end})`
-        );
-      }
     }
   }
 
