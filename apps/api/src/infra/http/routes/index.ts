@@ -6,6 +6,7 @@ import { createAuthRoutes } from './auth/auth.routes';
 import { createBookingRoutes } from './bookings/booking.routes';
 import { createOrganizationRoutes } from './organizations/organization.routes';
 import { createUnitRoutes } from './units/unit.routes';
+import { createUnitAvailabilityRoutes } from './units/unit-availability.routes';
 import { createPlanRoutes } from './billing/plan.routes';
 import { createSubscriptionRoutes } from './billing/subscription.routes';
 import { createWebhookRoutes } from './billing/webhook.routes';
@@ -26,6 +27,7 @@ export function createRoutes(container: Container) {
   app.route('/booking', createBookingRoutes(container));
   app.route('/organizations', createOrganizationRoutes(container));
   app.route('/units', createUnitRoutes(container));
+  app.route('/unit-availability', createUnitAvailabilityRoutes(container));
   app.route('/upload', createUploadRoutes(container));
 
   // Specialties and Services routes

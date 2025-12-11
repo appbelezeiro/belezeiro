@@ -10,18 +10,20 @@ import { OnboardingStepServiceType } from "@/components/onboarding/OnboardingSte
 import { OnboardingStepAmenities } from "@/components/onboarding/OnboardingStepAmenities";
 import { OnboardingStepWorkingHours } from "@/components/onboarding/OnboardingStepWorkingHours";
 import { OnboardingStepPersonalization } from "@/components/onboarding/OnboardingStepPersonalization";
+import { OnboardingFinalizing } from "@/components/onboarding/OnboardingFinalizing";
 import { useCurrentUser } from "@/features/auth";
-import { useSubmitOnboarding, type OnboardingSubmitData, type AmenityId, type WorkingHours } from "@/features/onboarding";
+import { useSubmitOnboarding, type OnboardingSubmitData, type AmenityId } from "@/features/onboarding";
 import { useOnboardingPersistence } from "@/shared/hooks";
+import type { AvailabilityRuleInput, AvailabilityExceptionInput } from "@/features/units/types/unit-availability.types";
 
 export interface OnboardingFormData {
   // Business
   businessName: string;
-  
+
   // Unit Basic Info
   unitName: string;
-  logo: string | null;
-  gallery: string[];
+  logo: File | null;
+  gallery: File[];
   whatsapp: string;
   phone: string;
   
@@ -43,11 +45,11 @@ export interface OnboardingFormData {
   
   // Amenities
   amenities: string[];
-  
-  // Working Hours
-  workingHours: Record<string, { open: string; close: string; enabled: boolean }>;
-  lunchBreak: { enabled: boolean; start: string; end: string };
-  
+
+  // Availability Rules (instead of working hours)
+  availability_rules: AvailabilityRuleInput[];
+  availability_exceptions: AvailabilityExceptionInput[];
+
   // Personalization
   brandColor: string;
 }
@@ -70,16 +72,16 @@ const initialFormData: OnboardingFormData = {
   services: [],
   serviceType: null,
   amenities: [],
-  workingHours: {
-    monday: { open: "09:00", close: "18:00", enabled: true },
-    tuesday: { open: "09:00", close: "18:00", enabled: true },
-    wednesday: { open: "09:00", close: "18:00", enabled: true },
-    thursday: { open: "09:00", close: "18:00", enabled: true },
-    friday: { open: "09:00", close: "18:00", enabled: true },
-    saturday: { open: "09:00", close: "13:00", enabled: true },
-    sunday: { open: "09:00", close: "18:00", enabled: false },
-  },
-  lunchBreak: { enabled: false, start: "12:00", end: "13:00" },
+  availability_rules: [
+    // Default: Monday to Friday 9AM-6PM
+    { type: 'weekly' as const, weekday: 1, start_time: '09:00', end_time: '18:00', slot_duration_minutes: 30, is_active: true },
+    { type: 'weekly' as const, weekday: 2, start_time: '09:00', end_time: '18:00', slot_duration_minutes: 30, is_active: true },
+    { type: 'weekly' as const, weekday: 3, start_time: '09:00', end_time: '18:00', slot_duration_minutes: 30, is_active: true },
+    { type: 'weekly' as const, weekday: 4, start_time: '09:00', end_time: '18:00', slot_duration_minutes: 30, is_active: true },
+    { type: 'weekly' as const, weekday: 5, start_time: '09:00', end_time: '18:00', slot_duration_minutes: 30, is_active: true },
+    { type: 'weekly' as const, weekday: 6, start_time: '09:00', end_time: '13:00', slot_duration_minutes: 30, is_active: true },
+  ],
+  availability_exceptions: [],
   brandColor: "#3b82f6",
 };
 
@@ -92,6 +94,11 @@ const Onboarding = () => {
   const [formData, setFormData] = useState<OnboardingFormData>(initialFormData);
   const [isRestored, setIsRestored] = useState(false);
   const isFirstRender = useRef(true);
+
+  // Finalizing state
+  const [isFinalizing, setIsFinalizing] = useState(false);
+  const [finalizingStep, setFinalizingStep] = useState(0);
+  const [isFinalizingComplete, setIsFinalizingComplete] = useState(false);
 
   // Initialize persistence hook
   const {
@@ -139,7 +146,14 @@ const Onboarding = () => {
     onSuccess: () => {
       // Clear persisted data on successful completion
       clearPersistence();
-      navigate("/onboarding/plans");
+
+      // Mark as complete
+      setIsFinalizingComplete(true);
+
+      // Wait 2.5s to show success message, then redirect
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2500);
     },
   });
 
@@ -158,23 +172,12 @@ const Onboarding = () => {
       professionId: service.professionId,
     }));
 
-    // Transform working hours to the correct format
-    const workingHours: WorkingHours = {
-      monday: formData.workingHours.monday,
-      tuesday: formData.workingHours.tuesday,
-      wednesday: formData.workingHours.wednesday,
-      thursday: formData.workingHours.thursday,
-      friday: formData.workingHours.friday,
-      saturday: formData.workingHours.saturday,
-      sunday: formData.workingHours.sunday,
-    };
-
     return {
       businessName: formData.businessName,
       brandColor: formData.brandColor,
       unitName: formData.unitName,
-      logo: formData.logo || undefined,
-      gallery: formData.gallery,
+      // Don't send logo/gallery URLs - we'll upload files after unit creation
+      gallery: [], // Empty array - images will be uploaded separately
       whatsapp: formData.whatsapp.replace(/\D/g, ''), // Remove non-digits
       phone: formData.phone ? formData.phone.replace(/\D/g, '') : undefined,
       address: {
@@ -190,8 +193,9 @@ const Onboarding = () => {
       services: servicesWithId,
       serviceType: formData.serviceType as 'local' | 'home' | 'both',
       amenities: formData.amenities as AmenityId[],
-      workingHours,
-      lunchBreak: formData.lunchBreak.enabled ? formData.lunchBreak : undefined,
+      // Pass availability rules directly - no conversion needed
+      availability_rules: formData.availability_rules,
+      availability_exceptions: formData.availability_exceptions,
     };
   };
 
@@ -201,8 +205,21 @@ const Onboarding = () => {
       return;
     }
 
+    // Show finalizing screen
+    setIsFinalizing(true);
+
     const submitData = transformFormDataToSubmit();
-    submitOnboarding.mutate({ data: submitData, userId: user.id });
+
+    // Files are already in the correct format - no conversion needed
+    submitOnboarding.mutate({
+      data: submitData,
+      userId: user.id,
+      logoFile: formData.logo,
+      galleryFiles: formData.gallery,
+      onProgress: (step) => {
+        setFinalizingStep(step);
+      },
+    });
   };
 
   const nextStep = () => {
@@ -239,6 +256,16 @@ const Onboarding = () => {
           <p className="text-muted-foreground">Carregando...</p>
         </div>
       </div>
+    );
+  }
+
+  // Show finalizing screen
+  if (isFinalizing) {
+    return (
+      <OnboardingFinalizing
+        currentStep={finalizingStep}
+        isComplete={isFinalizingComplete}
+      />
     );
   }
 

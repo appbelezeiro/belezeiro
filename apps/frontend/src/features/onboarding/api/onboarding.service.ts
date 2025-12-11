@@ -3,6 +3,7 @@
 // ============================================================================
 
 import { privateClient } from '@/services/api/client';
+import { uploadService } from '@/features/upload/api/upload.service';
 import type {
   CreateOrganizationRequest,
   OrganizationDTO,
@@ -101,10 +102,10 @@ class OnboardingService {
 
   /**
    * Submit complete onboarding data
-   * Creates organization first, then creates unit, then links specialties and services
+   * Creates organization first, then creates unit
    */
   async submitOnboarding(data: OnboardingSubmitData, userId: string): Promise<OnboardingResult> {
-    // Step 1: Create organization
+    // Step 1: Create organization (backend will mark onboarding complete if first business)
     const organization = await this.createOrganization({
       businessName: data.businessName,
       brandColor: data.brandColor,
@@ -115,13 +116,11 @@ class OnboardingService {
       },
     });
 
-    // Step 2: Create unit (with professions/services for backward compatibility)
-    // Note: These will be migrated to the new specialty/service system below
+    // Step 2: Create unit (without images - they will be uploaded separately)
     const unit = await this.createUnit({
       organizationId: organization.id,
       name: data.unitName,
-      logo: data.logo,
-      gallery: data.gallery,
+      // Don't send logo/gallery - will be uploaded after unit creation
       whatsapp: data.whatsapp,
       phone: data.phone,
       address: data.address,
@@ -129,12 +128,12 @@ class OnboardingService {
       services: data.services,
       serviceType: data.serviceType,
       amenities: data.amenities,
-      workingHours: data.workingHours,
-      lunchBreak: data.lunchBreak,
+      // Availability rules
+      availability_rules: data.availability_rules,
+      availability_exceptions: data.availability_exceptions,
     });
 
-    // Step 3: Link specialties to unit (new API)
-    // Only link if specialty has a valid ID (not custom)
+    // Step 3: Link specialties to unit
     try {
       const specialtyPromises = data.professions
         .filter((prof) => prof.id && !prof.id.startsWith('custom-'))
@@ -145,25 +144,12 @@ class OnboardingService {
             });
           } catch (error) {
             console.warn(`Failed to link specialty ${prof.id}:`, error);
-            // Continue with other specialties even if one fails
           }
         });
 
       await Promise.allSettled(specialtyPromises);
     } catch (error) {
       console.warn('Error linking specialties:', error);
-      // Don't fail onboarding if specialty linking fails
-    }
-
-    // Step 4: Link services to unit (new API)
-    // Map services by finding their IDs in the specialties
-    try {
-      // For now, we skip automatic service linking as we don't have service IDs
-      // This will be handled in a future update when we store service IDs in the form
-      console.log('Service linking will be available in next update');
-    } catch (error) {
-      console.warn('Error linking services:', error);
-      // Don't fail onboarding if service linking fails
     }
 
     return { organization, unit };

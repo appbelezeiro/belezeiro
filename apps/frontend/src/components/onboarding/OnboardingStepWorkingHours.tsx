@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { OnboardingFormData } from "@/pages/Onboarding";
 import { useToast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
+import type { AvailabilityRuleInput } from "@/features/units/types/unit-availability.types";
 
 interface OnboardingStepWorkingHoursProps {
   data: OnboardingFormData;
@@ -20,13 +20,13 @@ interface OnboardingStepWorkingHoursProps {
 }
 
 const days = [
-  { key: "monday", label: "Segunda" },
-  { key: "tuesday", label: "Terça" },
-  { key: "wednesday", label: "Quarta" },
-  { key: "thursday", label: "Quinta" },
-  { key: "friday", label: "Sexta" },
-  { key: "saturday", label: "Sábado" },
-  { key: "sunday", label: "Domingo" },
+  { weekday: 1, label: "Segunda" },
+  { weekday: 2, label: "Terça" },
+  { weekday: 3, label: "Quarta" },
+  { weekday: 4, label: "Quinta" },
+  { weekday: 5, label: "Sexta" },
+  { weekday: 6, label: "Sábado" },
+  { weekday: 0, label: "Domingo" },
 ];
 
 const timeOptions = Array.from({ length: 48 }, (_, i) => {
@@ -38,30 +38,83 @@ const timeOptions = Array.from({ length: 48 }, (_, i) => {
 export const OnboardingStepWorkingHours = ({ data, onUpdate, onNext, onBack }: OnboardingStepWorkingHoursProps) => {
   const { toast } = useToast();
 
-  const updateWorkingHours = (day: string, field: string, value: string | boolean) => {
-    onUpdate({
-      workingHours: {
-        ...data.workingHours,
-        [day]: { ...data.workingHours[day], [field]: value },
-      },
-    });
+  // Find the rule for a specific weekday
+  const getRuleForWeekday = (weekday: number): AvailabilityRuleInput | undefined => {
+    return data.availability_rules.find(
+      (rule) => rule.type === 'weekly' && rule.weekday === weekday
+    );
   };
 
-  const updateLunchBreak = (field: string, value: string | boolean) => {
-    onUpdate({
-      lunchBreak: { ...data.lunchBreak, [field]: value },
+  // Update a specific rule for a weekday
+  const updateRule = (weekday: number, field: keyof AvailabilityRuleInput, value: any) => {
+    const updatedRules = data.availability_rules.map((rule) => {
+      if (rule.type === 'weekly' && rule.weekday === weekday) {
+        return { ...rule, [field]: value };
+      }
+      return rule;
     });
+    onUpdate({ availability_rules: updatedRules });
   };
 
-  const copyHoursToAll = (sourceDay: string) => {
-    const source = data.workingHours[sourceDay];
-    const updated = { ...data.workingHours };
-    days.forEach(({ key }) => {
-      if (key !== sourceDay) {
-        updated[key] = { ...source };
+  // Toggle a day on/off
+  const toggleDay = (weekday: number, enabled: boolean) => {
+    if (enabled) {
+      // Add a new rule if enabling
+      const existingRule = getRuleForWeekday(weekday);
+      if (!existingRule) {
+        onUpdate({
+          availability_rules: [
+            ...data.availability_rules,
+            {
+              type: 'weekly' as const,
+              weekday,
+              start_time: '09:00',
+              end_time: '18:00',
+              slot_duration_minutes: 30,
+              is_active: true,
+            },
+          ],
+        });
+      } else {
+        updateRule(weekday, 'is_active', true);
+      }
+    } else {
+      // Remove the rule or mark as inactive
+      updateRule(weekday, 'is_active', false);
+    }
+  };
+
+  const copyHoursToAll = (sourceWeekday: number) => {
+    const sourceRule = getRuleForWeekday(sourceWeekday);
+    if (!sourceRule) return;
+
+    const updatedRules = days.map(({ weekday }) => {
+      if (weekday === sourceWeekday) {
+        return sourceRule; // Keep source as is
+      }
+      const existingRule = getRuleForWeekday(weekday);
+      if (existingRule) {
+        // Update existing rule with source times
+        return {
+          ...existingRule,
+          start_time: sourceRule.start_time,
+          end_time: sourceRule.end_time,
+          slot_duration_minutes: sourceRule.slot_duration_minutes,
+        };
+      } else {
+        // Create new rule with source times
+        return {
+          type: 'weekly' as const,
+          weekday,
+          start_time: sourceRule.start_time,
+          end_time: sourceRule.end_time,
+          slot_duration_minutes: sourceRule.slot_duration_minutes,
+          is_active: true,
+        };
       }
     });
-    onUpdate({ workingHours: updated });
+
+    onUpdate({ availability_rules: updatedRules });
     toast({ title: "Horários copiados para todos os dias" });
   };
 
@@ -80,70 +133,29 @@ export const OnboardingStepWorkingHours = ({ data, onUpdate, onNext, onBack }: O
         </p>
       </div>
 
-      {/* Lunch Break */}
-      <div className="flex items-center gap-4 p-4 rounded-xl border border-border">
-        <div className="flex items-center gap-3 flex-1">
-          <Switch
-            checked={data.lunchBreak.enabled}
-            onCheckedChange={(checked) => updateLunchBreak("enabled", checked)}
-          />
-          <span className="text-sm font-medium">Pausa para almoço</span>
-        </div>
-        {data.lunchBreak.enabled && (
-          <div className="flex items-center gap-2">
-            <Select
-              value={data.lunchBreak.start}
-              onValueChange={(v) => updateLunchBreak("start", v)}
-            >
-              <SelectTrigger className="w-20 h-8 text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {timeOptions.map((t) => (
-                  <SelectItem key={t} value={t}>{t}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <span className="text-muted-foreground text-xs">às</span>
-            <Select
-              value={data.lunchBreak.end}
-              onValueChange={(v) => updateLunchBreak("end", v)}
-            >
-              <SelectTrigger className="w-20 h-8 text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {timeOptions.map((t) => (
-                  <SelectItem key={t} value={t}>{t}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        )}
-      </div>
-
       {/* Days */}
       <div className="space-y-2">
-        {days.map(({ key, label }) => {
-          const day = data.workingHours[key];
+        {days.map(({ weekday, label }) => {
+          const rule = getRuleForWeekday(weekday);
+          const isEnabled = rule?.is_active !== false;
           return (
             <div
-              key={key}
+              key={weekday}
               className="flex flex-col sm:flex-row sm:items-center gap-2 p-3 rounded-xl border border-border"
             >
               <div className="flex items-center gap-3 flex-1">
                 <Switch
-                  checked={day.enabled}
-                  onCheckedChange={(checked) => updateWorkingHours(key, "enabled", checked)}
+                  checked={isEnabled}
+                  onCheckedChange={(checked) => toggleDay(weekday, checked)}
                 />
                 <span className="text-sm font-medium w-20">{label}</span>
               </div>
 
-              {day.enabled && (
+              {isEnabled && rule && (
                 <div className="flex items-center gap-2 ml-11 sm:ml-0">
                   <Select
-                    value={day.open}
-                    onValueChange={(v) => updateWorkingHours(key, "open", v)}
+                    value={rule.start_time}
+                    onValueChange={(v) => updateRule(weekday, 'start_time', v)}
                   >
                     <SelectTrigger className="w-20 h-8 text-xs">
                       <SelectValue />
@@ -156,8 +168,8 @@ export const OnboardingStepWorkingHours = ({ data, onUpdate, onNext, onBack }: O
                   </Select>
                   <span className="text-muted-foreground text-xs">às</span>
                   <Select
-                    value={day.close}
-                    onValueChange={(v) => updateWorkingHours(key, "close", v)}
+                    value={rule.end_time}
+                    onValueChange={(v) => updateRule(weekday, 'end_time', v)}
                   >
                     <SelectTrigger className="w-20 h-8 text-xs">
                       <SelectValue />
@@ -171,7 +183,7 @@ export const OnboardingStepWorkingHours = ({ data, onUpdate, onNext, onBack }: O
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => copyHoursToAll(key)}
+                    onClick={() => copyHoursToAll(weekday)}
                     className="h-8 px-2 text-xs gap-1"
                   >
                     <Copy className="h-3 w-3" />
