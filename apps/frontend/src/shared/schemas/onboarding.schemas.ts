@@ -14,13 +14,19 @@ import {
 } from './common.schemas';
 
 /**
+ * Schema para validar File objects (imagens)
+ */
+const fileSchema = z.instanceof(File);
+
+/**
  * Schema para Step 1: Informações Básicas
+ * logo e gallery aceitam File objects (para upload) ou strings (URLs após upload)
  */
 export const basicInfoSchema = z.object({
   businessName: requiredString(2, 100),
   unitName: requiredString(2, 100),
-  logo: z.string().nullable().optional(),
-  gallery: z.array(z.string()).optional(),
+  logo: z.union([fileSchema, z.string()]).nullable().optional(),
+  gallery: z.array(z.union([fileSchema, z.string()])).optional(),
   whatsapp: phoneSchema,
   phone: optionalPhoneSchema,
 });

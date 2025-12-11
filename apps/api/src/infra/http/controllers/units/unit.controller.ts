@@ -59,9 +59,8 @@ const CreateUnitSchema = z.object({
   professions: z.array(ProfessionRefSchema).min(1),
   services: z.array(ServiceRefSchema).min(1),
   serviceType: z.enum(['local', 'home', 'both']),
-  amenities: z.array(
-    z.enum(['wifi', 'parking', 'coffee', 'ac', 'snacks', 'waiting-room', 'accessibility'])
-  ),
+  // Amenities are now dynamic - accept any amenity ID string
+  amenities: z.array(z.string().min(1)).optional(),
 
   // Availability rules are now the primary way to define availability
   availability_rules: z.array(AvailabilityRuleInputSchema).optional(),
@@ -79,11 +78,8 @@ const UpdateUnitSchema = z.object({
   professions: z.array(ProfessionRefSchema).min(1).optional(),
   services: z.array(ServiceRefSchema).min(1).optional(),
   serviceType: z.enum(['local', 'home', 'both']).optional(),
-  amenities: z
-    .array(
-      z.enum(['wifi', 'parking', 'coffee', 'ac', 'snacks', 'waiting-room', 'accessibility'])
-    )
-    .optional(),
+  // Amenities are now dynamic - accept any amenity ID string
+  amenities: z.array(z.string().min(1)).optional(),
 });
 
 export class UnitController {
