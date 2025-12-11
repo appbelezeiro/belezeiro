@@ -10,6 +10,8 @@ import { OnboardingStepServiceType } from "@/components/onboarding/OnboardingSte
 import { OnboardingStepAmenities } from "@/components/onboarding/OnboardingStepAmenities";
 import { OnboardingStepWorkingHours } from "@/components/onboarding/OnboardingStepWorkingHours";
 import { OnboardingStepPersonalization } from "@/components/onboarding/OnboardingStepPersonalization";
+import { useAuth } from "@/contexts/AuthContext";
+import { useSubmitOnboarding, type OnboardingSubmitData, type AmenityId, type WorkingHours } from "@/features/onboarding";
 
 export interface OnboardingFormData {
   // Business
@@ -84,8 +86,15 @@ const TOTAL_STEPS = 7;
 
 const Onboarding = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<OnboardingFormData>(initialFormData);
+
+  const submitOnboarding = useSubmitOnboarding({
+    onSuccess: () => {
+      navigate("/onboarding/plans");
+    },
+  });
 
   const progress = (currentStep / TOTAL_STEPS) * 100;
 
@@ -93,12 +102,68 @@ const Onboarding = () => {
     setFormData((prev) => ({ ...prev, ...data }));
   };
 
+  // Transform form data to API format
+  const transformFormDataToSubmit = (): OnboardingSubmitData => {
+    // Transform services to include ID (generate from name)
+    const servicesWithId = formData.services.map((service) => ({
+      id: `serv_${service.name.toLowerCase().replace(/\s+/g, '_')}`,
+      name: service.name,
+      professionId: service.professionId,
+    }));
+
+    // Transform working hours to the correct format
+    const workingHours: WorkingHours = {
+      monday: formData.workingHours.monday,
+      tuesday: formData.workingHours.tuesday,
+      wednesday: formData.workingHours.wednesday,
+      thursday: formData.workingHours.thursday,
+      friday: formData.workingHours.friday,
+      saturday: formData.workingHours.saturday,
+      sunday: formData.workingHours.sunday,
+    };
+
+    return {
+      businessName: formData.businessName,
+      brandColor: formData.brandColor,
+      unitName: formData.unitName,
+      logo: formData.logo || undefined,
+      gallery: formData.gallery,
+      whatsapp: formData.whatsapp.replace(/\D/g, ''), // Remove non-digits
+      phone: formData.phone ? formData.phone.replace(/\D/g, '') : undefined,
+      address: {
+        cep: formData.cep,
+        street: formData.street,
+        number: formData.number,
+        complement: formData.complement || undefined,
+        neighborhood: formData.neighborhood,
+        city: formData.city,
+        state: formData.state,
+      },
+      professions: formData.professions,
+      services: servicesWithId,
+      serviceType: formData.serviceType as 'local' | 'home' | 'both',
+      amenities: formData.amenities as AmenityId[],
+      workingHours,
+      lunchBreak: formData.lunchBreak.enabled ? formData.lunchBreak : undefined,
+    };
+  };
+
+  const handleSubmit = async () => {
+    if (!user?.id) {
+      console.error('User not authenticated');
+      return;
+    }
+
+    const submitData = transformFormDataToSubmit();
+    submitOnboarding.mutate({ data: submitData, userId: user.id });
+  };
+
   const nextStep = () => {
     if (currentStep < TOTAL_STEPS) {
       setCurrentStep((prev) => prev + 1);
     } else {
-      // Save data and go to plans
-      navigate("/onboarding/plans");
+      // Submit onboarding data
+      handleSubmit();
     }
   };
 
@@ -203,6 +268,7 @@ const Onboarding = () => {
               onUpdate={updateFormData}
               onNext={nextStep}
               onBack={prevStep}
+              isSubmitting={submitOnboarding.isPending}
             />
           )}
         </div>

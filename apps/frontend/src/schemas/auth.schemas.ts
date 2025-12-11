@@ -30,6 +30,8 @@ export const loginRequestSchema = z.object({
  */
 export const loginResponseSchema = z.object({
   user: userSchema,
+  created: z.boolean().optional(),
+  pending_actions: z.record(z.string()).optional(),
 });
 
 /**

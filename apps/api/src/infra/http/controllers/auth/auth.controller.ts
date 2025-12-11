@@ -54,9 +54,23 @@ export class AuthController {
 
       const status = result.is_new_user ? 201 : 200;
 
+      // Check if user has organization (for onboarding redirect)
+      const organization = await this.container.use_cases.get_organization_by_owner.execute({
+        ownerId: result.user.id,
+      });
+
+      const hasOrganization = organization !== null;
+      const pendingActions: Record<string, string> = {};
+
+      if (!hasOrganization) {
+        pendingActions.onboarding = 'pending';
+      }
+
       return c.json(
         {
-          status: 'Logged successful',
+          user: UserMapper.toAuth(result.user),
+          created: result.is_new_user,
+          pending_actions: Object.keys(pendingActions).length > 0 ? pendingActions : undefined,
         },
         status,
       );
@@ -132,7 +146,7 @@ export class AuthController {
         user_id: auth.userId,
       });
 
-      return c.json(UserMapper.toProfile(user), 200);
+      return c.json({ user: UserMapper.toAuth(user) }, 200);
     } catch (error) {
       if (error instanceof UserNotFoundError) {
         throw new NotFoundError(error.message);
