@@ -139,7 +139,10 @@ export function createUseCases(repositories: Repositories, services: Services) {
     ),
 
     // Organization use cases
-    create_organization: new CreateOrganizationUseCase(repositories.organization_repository),
+    create_organization: new CreateOrganizationUseCase(
+      repositories.organization_repository,
+      repositories.user_repository,
+    ),
     get_organization_by_id: new GetOrganizationByIdUseCase(repositories.organization_repository),
     get_organization_by_owner: new GetOrganizationByOwnerUseCase(
       repositories.organization_repository,

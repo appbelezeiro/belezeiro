@@ -102,10 +102,10 @@ class OnboardingService {
 
   /**
    * Submit complete onboarding data
-   * Creates organization first, then creates unit, then links specialties and services
+   * Creates organization first, then creates unit
    */
   async submitOnboarding(data: OnboardingSubmitData, userId: string): Promise<OnboardingResult> {
-    // Step 1: Create organization
+    // Step 1: Create organization (backend will mark onboarding complete if first business)
     const organization = await this.createOrganization({
       businessName: data.businessName,
       brandColor: data.brandColor,
@@ -116,13 +116,11 @@ class OnboardingService {
       },
     });
 
-    // Step 2: Create unit (with professions/services for backward compatibility)
-    // Note: These will be migrated to the new specialty/service system below
+    // Step 2: Create unit (without images - they will be uploaded separately)
     const unit = await this.createUnit({
       organizationId: organization.id,
       name: data.unitName,
-      logo: data.logo,
-      gallery: data.gallery,
+      // Don't send logo/gallery - will be uploaded after unit creation
       whatsapp: data.whatsapp,
       phone: data.phone,
       address: data.address,
@@ -130,13 +128,12 @@ class OnboardingService {
       services: data.services,
       serviceType: data.serviceType,
       amenities: data.amenities,
-      // Availability is now defined through availability_rules and availability_exceptions
+      // Availability rules
       availability_rules: data.availability_rules,
       availability_exceptions: data.availability_exceptions,
     });
 
-    // Step 3: Link specialties to unit (new API)
-    // Only link if specialty has a valid ID (not custom)
+    // Step 3: Link specialties to unit
     try {
       const specialtyPromises = data.professions
         .filter((prof) => prof.id && !prof.id.startsWith('custom-'))
@@ -147,101 +144,15 @@ class OnboardingService {
             });
           } catch (error) {
             console.warn(`Failed to link specialty ${prof.id}:`, error);
-            // Continue with other specialties even if one fails
           }
         });
 
       await Promise.allSettled(specialtyPromises);
     } catch (error) {
       console.warn('Error linking specialties:', error);
-      // Don't fail onboarding if specialty linking fails
-    }
-
-    // Step 4: Link services to unit (new API)
-    // Map services by finding their IDs in the specialties
-    try {
-      // For now, we skip automatic service linking as we don't have service IDs
-      // This will be handled in a future update when we store service IDs in the form
-      console.log('Service linking will be available in next update');
-    } catch (error) {
-      console.warn('Error linking services:', error);
-      // Don't fail onboarding if service linking fails
     }
 
     return { organization, unit };
-  }
-
-  // ============================================================================
-  // Image Upload Helper
-  // ============================================================================
-
-  /**
-   * Upload images and update unit
-   * Handles logo and gallery uploads after unit creation
-   */
-  async uploadImagesAndUpdateUnit(params: {
-    unitId: string;
-    userId: string;
-    logoFile?: File | null;
-    galleryFiles?: File[];
-  }): Promise<{
-    logoUrl?: string;
-    galleryUrls?: string[];
-  }> {
-    const result: { logoUrl?: string; galleryUrls?: string[] } = {};
-
-    // Upload logo if exists
-    if (params.logoFile) {
-      try {
-        // 1. Generate pre-signed URL
-        const presigned = await uploadService.generateUploadUrl(
-          'logo',
-          params.logoFile.name,
-          params.logoFile.type
-        );
-
-        // 2. Upload to storage
-        await uploadService.uploadToStorage(presigned.upload_url, params.logoFile);
-
-        // 3. Confirm upload and get final URL
-        const confirmation = await uploadService.confirmUnitLogo(params.unitId, presigned.key);
-        result.logoUrl = confirmation.url;
-      } catch (error) {
-        console.error('Logo upload failed:', error);
-        // Continue even if logo upload fails
-      }
-    }
-
-    // Upload gallery if exists
-    if (params.galleryFiles && params.galleryFiles.length > 0) {
-      try {
-        // 1. Generate batch pre-signed URLs
-        const presignedBatch = await uploadService.generateBatchUploadUrls(
-          'gallery',
-          params.galleryFiles.map((file) => ({
-            fileName: file.name,
-            contentType: file.type,
-          }))
-        );
-
-        // 2. Upload all files to storage
-        await Promise.all(
-          presignedBatch.map((presigned, index) =>
-            uploadService.uploadToStorage(presigned.upload_url, params.galleryFiles![index])
-          )
-        );
-
-        // 3. Confirm batch upload and get final URLs
-        const keys = presignedBatch.map((p) => p.key);
-        const confirmation = await uploadService.confirmBatchGalleryUpload(params.unitId, keys);
-        result.galleryUrls = confirmation.urls;
-      } catch (error) {
-        console.error('Gallery upload failed:', error);
-        // Continue even if gallery upload fails
-      }
-    }
-
-    return result;
   }
 
   // ============================================================================

@@ -13,8 +13,88 @@ import { OnboardingStepPersonalization } from "@/components/onboarding/Onboardin
 import { useCurrentUser } from "@/features/auth";
 import { useSubmitOnboarding, type OnboardingSubmitData, type AmenityId } from "@/features/onboarding";
 import { useOnboardingPersistence } from "@/shared/hooks";
-import { convertToAvailabilityRules } from "@/features/onboarding/utils/convert-to-availability-rules";
-import { base64ToFile, base64ArrayToFiles } from "@/features/onboarding/utils/base64-to-file";
+import type { AvailabilityRuleInput, AvailabilityExceptionInput } from "@/features/units/types/unit-availability.types";
+
+// ============================================================================
+// Inline Helpers - Base64 to File Conversion
+// ============================================================================
+
+/**
+ * Convert base64 string to File object
+ */
+function base64ToFile(base64: string, filename: string): File {
+  const arr = base64.split(',');
+  const mimeMatch = arr[0].match(/:(.*?);/);
+  const mime = mimeMatch ? mimeMatch[1] : 'image/png';
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, { type: mime });
+}
+
+/**
+ * Convert array of base64 strings to File objects
+ */
+function base64ArrayToFiles(base64Array: string[], baseFilename: string): File[] {
+  return base64Array.map((base64, index) => {
+    const extension = base64.startsWith('data:image/png') ? 'png' : 'jpg';
+    return base64ToFile(base64, `${baseFilename}_${index}.${extension}`);
+  });
+}
+
+// ============================================================================
+// Inline Helpers - Working Hours to Availability Rules Conversion
+// ============================================================================
+
+/**
+ * Map day names to weekday numbers (0 = Sunday, 1 = Monday, etc.)
+ */
+const DAY_TO_WEEKDAY: Record<string, number> = {
+  sunday: 0,
+  monday: 1,
+  tuesday: 2,
+  wednesday: 3,
+  thursday: 4,
+  friday: 5,
+  saturday: 6,
+};
+
+/**
+ * Convert workingHours format to availability_rules format
+ */
+function convertWorkingHoursToAvailabilityRules(
+  workingHours: Record<string, { open: string; close: string; enabled: boolean }>,
+  lunchBreak?: { enabled: boolean; start: string; end: string },
+  slotDurationMinutes: number = 30
+): {
+  availability_rules: AvailabilityRuleInput[];
+  availability_exceptions: AvailabilityExceptionInput[];
+} {
+  const availability_rules: AvailabilityRuleInput[] = [];
+
+  // Convert each enabled day to a weekly availability rule
+  Object.entries(workingHours).forEach(([day, schedule]) => {
+    if (schedule.enabled) {
+      availability_rules.push({
+        type: 'weekly',
+        weekday: DAY_TO_WEEKDAY[day],
+        start_time: schedule.open,
+        end_time: schedule.close,
+        slot_duration_minutes: slotDurationMinutes,
+        is_active: true,
+      });
+    }
+  });
+
+  // For now, we don't convert lunch breaks to exceptions
+  // This can be handled later if needed
+  const availability_exceptions: AvailabilityExceptionInput[] = [];
+
+  return { availability_rules, availability_exceptions };
+}
 
 export interface OnboardingFormData {
   // Business
@@ -161,19 +241,9 @@ const Onboarding = () => {
       professionId: service.professionId,
     }));
 
-    // Convert working hours to availability rules
-    const workingHours = {
-      monday: formData.workingHours.monday,
-      tuesday: formData.workingHours.tuesday,
-      wednesday: formData.workingHours.wednesday,
-      thursday: formData.workingHours.thursday,
-      friday: formData.workingHours.friday,
-      saturday: formData.workingHours.saturday,
-      sunday: formData.workingHours.sunday,
-    };
-
-    const { availability_rules, availability_exceptions } = convertToAvailabilityRules(
-      workingHours,
+    // Convert working hours to availability rules (inline conversion)
+    const { availability_rules, availability_exceptions } = convertWorkingHoursToAvailabilityRules(
+      formData.workingHours,
       formData.lunchBreak.enabled ? formData.lunchBreak : undefined,
       30 // Default slot duration: 30 minutes
     );
@@ -183,6 +253,7 @@ const Onboarding = () => {
       brandColor: formData.brandColor,
       unitName: formData.unitName,
       // Don't send logo/gallery URLs - we'll upload files after unit creation
+      gallery: [], // Empty array - images will be uploaded separately
       whatsapp: formData.whatsapp.replace(/\D/g, ''), // Remove non-digits
       phone: formData.phone ? formData.phone.replace(/\D/g, '') : undefined,
       address: {
