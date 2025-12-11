@@ -12,6 +12,7 @@ import { queryKeys } from '@/shared/constants/query-keys';
 interface UseSubmitOnboardingOptions {
   onSuccess?: (data: OnboardingResult) => void;
   onError?: (error: Error) => void;
+  onProgress?: (step: number) => void;
 }
 
 export function useSubmitOnboarding(options?: UseSubmitOnboardingOptions) {
@@ -23,17 +24,27 @@ export function useSubmitOnboarding(options?: UseSubmitOnboardingOptions) {
       userId,
       logoFile,
       galleryFiles,
+      onProgress,
     }: {
       data: OnboardingSubmitData;
       userId: string;
       logoFile?: File | null;
       galleryFiles?: File[];
+      onProgress?: (step: number) => void;
     }): Promise<OnboardingResult> => {
       // Step 1: Create organization (backend marks onboarding complete if first business)
+      onProgress?.(1);
       // Step 2: Create unit (without images)
       const result = await onboardingService.submitOnboarding(data, userId);
 
-      // Step 3: Upload logo if exists
+      // Step 3: Configure unit
+      onProgress?.(2);
+      await new Promise(resolve => setTimeout(resolve, 500)); // Small delay for UX
+
+      // Step 4: Upload images
+      onProgress?.(3);
+
+      // Upload logo if exists
       if (logoFile) {
         try {
           const presigned = await uploadService.generateUploadUrl(
@@ -49,9 +60,11 @@ export function useSubmitOnboarding(options?: UseSubmitOnboardingOptions) {
         }
       }
 
-      // Step 4: Upload gallery if exists
+      // Upload gallery if exists
       if (galleryFiles && galleryFiles.length > 0) {
         try {
+          onProgress?.(4);
+
           const presignedBatch = await uploadService.generateBatchUploadUrls(
             'gallery',
             galleryFiles.map((file) => ({

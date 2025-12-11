@@ -10,6 +10,7 @@ import { OnboardingStepServiceType } from "@/components/onboarding/OnboardingSte
 import { OnboardingStepAmenities } from "@/components/onboarding/OnboardingStepAmenities";
 import { OnboardingStepWorkingHours } from "@/components/onboarding/OnboardingStepWorkingHours";
 import { OnboardingStepPersonalization } from "@/components/onboarding/OnboardingStepPersonalization";
+import { OnboardingFinalizing } from "@/components/onboarding/OnboardingFinalizing";
 import { useCurrentUser } from "@/features/auth";
 import { useSubmitOnboarding, type OnboardingSubmitData, type AmenityId } from "@/features/onboarding";
 import { useOnboardingPersistence } from "@/shared/hooks";
@@ -94,6 +95,11 @@ const Onboarding = () => {
   const [isRestored, setIsRestored] = useState(false);
   const isFirstRender = useRef(true);
 
+  // Finalizing state
+  const [isFinalizing, setIsFinalizing] = useState(false);
+  const [finalizingStep, setFinalizingStep] = useState(0);
+  const [isFinalizingComplete, setIsFinalizingComplete] = useState(false);
+
   // Initialize persistence hook
   const {
     saveFormData,
@@ -140,8 +146,14 @@ const Onboarding = () => {
     onSuccess: () => {
       // Clear persisted data on successful completion
       clearPersistence();
-      // Redirect to dashboard
-      navigate("/dashboard");
+
+      // Mark as complete
+      setIsFinalizingComplete(true);
+
+      // Wait 2.5s to show success message, then redirect
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2500);
     },
   });
 
@@ -193,6 +205,9 @@ const Onboarding = () => {
       return;
     }
 
+    // Show finalizing screen
+    setIsFinalizing(true);
+
     const submitData = transformFormDataToSubmit();
 
     // Files are already in the correct format - no conversion needed
@@ -201,6 +216,9 @@ const Onboarding = () => {
       userId: user.id,
       logoFile: formData.logo,
       galleryFiles: formData.gallery,
+      onProgress: (step) => {
+        setFinalizingStep(step);
+      },
     });
   };
 
@@ -238,6 +256,16 @@ const Onboarding = () => {
           <p className="text-muted-foreground">Carregando...</p>
         </div>
       </div>
+    );
+  }
+
+  // Show finalizing screen
+  if (isFinalizing) {
+    return (
+      <OnboardingFinalizing
+        currentStep={finalizingStep}
+        isComplete={isFinalizingComplete}
+      />
     );
   }
 
