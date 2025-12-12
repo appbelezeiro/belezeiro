@@ -108,23 +108,23 @@ class OnboardingService {
     // Step 1: Create organization (backend will mark onboarding complete if first business)
     const organization = await this.createOrganization({
       businessName: data.businessName,
-      brandColor: data.brandColor,
       ownerId: userId,
-      subscription: {
-        plan: 'free',
-        status: 'active',
-      },
     });
 
     // Step 2: Create unit (without images - they will be uploaded separately)
     const unit = await this.createUnit({
       organizationId: organization.id,
       name: data.unitName,
+      brandColor: data.brandColor,
+      subscription: {
+        plan: 'free',
+        status: 'active',
+      },
       // Don't send logo/gallery - will be uploaded after unit creation
       whatsapp: data.whatsapp,
       phone: data.phone,
       address: data.address,
-      professions: data.professions,
+      especialidades: data.especialidades,
       services: data.services,
       serviceType: data.serviceType,
       amenities: data.amenities,
@@ -135,15 +135,15 @@ class OnboardingService {
 
     // Step 3: Link specialties to unit
     try {
-      const specialtyPromises = data.professions
-        .filter((prof) => prof.id && !prof.id.startsWith('custom-'))
-        .map(async (prof) => {
+      const specialtyPromises = data.especialidades
+        .filter((espec) => espec.id && !espec.id.startsWith('custom-'))
+        .map(async (espec) => {
           try {
             await privateClient.post(`/api/units/${unit.id}/specialties`, {
-              specialty_id: prof.id,
+              specialty_id: espec.id,
             });
           } catch (error) {
-            console.warn(`Failed to link specialty ${prof.id}:`, error);
+            console.warn(`Failed to link specialty ${espec.id}:`, error);
           }
         });
 

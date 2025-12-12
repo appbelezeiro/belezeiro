@@ -40,8 +40,8 @@ export interface OnboardingPersistedData {
     complement: string;
 
     // Specialties & Services
-    professions: { id: string; name: string; icon: string }[];
-    services: { name: string; professionId: string }[];
+    especialidades: { id: string; name: string; icon: string }[];
+    services: { name: string; especialidadeId: string }[];
 
     // Service Type
     serviceType: 'local' | 'home' | 'both' | null;
