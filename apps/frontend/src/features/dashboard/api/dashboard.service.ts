@@ -9,7 +9,7 @@ import type {
   DashboardAppointmentsResponse,
   SecretaryInfo,
   PlanInfo,
-  DashboardNotification,
+  DashboardNotificationsResponse,
   RevenueStats,
 } from "../types";
 import {
@@ -17,7 +17,7 @@ import {
   dashboardAppointmentsResponseSchema,
   secretaryInfoSchema,
   planInfoSchema,
-  dashboardNotificationSchema,
+  dashboardNotificationsResponseSchema,
   revenueStatsSchema,
 } from "../schemas";
 
@@ -31,11 +31,11 @@ class DashboardService {
   /**
    * Get dashboard stats (KPIs)
    */
-  async getStats(unitId?: string): Promise<DashboardStats> {
+  async getStats(unitId: string): Promise<DashboardStats> {
     const response = await apiClient.get<DashboardStats>(
       API_ENDPOINTS.DASHBOARD.STATS,
       {
-        params: unitId ? { unitId } : undefined,
+        params: { unitId },
       }
     );
     return dashboardStatsSchema.parse(response.data);
@@ -45,12 +45,12 @@ class DashboardService {
    * Get today's appointments for the dashboard
    */
   async getTodayAppointments(
-    unitId?: string
+    unitId: string
   ): Promise<DashboardAppointmentsResponse> {
     const response = await apiClient.get<DashboardAppointmentsResponse>(
       API_ENDPOINTS.DASHBOARD.RECENT_BOOKINGS,
       {
-        params: unitId ? { unitId } : undefined,
+        params: { unitId },
       }
     );
     return dashboardAppointmentsResponseSchema.parse(response.data);
@@ -61,7 +61,7 @@ class DashboardService {
    */
   async getSecretaryInfo(): Promise<SecretaryInfo> {
     const response = await apiClient.get<SecretaryInfo>(
-      `${API_ENDPOINTS.DASHBOARD.STATS}/secretary`
+      API_ENDPOINTS.DASHBOARD.SECRETARY
     );
     return secretaryInfoSchema.parse(response.data);
   }
@@ -69,9 +69,12 @@ class DashboardService {
   /**
    * Get current plan info
    */
-  async getPlanInfo(): Promise<PlanInfo> {
+  async getPlanInfo(unitId: string): Promise<PlanInfo> {
     const response = await apiClient.get<PlanInfo>(
-      `${API_ENDPOINTS.DASHBOARD.STATS}/plan`
+      API_ENDPOINTS.DASHBOARD.PLAN,
+      {
+        params: { unitId },
+      }
     );
     return planInfoSchema.parse(response.data);
   }
@@ -79,14 +82,14 @@ class DashboardService {
   /**
    * Get notifications
    */
-  async getNotifications(limit = 10): Promise<DashboardNotification[]> {
-    const response = await apiClient.get<DashboardNotification[]>(
-      `${API_ENDPOINTS.DASHBOARD.STATS}/notifications`,
+  async getNotifications(limit = 10): Promise<DashboardNotificationsResponse> {
+    const response = await apiClient.get<DashboardNotificationsResponse>(
+      API_ENDPOINTS.DASHBOARD.NOTIFICATIONS,
       {
         params: { limit },
       }
     );
-    return response.data.map((n) => dashboardNotificationSchema.parse(n));
+    return dashboardNotificationsResponseSchema.parse(response.data);
   }
 
   /**
@@ -94,7 +97,7 @@ class DashboardService {
    */
   async markNotificationRead(notificationId: string): Promise<void> {
     await apiClient.patch(
-      `${API_ENDPOINTS.DASHBOARD.STATS}/notifications/${notificationId}/read`
+      API_ENDPOINTS.DASHBOARD.NOTIFICATION_READ(notificationId)
     );
   }
 
@@ -102,21 +105,20 @@ class DashboardService {
    * Mark all notifications as read
    */
   async markAllNotificationsRead(): Promise<void> {
-    await apiClient.patch(
-      `${API_ENDPOINTS.DASHBOARD.STATS}/notifications/read-all`
-    );
+    await apiClient.patch(API_ENDPOINTS.DASHBOARD.NOTIFICATIONS_READ_ALL);
   }
 
   /**
    * Get revenue stats
    */
   async getRevenueStats(
+    unitId: string,
     period: "day" | "week" | "month" | "year" = "month"
   ): Promise<RevenueStats> {
     const response = await apiClient.get<RevenueStats>(
-      `${API_ENDPOINTS.DASHBOARD.STATS}/revenue`,
+      API_ENDPOINTS.DASHBOARD.REVENUE,
       {
-        params: { period },
+        params: { unitId, period },
       }
     );
     return revenueStatsSchema.parse(response.data);

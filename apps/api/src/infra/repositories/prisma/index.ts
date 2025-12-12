@@ -10,6 +10,7 @@ export { PrismaOrganizationRepository } from './organizations/organization.repos
 export { PrismaUnitRepository } from './units/unit.repository.js';
 export { PrismaUnitAvailabilityRuleRepository } from './units/unit-availability-rule.repository.js';
 export { PrismaUnitAvailabilityExceptionRepository } from './units/unit-availability-exception.repository.js';
+export { PrismaCustomerRepository } from './customers/customer.repository.js';
 
 // Catalog Repositories
 export { PrismaSpecialtyRepository } from './catalog/specialty.repository.js';

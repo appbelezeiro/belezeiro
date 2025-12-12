@@ -2,6 +2,7 @@
 export { UserDataMapper } from './user.data-mapper.js';
 export { OrganizationDataMapper } from './organization.data-mapper.js';
 export { UnitDataMapper } from './unit.data-mapper.js';
+export { CustomerDataMapper } from './customer.data-mapper.js';
 
 // Catalog
 export { SpecialtyDataMapper } from './specialty.data-mapper.js';

@@ -18,6 +18,7 @@ import { createUnitServiceRoutes } from './unit-service.routes';
 import { createUploadRoutes } from './upload.routes';
 import { createAmenityRoutes } from './amenity.routes';
 import { createUnitAmenityRoutes } from './unit-amenity.routes';
+import { createDashboardRoutes } from './dashboard/dashboard.routes';
 
 export function createRoutes(container: Container) {
   const app = new Hono();
@@ -49,6 +50,9 @@ export function createRoutes(container: Container) {
   app.route('/subscriptions', createSubscriptionRoutes(container));
   app.route('/webhooks', createWebhookRoutes(container));
   app.route('/discounts', createDiscountRoutes(container));
+
+  // Dashboard routes
+  app.route('/dashboard', createDashboardRoutes(container));
 
   return app;
 }

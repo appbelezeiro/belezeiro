@@ -56,6 +56,7 @@ export const API_ENDPOINTS = {
     DETAIL: (id: string) => `/api/units/${id}`,
     PUBLIC: (id: string) => `/api/units/${id}/public`,
     BY_SLUG: (slug: string) => `/api/units/slug/${slug}`,
+    BY_ORGANIZATION: (organizationId: string) => `/api/units/organization/${organizationId}`,
     SERVICES: (id: string) => `/api/units/${id}/services`,
     SPECIALTIES: (id: string) => `/api/units/${id}/specialties`,
     SPECIALTY: (unitId: string, specialtyId: string) => `/api/units/${unitId}/specialties/${specialtyId}`,
@@ -90,6 +91,19 @@ export const API_ENDPOINTS = {
   DASHBOARD: {
     STATS: '/api/dashboard/stats',
     RECENT_BOOKINGS: '/api/dashboard/recent-bookings',
+    PLAN: '/api/dashboard/plan',
+    SECRETARY: '/api/dashboard/secretary',
+    REVENUE: '/api/dashboard/revenue',
+    NOTIFICATIONS: '/api/dashboard/notifications',
+    NOTIFICATION_READ: (id: string) => `/api/dashboard/notifications/${id}/read`,
+    NOTIFICATIONS_READ_ALL: '/api/dashboard/notifications/read-all',
+  },
+
+  // Organizations
+  ORGANIZATIONS: {
+    BASE: '/api/organizations',
+    DETAIL: (id: string) => `/api/organizations/${id}`,
+    BY_OWNER: (ownerId: string) => `/api/organizations/owner/${ownerId}`,
   },
 
   // Settings

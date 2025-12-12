@@ -35,6 +35,7 @@ model User {
   coupon_redemptions   CouponRedemption[]
   notifications        Notification[]
   notification_prefs   NotificationPreference[]
+  customer_profiles    Customer[]
 
   @@map("users")
 }
@@ -82,6 +83,8 @@ model Unit {
   unit_availability_rules   UnitAvailabilityRule[]
   unit_availability_exceptions UnitAvailabilityException[]
   subscription_record       Subscription?
+  bookings                  Booking[]
+  customers                 Customer[]
 
   @@map("units")
 }
@@ -147,6 +150,7 @@ model Service {
   // Relations
   specialty     Specialty     @relation(fields: [specialty_id], references: [id], onDelete: Cascade)
   unit_services UnitService[]
+  bookings      Booking[]
 
   @@map("services")
 }
@@ -208,18 +212,24 @@ model UnitService {
 // ============================================
 
 model Booking {
-  id         String        @id // book_*
-  user_id    String        @map("user_id")
-  client_id  String        @map("client_id")
-  start_at   DateTime      @map("start_at")
-  end_at     DateTime      @map("end_at")
-  status     BookingStatus @default(confirmed)
-  created_at DateTime      @default(now()) @map("created_at")
-  updated_at DateTime      @updatedAt @map("updated_at")
+  id          String        @id // book_*
+  user_id     String        @map("user_id")
+  client_id   String        @map("client_id")
+  unit_id     String        @map("unit_id")
+  service_id  String?       @map("service_id")
+  price_cents Int?          @map("price_cents")
+  notes       String?
+  start_at    DateTime      @map("start_at")
+  end_at      DateTime      @map("end_at")
+  status      BookingStatus @default(confirmed)
+  created_at  DateTime      @default(now()) @map("created_at")
+  updated_at  DateTime      @updatedAt @map("updated_at")
 
   // Relations
-  owner  User @relation("BookingOwner", fields: [user_id], references: [id], onDelete: Cascade)
-  client User @relation("BookingClient", fields: [client_id], references: [id], onDelete: Cascade)
+  owner    User     @relation("BookingOwner", fields: [user_id], references: [id], onDelete: Cascade)
+  client   User     @relation("BookingClient", fields: [client_id], references: [id], onDelete: Cascade)
+  unit     Unit     @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+  service  Service? @relation(fields: [service_id], references: [id], onDelete: SetNull)
 
   @@map("bookings")
 }
@@ -227,6 +237,24 @@ model Booking {
 enum BookingStatus {
   confirmed
   cancelled
+  completed
+  no_show
+}
+
+model Customer {
+  id         String   @id // cust_*
+  user_id    String   @map("user_id")
+  unit_id    String   @map("unit_id")
+  notes      String?
+  created_at DateTime @default(now()) @map("created_at")
+  updated_at DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  unit Unit @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, unit_id])
+  @@map("customers")
 }
 
 model BookingRule {
@@ -502,6 +530,7 @@ model Notification {
   message_id     String               @unique @map("message_id")
   sent_at        DateTime?            @map("sent_at")
   delivered_at   DateTime?            @map("delivered_at")
+  read_at        DateTime?            @map("read_at")
   created_at     DateTime             @default(now()) @map("created_at")
   updated_at     DateTime             @updatedAt @map("updated_at")
 

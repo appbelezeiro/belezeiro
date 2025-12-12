@@ -123,6 +123,7 @@ export function createUseCases(repositories: Repositories, services: Services) {
       repositories.booking_repository,
       repositories.booking_rule_repository,
       repositories.booking_exception_repository,
+      repositories.customer_repository,
     ),
     cancel_booking: new CancelBookingUseCase(repositories.booking_repository),
 
