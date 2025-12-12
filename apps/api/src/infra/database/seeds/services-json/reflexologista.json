@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63XAT",
+    "specialty_id": "spec_01KCA8QEJ2MC7H75C6J5V5A85S",
+    "code": "reflexologia_podal",
+    "name": "Reflexologia Podal",
+    "description": "Massagem reflexa nos pés",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63YBU",
+    "specialty_id": "spec_01KCA8QEJ2MC7H75C6J5V5A85S",
+    "code": "reflexologia_maos",
+    "name": "Reflexologia das Mãos",
+    "description": "Massagem reflexa nas mãos",
+    "default_duration_minutes": 45,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63ZCV",
+    "specialty_id": "spec_01KCA8QEJ2MC7H75C6J5V5A85S",
+    "code": "reflexologia_facial",
+    "name": "Reflexologia Facial",
+    "description": "Massagem reflexa no rosto",
+    "default_duration_minutes": 45,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q640DW",
+    "specialty_id": "spec_01KCA8QEJ2MC7H75C6J5V5A85S",
+    "code": "reflexologia_completa",
+    "name": "Reflexologia Completa",
+    "description": "Reflexologia de pés, mãos e orelhas",
+    "default_duration_minutes": 90,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q641EX",
+    "specialty_id": "spec_01KCA8QEJ2MC7H75C6J5V5A85S",
+    "code": "reflexologia_relaxante",
+    "name": "Reflexologia Relaxante",
+    "description": "Sessão focada em relaxamento",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q642FY",
+    "specialty_id": "spec_01KCA8QEJ2MC7H75C6J5V5A85S",
+    "code": "reflexologia_terapeutica",
+    "name": "Reflexologia Terapêutica",
+    "description": "Sessão focada em tratamento",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q643GZ",
+    "specialty_id": "spec_01KCA8QEJ2MC7H75C6J5V5A85S",
+    "code": "mapeamento_pes",
+    "name": "Mapeamento dos Pés",
+    "description": "Avaliação e diagnóstico pelos pés",
+    "default_duration_minutes": 45,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q644H1",
+    "specialty_id": "spec_01KCA8QEJ2MC7H75C6J5V5A85S",
+    "code": "escalda_pes_reflexo",
+    "name": "Escalda-pés + Reflexologia",
+    "description": "Banho relaxante seguido de reflexologia",
+    "default_duration_minutes": 75,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q645I2",
+    "specialty_id": "spec_01KCA8QEJ2MC7H75C6J5V5A85S",
+    "code": "reflexologia_gestante",
+    "name": "Reflexologia para Gestantes",
+    "description": "Reflexologia adaptada para grávidas",
+    "default_duration_minutes": 45,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q646J3",
+    "specialty_id": "spec_01KCA8QEJ2MC7H75C6J5V5A85S",
+    "code": "pacote_reflexologia",
+    "name": "Pacote Reflexologia (4 sessões)",
+    "description": "Pacote mensal de reflexologia",
+    "default_duration_minutes": 240,
+    "default_price_cents": 40000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

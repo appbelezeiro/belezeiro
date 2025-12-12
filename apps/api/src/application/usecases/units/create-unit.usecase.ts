@@ -1,109 +1,75 @@
 import { UnitEntity } from '@/domain/entities/units/unit.entity';
-import type {
-  Address,
-  EspecialidadeRef,
-  ServiceRef,
-  ServiceType,
-  Subscription,
-} from '@/domain/entities/units/unit.entity';
-import type { AmenityId } from '@/domain/constants/amenities';
 import { IUnitRepository } from '@/application/contracts/units/i-unit-repository.interface';
-import { BulkCreateUnitAvailabilityRulesUseCase } from './availability/bulk-create-unit-availability-rules.usecase';
-import { BulkCreateUnitAvailabilityExceptionsUseCase } from './availability/bulk-create-unit-availability-exceptions.usecase';
+import { IAmenityRepository } from '@/application/contracts/i-amenity-repository.interface';
+import { OneOrMoreAmenitiesNotFound } from '@/domain/errors/amenities/one-or-more-amenities-not-found.error';
+import { ISpecialtyRepository } from '@/application/contracts/i-specialty-repository.interface';
+import { UnitServiceType } from '@/domain/entities/units/unit.entity.types';
+import { OneOrMoreSpecialitiesNotFound } from '@/domain/errors/specialities/one-or-more-specialities-not-found.error';
+import { IServiceRepository } from '@/application/contracts/i-service-repository.interface';
+import { OneOrMoreServicesNotFound } from '@/domain/errors/services/one-or-more-services-not-found.error';
+import { AddressProps } from '@/domain/value-objects/address.value-object';
+import { PhoneProps } from '@/domain/value-objects/phone.value-object';
 
 class UseCase {
   constructor(
     private readonly unit_repository: IUnitRepository,
-    private readonly bulk_create_availability_rules?: BulkCreateUnitAvailabilityRulesUseCase,
-    private readonly bulk_create_availability_exceptions?: BulkCreateUnitAvailabilityExceptionsUseCase
-  ) {}
+    private readonly amenities_repository: IAmenityRepository,
+    private readonly specialities_repository: ISpecialtyRepository,
+    private readonly services_repository: IServiceRepository,
+  ) { }
 
   async execute(input: UseCase.Input): UseCase.Output {
+    const amenities = await this.amenities_repository.find_many_by_id(input.amenities);
+
+    if (amenities.length !== input.amenities.length) {
+      throw new OneOrMoreAmenitiesNotFound();
+    }
+
+    const specialities = await this.specialities_repository.find_many_by_id(input.specalities);
+
+    if (specialities.length !== input.specalities.length) {
+      throw new OneOrMoreSpecialitiesNotFound();
+    }
+
+    const services = await this.services_repository.find_many_by_id(input.services);
+
+    if (services.length !== input.services.length) {
+      throw new OneOrMoreServicesNotFound();
+    }
+
     const unit = new UnitEntity({
-      organizationId: input.organizationId,
+      orgId: input.orgId,
       name: input.name,
-      brandColor: input.brandColor,
-      subscription: input.subscription,
+      address: input.address,
       logo: input.logo,
       gallery: input.gallery,
-      whatsapp: input.whatsapp,
-      phone: input.phone,
-      address: input.address,
-      especialidades: input.especialidades,
-      services: input.services,
+      phones: input.phones,
+      preferences: input.preferences,
       serviceType: input.serviceType,
-      amenities: input.amenities,
+      especialidades: specialities,
+      services: services,
+      amenities: amenities,
     });
 
-    const created_unit = await this.unit_repository.create(unit);
+    await this.unit_repository.create(unit);
 
-    // If availability_rules were provided, create them in batch
-    if (
-      input.availability_rules &&
-      input.availability_rules.length > 0 &&
-      this.bulk_create_availability_rules
-    ) {
-      await this.bulk_create_availability_rules.execute({
-        unit_id: created_unit.id,
-        rules: input.availability_rules,
-      });
-    }
-
-    // If availability_exceptions were provided, create them in batch
-    if (
-      input.availability_exceptions &&
-      input.availability_exceptions.length > 0 &&
-      this.bulk_create_availability_exceptions
-    ) {
-      await this.bulk_create_availability_exceptions.execute({
-        unit_id: created_unit.id,
-        exceptions: input.availability_exceptions,
-      });
-    }
-
-    return created_unit;
+    return unit;
   }
 }
 
 declare namespace UseCase {
-  export type AvailabilityRuleInput = {
-    type: 'weekly' | 'specific_date';
-    weekday?: number;
-    date?: string;
-    start_time: string;
-    end_time: string;
-    slot_duration_minutes: number;
-    is_active?: boolean;
-    metadata?: Record<string, unknown>;
-  };
-
-  export type AvailabilityExceptionInput = {
-    date: string;
-    type: 'block' | 'override';
-    start_time?: string;
-    end_time?: string;
-    slot_duration_minutes?: number;
-    reason?: string;
-  };
-
   export type Input = {
-    organizationId: string;
+    orgId: string;
     name: string;
-    brandColor: string;
-    subscription?: Subscription;
-    logo?: string;
-    gallery?: string[];
-    whatsapp: string;
-    phone?: string;
-    address: Address;
-    especialidades: EspecialidadeRef[];
-    services: ServiceRef[];
-    serviceType: ServiceType;
-    amenities: AmenityId[];
-
-    // Availability rules are now the primary way to define availability
-    availability_rules?: AvailabilityRuleInput[];
-    availability_exceptions?: AvailabilityExceptionInput[];
+    logo: string;
+    gallery: string[];
+    phones: PhoneProps[];
+    address?: AddressProps;
+    preferences: Record<string, unknown>;
+    specalities: string[];
+    services: string[];
+    serviceType: UnitServiceType;
+    amenities: string[];
   };
 
   export type Output = Promise<UnitEntity>;

@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WJ9",
+    "specialty_id": "spec_01KCA8QEJ1K3HT1E0EWZRDKZNM",
+    "code": "limpeza_profunda",
+    "name": "Limpeza de Pele Profunda",
+    "description": "Limpeza completa com vapor e extração",
+    "default_duration_minutes": 120,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WKA",
+    "specialty_id": "spec_01KCA8QEJ1K3HT1E0EWZRDKZNM",
+    "code": "revitalizacao_facial",
+    "name": "Revitalização Facial",
+    "description": "Tratamento revitalizante para pele cansada",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WLB",
+    "specialty_id": "spec_01KCA8QEJ1K3HT1E0EWZRDKZNM",
+    "code": "peeling_diamante",
+    "name": "Peeling de Diamante",
+    "description": "Microdermoabrasão com ponteira de diamante",
+    "default_duration_minutes": 45,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WMC",
+    "specialty_id": "spec_01KCA8QEJ1K3HT1E0EWZRDKZNM",
+    "code": "peeling_cristal",
+    "name": "Peeling de Cristal",
+    "description": "Microdermoabrasão com microcristais",
+    "default_duration_minutes": 45,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WND",
+    "specialty_id": "spec_01KCA8QEJ1K3HT1E0EWZRDKZNM",
+    "code": "ionizacao_facial",
+    "name": "Ionização Facial",
+    "description": "Tratamento com corrente galvânica",
+    "default_duration_minutes": 45,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WOE",
+    "specialty_id": "spec_01KCA8QEJ1K3HT1E0EWZRDKZNM",
+    "code": "alta_frequencia",
+    "name": "Alta Frequência Facial",
+    "description": "Tratamento bactericida e cicatrizante",
+    "default_duration_minutes": 30,
+    "default_price_cents": 6000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WPF",
+    "specialty_id": "spec_01KCA8QEJ1K3HT1E0EWZRDKZNM",
+    "code": "eletrolifting",
+    "name": "Eletrolifting Facial",
+    "description": "Lifting não cirúrgico com microcorrentes",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WQG",
+    "specialty_id": "spec_01KCA8QEJ1K3HT1E0EWZRDKZNM",
+    "code": "vacuoterapia_facial",
+    "name": "Vacuoterapia Facial",
+    "description": "Tratamento com sucção para firmeza",
+    "default_duration_minutes": 45,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WRH",
+    "specialty_id": "spec_01KCA8QEJ1K3HT1E0EWZRDKZNM",
+    "code": "ultrasom_facial",
+    "name": "Ultrassom Facial",
+    "description": "Tratamento com ondas ultrassônicas",
+    "default_duration_minutes": 45,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WSI",
+    "specialty_id": "spec_01KCA8QEJ1K3HT1E0EWZRDKZNM",
+    "code": "mascara_led",
+    "name": "Máscara de LED",
+    "description": "Tratamento com máscara de fototerapia",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

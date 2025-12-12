@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XD4",
+    "specialty_id": "spec_01KCA8QEJ1NX3CSZ2R6G57EPBD",
+    "code": "microblading_classico",
+    "name": "Microblading Clássico",
+    "description": "Técnica fio a fio natural",
+    "default_duration_minutes": 150,
+    "default_price_cents": 60000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XE5",
+    "specialty_id": "spec_01KCA8QEJ1NX3CSZ2R6G57EPBD",
+    "code": "microblading_shadow",
+    "name": "Microblading Shadow",
+    "description": "Fio a fio com efeito sombreado",
+    "default_duration_minutes": 180,
+    "default_price_cents": 70000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XF6",
+    "specialty_id": "spec_01KCA8QEJ1NX3CSZ2R6G57EPBD",
+    "code": "microblading_hd",
+    "name": "Microblading HD",
+    "description": "Técnica de alta definição",
+    "default_duration_minutes": 180,
+    "default_price_cents": 80000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XG7",
+    "specialty_id": "spec_01KCA8QEJ1NX3CSZ2R6G57EPBD",
+    "code": "nanoblading",
+    "name": "Nanoblading",
+    "description": "Técnica ultrafina com agulha nano",
+    "default_duration_minutes": 180,
+    "default_price_cents": 85000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XH8",
+    "specialty_id": "spec_01KCA8QEJ1NX3CSZ2R6G57EPBD",
+    "code": "retoque_microblading",
+    "name": "Retoque de Microblading",
+    "description": "Retoque após cicatrização (30-45 dias)",
+    "default_duration_minutes": 90,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XI9",
+    "specialty_id": "spec_01KCA8QEJ1NX3CSZ2R6G57EPBD",
+    "code": "manutencao_microblading",
+    "name": "Manutenção de Microblading",
+    "description": "Manutenção anual do microblading",
+    "default_duration_minutes": 120,
+    "default_price_cents": 40000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XJA",
+    "specialty_id": "spec_01KCA8QEJ1NX3CSZ2R6G57EPBD",
+    "code": "correcao_microblading",
+    "name": "Correção de Microblading",
+    "description": "Correção de trabalho mal executado",
+    "default_duration_minutes": 180,
+    "default_price_cents": 70000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XKB",
+    "specialty_id": "spec_01KCA8QEJ1NX3CSZ2R6G57EPBD",
+    "code": "consulta_design",
+    "name": "Consulta de Design",
+    "description": "Avaliação e planejamento do design",
+    "default_duration_minutes": 45,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XLC",
+    "specialty_id": "spec_01KCA8QEJ1NX3CSZ2R6G57EPBD",
+    "code": "microblading_masculino",
+    "name": "Microblading Masculino",
+    "description": "Técnica adaptada para sobrancelhas masculinas",
+    "default_duration_minutes": 150,
+    "default_price_cents": 55000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XMD",
+    "specialty_id": "spec_01KCA8QEJ1NX3CSZ2R6G57EPBD",
+    "code": "combo_microblading_shadow",
+    "name": "Combo Microblading + Shadow",
+    "description": "Fio a fio + efeito esfumado completo",
+    "default_duration_minutes": 210,
+    "default_price_cents": 90000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

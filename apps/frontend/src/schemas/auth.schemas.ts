@@ -28,11 +28,11 @@ export const loginRequestSchema = z.object({
 
 /**
  * Login response schema
+ * Backend retorna apenas { onboarding: false } quando onboarding não foi feito,
+ * e não retorna nada (ou objeto vazio) quando já foi completado
  */
 export const loginResponseSchema = z.object({
-  user: userSchema,
-  created: z.boolean().optional(),
-  /** Only present when onboarding is not completed (false means onboarding required) */
+  /** Only present when onboarding is NOT completed (false means onboarding required) */
   onboarding: z.boolean().optional(),
 });
 

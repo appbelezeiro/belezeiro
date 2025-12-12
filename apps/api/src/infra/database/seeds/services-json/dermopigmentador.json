@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6X3T",
+    "specialty_id": "spec_01KCA8QEJ10XVB98Z6XJG21NK1",
+    "code": "micropigmentacao_sobrancelhas",
+    "name": "Micropigmentação de Sobrancelhas",
+    "description": "Pigmentação definitiva das sobrancelhas",
+    "default_duration_minutes": 120,
+    "default_price_cents": 50000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6X4U",
+    "specialty_id": "spec_01KCA8QEJ10XVB98Z6XJG21NK1",
+    "code": "micropigmentacao_labios",
+    "name": "Micropigmentação de Lábios",
+    "description": "Pigmentação definitiva dos lábios",
+    "default_duration_minutes": 150,
+    "default_price_cents": 60000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6X5V",
+    "specialty_id": "spec_01KCA8QEJ10XVB98Z6XJG21NK1",
+    "code": "micropigmentacao_olhos",
+    "name": "Micropigmentação de Olhos",
+    "description": "Delineado definitivo nos olhos",
+    "default_duration_minutes": 120,
+    "default_price_cents": 45000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6X6W",
+    "specialty_id": "spec_01KCA8QEJ10XVB98Z6XJG21NK1",
+    "code": "retoque_micropigmentacao",
+    "name": "Retoque de Micropigmentação",
+    "description": "Retoque da pigmentação existente",
+    "default_duration_minutes": 90,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6X7X",
+    "specialty_id": "spec_01KCA8QEJ10XVB98Z6XJG21NK1",
+    "code": "neutralizacao_sobrancelhas",
+    "name": "Neutralização de Sobrancelhas",
+    "description": "Correção de cor indesejada",
+    "default_duration_minutes": 120,
+    "default_price_cents": 40000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6X8Y",
+    "specialty_id": "spec_01KCA8QEJ10XVB98Z6XJG21NK1",
+    "code": "camuflagem_cicatrizes",
+    "name": "Camuflagem de Cicatrizes",
+    "description": "Micropigmentação para disfarçar cicatrizes",
+    "default_duration_minutes": 90,
+    "default_price_cents": 35000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6X9Z",
+    "specialty_id": "spec_01KCA8QEJ10XVB98Z6XJG21NK1",
+    "code": "camuflagem_estrias",
+    "name": "Camuflagem de Estrias",
+    "description": "Micropigmentação para disfarçar estrias",
+    "default_duration_minutes": 120,
+    "default_price_cents": 40000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XA1",
+    "specialty_id": "spec_01KCA8QEJ10XVB98Z6XJG21NK1",
+    "code": "camuflagem_vitiligo",
+    "name": "Camuflagem de Vitiligo",
+    "description": "Micropigmentação para áreas com vitiligo",
+    "default_duration_minutes": 120,
+    "default_price_cents": 45000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XB2",
+    "specialty_id": "spec_01KCA8QEJ10XVB98Z6XJG21NK1",
+    "code": "micropigmentacao_areola",
+    "name": "Micropigmentação de Aréola",
+    "description": "Reconstrução de aréola mamária",
+    "default_duration_minutes": 120,
+    "default_price_cents": 50000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XC3",
+    "specialty_id": "spec_01KCA8QEJ10XVB98Z6XJG21NK1",
+    "code": "remocao_micropigmentacao",
+    "name": "Remoção de Micropigmentação",
+    "description": "Remoção ou clareamento de pigmentação antiga",
+    "default_duration_minutes": 90,
+    "default_price_cents": 35000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

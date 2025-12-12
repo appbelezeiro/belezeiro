@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q629K4",
+    "specialty_id": "spec_01KCA8QEJ3MYTAWE8FM37SE1JY",
+    "code": "aula_yoga",
+    "name": "Aula de Yoga",
+    "description": "Aula de yoga hatha tradicional",
+    "default_duration_minutes": 60,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62AL5",
+    "specialty_id": "spec_01KCA8QEJ3MYTAWE8FM37SE1JY",
+    "code": "yoga_individual",
+    "name": "Yoga Individual",
+    "description": "Aula particular de yoga",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62BM6",
+    "specialty_id": "spec_01KCA8QEJ3MYTAWE8FM37SE1JY",
+    "code": "yoga_gestante",
+    "name": "Yoga para Gestantes",
+    "description": "Yoga adaptado para gestantes",
+    "default_duration_minutes": 60,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62CN7",
+    "specialty_id": "spec_01KCA8QEJ3MYTAWE8FM37SE1JY",
+    "code": "yoga_terapeutico",
+    "name": "Yoga Terapêutico",
+    "description": "Yoga com foco em reabilitação",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62DO8",
+    "specialty_id": "spec_01KCA8QEJ3MYTAWE8FM37SE1JY",
+    "code": "vinyasa_yoga",
+    "name": "Vinyasa Yoga",
+    "description": "Yoga dinâmico e fluido",
+    "default_duration_minutes": 60,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62EP9",
+    "specialty_id": "spec_01KCA8QEJ3MYTAWE8FM37SE1JY",
+    "code": "kundalini_yoga",
+    "name": "Kundalini Yoga",
+    "description": "Yoga energético com mantras",
+    "default_duration_minutes": 75,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62FQA",
+    "specialty_id": "spec_01KCA8QEJ3MYTAWE8FM37SE1JY",
+    "code": "yin_yoga",
+    "name": "Yin Yoga",
+    "description": "Yoga suave com posturas longas",
+    "default_duration_minutes": 60,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62GRB",
+    "specialty_id": "spec_01KCA8QEJ3MYTAWE8FM37SE1JY",
+    "code": "ashtanga_yoga",
+    "name": "Ashtanga Yoga",
+    "description": "Yoga vigoroso com sequências fixas",
+    "default_duration_minutes": 90,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62HSC",
+    "specialty_id": "spec_01KCA8QEJ3MYTAWE8FM37SE1JY",
+    "code": "yoga_nidra",
+    "name": "Yoga Nidra",
+    "description": "Prática de relaxamento profundo",
+    "default_duration_minutes": 45,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62ITD",
+    "specialty_id": "spec_01KCA8QEJ3MYTAWE8FM37SE1JY",
+    "code": "yoga_corporativo",
+    "name": "Yoga Corporativo",
+    "description": "Aulas de yoga em empresas",
+    "default_duration_minutes": 60,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

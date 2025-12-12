@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64R5O",
+    "specialty_id": "spec_01KCA8QEJ4G9NJYHD0MA5HQT8K",
+    "code": "sessao_coaching",
+    "name": "Sessão de Coaching",
+    "description": "Sessão individual de life coaching",
+    "default_duration_minutes": 60,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64S6P",
+    "specialty_id": "spec_01KCA8QEJ4G9NJYHD0MA5HQT8K",
+    "code": "coaching_inicial",
+    "name": "Sessão Inicial de Avaliação",
+    "description": "Primeira sessão de diagnóstico",
+    "default_duration_minutes": 90,
+    "default_price_cents": 30000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64T7Q",
+    "specialty_id": "spec_01KCA8QEJ4G9NJYHD0MA5HQT8K",
+    "code": "coaching_carreira",
+    "name": "Coaching de Carreira",
+    "description": "Foco em desenvolvimento profissional",
+    "default_duration_minutes": 60,
+    "default_price_cents": 28000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64U8R",
+    "specialty_id": "spec_01KCA8QEJ4G9NJYHD0MA5HQT8K",
+    "code": "coaching_relacionamentos",
+    "name": "Coaching de Relacionamentos",
+    "description": "Foco em relacionamentos pessoais",
+    "default_duration_minutes": 60,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64V9S",
+    "specialty_id": "spec_01KCA8QEJ4G9NJYHD0MA5HQT8K",
+    "code": "coaching_financeiro",
+    "name": "Coaching Financeiro",
+    "description": "Foco em saúde financeira",
+    "default_duration_minutes": 60,
+    "default_price_cents": 28000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64WAT",
+    "specialty_id": "spec_01KCA8QEJ4G9NJYHD0MA5HQT8K",
+    "code": "coaching_emagrecimento",
+    "name": "Coaching de Emagrecimento",
+    "description": "Foco em perda de peso e saúde",
+    "default_duration_minutes": 60,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64XBU",
+    "specialty_id": "spec_01KCA8QEJ4G9NJYHD0MA5HQT8K",
+    "code": "programa_12_semanas",
+    "name": "Programa de 12 Semanas",
+    "description": "Programa completo de transformação",
+    "default_duration_minutes": 720,
+    "default_price_cents": 250000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64YCV",
+    "specialty_id": "spec_01KCA8QEJ4G9NJYHD0MA5HQT8K",
+    "code": "coaching_online",
+    "name": "Coaching Online",
+    "description": "Sessão por videochamada",
+    "default_duration_minutes": 60,
+    "default_price_cents": 22000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64ZDW",
+    "specialty_id": "spec_01KCA8QEJ4G9NJYHD0MA5HQT8K",
+    "code": "coaching_grupo",
+    "name": "Coaching em Grupo",
+    "description": "Sessão de coaching coletivo",
+    "default_duration_minutes": 90,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q650EX",
+    "specialty_id": "spec_01KCA8QEJ4G9NJYHD0MA5HQT8K",
+    "code": "mentoria_executiva",
+    "name": "Mentoria Executiva",
+    "description": "Coaching para líderes e executivos",
+    "default_duration_minutes": 90,
+    "default_price_cents": 50000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

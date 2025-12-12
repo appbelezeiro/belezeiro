@@ -9,4 +9,5 @@ export interface ISpecialtyRepository {
   search(query: string, cursor?: string, limit?: number): Promise<CursorPaginatedResponse<SpecialtyEntity>>;
   update(entity: SpecialtyEntity): Promise<SpecialtyEntity>;
   delete(id: string): Promise<boolean>;
+  find_many_by_id(id: string[]): Promise<SpecialtyEntity[]>;
 }

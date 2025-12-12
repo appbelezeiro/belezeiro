@@ -168,4 +168,9 @@ export class InMemoryAmenityRepository implements IAmenityRepository {
     this.items.splice(index, 1);
     return true;
   }
+
+  async find_many_by_id(ids: string[]): Promise<AmenityEntity[]> {
+    const items = this.items.filter((i) => ids.includes(i.id));
+    return items.map(AmenityDataMapper.toDomain);
+  }
 }

@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61FP9",
+    "specialty_id": "spec_01KCA8QEJ31ZPP9YMHF4BGPR4T",
+    "code": "avaliacao_fisioterapeutica",
+    "name": "Avaliação Fisioterapêutica",
+    "description": "Avaliação completa e diagnóstico fisioterapêutico",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61GQA",
+    "specialty_id": "spec_01KCA8QEJ31ZPP9YMHF4BGPR4T",
+    "code": "sessao_fisioterapia",
+    "name": "Sessão de Fisioterapia",
+    "description": "Tratamento fisioterapêutico",
+    "default_duration_minutes": 50,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61HRB",
+    "specialty_id": "spec_01KCA8QEJ31ZPP9YMHF4BGPR4T",
+    "code": "fisioterapia_domiciliar",
+    "name": "Fisioterapia Domiciliar",
+    "description": "Atendimento em domicílio",
+    "default_duration_minutes": 60,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61ISC",
+    "specialty_id": "spec_01KCA8QEJ31ZPP9YMHF4BGPR4T",
+    "code": "eletroterapia",
+    "name": "Eletroterapia",
+    "description": "Tratamento com correntes elétricas",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61JTD",
+    "specialty_id": "spec_01KCA8QEJ31ZPP9YMHF4BGPR4T",
+    "code": "ultrassom_terapeutico",
+    "name": "Ultrassom Terapêutico",
+    "description": "Tratamento com ondas ultrassônicas",
+    "default_duration_minutes": 20,
+    "default_price_cents": 6000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61KUE",
+    "specialty_id": "spec_01KCA8QEJ31ZPP9YMHF4BGPR4T",
+    "code": "terapia_manual",
+    "name": "Terapia Manual",
+    "description": "Técnicas manuais de tratamento",
+    "default_duration_minutes": 50,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61LVF",
+    "specialty_id": "spec_01KCA8QEJ31ZPP9YMHF4BGPR4T",
+    "code": "cinesioterapia",
+    "name": "Cinesioterapia",
+    "description": "Tratamento por exercícios terapêuticos",
+    "default_duration_minutes": 50,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61MWG",
+    "specialty_id": "spec_01KCA8QEJ31ZPP9YMHF4BGPR4T",
+    "code": "bandagem_funcional",
+    "name": "Bandagem Funcional",
+    "description": "Aplicação de kinesio tape",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61NXH",
+    "specialty_id": "spec_01KCA8QEJ31ZPP9YMHF4BGPR4T",
+    "code": "dry_needling",
+    "name": "Dry Needling (Agulhamento Seco)",
+    "description": "Tratamento de pontos gatilho com agulhas",
+    "default_duration_minutes": 45,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61OYI",
+    "specialty_id": "spec_01KCA8QEJ31ZPP9YMHF4BGPR4T",
+    "code": "liberacao_miofascial_fisio",
+    "name": "Liberação Miofascial",
+    "description": "Técnica de liberação de fáscia",
+    "default_duration_minutes": 45,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

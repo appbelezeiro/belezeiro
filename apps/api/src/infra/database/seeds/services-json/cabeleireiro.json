@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6S7T",
+    "specialty_id": "spec_01KCA8QEHZ0ZE6DHQ40RNR59BX",
+    "code": "corte_feminino",
+    "name": "Corte Feminino",
+    "description": "Corte de cabelo feminino personalizado",
+    "default_duration_minutes": 60,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6S8U",
+    "specialty_id": "spec_01KCA8QEHZ0ZE6DHQ40RNR59BX",
+    "code": "corte_masculino",
+    "name": "Corte Masculino",
+    "description": "Corte de cabelo masculino",
+    "default_duration_minutes": 30,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6S9V",
+    "specialty_id": "spec_01KCA8QEHZ0ZE6DHQ40RNR59BX",
+    "code": "escova_simples",
+    "name": "Escova Simples",
+    "description": "Escova modeladora para cabelos curtos e médios",
+    "default_duration_minutes": 45,
+    "default_price_cents": 6000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SAW",
+    "specialty_id": "spec_01KCA8QEHZ0ZE6DHQ40RNR59BX",
+    "code": "escova_progressiva",
+    "name": "Escova Progressiva",
+    "description": "Tratamento de alisamento progressivo",
+    "default_duration_minutes": 180,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SBX",
+    "specialty_id": "spec_01KCA8QEHZ0ZE6DHQ40RNR59BX",
+    "code": "hidratacao_capilar",
+    "name": "Hidratação Capilar",
+    "description": "Tratamento de hidratação profunda dos fios",
+    "default_duration_minutes": 60,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SCY",
+    "specialty_id": "spec_01KCA8QEHZ0ZE6DHQ40RNR59BX",
+    "code": "reconstrucao_capilar",
+    "name": "Reconstrução Capilar",
+    "description": "Tratamento intensivo de reconstrução dos fios danificados",
+    "default_duration_minutes": 90,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SDZ",
+    "specialty_id": "spec_01KCA8QEHZ0ZE6DHQ40RNR59BX",
+    "code": "penteado_social",
+    "name": "Penteado Social",
+    "description": "Penteado para eventos e ocasiões especiais",
+    "default_duration_minutes": 60,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SE1",
+    "specialty_id": "spec_01KCA8QEHZ0ZE6DHQ40RNR59BX",
+    "code": "cauterizacao",
+    "name": "Cauterização",
+    "description": "Tratamento de selagem e nutrição dos fios",
+    "default_duration_minutes": 90,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SF2",
+    "specialty_id": "spec_01KCA8QEHZ0ZE6DHQ40RNR59BX",
+    "code": "corte_infantil",
+    "name": "Corte Infantil",
+    "description": "Corte de cabelo para crianças",
+    "default_duration_minutes": 30,
+    "default_price_cents": 4000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SG3",
+    "specialty_id": "spec_01KCA8QEHZ0ZE6DHQ40RNR59BX",
+    "code": "lavagem_secagem",
+    "name": "Lavagem e Secagem",
+    "description": "Lavagem com massagem e secagem com secador",
+    "default_duration_minutes": 30,
+    "default_price_cents": 3500,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

@@ -8,6 +8,7 @@ import type {
   User,
   LoginRequest,
   LoginResponse,
+  LoginResult,
   MeResponse,
   RefreshTokenResponse,
   LogoutResponse,
@@ -35,20 +36,37 @@ export class AuthService {
 
   /**
    * Realiza login com dados do OAuth
+   *
+   * O backend retorna apenas { onboarding: false } quando onboarding não foi feito,
+   * e não retorna nada quando já foi completado. Após o login, buscamos
+   * os dados do usuário via /me.
    */
-  async login(request: LoginRequest): Promise<LoginResponse> {
+  async login(request: LoginRequest): Promise<LoginResult> {
     // Valida dados de entrada
     const validatedRequest = loginRequestSchema.parse(request);
 
     // Faz chamada à API
-    const response = await this.publicClient.post<LoginResponse>(
+    const loginResponse = await this.publicClient.post<LoginResponse>(
       API_ENDPOINTS.AUTH.LOGIN,
       validatedRequest,
       { withCredentials: true }
     );
 
-    // Valida e retorna resposta
-    return loginResponseSchema.parse(response.data);
+    // Valida resposta do login
+    const validatedLoginResponse = loginResponseSchema.parse(loginResponse.data);
+
+    // Determina se precisa de onboarding baseado na resposta
+    // Se onboarding === false, precisa fazer onboarding
+    // Se onboarding === undefined (não veio), já foi completado
+    const needsOnboarding = validatedLoginResponse.onboarding === false;
+
+    // Busca os dados do usuário via /me
+    const user = await this.getCurrentUser();
+
+    return {
+      user,
+      needsOnboarding,
+    };
   }
 
   /**

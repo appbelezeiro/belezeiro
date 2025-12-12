@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TVJ",
+    "specialty_id": "spec_01KCA8QEJ0Q5HA35M358YSBW86",
+    "code": "consultoria_visagismo",
+    "name": "Consultoria de Visagismo",
+    "description": "Análise completa de imagem e estilo",
+    "default_duration_minutes": 90,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TWK",
+    "specialty_id": "spec_01KCA8QEJ0Q5HA35M358YSBW86",
+    "code": "analise_colorimetria",
+    "name": "Análise de Colorimetria",
+    "description": "Identificação da paleta de cores pessoal",
+    "default_duration_minutes": 60,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TXL",
+    "specialty_id": "spec_01KCA8QEJ0Q5HA35M358YSBW86",
+    "code": "analise_formato_rosto",
+    "name": "Análise de Formato de Rosto",
+    "description": "Identificação do formato e indicações de corte",
+    "default_duration_minutes": 45,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TYM",
+    "specialty_id": "spec_01KCA8QEJ0Q5HA35M358YSBW86",
+    "code": "projeto_transformacao",
+    "name": "Projeto de Transformação",
+    "description": "Planejamento completo de mudança de visual",
+    "default_duration_minutes": 120,
+    "default_price_cents": 35000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TZN",
+    "specialty_id": "spec_01KCA8QEJ0Q5HA35M358YSBW86",
+    "code": "consultoria_corte",
+    "name": "Consultoria de Corte",
+    "description": "Definição do corte ideal para seu rosto",
+    "default_duration_minutes": 45,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6V0O",
+    "specialty_id": "spec_01KCA8QEJ0Q5HA35M358YSBW86",
+    "code": "consultoria_cor_cabelo",
+    "name": "Consultoria de Cor de Cabelo",
+    "description": "Indicação da coloração ideal",
+    "default_duration_minutes": 45,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6V1P",
+    "specialty_id": "spec_01KCA8QEJ0Q5HA35M358YSBW86",
+    "code": "analise_biotipo",
+    "name": "Análise de Biotipo",
+    "description": "Identificação de biotipo corporal e proporções",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6V2Q",
+    "specialty_id": "spec_01KCA8QEJ0Q5HA35M358YSBW86",
+    "code": "consultoria_sobrancelhas",
+    "name": "Consultoria de Sobrancelhas",
+    "description": "Design ideal de sobrancelhas para o rosto",
+    "default_duration_minutes": 30,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6V3R",
+    "specialty_id": "spec_01KCA8QEJ0Q5HA35M358YSBW86",
+    "code": "day_visagismo",
+    "name": "Day de Visagismo",
+    "description": "Dia completo de transformação visual",
+    "default_duration_minutes": 480,
+    "default_price_cents": 80000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6V4S",
+    "specialty_id": "spec_01KCA8QEJ0Q5HA35M358YSBW86",
+    "code": "consultoria_maquiagem",
+    "name": "Consultoria de Maquiagem",
+    "description": "Orientação de maquiagem baseada no visagismo",
+    "default_duration_minutes": 60,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

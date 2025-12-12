@@ -1,5 +1,6 @@
 import { IUnitRepository } from '@/application/contracts/units/i-unit-repository.interface';
 import { IStorageGateway } from '@/domain/services/storage/i-storage-gateway.service';
+import { URLAddressVO } from '@/domain/value-objects/url-address.value-object';
 
 class UseCase {
   constructor(
@@ -16,7 +17,7 @@ class UseCase {
 
     // Se já tinha logo e deve deletar o antigo
     if (unit.logo && input.delete_old) {
-      const old_key = this.extract_key_from_url(unit.logo);
+      const old_key = this.extract_key_from_url(unit.logo.URL);
       await this.storage_gateway.delete_file({ key: old_key }).catch(() => {
         // Ignora erro se arquivo não existir
       });
@@ -26,7 +27,7 @@ class UseCase {
     const public_url = this.storage_gateway.get_public_url(input.key);
 
     // Atualizar entidade
-    unit.update_logo(public_url);
+    unit.update_logo(new URLAddressVO(public_url));
 
     // Persistir
     await this.unit_repository.update(unit);

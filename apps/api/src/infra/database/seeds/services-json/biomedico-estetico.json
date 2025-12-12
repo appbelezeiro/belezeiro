@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62T5O",
+    "specialty_id": "spec_01KCA8QEJ3Z97TZZEPF9F1M4TQ",
+    "code": "toxina_botulinica",
+    "name": "Toxina Botulínica (Botox)",
+    "description": "Aplicação de botox para rugas",
+    "default_duration_minutes": 45,
+    "default_price_cents": 120000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62U6P",
+    "specialty_id": "spec_01KCA8QEJ3Z97TZZEPF9F1M4TQ",
+    "code": "preenchimento_labial",
+    "name": "Preenchimento Labial",
+    "description": "Preenchimento dos lábios com ácido hialurônico",
+    "default_duration_minutes": 45,
+    "default_price_cents": 150000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62V7Q",
+    "specialty_id": "spec_01KCA8QEJ3Z97TZZEPF9F1M4TQ",
+    "code": "preenchimento_olheiras",
+    "name": "Preenchimento de Olheiras",
+    "description": "Tratamento de olheiras com preenchimento",
+    "default_duration_minutes": 45,
+    "default_price_cents": 180000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62W8R",
+    "specialty_id": "spec_01KCA8QEJ3Z97TZZEPF9F1M4TQ",
+    "code": "bioestimuladores",
+    "name": "Bioestimuladores de Colágeno",
+    "description": "Aplicação de Sculptra, Radiesse ou similares",
+    "default_duration_minutes": 60,
+    "default_price_cents": 250000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62X9S",
+    "specialty_id": "spec_01KCA8QEJ3Z97TZZEPF9F1M4TQ",
+    "code": "skinbooster",
+    "name": "Skinbooster",
+    "description": "Hidratação profunda com ácido hialurônico",
+    "default_duration_minutes": 45,
+    "default_price_cents": 150000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62YAT",
+    "specialty_id": "spec_01KCA8QEJ3Z97TZZEPF9F1M4TQ",
+    "code": "fios_pdo",
+    "name": "Fios de PDO",
+    "description": "Lifting não cirúrgico com fios",
+    "default_duration_minutes": 90,
+    "default_price_cents": 300000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62ZBU",
+    "specialty_id": "spec_01KCA8QEJ3Z97TZZEPF9F1M4TQ",
+    "code": "laser_co2",
+    "name": "Laser CO2 Fracionado",
+    "description": "Tratamento a laser para rejuvenescimento",
+    "default_duration_minutes": 60,
+    "default_price_cents": 200000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q630CV",
+    "specialty_id": "spec_01KCA8QEJ3Z97TZZEPF9F1M4TQ",
+    "code": "intradermoterapia",
+    "name": "Intradermoterapia",
+    "description": "Aplicação de ativos injetáveis",
+    "default_duration_minutes": 45,
+    "default_price_cents": 100000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q631DW",
+    "specialty_id": "spec_01KCA8QEJ3Z97TZZEPF9F1M4TQ",
+    "code": "pdrn",
+    "name": "PDRN (Ácido Polinucleotídeo)",
+    "description": "Bioestimulador de última geração",
+    "default_duration_minutes": 45,
+    "default_price_cents": 180000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q632EX",
+    "specialty_id": "spec_01KCA8QEJ3Z97TZZEPF9F1M4TQ",
+    "code": "enzimas",
+    "name": "Aplicação de Enzimas",
+    "description": "Lipólise enzimática para gordura",
+    "default_duration_minutes": 45,
+    "default_price_cents": 80000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

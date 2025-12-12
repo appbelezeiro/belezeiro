@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61ZAT",
+    "specialty_id": "spec_01KCA8QEJ4N1F5ZJFSKH38RH62",
+    "code": "avaliacao_fisica",
+    "name": "Avaliação Física",
+    "description": "Avaliação completa de condicionamento",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q620BU",
+    "specialty_id": "spec_01KCA8QEJ4N1F5ZJFSKH38RH62",
+    "code": "treino_individual",
+    "name": "Treino Individual",
+    "description": "Sessão de treino personalizado",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q621CV",
+    "specialty_id": "spec_01KCA8QEJ4N1F5ZJFSKH38RH62",
+    "code": "treino_dupla",
+    "name": "Treino em Dupla",
+    "description": "Treino para duas pessoas",
+    "default_duration_minutes": 60,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q622DW",
+    "specialty_id": "spec_01KCA8QEJ4N1F5ZJFSKH38RH62",
+    "code": "treino_domiciliar",
+    "name": "Treino Domiciliar",
+    "description": "Treino na residência do aluno",
+    "default_duration_minutes": 60,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q623EX",
+    "specialty_id": "spec_01KCA8QEJ4N1F5ZJFSKH38RH62",
+    "code": "treino_outdoor",
+    "name": "Treino Outdoor",
+    "description": "Treino ao ar livre",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q624FY",
+    "specialty_id": "spec_01KCA8QEJ4N1F5ZJFSKH38RH62",
+    "code": "periodizacao_treino",
+    "name": "Periodização de Treino",
+    "description": "Elaboração de plano de treino mensal",
+    "default_duration_minutes": 90,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q625GZ",
+    "specialty_id": "spec_01KCA8QEJ4N1F5ZJFSKH38RH62",
+    "code": "treino_funcional",
+    "name": "Treino Funcional",
+    "description": "Treino com exercícios funcionais",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q626H1",
+    "specialty_id": "spec_01KCA8QEJ4N1F5ZJFSKH38RH62",
+    "code": "treino_hiit",
+    "name": "Treino HIIT",
+    "description": "Treino intervalado de alta intensidade",
+    "default_duration_minutes": 45,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q627I2",
+    "specialty_id": "spec_01KCA8QEJ4N1F5ZJFSKH38RH62",
+    "code": "consultoria_online",
+    "name": "Consultoria Online",
+    "description": "Acompanhamento e planilhas online",
+    "default_duration_minutes": 45,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q628J3",
+    "specialty_id": "spec_01KCA8QEJ4N1F5ZJFSKH38RH62",
+    "code": "treino_gestante",
+    "name": "Treino para Gestantes",
+    "description": "Treino adaptado para gestantes",
+    "default_duration_minutes": 50,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

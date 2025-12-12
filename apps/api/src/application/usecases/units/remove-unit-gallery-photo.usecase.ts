@@ -15,7 +15,7 @@ class UseCase {
     }
 
     // Remover da galeria
-    const updated_gallery = unit.gallery.filter((url) => url !== input.photo_url);
+    const updated_gallery = unit.gallery.filter((urlVO) => urlVO.URL !== input.photo_url);
 
     // Se removeu alguma foto, deletar do storage também
     if (updated_gallery.length < unit.gallery.length) {

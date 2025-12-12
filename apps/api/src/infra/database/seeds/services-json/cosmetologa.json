@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WTJ",
+    "specialty_id": "spec_01KCA8QEJ1HQJW3506HQ6Z891K",
+    "code": "analise_pele",
+    "name": "Análise de Pele",
+    "description": "Diagnóstico completo do tipo de pele",
+    "default_duration_minutes": 45,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WUK",
+    "specialty_id": "spec_01KCA8QEJ1HQJW3506HQ6Z891K",
+    "code": "protocolo_personalizado",
+    "name": "Protocolo Personalizado",
+    "description": "Tratamento customizado para sua pele",
+    "default_duration_minutes": 90,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WVL",
+    "specialty_id": "spec_01KCA8QEJ1HQJW3506HQ6Z891K",
+    "code": "tratamento_antiaging",
+    "name": "Tratamento Antiaging",
+    "description": "Protocolo anti-envelhecimento",
+    "default_duration_minutes": 90,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WWM",
+    "specialty_id": "spec_01KCA8QEJ1HQJW3506HQ6Z891K",
+    "code": "skincare_home",
+    "name": "Consultoria de Skincare",
+    "description": "Orientação de cuidados diários em casa",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WXN",
+    "specialty_id": "spec_01KCA8QEJ1HQJW3506HQ6Z891K",
+    "code": "tratamento_vitamina_c",
+    "name": "Tratamento com Vitamina C",
+    "description": "Protocolo antioxidante com vitamina C",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WYO",
+    "specialty_id": "spec_01KCA8QEJ1HQJW3506HQ6Z891K",
+    "code": "tratamento_acido_hialuronico",
+    "name": "Tratamento com Ácido Hialurônico",
+    "description": "Protocolo hidratante com ácido hialurônico",
+    "default_duration_minutes": 60,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WZP",
+    "specialty_id": "spec_01KCA8QEJ1HQJW3506HQ6Z891K",
+    "code": "tratamento_retinol",
+    "name": "Tratamento com Retinol",
+    "description": "Protocolo renovador com retinol",
+    "default_duration_minutes": 60,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6X0Q",
+    "specialty_id": "spec_01KCA8QEJ1HQJW3506HQ6Z891K",
+    "code": "tratamento_niacinamida",
+    "name": "Tratamento com Niacinamida",
+    "description": "Protocolo para poros e oleosidade",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6X1R",
+    "specialty_id": "spec_01KCA8QEJ1HQJW3506HQ6Z891K",
+    "code": "formulacao_cosmetica",
+    "name": "Formulação Cosmética Personalizada",
+    "description": "Desenvolvimento de produtos para sua pele",
+    "default_duration_minutes": 90,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6X2S",
+    "specialty_id": "spec_01KCA8QEJ1HQJW3506HQ6Z891K",
+    "code": "tratamento_peptideos",
+    "name": "Tratamento com Peptídeos",
+    "description": "Protocolo firmador com peptídeos",
+    "default_duration_minutes": 60,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

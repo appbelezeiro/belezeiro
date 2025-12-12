@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TL9",
+    "specialty_id": "spec_01KCA8QEJ004Y00QZPBVZGGEY0",
+    "code": "box_braids",
+    "name": "Box Braids",
+    "description": "Tranças box braids completas",
+    "default_duration_minutes": 360,
+    "default_price_cents": 35000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TMA",
+    "specialty_id": "spec_01KCA8QEJ004Y00QZPBVZGGEY0",
+    "code": "twist",
+    "name": "Twist",
+    "description": "Tranças estilo twist",
+    "default_duration_minutes": 300,
+    "default_price_cents": 30000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TNB",
+    "specialty_id": "spec_01KCA8QEJ004Y00QZPBVZGGEY0",
+    "code": "trancas_nagos",
+    "name": "Tranças Nagô",
+    "description": "Tranças africanas nagô rente ao couro cabeludo",
+    "default_duration_minutes": 180,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TOC",
+    "specialty_id": "spec_01KCA8QEJ004Y00QZPBVZGGEY0",
+    "code": "trancas_rastafari",
+    "name": "Tranças Rastafári",
+    "description": "Tranças finas estilo dreadlocks",
+    "default_duration_minutes": 420,
+    "default_price_cents": 40000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TPD",
+    "specialty_id": "spec_01KCA8QEJ004Y00QZPBVZGGEY0",
+    "code": "knotless_braids",
+    "name": "Knotless Braids",
+    "description": "Tranças sem nó, mais leves e naturais",
+    "default_duration_minutes": 420,
+    "default_price_cents": 45000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TQE",
+    "specialty_id": "spec_01KCA8QEJ004Y00QZPBVZGGEY0",
+    "code": "fulani_braids",
+    "name": "Fulani Braids",
+    "description": "Tranças estilo fulani com detalhes",
+    "default_duration_minutes": 240,
+    "default_price_cents": 28000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TRF",
+    "specialty_id": "spec_01KCA8QEJ004Y00QZPBVZGGEY0",
+    "code": "goddess_locs",
+    "name": "Goddess Locs",
+    "description": "Locs estilo goddess com pontas onduladas",
+    "default_duration_minutes": 360,
+    "default_price_cents": 38000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TSG",
+    "specialty_id": "spec_01KCA8QEJ004Y00QZPBVZGGEY0",
+    "code": "crochet_braids",
+    "name": "Crochet Braids",
+    "description": "Aplicação de cabelo com técnica crochet",
+    "default_duration_minutes": 180,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TTH",
+    "specialty_id": "spec_01KCA8QEJ004Y00QZPBVZGGEY0",
+    "code": "manutencao_trancas",
+    "name": "Manutenção de Tranças",
+    "description": "Retoque e manutenção de tranças existentes",
+    "default_duration_minutes": 120,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TUI",
+    "specialty_id": "spec_01KCA8QEJ004Y00QZPBVZGGEY0",
+    "code": "remocao_trancas",
+    "name": "Remoção de Tranças",
+    "description": "Remoção cuidadosa de tranças",
+    "default_duration_minutes": 180,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

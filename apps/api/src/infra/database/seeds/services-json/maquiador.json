@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Y7Y",
+    "specialty_id": "spec_01KCA8QEJ1S49XTR2SMB4S5GXM",
+    "code": "maquiagem_social",
+    "name": "Maquiagem Social",
+    "description": "Maquiagem para eventos e ocasiões especiais",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Y8Z",
+    "specialty_id": "spec_01KCA8QEJ1S49XTR2SMB4S5GXM",
+    "code": "maquiagem_dia",
+    "name": "Maquiagem Dia a Dia",
+    "description": "Maquiagem leve e natural",
+    "default_duration_minutes": 45,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Y91",
+    "specialty_id": "spec_01KCA8QEJ1S49XTR2SMB4S5GXM",
+    "code": "maquiagem_festa",
+    "name": "Maquiagem para Festa",
+    "description": "Maquiagem elaborada para festas",
+    "default_duration_minutes": 75,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YA2",
+    "specialty_id": "spec_01KCA8QEJ1S49XTR2SMB4S5GXM",
+    "code": "automaquiagem",
+    "name": "Aula de Automaquiagem",
+    "description": "Ensino de técnicas de automaquiagem",
+    "default_duration_minutes": 120,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YB3",
+    "specialty_id": "spec_01KCA8QEJ1S49XTR2SMB4S5GXM",
+    "code": "maquiagem_editorial",
+    "name": "Maquiagem Editorial",
+    "description": "Maquiagem para fotos e ensaios",
+    "default_duration_minutes": 90,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YC4",
+    "specialty_id": "spec_01KCA8QEJ1S49XTR2SMB4S5GXM",
+    "code": "retoque_maquiagem",
+    "name": "Retoque de Maquiagem",
+    "description": "Retoque durante evento",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YD5",
+    "specialty_id": "spec_01KCA8QEJ1S49XTR2SMB4S5GXM",
+    "code": "aplicacao_cilios",
+    "name": "Aplicação de Cílios Postiços",
+    "description": "Aplicação de cílios para evento",
+    "default_duration_minutes": 20,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YE6",
+    "specialty_id": "spec_01KCA8QEJ1S49XTR2SMB4S5GXM",
+    "code": "maquiagem_infantil",
+    "name": "Maquiagem Infantil",
+    "description": "Maquiagem leve para crianças",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YF7",
+    "specialty_id": "spec_01KCA8QEJ1S49XTR2SMB4S5GXM",
+    "code": "teste_maquiagem",
+    "name": "Teste de Maquiagem",
+    "description": "Sessão de teste para eventos",
+    "default_duration_minutes": 90,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YG8",
+    "specialty_id": "spec_01KCA8QEJ1S49XTR2SMB4S5GXM",
+    "code": "contorno_iluminacao",
+    "name": "Contorno e Iluminação",
+    "description": "Técnica de contorno facial",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

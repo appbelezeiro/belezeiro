@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YRJ",
+    "specialty_id": "spec_01KCA8QEJ1MGEWMJK6TWC8Y5X7",
+    "code": "depilacao_virilha",
+    "name": "Depilação Virilha",
+    "description": "Depilação completa da região da virilha",
+    "default_duration_minutes": 30,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YSK",
+    "specialty_id": "spec_01KCA8QEJ1MGEWMJK6TWC8Y5X7",
+    "code": "depilacao_pernas_completas",
+    "name": "Depilação Pernas Completas",
+    "description": "Depilação de pernas inteiras",
+    "default_duration_minutes": 45,
+    "default_price_cents": 6000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YTL",
+    "specialty_id": "spec_01KCA8QEJ1MGEWMJK6TWC8Y5X7",
+    "code": "depilacao_meia_perna",
+    "name": "Depilação Meia Perna",
+    "description": "Depilação da meia perna",
+    "default_duration_minutes": 30,
+    "default_price_cents": 4000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YUM",
+    "specialty_id": "spec_01KCA8QEJ1MGEWMJK6TWC8Y5X7",
+    "code": "depilacao_axilas",
+    "name": "Depilação Axilas",
+    "description": "Depilação das axilas",
+    "default_duration_minutes": 15,
+    "default_price_cents": 2500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YVN",
+    "specialty_id": "spec_01KCA8QEJ1MGEWMJK6TWC8Y5X7",
+    "code": "depilacao_buço",
+    "name": "Depilação Buço",
+    "description": "Depilação do buço facial",
+    "default_duration_minutes": 10,
+    "default_price_cents": 1500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YWO",
+    "specialty_id": "spec_01KCA8QEJ1MGEWMJK6TWC8Y5X7",
+    "code": "depilacao_bracos",
+    "name": "Depilação Braços",
+    "description": "Depilação dos braços completos",
+    "default_duration_minutes": 30,
+    "default_price_cents": 4000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YXP",
+    "specialty_id": "spec_01KCA8QEJ1MGEWMJK6TWC8Y5X7",
+    "code": "depilacao_costas",
+    "name": "Depilação Costas",
+    "description": "Depilação das costas completas",
+    "default_duration_minutes": 45,
+    "default_price_cents": 6000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YYQ",
+    "specialty_id": "spec_01KCA8QEJ1MGEWMJK6TWC8Y5X7",
+    "code": "depilacao_corpo_inteiro",
+    "name": "Depilação Corpo Inteiro",
+    "description": "Pacote completo de depilação corporal",
+    "default_duration_minutes": 120,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YZR",
+    "specialty_id": "spec_01KCA8QEJ1MGEWMJK6TWC8Y5X7",
+    "code": "depilacao_perianal",
+    "name": "Depilação Perianal",
+    "description": "Depilação da região perianal",
+    "default_duration_minutes": 20,
+    "default_price_cents": 3000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Z0S",
+    "specialty_id": "spec_01KCA8QEJ1MGEWMJK6TWC8Y5X7",
+    "code": "depilacao_abdomen",
+    "name": "Depilação Abdômen",
+    "description": "Depilação da região abdominal",
+    "default_duration_minutes": 20,
+    "default_price_cents": 3500,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

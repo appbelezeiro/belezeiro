@@ -16,7 +16,7 @@ const SocialLoginSchema = z.object({
 });
 
 export class AuthController {
-  constructor(private readonly container: Container) {}
+  constructor(private readonly container: Container) { }
 
   async social_login(c: Context) {
     try {
@@ -55,14 +55,7 @@ export class AuthController {
       const status = result.is_new_user ? 201 : 200;
 
       // Build response - only include onboarding: false when user hasn't completed it
-      const response: {
-        user: ReturnType<typeof UserMapper.toAuth>;
-        created: boolean;
-        onboarding?: boolean;
-      } = {
-        user: UserMapper.toAuth(result.user),
-        created: result.is_new_user,
-      };
+      const response: { onboarding?: boolean; } = {};
 
       // Only return onboarding: false when user needs to complete onboarding
       if (!result.user.onboardingCompleted) {

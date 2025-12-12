@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62JUE",
+    "specialty_id": "spec_01KCA8QEJ3RHJ5G4YAP7411D5C",
+    "code": "pilates_solo",
+    "name": "Pilates Solo (Mat)",
+    "description": "Aula de pilates no solo",
+    "default_duration_minutes": 60,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62KVF",
+    "specialty_id": "spec_01KCA8QEJ3RHJ5G4YAP7411D5C",
+    "code": "pilates_aparelhos",
+    "name": "Pilates em Aparelhos",
+    "description": "Aula com reformer, cadillac e outros",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62LWG",
+    "specialty_id": "spec_01KCA8QEJ3RHJ5G4YAP7411D5C",
+    "code": "pilates_individual",
+    "name": "Pilates Individual",
+    "description": "Aula particular de pilates",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62MXH",
+    "specialty_id": "spec_01KCA8QEJ3RHJ5G4YAP7411D5C",
+    "code": "pilates_dupla",
+    "name": "Pilates em Dupla",
+    "description": "Aula para duas pessoas",
+    "default_duration_minutes": 60,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62NYI",
+    "specialty_id": "spec_01KCA8QEJ3RHJ5G4YAP7411D5C",
+    "code": "pilates_gestante",
+    "name": "Pilates para Gestantes",
+    "description": "Pilates adaptado para gestantes",
+    "default_duration_minutes": 50,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62OZJ",
+    "specialty_id": "spec_01KCA8QEJ3RHJ5G4YAP7411D5C",
+    "code": "pilates_pos_parto",
+    "name": "Pilates Pós-parto",
+    "description": "Recuperação após o parto",
+    "default_duration_minutes": 50,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62P1K",
+    "specialty_id": "spec_01KCA8QEJ3RHJ5G4YAP7411D5C",
+    "code": "pilates_terceira_idade",
+    "name": "Pilates para Terceira Idade",
+    "description": "Pilates adaptado para idosos",
+    "default_duration_minutes": 50,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62Q2L",
+    "specialty_id": "spec_01KCA8QEJ3RHJ5G4YAP7411D5C",
+    "code": "avaliacao_pilates",
+    "name": "Avaliação de Pilates",
+    "description": "Avaliação postural e física inicial",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62R3M",
+    "specialty_id": "spec_01KCA8QEJ3RHJ5G4YAP7411D5C",
+    "code": "pilates_coluna",
+    "name": "Pilates para Coluna",
+    "description": "Foco em tratamento de dores na coluna",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q62S4N",
+    "specialty_id": "spec_01KCA8QEJ3RHJ5G4YAP7411D5C",
+    "code": "pilates_corporativo",
+    "name": "Pilates Corporativo",
+    "description": "Aulas de pilates em empresas",
+    "default_duration_minutes": 60,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

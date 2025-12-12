@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VF4",
+    "specialty_id": "spec_01KCA8QEJ1YAMXCFPEZBZN9JNQ",
+    "code": "pedicure_simples",
+    "name": "Pedicure Simples",
+    "description": "Cutilagem e esmaltação dos pés",
+    "default_duration_minutes": 60,
+    "default_price_cents": 4500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VG5",
+    "specialty_id": "spec_01KCA8QEJ1YAMXCFPEZBZN9JNQ",
+    "code": "pedicure_gel",
+    "name": "Pedicure em Gel",
+    "description": "Esmaltação dos pés com esmalte em gel",
+    "default_duration_minutes": 75,
+    "default_price_cents": 7000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VH6",
+    "specialty_id": "spec_01KCA8QEJ1YAMXCFPEZBZN9JNQ",
+    "code": "spa_pes",
+    "name": "Spa dos Pés",
+    "description": "Tratamento completo com escalda-pés e hidratação",
+    "default_duration_minutes": 90,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VI7",
+    "specialty_id": "spec_01KCA8QEJ1YAMXCFPEZBZN9JNQ",
+    "code": "esfoliacao_pes",
+    "name": "Esfoliação dos Pés",
+    "description": "Remoção de células mortas dos pés",
+    "default_duration_minutes": 30,
+    "default_price_cents": 3500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VJ8",
+    "specialty_id": "spec_01KCA8QEJ1YAMXCFPEZBZN9JNQ",
+    "code": "hidratacao_pes",
+    "name": "Hidratação dos Pés",
+    "description": "Tratamento hidratante para pés ressecados",
+    "default_duration_minutes": 30,
+    "default_price_cents": 3000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VK9",
+    "specialty_id": "spec_01KCA8QEJ1YAMXCFPEZBZN9JNQ",
+    "code": "remocao_calosidades",
+    "name": "Remoção de Calosidades",
+    "description": "Tratamento para remoção de calos",
+    "default_duration_minutes": 45,
+    "default_price_cents": 4000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VLA",
+    "specialty_id": "spec_01KCA8QEJ1YAMXCFPEZBZN9JNQ",
+    "code": "pedicure_masculino",
+    "name": "Pedicure Masculino",
+    "description": "Cuidados com os pés masculinos",
+    "default_duration_minutes": 45,
+    "default_price_cents": 4000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VMB",
+    "specialty_id": "spec_01KCA8QEJ1YAMXCFPEZBZN9JNQ",
+    "code": "parafina_pes",
+    "name": "Parafina nos Pés",
+    "description": "Tratamento com parafina quente",
+    "default_duration_minutes": 30,
+    "default_price_cents": 3500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VNC",
+    "specialty_id": "spec_01KCA8QEJ1YAMXCFPEZBZN9JNQ",
+    "code": "francesinha_pes",
+    "name": "Francesinha nos Pés",
+    "description": "Esmaltação francesinha nos pés",
+    "default_duration_minutes": 75,
+    "default_price_cents": 6000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VOD",
+    "specialty_id": "spec_01KCA8QEJ1YAMXCFPEZBZN9JNQ",
+    "code": "combo_maos_pes",
+    "name": "Combo Mãos e Pés",
+    "description": "Manicure e pedicure completos",
+    "default_duration_minutes": 90,
+    "default_price_cents": 7500,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

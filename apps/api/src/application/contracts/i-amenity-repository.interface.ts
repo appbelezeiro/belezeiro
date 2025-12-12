@@ -10,4 +10,5 @@ export interface IAmenityRepository {
   search(query: string, cursor?: string, limit?: number): Promise<CursorPaginatedResponse<AmenityEntity>>;
   update(entity: AmenityEntity): Promise<AmenityEntity>;
   delete(id: string): Promise<boolean>;
+  find_many_by_id(id: string[]): Promise<AmenityEntity[]>;
 }

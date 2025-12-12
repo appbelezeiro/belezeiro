@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q633FY",
+    "specialty_id": "spec_01KCA8QEJ4ENZZTZVMRXTV2SP7",
+    "code": "tatuagem_pequena",
+    "name": "Tatuagem Pequena",
+    "description": "Tatuagem até 5cm",
+    "default_duration_minutes": 60,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q634GZ",
+    "specialty_id": "spec_01KCA8QEJ4ENZZTZVMRXTV2SP7",
+    "code": "tatuagem_media",
+    "name": "Tatuagem Média",
+    "description": "Tatuagem de 5cm a 15cm",
+    "default_duration_minutes": 180,
+    "default_price_cents": 50000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q635H1",
+    "specialty_id": "spec_01KCA8QEJ4ENZZTZVMRXTV2SP7",
+    "code": "tatuagem_grande",
+    "name": "Tatuagem Grande",
+    "description": "Tatuagem acima de 15cm",
+    "default_duration_minutes": 300,
+    "default_price_cents": 100000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q636I2",
+    "specialty_id": "spec_01KCA8QEJ4ENZZTZVMRXTV2SP7",
+    "code": "tatuagem_fechamento",
+    "name": "Fechamento de Braço/Perna",
+    "description": "Tatuagem de fechamento completo",
+    "default_duration_minutes": 480,
+    "default_price_cents": 250000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q637J3",
+    "specialty_id": "spec_01KCA8QEJ4ENZZTZVMRXTV2SP7",
+    "code": "cobertura_tatuagem",
+    "name": "Cobertura (Cover Up)",
+    "description": "Cobertura de tatuagem existente",
+    "default_duration_minutes": 240,
+    "default_price_cents": 80000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q638K4",
+    "specialty_id": "spec_01KCA8QEJ4ENZZTZVMRXTV2SP7",
+    "code": "retoque_tatuagem",
+    "name": "Retoque de Tatuagem",
+    "description": "Retoque em tatuagem antiga",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q639L5",
+    "specialty_id": "spec_01KCA8QEJ4ENZZTZVMRXTV2SP7",
+    "code": "orcamento_tatuagem",
+    "name": "Orçamento/Consulta",
+    "description": "Consulta para planejamento de tatuagem",
+    "default_duration_minutes": 30,
+    "default_price_cents": 0,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63AM6",
+    "specialty_id": "spec_01KCA8QEJ4ENZZTZVMRXTV2SP7",
+    "code": "tatuagem_realista",
+    "name": "Tatuagem Realista",
+    "description": "Tatuagem estilo realismo",
+    "default_duration_minutes": 300,
+    "default_price_cents": 120000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63BN7",
+    "specialty_id": "spec_01KCA8QEJ4ENZZTZVMRXTV2SP7",
+    "code": "tatuagem_aquarela",
+    "name": "Tatuagem Aquarela",
+    "description": "Tatuagem estilo watercolor",
+    "default_duration_minutes": 180,
+    "default_price_cents": 70000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63CO8",
+    "specialty_id": "spec_01KCA8QEJ4ENZZTZVMRXTV2SP7",
+    "code": "tatuagem_fineline",
+    "name": "Tatuagem Fine Line",
+    "description": "Tatuagem de traços finos e delicados",
+    "default_duration_minutes": 120,
+    "default_price_cents": 40000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

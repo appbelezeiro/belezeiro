@@ -9,7 +9,6 @@ export function createAmenityRoutes(container: Container) {
   router.post('/', (c) => controller.create(c));
   router.get('/', (c) => controller.list(c));
   router.get('/search', (c) => controller.search(c));
-  router.post('/seed', (c) => controller.seed(c));
   router.get('/:id', (c) => controller.get_by_id(c));
   router.patch('/:id', (c) => controller.update(c));
   router.post('/:id/activate', (c) => controller.activate(c));

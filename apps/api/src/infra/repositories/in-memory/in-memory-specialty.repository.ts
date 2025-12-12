@@ -124,4 +124,9 @@ export class InMemorySpecialtyRepository implements ISpecialtyRepository {
     this.items.splice(index, 1);
     return true;
   }
+
+  async find_many_by_id(ids: string[]): Promise<SpecialtyEntity[]> {
+    const items = this.items.filter((i) => ids.includes(i.id));
+    return items.map(SpecialtyDataMapper.toDomain);
+  }
 }

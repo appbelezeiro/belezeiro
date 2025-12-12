@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZB4",
+    "specialty_id": "spec_01KCA8QEJ2BTBHRDHNXAPCXPJC",
+    "code": "consulta_podologica",
+    "name": "Consulta Podológica",
+    "description": "Avaliação completa dos pés",
+    "default_duration_minutes": 45,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZC5",
+    "specialty_id": "spec_01KCA8QEJ2BTBHRDHNXAPCXPJC",
+    "code": "tratamento_unha_encravada",
+    "name": "Tratamento Unha Encravada",
+    "description": "Tratamento e correção de unha encravada",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZD6",
+    "specialty_id": "spec_01KCA8QEJ2BTBHRDHNXAPCXPJC",
+    "code": "ortoniquia",
+    "name": "Órtese/Ortonixia",
+    "description": "Aplicação de órtese corretiva",
+    "default_duration_minutes": 45,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZE7",
+    "specialty_id": "spec_01KCA8QEJ2BTBHRDHNXAPCXPJC",
+    "code": "tratamento_micose",
+    "name": "Tratamento de Micose",
+    "description": "Tratamento de micose ungueal ou interdigital",
+    "default_duration_minutes": 45,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZF8",
+    "specialty_id": "spec_01KCA8QEJ2BTBHRDHNXAPCXPJC",
+    "code": "remocao_calos",
+    "name": "Remoção de Calos e Calosidades",
+    "description": "Tratamento de calos e hiperqueratose",
+    "default_duration_minutes": 45,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZG9",
+    "specialty_id": "spec_01KCA8QEJ2BTBHRDHNXAPCXPJC",
+    "code": "tratamento_fissuras",
+    "name": "Tratamento de Fissuras",
+    "description": "Tratamento de rachaduras nos calcanhares",
+    "default_duration_minutes": 45,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZHA",
+    "specialty_id": "spec_01KCA8QEJ2BTBHRDHNXAPCXPJC",
+    "code": "tratamento_verrugas",
+    "name": "Tratamento de Verrugas Plantares",
+    "description": "Tratamento de verrugas nos pés",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZIB",
+    "specialty_id": "spec_01KCA8QEJ2BTBHRDHNXAPCXPJC",
+    "code": "corte_tecnico_unhas",
+    "name": "Corte Técnico de Unhas",
+    "description": "Corte especializado de unhas problemáticas",
+    "default_duration_minutes": 30,
+    "default_price_cents": 6000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZJC",
+    "specialty_id": "spec_01KCA8QEJ2BTBHRDHNXAPCXPJC",
+    "code": "palmilha_sob_medida",
+    "name": "Avaliação para Palmilha",
+    "description": "Avaliação e indicação de palmilhas",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZKD",
+    "specialty_id": "spec_01KCA8QEJ2BTBHRDHNXAPCXPJC",
+    "code": "manutencao_podologica",
+    "name": "Manutenção Podológica",
+    "description": "Sessão de manutenção periódica",
+    "default_duration_minutes": 45,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

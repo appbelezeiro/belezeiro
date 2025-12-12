@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YH9",
+    "specialty_id": "spec_01KCA8QEJ156B12MV2X17JTJCR",
+    "code": "maquiagem_noiva",
+    "name": "Maquiagem de Noiva",
+    "description": "Maquiagem completa para o dia do casamento",
+    "default_duration_minutes": 90,
+    "default_price_cents": 50000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YIA",
+    "specialty_id": "spec_01KCA8QEJ156B12MV2X17JTJCR",
+    "code": "teste_noiva",
+    "name": "Teste de Noiva",
+    "description": "Sessão de teste para definição da maquiagem",
+    "default_duration_minutes": 120,
+    "default_price_cents": 35000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YJB",
+    "specialty_id": "spec_01KCA8QEJ156B12MV2X17JTJCR",
+    "code": "pacote_noiva_completo",
+    "name": "Pacote Noiva Completo",
+    "description": "Teste + dia do casamento + retoque",
+    "default_duration_minutes": 240,
+    "default_price_cents": 80000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YKC",
+    "specialty_id": "spec_01KCA8QEJ156B12MV2X17JTJCR",
+    "code": "maquiagem_madrinhas",
+    "name": "Maquiagem para Madrinhas",
+    "description": "Maquiagem para madrinhas do casamento",
+    "default_duration_minutes": 60,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YLD",
+    "specialty_id": "spec_01KCA8QEJ156B12MV2X17JTJCR",
+    "code": "maquiagem_mae_noiva",
+    "name": "Maquiagem Mãe da Noiva/Noivo",
+    "description": "Maquiagem especial para mães",
+    "default_duration_minutes": 60,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YME",
+    "specialty_id": "spec_01KCA8QEJ156B12MV2X17JTJCR",
+    "code": "airbrush_noiva",
+    "name": "Airbrush Noiva",
+    "description": "Maquiagem com aerógrafo para longa duração",
+    "default_duration_minutes": 120,
+    "default_price_cents": 70000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YNF",
+    "specialty_id": "spec_01KCA8QEJ156B12MV2X17JTJCR",
+    "code": "retoque_cerimonia",
+    "name": "Retoque para Cerimônia",
+    "description": "Retoque antes da cerimônia/festa",
+    "default_duration_minutes": 30,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YOG",
+    "specialty_id": "spec_01KCA8QEJ156B12MV2X17JTJCR",
+    "code": "acompanhamento_evento",
+    "name": "Acompanhamento no Evento",
+    "description": "Maquiador presente durante o evento",
+    "default_duration_minutes": 240,
+    "default_price_cents": 60000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YPH",
+    "specialty_id": "spec_01KCA8QEJ156B12MV2X17JTJCR",
+    "code": "ensaio_pre_wedding",
+    "name": "Maquiagem Ensaio Pré-Wedding",
+    "description": "Maquiagem para ensaio fotográfico",
+    "default_duration_minutes": 75,
+    "default_price_cents": 30000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6YQI",
+    "specialty_id": "spec_01KCA8QEJ156B12MV2X17JTJCR",
+    "code": "consultoria_skincare_noiva",
+    "name": "Consultoria Skincare para Noiva",
+    "description": "Preparação da pele meses antes do casamento",
+    "default_duration_minutes": 60,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

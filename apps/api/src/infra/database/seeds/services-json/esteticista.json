@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6W9Y",
+    "specialty_id": "spec_01KCA8QEJ1CV45K9P3CZCH6J06",
+    "code": "limpeza_pele",
+    "name": "Limpeza de Pele",
+    "description": "Limpeza profunda com extração de comedões",
+    "default_duration_minutes": 90,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WAZ",
+    "specialty_id": "spec_01KCA8QEJ1CV45K9P3CZCH6J06",
+    "code": "hidratacao_facial",
+    "name": "Hidratação Facial",
+    "description": "Tratamento hidratante para o rosto",
+    "default_duration_minutes": 60,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WB1",
+    "specialty_id": "spec_01KCA8QEJ1CV45K9P3CZCH6J06",
+    "code": "peeling_quimico",
+    "name": "Peeling Químico",
+    "description": "Peeling com ácidos para renovação celular",
+    "default_duration_minutes": 45,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WC2",
+    "specialty_id": "spec_01KCA8QEJ1CV45K9P3CZCH6J06",
+    "code": "radiofrequencia_facial",
+    "name": "Radiofrequência Facial",
+    "description": "Tratamento para firmeza e rejuvenescimento",
+    "default_duration_minutes": 60,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WD3",
+    "specialty_id": "spec_01KCA8QEJ1CV45K9P3CZCH6J06",
+    "code": "drenagem_facial",
+    "name": "Drenagem Linfática Facial",
+    "description": "Massagem de drenagem para reduzir inchaço",
+    "default_duration_minutes": 45,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WE4",
+    "specialty_id": "spec_01KCA8QEJ1CV45K9P3CZCH6J06",
+    "code": "microagulhamento_facial",
+    "name": "Microagulhamento Facial",
+    "description": "Tratamento com microagulhas para rejuvenescimento",
+    "default_duration_minutes": 60,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WF5",
+    "specialty_id": "spec_01KCA8QEJ1CV45K9P3CZCH6J06",
+    "code": "led_facial",
+    "name": "LED Facial",
+    "description": "Fototerapia com LED para tratamento da pele",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WG6",
+    "specialty_id": "spec_01KCA8QEJ1CV45K9P3CZCH6J06",
+    "code": "mascara_ouro",
+    "name": "Máscara de Ouro",
+    "description": "Tratamento com máscara de ouro 24k",
+    "default_duration_minutes": 45,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WH7",
+    "specialty_id": "spec_01KCA8QEJ1CV45K9P3CZCH6J06",
+    "code": "tratamento_acne",
+    "name": "Tratamento para Acne",
+    "description": "Protocolo específico para controle de acne",
+    "default_duration_minutes": 75,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6WI8",
+    "specialty_id": "spec_01KCA8QEJ1CV45K9P3CZCH6J06",
+    "code": "tratamento_manchas",
+    "name": "Tratamento para Manchas",
+    "description": "Protocolo para clareamento de manchas",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

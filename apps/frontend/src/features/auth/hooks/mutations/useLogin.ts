@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { queryKeys } from '@/shared/constants/query-keys';
 import { getAuthService } from '../../api';
-import type { LoginRequest, LoginResponse } from '../../types/auth.types';
+import type { LoginRequest, LoginResult } from '../../types/auth.types';
 
 /**
  * Opções do hook useLogin
@@ -16,7 +16,7 @@ export interface UseLoginOptions {
   /**
    * Callback chamado após login bem-sucedido
    */
-  onSuccess?: (data: LoginResponse) => void;
+  onSuccess?: (data: LoginResult) => void;
 
   /**
    * Callback chamado em caso de erro
@@ -38,6 +38,10 @@ export interface UseLoginOptions {
 
 /**
  * Hook para realizar login
+ *
+ * O backend retorna apenas { onboarding: false } quando onboarding não foi feito,
+ * e não retorna nada quando já foi completado. O AuthService busca os dados
+ * do usuário via /me após o login.
  */
 export function useLogin(options: UseLoginOptions = {}) {
   const {
@@ -54,7 +58,7 @@ export function useLogin(options: UseLoginOptions = {}) {
   return useMutation({
     mutationFn: (request: LoginRequest) => authService.login(request),
 
-    onSuccess: (data) => {
+    onSuccess: (data: LoginResult) => {
       // Atualiza cache do usuário
       queryClient.setQueryData(queryKeys.auth.me(), data.user);
 
@@ -64,15 +68,13 @@ export function useLogin(options: UseLoginOptions = {}) {
       // Callback customizado
       onSuccess?.(data);
 
-      // Redireciona
+      // Redireciona baseado no estado de onboarding
       if (shouldRedirect) {
-        // Se onboarding não está completo, redireciona para onboarding
-        if (data.onboarding === false) {
+        if (data.needsOnboarding) {
+          // Precisa fazer onboarding
           navigate('/onboarding');
-        } else if (data.created) {
-          // Se é primeiro login, redireciona para bem-vindo
-          navigate('/bem-vindo');
         } else {
+          // Onboarding já foi feito, vai para dashboard
           navigate(redirectTo);
         }
       }
@@ -94,7 +96,7 @@ export type UseLoginReturn = ReturnType<typeof useLogin>;
  * Helper para verificar se o login foi bem-sucedido
  */
 export function isLoginSuccess(result: UseLoginReturn): result is UseLoginReturn & {
-  data: LoginResponse;
+  data: LoginResult;
 } {
   return result.isSuccess && result.data !== undefined;
 }

@@ -134,4 +134,9 @@ export class InMemoryServiceRepository implements IServiceRepository {
       .filter((i) => i.specialty_id === specialty_id)
       .map(ServiceDataMapper.toDomain);
   }
+
+  async find_many_by_id(ids: string[]): Promise<ServiceEntity[]> {
+    const items = this.items.filter((i) => ids.includes(i.id));
+    return items.map(ServiceDataMapper.toDomain);
+  }
 }

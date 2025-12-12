@@ -5,15 +5,6 @@
 /**
  * User entity returned from API
  */
-export interface LoginAPIResponse {
-  created: boolean;
-  /** Only present when onboarding is not completed (false means onboarding required) */
-  onboarding?: boolean;
-}
-
-/**
- * User entity returned from API
- */
 export interface User {
   id: string;
   name: string;
@@ -35,9 +26,12 @@ export interface LoginRequest {
 
 /**
  * Login response from API
+ * Backend retorna apenas { onboarding: false } quando onboarding não foi feito,
+ * e não retorna nada (ou objeto vazio) quando já foi completado
  */
 export interface LoginResponse {
-  user: User;
+  /** Only present when onboarding is NOT completed (false means onboarding required) */
+  onboarding?: boolean;
 }
 
 /**
@@ -120,10 +114,19 @@ export interface AuthState {
 }
 
 /**
+ * Resultado do login com informações de onboarding
+ */
+export interface LoginResult {
+  user: User;
+  /** true se o onboarding precisa ser feito */
+  needsOnboarding: boolean;
+}
+
+/**
  * Auth context actions
  */
 export interface AuthActions {
-  login: (request: LoginRequest) => Promise<User>;
+  login: (request: LoginRequest) => Promise<LoginResult>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
   refreshToken: () => Promise<void>;

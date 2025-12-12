@@ -35,6 +35,8 @@ model User {
   notifications      Notification[]
   notification_prefs NotificationPreference[]
   customer_profiles  Customer[]
+  phones             Phone[]
+  address            Address?
 
   @@map("users")
 }
@@ -54,28 +56,21 @@ model Organization {
 }
 
 model Unit {
-  id              String      @id // unit_*
-  organization_id String      @map("organization_id")
+  id              String   @id // unit_*
+  organization_id String   @map("organization_id")
   name            String
-  brand_color     String      @map("brand_color")
   logo            String?
-  gallery         String[]    @default([])
-  is_active       Boolean     @default(true) @map("is_active")
-  whatsapp        String
-  phone           String?
-  address         Json // { cep, street, number, complement?, neighborhood, city, state }
-  especialidades  Json // EspecialidadeRef[]
-  services        Json // ServiceRef[]
-  service_type    ServiceType @default(local) @map("service_type")
-  amenities       String[]    @default([]) // AmenityId[]
-  subscription    Json? // { plan, status, expiresAt }
-  working_hours   Json?       @map("working_hours") // Record<DayOfWeek, DaySchedule>
-  lunch_break     Json?       @map("lunch_break") // { enabled, start, end }
-  created_at      DateTime    @default(now()) @map("created_at")
-  updated_at      DateTime    @updatedAt @map("updated_at")
+  gallery         String[] @default([])
+  is_active       Boolean  @default(true) @map("is_active")
+  preferences     Json?    // { palletColor?: string }
+  service_type    String   @default("on-site") @map("service_type") // "on-site" | "home-care" | "both"
+  created_at      DateTime @default(now()) @map("created_at")
+  updated_at      DateTime @updatedAt @map("updated_at")
 
   // Relations
   organization                 Organization                @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  address                      Address?
+  phones                       Phone[]
   unit_specialties             UnitSpecialty[]
   unit_services                UnitService[]
   unit_amenities               UnitAmenity[]
@@ -88,10 +83,49 @@ model Unit {
   @@map("units")
 }
 
-enum ServiceType {
-  local
-  home
-  both
+model Address {
+  id           String   @id @default(uuid())
+  street       String
+  number       String
+  neighborhood String
+  city         String
+  state        String   @db.VarChar(2)
+  zipcode      String   // CEP: "01310-200"
+  country      String   @default("BR") @db.VarChar(2)
+  complement   String?
+  reference    String?  // Ponto de referência
+  latitude     Float?
+  longitude    Float?
+  unit_id      String?  @unique @map("unit_id")
+  user_id      String?  @unique @map("user_id")
+  created_at   DateTime @default(now()) @map("created_at")
+  updated_at   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  unit Unit? @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("addresses")
+}
+
+model Phone {
+  id           String   @id @default(uuid())
+  country_code String   @default("+55") @map("country_code") // Ex: "+55"
+  area_code    String   @map("area_code") // DDD: "11", "21", etc.
+  number       String   // Número sem DDD: "999999999"
+  label        String?
+  is_whatsapp  Boolean  @default(false) @map("is_whatsapp")
+  is_verified  Boolean  @default(false) @map("is_verified")
+  unit_id      String?  @map("unit_id")
+  user_id      String?  @map("user_id")
+  created_at   DateTime @default(now()) @map("created_at")
+  updated_at   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  unit Unit? @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("phones")
 }
 
 // ============================================

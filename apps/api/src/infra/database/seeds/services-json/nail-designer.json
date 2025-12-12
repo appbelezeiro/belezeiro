@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VPE",
+    "specialty_id": "spec_01KCA8QEJ1CHCAKA97GA0WR87M",
+    "code": "nail_art_simples",
+    "name": "Nail Art Simples",
+    "description": "Decoração simples nas unhas (por unha)",
+    "default_duration_minutes": 15,
+    "default_price_cents": 1000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VQF",
+    "specialty_id": "spec_01KCA8QEJ1CHCAKA97GA0WR87M",
+    "code": "nail_art_elaborada",
+    "name": "Nail Art Elaborada",
+    "description": "Decoração elaborada com detalhes (por unha)",
+    "default_duration_minutes": 30,
+    "default_price_cents": 2500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VRG",
+    "specialty_id": "spec_01KCA8QEJ1CHCAKA97GA0WR87M",
+    "code": "unhas_decoradas_completo",
+    "name": "Unhas Decoradas Completo",
+    "description": "Decoração em todas as unhas",
+    "default_duration_minutes": 120,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VSH",
+    "specialty_id": "spec_01KCA8QEJ1CHCAKA97GA0WR87M",
+    "code": "pedrarias",
+    "name": "Aplicação de Pedrarias",
+    "description": "Aplicação de pedras e cristais nas unhas",
+    "default_duration_minutes": 60,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VTI",
+    "specialty_id": "spec_01KCA8QEJ1CHCAKA97GA0WR87M",
+    "code": "adesivos_unhas",
+    "name": "Aplicação de Adesivos",
+    "description": "Aplicação de adesivos decorativos",
+    "default_duration_minutes": 45,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VUJ",
+    "specialty_id": "spec_01KCA8QEJ1CHCAKA97GA0WR87M",
+    "code": "carimbo_unhas",
+    "name": "Carimbo nas Unhas",
+    "description": "Decoração com técnica de carimbo",
+    "default_duration_minutes": 60,
+    "default_price_cents": 6000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VVK",
+    "specialty_id": "spec_01KCA8QEJ1CHCAKA97GA0WR87M",
+    "code": "efeito_marmorizado",
+    "name": "Efeito Marmorizado",
+    "description": "Decoração com efeito mármore",
+    "default_duration_minutes": 90,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VWL",
+    "specialty_id": "spec_01KCA8QEJ1CHCAKA97GA0WR87M",
+    "code": "unhas_encapsuladas",
+    "name": "Unhas Encapsuladas",
+    "description": "Decoração encapsulada em gel",
+    "default_duration_minutes": 120,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VXM",
+    "specialty_id": "spec_01KCA8QEJ1CHCAKA97GA0WR87M",
+    "code": "baby_boomer",
+    "name": "Baby Boomer",
+    "description": "Técnica de degradê suave estilo baby boomer",
+    "default_duration_minutes": 90,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VYN",
+    "specialty_id": "spec_01KCA8QEJ1CHCAKA97GA0WR87M",
+    "code": "unhas_cromadas",
+    "name": "Unhas Cromadas",
+    "description": "Efeito espelhado/cromado nas unhas",
+    "default_duration_minutes": 90,
+    "default_price_cents": 14000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

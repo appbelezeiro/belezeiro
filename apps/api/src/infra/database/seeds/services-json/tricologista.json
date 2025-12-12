@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6T1O",
+    "specialty_id": "spec_01KCA8QEJ0TDBT2B5EK2VSRTZ5",
+    "code": "avaliacao_capilar",
+    "name": "Avaliação Capilar",
+    "description": "Diagnóstico completo do couro cabeludo e fios",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6T2P",
+    "specialty_id": "spec_01KCA8QEJ0TDBT2B5EK2VSRTZ5",
+    "code": "tratamento_queda",
+    "name": "Tratamento para Queda Capilar",
+    "description": "Protocolo para combate à queda de cabelo",
+    "default_duration_minutes": 90,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6T3Q",
+    "specialty_id": "spec_01KCA8QEJ0TDBT2B5EK2VSRTZ5",
+    "code": "peeling_couro_cabeludo",
+    "name": "Peeling de Couro Cabeludo",
+    "description": "Esfoliação e limpeza profunda do couro cabeludo",
+    "default_duration_minutes": 45,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6T4R",
+    "specialty_id": "spec_01KCA8QEJ0TDBT2B5EK2VSRTZ5",
+    "code": "microagulhamento_capilar",
+    "name": "Microagulhamento Capilar",
+    "description": "Estímulo ao crescimento através de microagulhas",
+    "default_duration_minutes": 60,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6T5S",
+    "specialty_id": "spec_01KCA8QEJ0TDBT2B5EK2VSRTZ5",
+    "code": "laserterapia_capilar",
+    "name": "Laserterapia Capilar",
+    "description": "Tratamento com laser de baixa intensidade",
+    "default_duration_minutes": 30,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6T6T",
+    "specialty_id": "spec_01KCA8QEJ0TDBT2B5EK2VSRTZ5",
+    "code": "ozonioterapia_capilar",
+    "name": "Ozonioterapia Capilar",
+    "description": "Tratamento com ozônio para saúde capilar",
+    "default_duration_minutes": 45,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6T7U",
+    "specialty_id": "spec_01KCA8QEJ0TDBT2B5EK2VSRTZ5",
+    "code": "tratamento_caspa",
+    "name": "Tratamento para Caspa",
+    "description": "Protocolo para controle da dermatite seborreica",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6T8V",
+    "specialty_id": "spec_01KCA8QEJ0TDBT2B5EK2VSRTZ5",
+    "code": "tratamento_oleosidade",
+    "name": "Tratamento para Oleosidade",
+    "description": "Controle da produção de sebo no couro cabeludo",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6T9W",
+    "specialty_id": "spec_01KCA8QEJ0TDBT2B5EK2VSRTZ5",
+    "code": "mesoterapia_capilar",
+    "name": "Mesoterapia Capilar",
+    "description": "Aplicação de ativos diretamente no couro cabeludo",
+    "default_duration_minutes": 45,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TAX",
+    "specialty_id": "spec_01KCA8QEJ0TDBT2B5EK2VSRTZ5",
+    "code": "tricoscopia",
+    "name": "Tricoscopia",
+    "description": "Exame microscópico do couro cabeludo e fios",
+    "default_duration_minutes": 30,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

@@ -27,14 +27,10 @@ export function createServer() {
   const di_container = container();
 
   // Run database seeds on startup
-  runSeeds(
-    di_container.use_cases.seed_specialties,
-    di_container.use_cases.seed_services,
-    di_container.use_cases.seed_amenities
-  ).catch((error) => {
-    console.error('Failed to run database seeds:', error);
-    // Don't throw - allow server to start even if seeds fail
-  });
+  // runSeeds().catch((error) => {
+  //   console.error('Failed to run database seeds:', error);
+  //   // Don't throw - allow server to start even if seeds fail
+  // });
 
   app.onError(globalErrorHandler);
 

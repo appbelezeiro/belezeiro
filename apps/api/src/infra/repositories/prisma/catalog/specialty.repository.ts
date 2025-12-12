@@ -85,4 +85,11 @@ export class PrismaSpecialtyRepository implements ISpecialtyRepository {
       return false;
     }
   }
+
+  async find_many_by_id(ids: string[]): Promise<SpecialtyEntity[]> {
+    const specialties = await prisma.specialty.findMany({
+      where: { id: { in: ids } },
+    });
+    return specialties.map(SpecialtyDataMapper.toDomain);
+  }
 }

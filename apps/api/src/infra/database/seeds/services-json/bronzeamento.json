@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63NZJ",
+    "specialty_id": "spec_01KCA8QEJ28K1EMJND0T4CK7N2",
+    "code": "bronze_natural",
+    "name": "Bronzeamento Natural",
+    "description": "Bronze com fitinhas no sol",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63O1K",
+    "specialty_id": "spec_01KCA8QEJ28K1EMJND0T4CK7N2",
+    "code": "bronze_spray",
+    "name": "Bronzeamento a Jato (Spray)",
+    "description": "Bronze instantâneo com spray",
+    "default_duration_minutes": 30,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63P2L",
+    "specialty_id": "spec_01KCA8QEJ28K1EMJND0T4CK7N2",
+    "code": "bronze_cabine",
+    "name": "Bronzeamento em Cabine",
+    "description": "Bronze em câmara de UV",
+    "default_duration_minutes": 20,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63Q3M",
+    "specialty_id": "spec_01KCA8QEJ28K1EMJND0T4CK7N2",
+    "code": "bronze_marquinha",
+    "name": "Bronzeamento com Marquinha",
+    "description": "Bronze com marcações personalizadas",
+    "default_duration_minutes": 45,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63R4N",
+    "specialty_id": "spec_01KCA8QEJ28K1EMJND0T4CK7N2",
+    "code": "manutencao_bronze",
+    "name": "Manutenção de Bronze",
+    "description": "Retoque e manutenção do bronze",
+    "default_duration_minutes": 20,
+    "default_price_cents": 6000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63S5O",
+    "specialty_id": "spec_01KCA8QEJ28K1EMJND0T4CK7N2",
+    "code": "bronze_instantaneo",
+    "name": "Bronzeamento Instantâneo",
+    "description": "Bronze imediato para eventos",
+    "default_duration_minutes": 30,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63T6P",
+    "specialty_id": "spec_01KCA8QEJ28K1EMJND0T4CK7N2",
+    "code": "esfoliacao_pre_bronze",
+    "name": "Esfoliação Pré-bronze",
+    "description": "Preparação da pele para bronzeamento",
+    "default_duration_minutes": 30,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63U7Q",
+    "specialty_id": "spec_01KCA8QEJ28K1EMJND0T4CK7N2",
+    "code": "hidratacao_pos_bronze",
+    "name": "Hidratação Pós-bronze",
+    "description": "Tratamento para prolongar o bronze",
+    "default_duration_minutes": 30,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63V8R",
+    "specialty_id": "spec_01KCA8QEJ28K1EMJND0T4CK7N2",
+    "code": "pacote_bronze",
+    "name": "Pacote Bronze (4 sessões)",
+    "description": "Pacote de 4 sessões de bronze",
+    "default_duration_minutes": 120,
+    "default_price_cents": 30000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63W9S",
+    "specialty_id": "spec_01KCA8QEJ28K1EMJND0T4CK7N2",
+    "code": "bronze_dourado",
+    "name": "Bronze Dourado",
+    "description": "Tom dourado especial",
+    "default_duration_minutes": 45,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

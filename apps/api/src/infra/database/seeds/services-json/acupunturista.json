@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZVO",
+    "specialty_id": "spec_01KCA8QEJ3T6VJFDC5SVFQ7P4T",
+    "code": "consulta_acupuntura",
+    "name": "Consulta de Acupuntura",
+    "description": "Avaliação e diagnóstico em medicina chinesa",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZWP",
+    "specialty_id": "spec_01KCA8QEJ3T6VJFDC5SVFQ7P4T",
+    "code": "sessao_acupuntura",
+    "name": "Sessão de Acupuntura",
+    "description": "Aplicação de agulhas em pontos específicos",
+    "default_duration_minutes": 45,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZXQ",
+    "specialty_id": "spec_01KCA8QEJ3T6VJFDC5SVFQ7P4T",
+    "code": "acupuntura_estetica",
+    "name": "Acupuntura Estética",
+    "description": "Acupuntura facial para rejuvenescimento",
+    "default_duration_minutes": 60,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZYR",
+    "specialty_id": "spec_01KCA8QEJ3T6VJFDC5SVFQ7P4T",
+    "code": "eletroacupuntura",
+    "name": "Eletroacupuntura",
+    "description": "Acupuntura com estímulo elétrico",
+    "default_duration_minutes": 45,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZZS",
+    "specialty_id": "spec_01KCA8QEJ3T6VJFDC5SVFQ7P4T",
+    "code": "moxabustao",
+    "name": "Moxabustão",
+    "description": "Aquecimento de pontos com artemísia",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q610AT",
+    "specialty_id": "spec_01KCA8QEJ3T6VJFDC5SVFQ7P4T",
+    "code": "ventosaterapia",
+    "name": "Ventosaterapia",
+    "description": "Aplicação de ventosas",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q611BU",
+    "specialty_id": "spec_01KCA8QEJ3T6VJFDC5SVFQ7P4T",
+    "code": "auriculoterapia",
+    "name": "Auriculoterapia",
+    "description": "Tratamento em pontos da orelha",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q612CV",
+    "specialty_id": "spec_01KCA8QEJ3T6VJFDC5SVFQ7P4T",
+    "code": "craniopuntura",
+    "name": "Craniopuntura",
+    "description": "Acupuntura no couro cabeludo",
+    "default_duration_minutes": 45,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q613DW",
+    "specialty_id": "spec_01KCA8QEJ3T6VJFDC5SVFQ7P4T",
+    "code": "acupuntura_dor",
+    "name": "Acupuntura para Dor",
+    "description": "Tratamento específico para dores crônicas",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q614EX",
+    "specialty_id": "spec_01KCA8QEJ3T6VJFDC5SVFQ7P4T",
+    "code": "acupuntura_ansiedade",
+    "name": "Acupuntura para Ansiedade",
+    "description": "Tratamento para ansiedade e estresse",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

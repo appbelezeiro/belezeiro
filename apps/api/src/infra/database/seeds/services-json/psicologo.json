@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61PZJ",
+    "specialty_id": "spec_01KCA8QEJ443G0G7GJH2HY7T37",
+    "code": "consulta_psicologica",
+    "name": "Consulta Psicológica",
+    "description": "Sessão de psicoterapia individual",
+    "default_duration_minutes": 50,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61Q1K",
+    "specialty_id": "spec_01KCA8QEJ443G0G7GJH2HY7T37",
+    "code": "primeira_consulta",
+    "name": "Primeira Consulta/Entrevista",
+    "description": "Sessão inicial de avaliação",
+    "default_duration_minutes": 60,
+    "default_price_cents": 22000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61R2L",
+    "specialty_id": "spec_01KCA8QEJ443G0G7GJH2HY7T37",
+    "code": "terapia_casal_psi",
+    "name": "Terapia de Casal",
+    "description": "Sessão de terapia para casais",
+    "default_duration_minutes": 60,
+    "default_price_cents": 28000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61S3M",
+    "specialty_id": "spec_01KCA8QEJ443G0G7GJH2HY7T37",
+    "code": "terapia_infantil",
+    "name": "Terapia Infantil",
+    "description": "Atendimento psicológico para crianças",
+    "default_duration_minutes": 45,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61T4N",
+    "specialty_id": "spec_01KCA8QEJ443G0G7GJH2HY7T37",
+    "code": "orientacao_pais",
+    "name": "Orientação para Pais",
+    "description": "Sessão de orientação parental",
+    "default_duration_minutes": 50,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61U5O",
+    "specialty_id": "spec_01KCA8QEJ443G0G7GJH2HY7T37",
+    "code": "avaliacao_psicologica",
+    "name": "Avaliação Psicológica",
+    "description": "Aplicação de testes e avaliações",
+    "default_duration_minutes": 90,
+    "default_price_cents": 35000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61V6P",
+    "specialty_id": "spec_01KCA8QEJ443G0G7GJH2HY7T37",
+    "code": "laudo_psicologico",
+    "name": "Elaboração de Laudo",
+    "description": "Elaboração de laudo psicológico",
+    "default_duration_minutes": 120,
+    "default_price_cents": 50000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61W7Q",
+    "specialty_id": "spec_01KCA8QEJ443G0G7GJH2HY7T37",
+    "code": "consulta_online_psi",
+    "name": "Consulta Online",
+    "description": "Atendimento por videochamada",
+    "default_duration_minutes": 50,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61X8R",
+    "specialty_id": "spec_01KCA8QEJ443G0G7GJH2HY7T37",
+    "code": "plantao_psicologico",
+    "name": "Plantão Psicológico",
+    "description": "Atendimento emergencial",
+    "default_duration_minutes": 60,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61Y9S",
+    "specialty_id": "spec_01KCA8QEJ443G0G7GJH2HY7T37",
+    "code": "grupo_terapeutico",
+    "name": "Grupo Terapêutico",
+    "description": "Sessão de terapia em grupo",
+    "default_duration_minutes": 90,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

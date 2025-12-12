@@ -36,14 +36,12 @@ import { CreateSpecialtyUseCase } from '@/application/usecases/specialty/create-
 import { GetSpecialtyByIdUseCase } from '@/application/usecases/specialty/get-specialty-by-id.usecase';
 import { ListSpecialtiesUseCase } from '@/application/usecases/specialty/list-specialties.usecase';
 import { SearchSpecialtiesUseCase } from '@/application/usecases/specialty/search-specialties.usecase';
-import { SeedSpecialtiesUseCase } from '@/application/usecases/specialty/seed-specialties.usecase';
 import { CreateServiceUseCase } from '@/application/usecases/service/create-service.usecase';
 import { GetServiceByIdUseCase } from '@/application/usecases/service/get-service-by-id.usecase';
 import { ListServicesUseCase } from '@/application/usecases/service/list-services.usecase';
 import { SearchServicesUseCase } from '@/application/usecases/service/search-services.usecase';
 import { UpdateServiceUseCase } from '@/application/usecases/service/update-service.usecase';
 import { DeleteServiceUseCase } from '@/application/usecases/service/delete-service.usecase';
-import { SeedServicesUseCase } from '@/application/usecases/service/seed-services.usecase';
 import { LinkUnitSpecialtyUseCase } from '@/application/usecases/unit-specialty/link-unit-specialty.usecase';
 import { UnlinkUnitSpecialtyUseCase } from '@/application/usecases/unit-specialty/unlink-unit-specialty.usecase';
 import { GetUnitSpecialtiesUseCase } from '@/application/usecases/unit-specialty/get-unit-specialties.usecase';
@@ -65,7 +63,6 @@ import { SearchAmenitiesUseCase } from '@/application/usecases/amenity/search-am
 import { UpdateAmenityUseCase } from '@/application/usecases/amenity/update-amenity.usecase';
 import { ActivateAmenityUseCase } from '@/application/usecases/amenity/activate-amenity.usecase';
 import { DeactivateAmenityUseCase } from '@/application/usecases/amenity/deactivate-amenity.usecase';
-import { SeedAmenitiesUseCase } from '@/application/usecases/amenity/seed-amenities.usecase';
 import { LinkUnitAmenityUseCase } from '@/application/usecases/unit-amenity/link-unit-amenity.usecase';
 import { UnlinkUnitAmenityUseCase } from '@/application/usecases/unit-amenity/unlink-unit-amenity.usecase';
 import { GetUnitAmenitiesUseCase } from '@/application/usecases/unit-amenity/get-unit-amenities.usecase';
@@ -197,14 +194,18 @@ export function createUseCases(repositories: Repositories, services: Services) {
     // Unit use cases (updated with availability dependencies)
     create_unit: new CreateUnitUseCase(
       repositories.unit_repository,
-      new BulkCreateUnitAvailabilityRulesUseCase(repositories.unit_availability_rule_repository),
-      new BulkCreateUnitAvailabilityExceptionsUseCase(
-        repositories.unit_availability_exception_repository,
-      ),
+      repositories.amenity_repository,
+      repositories.specialty_repository,
+      repositories.service_repository,
     ),
     get_unit_by_id: new GetUnitByIdUseCase(repositories.unit_repository),
     list_units_by_organization: new ListUnitsByOrganizationUseCase(repositories.unit_repository),
-    update_unit: new UpdateUnitUseCase(repositories.unit_repository),
+    update_unit: new UpdateUnitUseCase(
+      repositories.unit_repository,
+      repositories.amenity_repository,
+      repositories.specialty_repository,
+      repositories.service_repository,
+    ),
     list_active_units: new ListActiveUnitsUseCase(repositories.unit_repository),
 
     // Billing - Plan use cases
@@ -241,7 +242,6 @@ export function createUseCases(repositories: Repositories, services: Services) {
     get_specialty_by_id: new GetSpecialtyByIdUseCase(repositories.specialty_repository),
     list_specialties: new ListSpecialtiesUseCase(repositories.specialty_repository),
     search_specialties: new SearchSpecialtiesUseCase(repositories.specialty_repository),
-    seed_specialties: new SeedSpecialtiesUseCase(repositories.specialty_repository),
 
     // Service use cases
     create_service: new CreateServiceUseCase(
@@ -253,7 +253,6 @@ export function createUseCases(repositories: Repositories, services: Services) {
     search_services: new SearchServicesUseCase(repositories.service_repository),
     update_service: new UpdateServiceUseCase(repositories.service_repository),
     delete_service: new DeleteServiceUseCase(repositories.service_repository),
-    seed_services: new SeedServicesUseCase(repositories.service_repository),
 
     // Unit-Specialty use cases
     link_unit_specialty: new LinkUnitSpecialtyUseCase(
@@ -308,7 +307,6 @@ export function createUseCases(repositories: Repositories, services: Services) {
     update_amenity: new UpdateAmenityUseCase(repositories.amenity_repository),
     activate_amenity: new ActivateAmenityUseCase(repositories.amenity_repository),
     deactivate_amenity: new DeactivateAmenityUseCase(repositories.amenity_repository),
-    seed_amenities: new SeedAmenitiesUseCase(repositories.amenity_repository),
 
     // Unit-Amenity use cases
     link_unit_amenity: new LinkUnitAmenityUseCase(

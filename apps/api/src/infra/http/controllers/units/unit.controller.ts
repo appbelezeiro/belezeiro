@@ -7,99 +7,62 @@ import { NotFoundError } from '../../errors/http-errors';
 import type { AuthContext } from '../../middleware/auth.middleware';
 
 const AddressSchema = z.object({
-  cep: z.string().regex(/^\d{5}-?\d{3}$/),
   street: z.string().min(1),
   number: z.string().min(1),
-  complement: z.string().optional(),
   neighborhood: z.string().min(1),
   city: z.string().min(1),
   state: z.string().length(2),
+  zipcode: z.string().regex(/^\d{5}-?\d{3}$/),
+  country: z.string().length(2).default('BR'),
+  complement: z.string().optional(),
+  reference: z.string().optional(),
+  latitude: z.number().min(-90).max(90).optional(),
+  longitude: z.number().min(-180).max(180).optional(),
 });
 
-const EspecialidadeRefSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  icon: z.string(),
-});
-
-const ServiceRefSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  especialidadeId: z.string(),
-});
-
-const AvailabilityRuleInputSchema = z.object({
-  type: z.enum(['weekly', 'specific_date']),
-  weekday: z.number().min(0).max(6).optional(),
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
-  start_time: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/),
-  end_time: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/),
-  slot_duration_minutes: z.number().positive(),
-  is_active: z.boolean().optional(),
-  metadata: z.record(z.string(), z.unknown()).optional(),
-});
-
-const AvailabilityExceptionInputSchema = z.object({
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-  type: z.enum(['block', 'override']),
-  start_time: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/).optional(),
-  end_time: z.string().regex(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/).optional(),
-  slot_duration_minutes: z.number().positive().optional(),
-  reason: z.string().optional(),
+const PhoneSchema = z.object({
+  country_code: z.string().min(1).default('+55'),
+  area_code: z.string().min(2).max(3),
+  number: z.string().min(8).max(9),
+  label: z.string().optional(),
+  is_whatsapp: z.boolean().default(false),
+  is_verified: z.boolean().default(false),
 });
 
 const CreateUnitSchema = z.object({
-  organizationId: z.string().min(1),
+  orgId: z.string().min(1),
   name: z.string().min(1),
-  brandColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/),
-  subscription: z
-    .object({
-      plan: z.enum(['free', 'pro', 'enterprise']),
-      status: z.enum(['active', 'inactive', 'suspended']),
-      expiresAt: z.string().datetime().optional(),
-    })
-    .optional(),
-  logo: z.string().url().optional(),
-  gallery: z.array(z.string().url()).optional(),
-  whatsapp: z.string().min(10),
-  phone: z.string().min(10).optional(),
+  preferences: z.object({
+    palletColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/).optional(),
+  }).optional(),
+  logo: z.string().url().default(''),
+  gallery: z.array(z.string().url()).default([]),
+  phones: z.array(PhoneSchema).min(1),
   address: AddressSchema,
-  especialidades: z.array(EspecialidadeRefSchema).min(1),
-  services: z.array(ServiceRefSchema).min(1),
-  serviceType: z.enum(['local', 'home', 'both']),
-  // Amenities are now dynamic - accept any amenity ID string
-  amenities: z.array(z.string().min(1)).optional(),
-
-  // Availability rules are now the primary way to define availability
-  availability_rules: z.array(AvailabilityRuleInputSchema).optional(),
-  availability_exceptions: z.array(AvailabilityExceptionInputSchema).optional(),
+  especialidades: z.array(z.string()).default([]),
+  services: z.array(z.string()).default([]),
+  serviceType: z.enum(['on-site', 'home-care', 'both']),
+  amenities: z.array(z.string()).default([]),
 });
 
 const UpdateUnitSchema = z.object({
   name: z.string().min(1).optional(),
-  brandColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/).optional(),
-  subscription: z
-    .object({
-      plan: z.enum(['free', 'pro', 'enterprise']),
-      status: z.enum(['active', 'inactive', 'suspended']),
-      expiresAt: z.string().datetime().optional(),
-    })
-    .optional(),
+  preferences: z.object({
+    palletColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/).optional(),
+  }).optional(),
   logo: z.string().url().optional(),
   gallery: z.array(z.string().url()).optional(),
-  isActive: z.boolean().optional(),
-  whatsapp: z.string().min(10).optional(),
-  phone: z.string().min(10).optional(),
-  address: AddressSchema.optional(),
-  especialidades: z.array(EspecialidadeRefSchema).min(1).optional(),
-  services: z.array(ServiceRefSchema).min(1).optional(),
-  serviceType: z.enum(['local', 'home', 'both']).optional(),
-  // Amenities are now dynamic - accept any amenity ID string
-  amenities: z.array(z.string().min(1)).optional(),
+  active: z.boolean().optional(),
+  phones: z.array(PhoneSchema).optional(),
+  address: AddressSchema.nullable().optional(),
+  especialidades: z.array(z.string()).optional(),
+  services: z.array(z.string()).optional(),
+  serviceType: z.enum(['on-site', 'home-care', 'both']).optional(),
+  amenities: z.array(z.string()).optional(),
 });
 
 export class UnitController {
-  constructor(private readonly container: Container) {}
+  constructor(private readonly container: Container) { }
 
   async create(c: Context) {
     try {
@@ -107,28 +70,17 @@ export class UnitController {
       const payload = CreateUnitSchema.parse(body);
 
       const unit = await this.container.use_cases.create_unit.execute({
-        organizationId: payload.organizationId,
+        orgId: payload.orgId,
         name: payload.name,
-        brandColor: payload.brandColor,
-        subscription: payload.subscription
-          ? {
-              ...payload.subscription,
-              expiresAt: payload.subscription.expiresAt
-                ? new Date(payload.subscription.expiresAt)
-                : undefined,
-            }
-          : undefined,
+        preferences: payload.preferences ?? {},
         logo: payload.logo,
         gallery: payload.gallery,
-        whatsapp: payload.whatsapp,
-        phone: payload.phone,
+        phones: payload.phones,
         address: payload.address,
-        especialidades: payload.especialidades,
+        specalities: payload.especialidades,
         services: payload.services,
         serviceType: payload.serviceType,
-        amenities: payload.amenities ?? [],
-        availability_rules: payload.availability_rules,
-        availability_exceptions: payload.availability_exceptions,
+        amenities: payload.amenities,
       });
 
       // Complete onboarding for the user after creating their first unit
@@ -188,20 +140,11 @@ export class UnitController {
       const unit = await this.container.use_cases.update_unit.execute({
         id,
         name: payload.name,
-        brandColor: payload.brandColor,
-        subscription: payload.subscription
-          ? {
-              ...payload.subscription,
-              expiresAt: payload.subscription.expiresAt
-                ? new Date(payload.subscription.expiresAt)
-                : undefined,
-            }
-          : undefined,
+        preferences: payload.preferences,
         logo: payload.logo,
         gallery: payload.gallery,
-        isActive: payload.isActive,
-        whatsapp: payload.whatsapp,
-        phone: payload.phone,
+        active: payload.active,
+        phones: payload.phones,
         address: payload.address,
         especialidades: payload.especialidades,
         services: payload.services,

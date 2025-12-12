@@ -17,14 +17,14 @@ export function createUnitOwnershipMiddleware(container: Container) {
 
     // Buscar organização para validar owner
     const organization =
-      await container.repositories.organization_repository.find_by_id(unit.organizationId);
+      await container.repositories.organization_repository.find_by_id(unit.orgId);
 
     if (!organization) {
       throw new NotFoundError('Organization not found');
     }
 
     // Validar se user é owner da organização
-    if (organization.owner_id !== user_id) {
+    if (organization.ownerId !== user_id) {
       throw new ForbiddenError('You do not own this unit');
     }
 

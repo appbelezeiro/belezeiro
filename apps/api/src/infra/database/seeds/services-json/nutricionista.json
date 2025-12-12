@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q615FY",
+    "specialty_id": "spec_01KCA8QEJ335GDV7RFZF9AFBWW",
+    "code": "consulta_nutricional",
+    "name": "Consulta Nutricional",
+    "description": "Avaliação e prescrição de dieta",
+    "default_duration_minutes": 60,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q616GZ",
+    "specialty_id": "spec_01KCA8QEJ335GDV7RFZF9AFBWW",
+    "code": "retorno_nutricional",
+    "name": "Retorno Nutricional",
+    "description": "Acompanhamento e ajustes na dieta",
+    "default_duration_minutes": 30,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q617H1",
+    "specialty_id": "spec_01KCA8QEJ335GDV7RFZF9AFBWW",
+    "code": "avaliacao_composicao",
+    "name": "Avaliação de Composição Corporal",
+    "description": "Bioimpedância e análise corporal",
+    "default_duration_minutes": 30,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q618I2",
+    "specialty_id": "spec_01KCA8QEJ335GDV7RFZF9AFBWW",
+    "code": "plano_alimentar",
+    "name": "Elaboração de Plano Alimentar",
+    "description": "Criação de cardápio personalizado",
+    "default_duration_minutes": 45,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q619J3",
+    "specialty_id": "spec_01KCA8QEJ335GDV7RFZF9AFBWW",
+    "code": "reeducacao_alimentar",
+    "name": "Programa de Reeducação Alimentar",
+    "description": "Acompanhamento mensal de reeducação",
+    "default_duration_minutes": 60,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61AK4",
+    "specialty_id": "spec_01KCA8QEJ335GDV7RFZF9AFBWW",
+    "code": "consulta_gestante",
+    "name": "Consulta Nutricional Gestante",
+    "description": "Acompanhamento nutricional na gestação",
+    "default_duration_minutes": 60,
+    "default_price_cents": 22000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61BL5",
+    "specialty_id": "spec_01KCA8QEJ335GDV7RFZF9AFBWW",
+    "code": "consulta_infantil",
+    "name": "Consulta Nutricional Infantil",
+    "description": "Nutrição para crianças e adolescentes",
+    "default_duration_minutes": 60,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61CM6",
+    "specialty_id": "spec_01KCA8QEJ335GDV7RFZF9AFBWW",
+    "code": "dieta_detox",
+    "name": "Programa Detox",
+    "description": "Protocolo de desintoxicação alimentar",
+    "default_duration_minutes": 45,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61DN7",
+    "specialty_id": "spec_01KCA8QEJ335GDV7RFZF9AFBWW",
+    "code": "consulta_online",
+    "name": "Consulta Online",
+    "description": "Atendimento nutricional por videochamada",
+    "default_duration_minutes": 45,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q61EO8",
+    "specialty_id": "spec_01KCA8QEJ335GDV7RFZF9AFBWW",
+    "code": "teste_intolerancia",
+    "name": "Avaliação de Intolerâncias",
+    "description": "Análise de sensibilidades alimentares",
+    "default_duration_minutes": 60,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

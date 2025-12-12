@@ -26,12 +26,21 @@ export interface LoginRequest {
 
 /**
  * Resposta de login da API
+ * Backend retorna apenas { onboarding: false } quando onboarding não foi feito,
+ * e não retorna nada quando já foi completado
  */
 export interface LoginResponse {
-  user: User;
-  created?: boolean;
-  /** Only present when onboarding is not completed (false means onboarding required) */
+  /** Only present when onboarding is NOT completed (false means onboarding required) */
   onboarding?: boolean;
+}
+
+/**
+ * Resultado do login com informações de onboarding
+ */
+export interface LoginResult {
+  user: User;
+  /** true se o onboarding precisa ser feito */
+  needsOnboarding: boolean;
 }
 
 /**

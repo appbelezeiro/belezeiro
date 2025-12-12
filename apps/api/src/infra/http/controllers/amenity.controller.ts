@@ -19,17 +19,6 @@ const UpdateAmenitySchema = z.object({
   icon: z.string().min(1).max(50).optional(),
 });
 
-const SeedAmenitiesSchema = z.object({
-  seeds: z.array(
-    z.object({
-      code: z.string(),
-      name: z.string(),
-      description: z.string().optional(),
-      icon: z.string(),
-    })
-  ),
-});
-
 export class AmenityController {
   constructor(private readonly container: Container) {}
 
@@ -154,17 +143,4 @@ export class AmenityController {
     }
   }
 
-  async seed(c: Context) {
-    const body = await c.req.json();
-    const payload = SeedAmenitiesSchema.parse(body);
-
-    const amenities = await this.container.use_cases.seed_amenities.execute({
-      seeds: payload.seeds,
-    });
-
-    return c.json({
-      items: amenities.map(AmenityMapper.toDTO),
-      count: amenities.length,
-    });
-  }
 }

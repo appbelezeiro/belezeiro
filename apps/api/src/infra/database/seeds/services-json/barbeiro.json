@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SH4",
+    "specialty_id": "spec_01KCA8QEJ0PMV3MYG66TECC69N",
+    "code": "corte_masculino_barber",
+    "name": "Corte Masculino",
+    "description": "Corte de cabelo masculino na barbearia",
+    "default_duration_minutes": 30,
+    "default_price_cents": 4500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SI5",
+    "specialty_id": "spec_01KCA8QEJ0PMV3MYG66TECC69N",
+    "code": "barba_completa",
+    "name": "Barba Completa",
+    "description": "Aparar, modelar e finalizar a barba",
+    "default_duration_minutes": 30,
+    "default_price_cents": 3500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SJ6",
+    "specialty_id": "spec_01KCA8QEJ0PMV3MYG66TECC69N",
+    "code": "corte_barba",
+    "name": "Corte + Barba",
+    "description": "Combo de corte de cabelo e barba",
+    "default_duration_minutes": 50,
+    "default_price_cents": 7000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SK7",
+    "specialty_id": "spec_01KCA8QEJ0PMV3MYG66TECC69N",
+    "code": "barboterapia",
+    "name": "Barboterapia",
+    "description": "Tratamento completo com toalha quente e óleos",
+    "default_duration_minutes": 45,
+    "default_price_cents": 6000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SL8",
+    "specialty_id": "spec_01KCA8QEJ0PMV3MYG66TECC69N",
+    "code": "pigmentacao_barba",
+    "name": "Pigmentação de Barba",
+    "description": "Coloração e preenchimento de falhas na barba",
+    "default_duration_minutes": 40,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SM9",
+    "specialty_id": "spec_01KCA8QEJ0PMV3MYG66TECC69N",
+    "code": "degradee",
+    "name": "Degradê",
+    "description": "Corte com técnica de degradê nas laterais",
+    "default_duration_minutes": 40,
+    "default_price_cents": 5500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SNA",
+    "specialty_id": "spec_01KCA8QEJ0PMV3MYG66TECC69N",
+    "code": "navalhado",
+    "name": "Acabamento Navalhado",
+    "description": "Acabamento com navalha nas laterais e nuca",
+    "default_duration_minutes": 15,
+    "default_price_cents": 2000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SOB",
+    "specialty_id": "spec_01KCA8QEJ0PMV3MYG66TECC69N",
+    "code": "sobrancelha_masculina",
+    "name": "Sobrancelha Masculina",
+    "description": "Design e alinhamento de sobrancelha masculina",
+    "default_duration_minutes": 15,
+    "default_price_cents": 1500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SPC",
+    "specialty_id": "spec_01KCA8QEJ0PMV3MYG66TECC69N",
+    "code": "hidratacao_barba",
+    "name": "Hidratação de Barba",
+    "description": "Tratamento hidratante para barba",
+    "default_duration_minutes": 20,
+    "default_price_cents": 2500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SQD",
+    "specialty_id": "spec_01KCA8QEJ0PMV3MYG66TECC69N",
+    "code": "razor_fade",
+    "name": "Razor Fade",
+    "description": "Corte com degradê zerado na navalha",
+    "default_duration_minutes": 45,
+    "default_price_cents": 6000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

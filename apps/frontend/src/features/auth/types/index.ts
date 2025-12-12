@@ -6,6 +6,7 @@ export type {
   User,
   LoginRequest,
   LoginResponse,
+  LoginResult,
   RefreshTokenResponse,
   LogoutResponse,
   MeResponse,

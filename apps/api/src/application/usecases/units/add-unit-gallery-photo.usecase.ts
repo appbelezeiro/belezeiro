@@ -1,5 +1,6 @@
 import { IUnitRepository } from '@/application/contracts/units/i-unit-repository.interface';
 import { IStorageGateway } from '@/domain/services/storage/i-storage-gateway.service';
+import { URLAddressVO } from '@/domain/value-objects/url-address.value-object';
 
 class UseCase {
   constructor(
@@ -18,7 +19,8 @@ class UseCase {
     const public_url = this.storage_gateway.get_public_url(input.key);
 
     // Adicionar à galeria
-    const updated_gallery = [...unit.gallery, public_url];
+    const new_url = new URLAddressVO(public_url);
+    const updated_gallery = [...unit.gallery, new_url];
 
     // Atualizar entidade
     unit.update_gallery(updated_gallery);

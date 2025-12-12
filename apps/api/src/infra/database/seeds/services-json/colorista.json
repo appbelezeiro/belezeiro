@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SRE",
+    "specialty_id": "spec_01KCA8QEJ043KKWG862DW6NGB3",
+    "code": "coloracao_global",
+    "name": "Coloração Global",
+    "description": "Coloração completa em todo o cabelo",
+    "default_duration_minutes": 120,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SSF",
+    "specialty_id": "spec_01KCA8QEJ043KKWG862DW6NGB3",
+    "code": "mechas_tradicionais",
+    "name": "Mechas Tradicionais",
+    "description": "Mechas clássicas com papel alumínio",
+    "default_duration_minutes": 150,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6STG",
+    "specialty_id": "spec_01KCA8QEJ043KKWG862DW6NGB3",
+    "code": "luzes",
+    "name": "Luzes",
+    "description": "Técnica de luzes para iluminar o cabelo",
+    "default_duration_minutes": 120,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SUH",
+    "specialty_id": "spec_01KCA8QEJ043KKWG862DW6NGB3",
+    "code": "balayage",
+    "name": "Balayage",
+    "description": "Técnica de coloração à mão livre com efeito natural",
+    "default_duration_minutes": 180,
+    "default_price_cents": 30000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SVI",
+    "specialty_id": "spec_01KCA8QEJ043KKWG862DW6NGB3",
+    "code": "ombre_hair",
+    "name": "Ombré Hair",
+    "description": "Coloração degradê das raízes às pontas",
+    "default_duration_minutes": 180,
+    "default_price_cents": 28000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SWJ",
+    "specialty_id": "spec_01KCA8QEJ043KKWG862DW6NGB3",
+    "code": "retoque_raiz",
+    "name": "Retoque de Raiz",
+    "description": "Retoque de coloração na raiz",
+    "default_duration_minutes": 60,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SXK",
+    "specialty_id": "spec_01KCA8QEJ043KKWG862DW6NGB3",
+    "code": "decapagem",
+    "name": "Decapagem",
+    "description": "Remoção de coloração anterior",
+    "default_duration_minutes": 120,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SYL",
+    "specialty_id": "spec_01KCA8QEJ043KKWG862DW6NGB3",
+    "code": "tonalizacao",
+    "name": "Tonalização",
+    "description": "Aplicação de tonalizante para ajuste de cor",
+    "default_duration_minutes": 60,
+    "default_price_cents": 7000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6SZM",
+    "specialty_id": "spec_01KCA8QEJ043KKWG862DW6NGB3",
+    "code": "matizacao",
+    "name": "Matização",
+    "description": "Neutralização de tons amarelados ou alaranjados",
+    "default_duration_minutes": 45,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6T0N",
+    "specialty_id": "spec_01KCA8QEJ043KKWG862DW6NGB3",
+    "code": "coloracao_fantasia",
+    "name": "Coloração Fantasia",
+    "description": "Coloração com cores vibrantes e não convencionais",
+    "default_duration_minutes": 180,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

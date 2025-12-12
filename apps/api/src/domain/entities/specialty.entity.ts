@@ -9,9 +9,9 @@ type SpecialtyEntityOwnProps = {
   is_active: boolean;
 };
 
-type SpecialtyEntityCreationProps = Omit<SpecialtyEntityOwnProps, 'is_active' | 'description'> &
+export type SpecialtyEntityCreationProps = Omit<SpecialtyEntityOwnProps, 'is_active' | 'description'> &
   Partial<Pick<SpecialtyEntityOwnProps, 'is_active'>> &
-  { description?: string } &
+{ description?: string } &
   BaseEntityCreationProps;
 
 type SpecialtyEntityProps = SpecialtyEntityOwnProps & BaseEntityProps;

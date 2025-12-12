@@ -18,7 +18,7 @@ export class InMemoryUnitRepository implements IUnitRepository {
 
   async find_by_organization_id(organizationId: string): Promise<UnitEntity[]> {
     return this.items
-      .filter((i) => i.organizationId === organizationId)
+      .filter((i) => i.orgId === organizationId)
       .map(UnitDataMapper.toDomain);
   }
 
@@ -27,7 +27,7 @@ export class InMemoryUnitRepository implements IUnitRepository {
   }
 
   async list_active(): Promise<UnitEntity[]> {
-    return this.items.filter((i) => i.isActive).map(UnitDataMapper.toDomain);
+    return this.items.filter((i) => i.active).map(UnitDataMapper.toDomain);
   }
 
   async update(entity: UnitEntity): Promise<UnitEntity> {

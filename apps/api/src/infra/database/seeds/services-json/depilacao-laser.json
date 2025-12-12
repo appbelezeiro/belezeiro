@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64HUE",
+    "specialty_id": "spec_01KCA8QEJ20G09J58MW4QTT3JR",
+    "code": "laser_virilha",
+    "name": "Depilação a Laser Virilha",
+    "description": "Depilação definitiva da virilha",
+    "default_duration_minutes": 30,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64IVF",
+    "specialty_id": "spec_01KCA8QEJ20G09J58MW4QTT3JR",
+    "code": "laser_axilas",
+    "name": "Depilação a Laser Axilas",
+    "description": "Depilação definitiva das axilas",
+    "default_duration_minutes": 15,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64JWG",
+    "specialty_id": "spec_01KCA8QEJ20G09J58MW4QTT3JR",
+    "code": "laser_pernas_completas",
+    "name": "Depilação a Laser Pernas Completas",
+    "description": "Depilação definitiva das pernas inteiras",
+    "default_duration_minutes": 60,
+    "default_price_cents": 50000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64KXH",
+    "specialty_id": "spec_01KCA8QEJ20G09J58MW4QTT3JR",
+    "code": "laser_buco",
+    "name": "Depilação a Laser Buço",
+    "description": "Depilação definitiva do buço",
+    "default_duration_minutes": 10,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64LYI",
+    "specialty_id": "spec_01KCA8QEJ20G09J58MW4QTT3JR",
+    "code": "laser_corpo_inteiro",
+    "name": "Depilação a Laser Corpo Inteiro",
+    "description": "Pacote de corpo completo",
+    "default_duration_minutes": 180,
+    "default_price_cents": 150000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64MZJ",
+    "specialty_id": "spec_01KCA8QEJ20G09J58MW4QTT3JR",
+    "code": "laser_barba",
+    "name": "Depilação a Laser Barba",
+    "description": "Depilação definitiva da barba",
+    "default_duration_minutes": 30,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64N1K",
+    "specialty_id": "spec_01KCA8QEJ20G09J58MW4QTT3JR",
+    "code": "laser_costas",
+    "name": "Depilação a Laser Costas",
+    "description": "Depilação definitiva das costas",
+    "default_duration_minutes": 45,
+    "default_price_cents": 40000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64O2L",
+    "specialty_id": "spec_01KCA8QEJ20G09J58MW4QTT3JR",
+    "code": "laser_perianal",
+    "name": "Depilação a Laser Perianal",
+    "description": "Depilação definitiva perianal",
+    "default_duration_minutes": 15,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64P3M",
+    "specialty_id": "spec_01KCA8QEJ20G09J58MW4QTT3JR",
+    "code": "avaliacao_laser",
+    "name": "Avaliação para Laser",
+    "description": "Consulta e teste de fotossensibilidade",
+    "default_duration_minutes": 30,
+    "default_price_cents": 0,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64Q4N",
+    "specialty_id": "spec_01KCA8QEJ20G09J58MW4QTT3JR",
+    "code": "luz_pulsada_rosto",
+    "name": "Luz Pulsada Facial",
+    "description": "Fotodepilação e rejuvenescimento",
+    "default_duration_minutes": 30,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

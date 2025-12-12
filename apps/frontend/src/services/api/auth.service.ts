@@ -22,6 +22,15 @@ import {
 import { mapApiUserToUser } from "@/mappers/auth.mappers";
 
 /**
+ * Resultado do login com informações de onboarding
+ */
+export interface LoginResult {
+  user: User;
+  /** true se o onboarding precisa ser feito */
+  needsOnboarding: boolean;
+}
+
+/**
  * Auth Service
  * Handles all authentication-related API calls
  */
@@ -30,13 +39,17 @@ class AuthService {
    * Login user with OAuth provider data
    * Endpoint: POST /api/auth/social-login
    * Client: Public (no credentials needed for login)
+   *
+   * O backend retorna apenas { onboarding: false } quando onboarding não foi feito,
+   * e não retorna nada quando já foi completado. Após o login, buscamos
+   * os dados do usuário via /me.
    */
-  async login(request: LoginRequest): Promise<User> {
+  async login(request: LoginRequest): Promise<LoginResult> {
     // Validate request data
     const validatedRequest = validateData(loginRequestSchema, request);
 
     // Make API call - MUST use withCredentials to receive httpOnly cookies
-    const response = await publicClient.post<LoginResponse>(
+    const loginResponse = await publicClient.post<LoginResponse>(
       "/api/auth/social-login",
       validatedRequest,
       {
@@ -44,9 +57,21 @@ class AuthService {
       }
     );
 
-    // Validate and map response
-    const validatedResponse = validateData(loginResponseSchema, response.data);
-    return mapApiUserToUser(validatedResponse.user);
+    // Validate login response
+    const validatedLoginResponse = validateData(loginResponseSchema, loginResponse.data);
+
+    // Determina se precisa de onboarding baseado na resposta
+    // Se onboarding === false, precisa fazer onboarding
+    // Se onboarding === undefined (não veio), já foi completado
+    const needsOnboarding = validatedLoginResponse.onboarding === false;
+
+    // Busca os dados do usuário via /me
+    const user = await this.getCurrentUser();
+
+    return {
+      user,
+      needsOnboarding,
+    };
   }
 
   /**

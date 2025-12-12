@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XNE",
+    "specialty_id": "spec_01KCA8QEJ1JN42ZNF3TKT2KFB9",
+    "code": "design_simples",
+    "name": "Design de Sobrancelhas",
+    "description": "Design e modelagem com pinça",
+    "default_duration_minutes": 30,
+    "default_price_cents": 4000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XOF",
+    "specialty_id": "spec_01KCA8QEJ1JN42ZNF3TKT2KFB9",
+    "code": "design_henna",
+    "name": "Design + Henna",
+    "description": "Design com aplicação de henna",
+    "default_duration_minutes": 45,
+    "default_price_cents": 6000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XPG",
+    "specialty_id": "spec_01KCA8QEJ1JN42ZNF3TKT2KFB9",
+    "code": "brow_lamination",
+    "name": "Brow Lamination",
+    "description": "Alisamento e fixação dos fios",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XQH",
+    "specialty_id": "spec_01KCA8QEJ1JN42ZNF3TKT2KFB9",
+    "code": "tintura_sobrancelhas",
+    "name": "Tintura de Sobrancelhas",
+    "description": "Coloração permanente dos fios",
+    "default_duration_minutes": 30,
+    "default_price_cents": 4500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XRI",
+    "specialty_id": "spec_01KCA8QEJ1JN42ZNF3TKT2KFB9",
+    "code": "design_cera",
+    "name": "Design com Cera",
+    "description": "Modelagem com depilação em cera",
+    "default_duration_minutes": 25,
+    "default_price_cents": 3500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XSJ",
+    "specialty_id": "spec_01KCA8QEJ1JN42ZNF3TKT2KFB9",
+    "code": "design_linha",
+    "name": "Design com Linha",
+    "description": "Modelagem com depilação egípcia",
+    "default_duration_minutes": 30,
+    "default_price_cents": 4000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XTK",
+    "specialty_id": "spec_01KCA8QEJ1JN42ZNF3TKT2KFB9",
+    "code": "design_masculino",
+    "name": "Design Masculino",
+    "description": "Design de sobrancelhas masculinas",
+    "default_duration_minutes": 20,
+    "default_price_cents": 3000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XUL",
+    "specialty_id": "spec_01KCA8QEJ1JN42ZNF3TKT2KFB9",
+    "code": "hidratacao_sobrancelhas",
+    "name": "Hidratação de Sobrancelhas",
+    "description": "Tratamento nutritivo para os fios",
+    "default_duration_minutes": 30,
+    "default_price_cents": 3500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XVM",
+    "specialty_id": "spec_01KCA8QEJ1JN42ZNF3TKT2KFB9",
+    "code": "correcao_design",
+    "name": "Correção de Design",
+    "description": "Ajuste de sobrancelhas irregulares",
+    "default_duration_minutes": 45,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XWN",
+    "specialty_id": "spec_01KCA8QEJ1JN42ZNF3TKT2KFB9",
+    "code": "combo_lamination_henna",
+    "name": "Combo Lamination + Henna",
+    "description": "Lamination com coloração em henna",
+    "default_duration_minutes": 75,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

@@ -5,7 +5,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import type { User, LoginRequest, AuthContextType } from "@/types/auth.types";
-import { authService } from "@/services/api/auth.service";
+import { authService, type LoginResult } from "@/services/api/auth.service";
 import { setupTokenRefreshInterceptor } from "@/services/api/interceptors";
 import { handleApiError } from "@/utils/error-handler";
 import { toast } from "sonner";
@@ -49,16 +49,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   /**
    * Login user with OAuth credentials
+   * Retorna LoginResult com user e flag needsOnboarding
    */
   const login = useCallback(
-    async (request: LoginRequest): Promise<User> => {
+    async (request: LoginRequest): Promise<LoginResult> => {
       try {
-        const loggedInUser = await authService.login(request);
-        setUser(loggedInUser);
+        const result = await authService.login(request);
+        setUser(result.user);
 
-        toast.success(`Bem-vindo, ${loggedInUser.name}!`);
+        toast.success(`Bem-vindo, ${result.user.name}!`);
 
-        return loggedInUser;
+        return result;
       } catch (error) {
         const processedError = handleApiError(error);
         toast.error(processedError.message);

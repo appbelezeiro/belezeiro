@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63DP9",
+    "specialty_id": "spec_01KCA8QEJ4YFWT6N78DHKNR5BV",
+    "code": "day_spa",
+    "name": "Day Spa Completo",
+    "description": "Pacote de tratamentos para um dia",
+    "default_duration_minutes": 240,
+    "default_price_cents": 50000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63EQA",
+    "specialty_id": "spec_01KCA8QEJ4YFWT6N78DHKNR5BV",
+    "code": "ritual_relaxamento",
+    "name": "Ritual de Relaxamento",
+    "description": "Sequência de tratamentos relaxantes",
+    "default_duration_minutes": 120,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63FRB",
+    "specialty_id": "spec_01KCA8QEJ4YFWT6N78DHKNR5BV",
+    "code": "ofuro",
+    "name": "Banho de Ofurô",
+    "description": "Banho japonês relaxante",
+    "default_duration_minutes": 45,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63GSC",
+    "specialty_id": "spec_01KCA8QEJ4YFWT6N78DHKNR5BV",
+    "code": "esfoliacao_corporal_spa",
+    "name": "Esfoliação Corporal Premium",
+    "description": "Esfoliação com produtos premium",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63HTD",
+    "specialty_id": "spec_01KCA8QEJ4YFWT6N78DHKNR5BV",
+    "code": "banho_lua_mel",
+    "name": "Banho de Lua de Mel",
+    "description": "Tratamento especial para casais",
+    "default_duration_minutes": 90,
+    "default_price_cents": 35000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63IUE",
+    "specialty_id": "spec_01KCA8QEJ4YFWT6N78DHKNR5BV",
+    "code": "hidromassagem",
+    "name": "Hidromassagem",
+    "description": "Sessão de hidromassagem relaxante",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63JVF",
+    "specialty_id": "spec_01KCA8QEJ4YFWT6N78DHKNR5BV",
+    "code": "sauna_seca",
+    "name": "Sauna Seca",
+    "description": "Sessão de sauna seca",
+    "default_duration_minutes": 20,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63KWG",
+    "specialty_id": "spec_01KCA8QEJ4YFWT6N78DHKNR5BV",
+    "code": "sauna_umida",
+    "name": "Sauna Úmida/Vapor",
+    "description": "Sessão de sauna a vapor",
+    "default_duration_minutes": 20,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63LXH",
+    "specialty_id": "spec_01KCA8QEJ4YFWT6N78DHKNR5BV",
+    "code": "envolvimento_corporal",
+    "name": "Envolvimento Corporal",
+    "description": "Body wrap com produtos especiais",
+    "default_duration_minutes": 60,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q63MYI",
+    "specialty_id": "spec_01KCA8QEJ4YFWT6N78DHKNR5BV",
+    "code": "ritual_noiva",
+    "name": "Ritual da Noiva",
+    "description": "Pacote especial pré-casamento",
+    "default_duration_minutes": 180,
+    "default_price_cents": 45000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

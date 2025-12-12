@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZLE",
+    "specialty_id": "spec_01KCA8QEJ291YTEXYZSGSC84BH",
+    "code": "drenagem_corporal",
+    "name": "Drenagem Linfática Corporal",
+    "description": "Drenagem linfática de corpo inteiro",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZMF",
+    "specialty_id": "spec_01KCA8QEJ291YTEXYZSGSC84BH",
+    "code": "massagem_redutora",
+    "name": "Massagem Redutora",
+    "description": "Massagem modeladora e redutora de medidas",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZNG",
+    "specialty_id": "spec_01KCA8QEJ291YTEXYZSGSC84BH",
+    "code": "radiofrequencia_corporal",
+    "name": "Radiofrequência Corporal",
+    "description": "Tratamento de flacidez com radiofrequência",
+    "default_duration_minutes": 60,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZOH",
+    "specialty_id": "spec_01KCA8QEJ291YTEXYZSGSC84BH",
+    "code": "criolipolise",
+    "name": "Criolipólise",
+    "description": "Tratamento de gordura por congelamento",
+    "default_duration_minutes": 60,
+    "default_price_cents": 50000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZPI",
+    "specialty_id": "spec_01KCA8QEJ291YTEXYZSGSC84BH",
+    "code": "ultracavitacao",
+    "name": "Ultracavitação",
+    "description": "Lipocavitação para gordura localizada",
+    "default_duration_minutes": 45,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZQJ",
+    "specialty_id": "spec_01KCA8QEJ291YTEXYZSGSC84BH",
+    "code": "manta_termica",
+    "name": "Manta Térmica",
+    "description": "Tratamento com manta térmica infravermelho",
+    "default_duration_minutes": 45,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZRK",
+    "specialty_id": "spec_01KCA8QEJ291YTEXYZSGSC84BH",
+    "code": "vacuoterapia",
+    "name": "Vacuoterapia",
+    "description": "Tratamento com ventosas para celulite",
+    "default_duration_minutes": 45,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZSL",
+    "specialty_id": "spec_01KCA8QEJ291YTEXYZSGSC84BH",
+    "code": "endermologia",
+    "name": "Endermologia",
+    "description": "Tratamento mecânico para celulite e fibrose",
+    "default_duration_minutes": 45,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZTM",
+    "specialty_id": "spec_01KCA8QEJ291YTEXYZSGSC84BH",
+    "code": "carboxiterapia",
+    "name": "Carboxiterapia Corporal",
+    "description": "Aplicação de gás carbônico",
+    "default_duration_minutes": 45,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZUN",
+    "specialty_id": "spec_01KCA8QEJ291YTEXYZSGSC84BH",
+    "code": "esfoliacao_corporal",
+    "name": "Esfoliação Corporal",
+    "description": "Esfoliação e hidratação de corpo inteiro",
+    "default_duration_minutes": 60,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

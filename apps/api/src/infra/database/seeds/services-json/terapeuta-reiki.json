@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q647K4",
+    "specialty_id": "spec_01KCA8QEJ332GN89325HH851SF",
+    "code": "sessao_reiki",
+    "name": "Sessão de Reiki",
+    "description": "Terapia energética Reiki tradicional",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q648L5",
+    "specialty_id": "spec_01KCA8QEJ332GN89325HH851SF",
+    "code": "reiki_distancia",
+    "name": "Reiki à Distância",
+    "description": "Envio de energia à distância",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q649M6",
+    "specialty_id": "spec_01KCA8QEJ332GN89325HH851SF",
+    "code": "reiki_cristais",
+    "name": "Reiki com Cristais",
+    "description": "Reiki combinado com cristaloterapia",
+    "default_duration_minutes": 75,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64AN7",
+    "specialty_id": "spec_01KCA8QEJ332GN89325HH851SF",
+    "code": "limpeza_energetica",
+    "name": "Limpeza Energética",
+    "description": "Limpeza de energias negativas",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64BO8",
+    "specialty_id": "spec_01KCA8QEJ332GN89325HH851SF",
+    "code": "equilibrio_chakras",
+    "name": "Equilíbrio de Chakras",
+    "description": "Harmonização dos centros de energia",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64CP9",
+    "specialty_id": "spec_01KCA8QEJ332GN89325HH851SF",
+    "code": "reiki_meditacao",
+    "name": "Reiki + Meditação Guiada",
+    "description": "Combinação de reiki com meditação",
+    "default_duration_minutes": 90,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64DQA",
+    "specialty_id": "spec_01KCA8QEJ332GN89325HH851SF",
+    "code": "iniciacao_reiki",
+    "name": "Iniciação em Reiki Nível 1",
+    "description": "Curso de iniciação em Reiki",
+    "default_duration_minutes": 480,
+    "default_price_cents": 50000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64ERB",
+    "specialty_id": "spec_01KCA8QEJ332GN89325HH851SF",
+    "code": "reiki_animais",
+    "name": "Reiki para Animais",
+    "description": "Terapia energética para pets",
+    "default_duration_minutes": 30,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64FSC",
+    "specialty_id": "spec_01KCA8QEJ332GN89325HH851SF",
+    "code": "reiki_gestantes",
+    "name": "Reiki para Gestantes",
+    "description": "Terapia suave para grávidas",
+    "default_duration_minutes": 45,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q64GTD",
+    "specialty_id": "spec_01KCA8QEJ332GN89325HH851SF",
+    "code": "pacote_reiki",
+    "name": "Pacote Reiki (4 sessões)",
+    "description": "Pacote mensal de terapia",
+    "default_duration_minutes": 240,
+    "default_price_cents": 40000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

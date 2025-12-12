@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q651FY",
+    "specialty_id": "spec_01KCA8QEJ3RPCQ99B3SQNSAZRT",
+    "code": "avaliacao_harmonizacao",
+    "name": "Avaliação para Harmonização",
+    "description": "Consulta e planejamento facial",
+    "default_duration_minutes": 45,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q652GZ",
+    "specialty_id": "spec_01KCA8QEJ3RPCQ99B3SQNSAZRT",
+    "code": "harmonizacao_completa",
+    "name": "Harmonização Facial Completa",
+    "description": "Pacote completo de procedimentos",
+    "default_duration_minutes": 120,
+    "default_price_cents": 350000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q653H1",
+    "specialty_id": "spec_01KCA8QEJ3RPCQ99B3SQNSAZRT",
+    "code": "botox_testa",
+    "name": "Botox Testa",
+    "description": "Toxina botulínica na região da testa",
+    "default_duration_minutes": 30,
+    "default_price_cents": 80000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q654I2",
+    "specialty_id": "spec_01KCA8QEJ3RPCQ99B3SQNSAZRT",
+    "code": "botox_glabela",
+    "name": "Botox Glabela",
+    "description": "Toxina entre as sobrancelhas",
+    "default_duration_minutes": 20,
+    "default_price_cents": 60000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q655J3",
+    "specialty_id": "spec_01KCA8QEJ3RPCQ99B3SQNSAZRT",
+    "code": "botox_pes_galinha",
+    "name": "Botox Pés de Galinha",
+    "description": "Toxina ao redor dos olhos",
+    "default_duration_minutes": 20,
+    "default_price_cents": 60000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q656K4",
+    "specialty_id": "spec_01KCA8QEJ3RPCQ99B3SQNSAZRT",
+    "code": "preenchimento_malar",
+    "name": "Preenchimento Malar",
+    "description": "Preenchimento das maçãs do rosto",
+    "default_duration_minutes": 45,
+    "default_price_cents": 180000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q657L5",
+    "specialty_id": "spec_01KCA8QEJ3RPCQ99B3SQNSAZRT",
+    "code": "preenchimento_mandibula",
+    "name": "Preenchimento Mandíbula",
+    "description": "Definição do contorno mandibular",
+    "default_duration_minutes": 45,
+    "default_price_cents": 200000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q658M6",
+    "specialty_id": "spec_01KCA8QEJ3RPCQ99B3SQNSAZRT",
+    "code": "preenchimento_queixo",
+    "name": "Preenchimento de Queixo",
+    "description": "Projeção e definição do queixo",
+    "default_duration_minutes": 30,
+    "default_price_cents": 150000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q659N7",
+    "specialty_id": "spec_01KCA8QEJ3RPCQ99B3SQNSAZRT",
+    "code": "rinomodelacao",
+    "name": "Rinomodelação",
+    "description": "Correção do nariz com preenchimento",
+    "default_duration_minutes": 45,
+    "default_price_cents": 200000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q65AO8",
+    "specialty_id": "spec_01KCA8QEJ3RPCQ99B3SQNSAZRT",
+    "code": "bichectomia_quimica",
+    "name": "Lipo de Papada",
+    "description": "Redução de papada com enzimas",
+    "default_duration_minutes": 30,
+    "default_price_cents": 100000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

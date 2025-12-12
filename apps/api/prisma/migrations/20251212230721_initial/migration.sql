@@ -1,7 +1,4 @@
 -- CreateEnum
-CREATE TYPE "ServiceType" AS ENUM ('local', 'home', 'both');
-
--- CreateEnum
 CREATE TYPE "BookingStatus" AS ENUM ('confirmed', 'cancelled', 'completed', 'no_show');
 
 -- CreateEnum
@@ -63,7 +60,7 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "organizations" (
     "id" TEXT NOT NULL,
-    "business_name" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "owner_id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
@@ -76,24 +73,54 @@ CREATE TABLE "units" (
     "id" TEXT NOT NULL,
     "organization_id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "brand_color" TEXT NOT NULL,
     "logo" TEXT,
     "gallery" TEXT[] DEFAULT ARRAY[]::TEXT[],
     "is_active" BOOLEAN NOT NULL DEFAULT true,
-    "whatsapp" TEXT NOT NULL,
-    "phone" TEXT,
-    "address" JSONB NOT NULL,
-    "especialidades" JSONB NOT NULL,
-    "services" JSONB NOT NULL,
-    "service_type" "ServiceType" NOT NULL DEFAULT 'local',
-    "amenities" TEXT[] DEFAULT ARRAY[]::TEXT[],
-    "subscription" JSONB,
-    "working_hours" JSONB,
-    "lunch_break" JSONB,
+    "preferences" JSONB,
+    "service_type" TEXT NOT NULL DEFAULT 'on-site',
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "units_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "addresses" (
+    "id" TEXT NOT NULL,
+    "street" TEXT NOT NULL,
+    "number" TEXT NOT NULL,
+    "neighborhood" TEXT NOT NULL,
+    "city" TEXT NOT NULL,
+    "state" VARCHAR(2) NOT NULL,
+    "zipcode" TEXT NOT NULL,
+    "country" VARCHAR(2) NOT NULL DEFAULT 'BR',
+    "complement" TEXT,
+    "reference" TEXT,
+    "latitude" DOUBLE PRECISION,
+    "longitude" DOUBLE PRECISION,
+    "unit_id" TEXT,
+    "user_id" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "addresses_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "phones" (
+    "id" TEXT NOT NULL,
+    "country_code" TEXT NOT NULL DEFAULT '+55',
+    "area_code" TEXT NOT NULL,
+    "number" TEXT NOT NULL,
+    "label" TEXT,
+    "is_whatsapp" BOOLEAN NOT NULL DEFAULT false,
+    "is_verified" BOOLEAN NOT NULL DEFAULT false,
+    "unit_id" TEXT,
+    "user_id" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "phones_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -435,7 +462,10 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 CREATE UNIQUE INDEX "users_provider_id_key" ON "users"("provider_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "organizations_owner_id_key" ON "organizations"("owner_id");
+CREATE UNIQUE INDEX "addresses_unit_id_key" ON "addresses"("unit_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "addresses_user_id_key" ON "addresses"("user_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "specialties_code_key" ON "specialties"("code");
@@ -481,6 +511,18 @@ ALTER TABLE "organizations" ADD CONSTRAINT "organizations_owner_id_fkey" FOREIGN
 
 -- AddForeignKey
 ALTER TABLE "units" ADD CONSTRAINT "units_organization_id_fkey" FOREIGN KEY ("organization_id") REFERENCES "organizations"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "addresses" ADD CONSTRAINT "addresses_unit_id_fkey" FOREIGN KEY ("unit_id") REFERENCES "units"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "addresses" ADD CONSTRAINT "addresses_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "phones" ADD CONSTRAINT "phones_unit_id_fkey" FOREIGN KEY ("unit_id") REFERENCES "units"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "phones" ADD CONSTRAINT "phones_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "services" ADD CONSTRAINT "services_specialty_id_fkey" FOREIGN KEY ("specialty_id") REFERENCES "specialties"("id") ON DELETE CASCADE ON UPDATE CASCADE;

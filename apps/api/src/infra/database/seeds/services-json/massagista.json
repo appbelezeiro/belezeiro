@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Z1T",
+    "specialty_id": "spec_01KCA8QEJ25SVW6GNRT6FH7WQE",
+    "code": "massagem_relaxante",
+    "name": "Massagem Relaxante",
+    "description": "Massagem para relaxamento e bem-estar",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Z2U",
+    "specialty_id": "spec_01KCA8QEJ25SVW6GNRT6FH7WQE",
+    "code": "massagem_terapeutica",
+    "name": "Massagem Terapêutica",
+    "description": "Massagem para tratamento de dores",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Z3V",
+    "specialty_id": "spec_01KCA8QEJ25SVW6GNRT6FH7WQE",
+    "code": "massagem_modeladora",
+    "name": "Massagem Modeladora",
+    "description": "Massagem redutora e modeladora",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Z4W",
+    "specialty_id": "spec_01KCA8QEJ25SVW6GNRT6FH7WQE",
+    "code": "drenagem_linfatica",
+    "name": "Drenagem Linfática",
+    "description": "Massagem de drenagem linfática manual",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Z5X",
+    "specialty_id": "spec_01KCA8QEJ25SVW6GNRT6FH7WQE",
+    "code": "massagem_pedras_quentes",
+    "name": "Massagem com Pedras Quentes",
+    "description": "Massagem relaxante com pedras vulcânicas",
+    "default_duration_minutes": 90,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Z6Y",
+    "specialty_id": "spec_01KCA8QEJ25SVW6GNRT6FH7WQE",
+    "code": "massagem_bambu",
+    "name": "Massagem com Bambus",
+    "description": "Massagem com técnica de bambuterapia",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Z7Z",
+    "specialty_id": "spec_01KCA8QEJ25SVW6GNRT6FH7WQE",
+    "code": "massagem_gestante",
+    "name": "Massagem para Gestantes",
+    "description": "Massagem especial para gestantes",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Z81",
+    "specialty_id": "spec_01KCA8QEJ25SVW6GNRT6FH7WQE",
+    "code": "massagem_casal",
+    "name": "Massagem para Casal",
+    "description": "Sessão de massagem simultânea para casal",
+    "default_duration_minutes": 60,
+    "default_price_cents": 22000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Z92",
+    "specialty_id": "spec_01KCA8QEJ25SVW6GNRT6FH7WQE",
+    "code": "liberacao_miofascial",
+    "name": "Liberação Miofascial",
+    "description": "Técnica de liberação da fáscia muscular",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6ZA3",
+    "specialty_id": "spec_01KCA8QEJ25SVW6GNRT6FH7WQE",
+    "code": "quick_massage",
+    "name": "Quick Massage",
+    "description": "Massagem rápida em cadeira",
+    "default_duration_minutes": 20,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

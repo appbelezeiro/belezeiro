@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6V5T",
+    "specialty_id": "spec_01KCA8QEJ1SEZ49P0Y5SCR07R2",
+    "code": "manicure_simples",
+    "name": "Manicure Simples",
+    "description": "Cutilagem e esmaltação básica",
+    "default_duration_minutes": 45,
+    "default_price_cents": 3500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6V6U",
+    "specialty_id": "spec_01KCA8QEJ1SEZ49P0Y5SCR07R2",
+    "code": "manicure_gel",
+    "name": "Manicure em Gel",
+    "description": "Esmaltação com esmalte em gel",
+    "default_duration_minutes": 60,
+    "default_price_cents": 6000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6V7V",
+    "specialty_id": "spec_01KCA8QEJ1SEZ49P0Y5SCR07R2",
+    "code": "spa_maos",
+    "name": "Spa das Mãos",
+    "description": "Tratamento completo com hidratação e esfoliação",
+    "default_duration_minutes": 75,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6V8W",
+    "specialty_id": "spec_01KCA8QEJ1SEZ49P0Y5SCR07R2",
+    "code": "francesinha",
+    "name": "Francesinha",
+    "description": "Esmaltação estilo francesinha",
+    "default_duration_minutes": 60,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6V9X",
+    "specialty_id": "spec_01KCA8QEJ1SEZ49P0Y5SCR07R2",
+    "code": "esmaltacao_comum",
+    "name": "Esmaltação Comum",
+    "description": "Aplicação de esmalte tradicional",
+    "default_duration_minutes": 30,
+    "default_price_cents": 2500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VAY",
+    "specialty_id": "spec_01KCA8QEJ1SEZ49P0Y5SCR07R2",
+    "code": "cutilagem",
+    "name": "Cutilagem",
+    "description": "Remoção e tratamento de cutículas",
+    "default_duration_minutes": 30,
+    "default_price_cents": 2000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VBZ",
+    "specialty_id": "spec_01KCA8QEJ1SEZ49P0Y5SCR07R2",
+    "code": "blindagem_unhas",
+    "name": "Blindagem de Unhas",
+    "description": "Tratamento de fortalecimento das unhas",
+    "default_duration_minutes": 60,
+    "default_price_cents": 7000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VC1",
+    "specialty_id": "spec_01KCA8QEJ1SEZ49P0Y5SCR07R2",
+    "code": "banho_gel",
+    "name": "Banho de Gel",
+    "description": "Cobertura com gel para fortalecimento",
+    "default_duration_minutes": 60,
+    "default_price_cents": 6500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VD2",
+    "specialty_id": "spec_01KCA8QEJ1SEZ49P0Y5SCR07R2",
+    "code": "esmaltacao_inglesinha",
+    "name": "Esmaltação Inglesinha",
+    "description": "Esmaltação com técnica inglesinha",
+    "default_duration_minutes": 50,
+    "default_price_cents": 4500,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VE3",
+    "specialty_id": "spec_01KCA8QEJ1SEZ49P0Y5SCR07R2",
+    "code": "remocao_esmalte_gel",
+    "name": "Remoção de Esmalte em Gel",
+    "description": "Remoção cuidadosa de esmalte em gel",
+    "default_duration_minutes": 30,
+    "default_price_cents": 2500,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

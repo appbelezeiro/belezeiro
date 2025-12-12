@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TBY",
+    "specialty_id": "spec_01KCA8QEJ0YZNRWR0AWP1DTYFN",
+    "code": "penteado_noiva",
+    "name": "Penteado de Noiva",
+    "description": "Penteado elaborado para casamentos",
+    "default_duration_minutes": 90,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TCZ",
+    "specialty_id": "spec_01KCA8QEJ0YZNRWR0AWP1DTYFN",
+    "code": "penteado_festa",
+    "name": "Penteado para Festa",
+    "description": "Penteado sofisticado para eventos",
+    "default_duration_minutes": 60,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TD1",
+    "specialty_id": "spec_01KCA8QEJ0YZNRWR0AWP1DTYFN",
+    "code": "escova_modelada",
+    "name": "Escova Modelada",
+    "description": "Escova com modelagem de ondas ou cachos",
+    "default_duration_minutes": 60,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TE2",
+    "specialty_id": "spec_01KCA8QEJ0YZNRWR0AWP1DTYFN",
+    "code": "babyliss",
+    "name": "Babyliss / Ondas",
+    "description": "Finalização com ondas ou cachos definidos",
+    "default_duration_minutes": 45,
+    "default_price_cents": 7000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TF3",
+    "specialty_id": "spec_01KCA8QEJ0YZNRWR0AWP1DTYFN",
+    "code": "coque_elaborado",
+    "name": "Coque Elaborado",
+    "description": "Penteado tipo coque com acabamento sofisticado",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TG4",
+    "specialty_id": "spec_01KCA8QEJ0YZNRWR0AWP1DTYFN",
+    "code": "tranca_embutida",
+    "name": "Trança Embutida",
+    "description": "Trança embutida decorativa",
+    "default_duration_minutes": 45,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TH5",
+    "specialty_id": "spec_01KCA8QEJ0YZNRWR0AWP1DTYFN",
+    "code": "penteado_formatura",
+    "name": "Penteado de Formatura",
+    "description": "Penteado elegante para formaturas",
+    "default_duration_minutes": 75,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TI6",
+    "specialty_id": "spec_01KCA8QEJ0YZNRWR0AWP1DTYFN",
+    "code": "penteado_debutante",
+    "name": "Penteado para Debutante",
+    "description": "Penteado especial para festa de 15 anos",
+    "default_duration_minutes": 90,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TJ7",
+    "specialty_id": "spec_01KCA8QEJ0YZNRWR0AWP1DTYFN",
+    "code": "semi_preso",
+    "name": "Semi-preso",
+    "description": "Penteado semi-preso elegante",
+    "default_duration_minutes": 45,
+    "default_price_cents": 9000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6TK8",
+    "specialty_id": "spec_01KCA8QEJ0YZNRWR0AWP1DTYFN",
+    "code": "teste_penteado",
+    "name": "Teste de Penteado",
+    "description": "Sessão de teste para definição de penteado",
+    "default_duration_minutes": 90,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

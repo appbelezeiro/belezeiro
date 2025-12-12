@@ -106,4 +106,11 @@ export class PrismaAmenityRepository implements IAmenityRepository {
       return false;
     }
   }
+
+  async find_many_by_id(ids: string[]): Promise<AmenityEntity[]> {
+    const amenities = await prisma.amenity.findMany({
+      where: { id: { in: ids } },
+    });
+    return amenities.map(AmenityDataMapper.toDomain);
+  }
 }

@@ -1,65 +1,104 @@
-import type {
-  DayOfWeek,
-  DaySchedule,
-  ServiceType,
-  Address,
-  EspecialidadeRef,
-  ServiceRef,
-  LunchBreak,
-  WorkingHours,
-  Subscription,
-} from '@/domain/entities/units/unit.entity';
-import type { AmenityId } from '@/domain/constants/amenities';
+import type { UnitServiceType } from '@/domain/entities/units/unit.entity.types';
+
+type UnitPreferences = {
+  palletColor?: string;
+};
+
+export interface AddressDTO {
+  id: string;
+  street: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  zipcode: string;
+  country: string;
+  complement?: string;
+  reference?: string;
+  latitude?: number;
+  longitude?: number;
+  formatted: string;
+}
+
+export interface PhoneDTO {
+  id: string;
+  country_code: string;
+  area_code: string;
+  number: string;
+  full_number: string;
+  label?: string;
+  is_whatsapp: boolean;
+  is_verified: boolean;
+}
+
+export interface SpecialtyDTO {
+  id: string;
+  code: string;
+  name: string;
+  description?: string;
+  icon: string;
+  is_predefined: boolean;
+  is_active: boolean;
+}
+
+export interface ServiceDTO {
+  id: string;
+  specialty_id: string;
+  code: string;
+  name: string;
+  description?: string;
+  default_duration_minutes: number;
+  default_price_cents: number;
+  is_predefined: boolean;
+  is_active: boolean;
+}
+
+export interface AmenityDTO {
+  id: string;
+  code: string;
+  name: string;
+  description?: string;
+  icon: string;
+  is_predefined: boolean;
+  is_active: boolean;
+}
 
 export interface UnitDTO {
   id: string;
-  organizationId: string;
+  orgId: string;
   name: string;
-  brandColor: string;
-  subscription?: Subscription;
+  preferences: Partial<UnitPreferences>;
   logo?: string;
   gallery: string[];
-  isActive: boolean;
-  whatsapp: string;
-  phone?: string;
-  address: Address;
-  especialidades: EspecialidadeRef[];
-  services: ServiceRef[];
-  serviceType: ServiceType;
-  amenities: AmenityId[];
-  workingHours: WorkingHours;
-  lunchBreak?: LunchBreak;
+  active: boolean;
+  phones: PhoneDTO[];
+  address: AddressDTO | null;
+  especialidades: SpecialtyDTO[];
+  services: ServiceDTO[];
+  serviceType: UnitServiceType;
+  amenities: AmenityDTO[];
   created_at: Date;
   updated_at: Date;
 }
 
 export interface UnitSummaryDTO {
   id: string;
-  organizationId: string;
+  orgId: string;
   name: string;
   logo?: string;
-  isActive: boolean;
-  serviceType: ServiceType;
+  active: boolean;
+  serviceType: UnitServiceType;
 }
 
 export interface UnitListItemDTO {
   id: string;
   name: string;
   logo?: string;
-  isActive: boolean;
+  active: boolean;
   address: {
     city: string;
     state: string;
   };
 }
 
-export type {
-  DayOfWeek,
-  DaySchedule,
-  ServiceType,
-  Address,
-  EspecialidadeRef,
-  ServiceRef,
-  LunchBreak,
-  WorkingHours,
-};
+export type { UnitServiceType, UnitPreferences };

@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XXO",
+    "specialty_id": "spec_01KCA8QEJ1KXY14TWVDKK7T2FA",
+    "code": "extensao_classica",
+    "name": "Extensão Clássica (Fio a Fio)",
+    "description": "Uma extensão por cílio natural",
+    "default_duration_minutes": 120,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XYP",
+    "specialty_id": "spec_01KCA8QEJ1KXY14TWVDKK7T2FA",
+    "code": "extensao_volume_brasileiro",
+    "name": "Volume Brasileiro",
+    "description": "Leques de 2-6 fios por cílio",
+    "default_duration_minutes": 150,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6XZQ",
+    "specialty_id": "spec_01KCA8QEJ1KXY14TWVDKK7T2FA",
+    "code": "extensao_volume_russo",
+    "name": "Volume Russo",
+    "description": "Mega volume com leques fechados",
+    "default_duration_minutes": 180,
+    "default_price_cents": 25000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Y0R",
+    "specialty_id": "spec_01KCA8QEJ1KXY14TWVDKK7T2FA",
+    "code": "extensao_hibrida",
+    "name": "Extensão Híbrida",
+    "description": "Mix de clássico e volume",
+    "default_duration_minutes": 150,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Y1S",
+    "specialty_id": "spec_01KCA8QEJ1KXY14TWVDKK7T2FA",
+    "code": "manutencao_cilios",
+    "name": "Manutenção de Cílios",
+    "description": "Retoque quinzenal das extensões",
+    "default_duration_minutes": 60,
+    "default_price_cents": 8000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Y2T",
+    "specialty_id": "spec_01KCA8QEJ1KXY14TWVDKK7T2FA",
+    "code": "lash_lifting",
+    "name": "Lash Lifting",
+    "description": "Curvamento permanente dos cílios",
+    "default_duration_minutes": 60,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Y3U",
+    "specialty_id": "spec_01KCA8QEJ1KXY14TWVDKK7T2FA",
+    "code": "lash_lifting_botoxx",
+    "name": "Lash Lifting + Botoxx",
+    "description": "Lifting com nutrição intensiva",
+    "default_duration_minutes": 75,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Y4V",
+    "specialty_id": "spec_01KCA8QEJ1KXY14TWVDKK7T2FA",
+    "code": "tintura_cilios",
+    "name": "Tintura de Cílios",
+    "description": "Coloração permanente dos cílios",
+    "default_duration_minutes": 30,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Y5W",
+    "specialty_id": "spec_01KCA8QEJ1KXY14TWVDKK7T2FA",
+    "code": "remocao_extensao",
+    "name": "Remoção de Extensão",
+    "description": "Remoção completa das extensões",
+    "default_duration_minutes": 45,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6Y6X",
+    "specialty_id": "spec_01KCA8QEJ1KXY14TWVDKK7T2FA",
+    "code": "mega_volume",
+    "name": "Mega Volume",
+    "description": "Volume extremo com 10+ fios por cílio",
+    "default_duration_minutes": 210,
+    "default_price_cents": 30000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]

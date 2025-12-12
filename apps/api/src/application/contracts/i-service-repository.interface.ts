@@ -10,4 +10,5 @@ export interface IServiceRepository {
   update(entity: ServiceEntity): Promise<ServiceEntity>;
   delete(id: string): Promise<boolean>;
   list_by_specialty_id(specialty_id: string): Promise<ServiceEntity[]>;
+  find_many_by_id(id: string[]): Promise<ServiceEntity[]>;
 }

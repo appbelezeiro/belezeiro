@@ -99,4 +99,11 @@ export class PrismaServiceRepository implements IServiceRepository {
     });
     return services.map(ServiceDataMapper.toDomain);
   }
+
+  async find_many_by_id(ids: string[]): Promise<ServiceEntity[]> {
+    const services = await prisma.service.findMany({
+      where: { id: { in: ids } },
+    });
+    return services.map(ServiceDataMapper.toDomain);
+  }
 }

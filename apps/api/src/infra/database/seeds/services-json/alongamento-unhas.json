@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6VZO",
+    "specialty_id": "spec_01KCA8QEJ1HGKA9ZH5D2JAVQ6G",
+    "code": "alongamento_gel",
+    "name": "Alongamento em Gel",
+    "description": "Alongamento de unhas com gel moldado",
+    "default_duration_minutes": 120,
+    "default_price_cents": 15000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6W0P",
+    "specialty_id": "spec_01KCA8QEJ1HGKA9ZH5D2JAVQ6G",
+    "code": "alongamento_acrigel",
+    "name": "Alongamento em Acrigel",
+    "description": "Alongamento com técnica de acrigel",
+    "default_duration_minutes": 120,
+    "default_price_cents": 16000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6W1Q",
+    "specialty_id": "spec_01KCA8QEJ1HGKA9ZH5D2JAVQ6G",
+    "code": "alongamento_fibra",
+    "name": "Alongamento em Fibra de Vidro",
+    "description": "Alongamento com fibra de vidro",
+    "default_duration_minutes": 150,
+    "default_price_cents": 18000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6W2R",
+    "specialty_id": "spec_01KCA8QEJ1HGKA9ZH5D2JAVQ6G",
+    "code": "alongamento_polygel",
+    "name": "Alongamento em Polygel",
+    "description": "Alongamento com polygel (híbrido)",
+    "default_duration_minutes": 120,
+    "default_price_cents": 17000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6W3S",
+    "specialty_id": "spec_01KCA8QEJ1HGKA9ZH5D2JAVQ6G",
+    "code": "alongamento_acrilico",
+    "name": "Alongamento em Acrílico",
+    "description": "Alongamento com pó acrílico",
+    "default_duration_minutes": 150,
+    "default_price_cents": 20000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6W4T",
+    "specialty_id": "spec_01KCA8QEJ1HGKA9ZH5D2JAVQ6G",
+    "code": "manutencao_alongamento",
+    "name": "Manutenção de Alongamento",
+    "description": "Retoque e manutenção do alongamento",
+    "default_duration_minutes": 90,
+    "default_price_cents": 10000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6W5U",
+    "specialty_id": "spec_01KCA8QEJ1HGKA9ZH5D2JAVQ6G",
+    "code": "remocao_alongamento",
+    "name": "Remoção de Alongamento",
+    "description": "Remoção segura do alongamento",
+    "default_duration_minutes": 60,
+    "default_price_cents": 5000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6W6V",
+    "specialty_id": "spec_01KCA8QEJ1HGKA9ZH5D2JAVQ6G",
+    "code": "reparo_unha",
+    "name": "Reparo de Unha",
+    "description": "Reparo de unha quebrada (por unha)",
+    "default_duration_minutes": 20,
+    "default_price_cents": 2000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6W7W",
+    "specialty_id": "spec_01KCA8QEJ1HGKA9ZH5D2JAVQ6G",
+    "code": "tips_gel",
+    "name": "Tips com Gel",
+    "description": "Aplicação de tips com cobertura em gel",
+    "default_duration_minutes": 90,
+    "default_price_cents": 12000,
+    "is_predefined": true,
+    "is_active": true
+  },
+  {
+    "id": "serv_01JKCABD6P5K8J2M3N4Q5R6W8X",
+    "specialty_id": "spec_01KCA8QEJ1HGKA9ZH5D2JAVQ6G",
+    "code": "molde_f1",
+    "name": "Alongamento Molde F1",
+    "description": "Alongamento com molde F1 em gel",
+    "default_duration_minutes": 150,
+    "default_price_cents": 22000,
+    "is_predefined": true,
+    "is_active": true
+  }
+]
