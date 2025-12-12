@@ -2,6 +2,7 @@ import type { Context } from 'hono';
 import type { ErrorHandler } from 'hono';
 import { ZodError } from 'zod';
 import { HttpError } from '../errors/http-errors';
+import { DomainError } from '@/domain/errors/domain-error';
 
 export const globalErrorHandler: ErrorHandler = (err: unknown, c: Context) => {
   const timestamp = new Date().toISOString();
@@ -30,6 +31,13 @@ export const globalErrorHandler: ErrorHandler = (err: unknown, c: Context) => {
       response.details = err.details;
     }
     return c.json(response, err.statusCode as any);
+  }
+
+  // Domain errors (validation errors from entities)
+  if (err instanceof DomainError) {
+    response.error = err.name;
+    response.message = err.message;
+    return c.json(response, 400);
   }
 
   // Unknown errors

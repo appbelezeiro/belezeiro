@@ -77,7 +77,7 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
 
   // Combine all services from selected specialties
   const availableServices = useMemo(() => {
-    const servicesMap = new Map<string, { name: string; especialidadeId: string; especialidadeName: string }>();
+    const servicesMap = new Map<string, { id: string; name: string; especialidadeId: string; especialidadeName: string }>();
 
     servicesQueries.forEach((query, index) => {
       const specialtyId = selectedSpecialtyIds[index];
@@ -88,10 +88,11 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
       if (!response?.items || !specialty) return;
 
       response.items.forEach((service) => {
-        // Use name+especialidadeId as key to avoid duplicates
-        const key = `${service.name}-${specialtyId}`;
+        // Use service.id as key to avoid duplicates
+        const key = service.id;
         if (!servicesMap.has(key)) {
           servicesMap.set(key, {
+            id: service.id,
             name: service.name,
             especialidadeId: specialtyId,
             especialidadeName: specialty.name,
@@ -102,12 +103,13 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
 
     // Include custom services that are NOT from API (custom specialties only)
     data.services.forEach((s) => {
-      const key = `${s.name}-${s.especialidadeId}`;
+      const key = s.id;
       // Only add if not already in map (prevents duplicates)
       if (!servicesMap.has(key)) {
         const especialidade = data.especialidades.find((p) => p.id === s.especialidadeId);
         if (especialidade) {
           servicesMap.set(key, {
+            id: s.id,
             name: s.name,
             especialidadeId: s.especialidadeId,
             especialidadeName: especialidade.name,
@@ -121,7 +123,7 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
 
   // Auto-select all services when a new specialty is selected and its services are loaded
   useEffect(() => {
-    const newServices: { name: string; especialidadeId: string }[] = [];
+    const newServices: { id: string; name: string; especialidadeId: string }[] = [];
 
     servicesQueries.forEach((query, index) => {
       const specialtyId = selectedSpecialtyIds[index];
@@ -140,10 +142,10 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
       // Add all services from this specialty
       response.items.forEach((service) => {
         const alreadySelected = data.services.some(
-          (s) => s.name === service.name && s.especialidadeId === specialtyId
+          (s) => s.id === service.id
         );
         if (!alreadySelected) {
-          newServices.push({ name: service.name, especialidadeId: specialtyId });
+          newServices.push({ id: service.id, name: service.name, especialidadeId: specialtyId });
         }
       });
     });
@@ -202,20 +204,16 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
     }
   };
 
-  const toggleService = (serviceName: string, especialidadeId: string) => {
-    const isSelected = data.services.some(
-      (s) => s.name === serviceName && s.especialidadeId === especialidadeId
-    );
+  const toggleService = (serviceId: string, serviceName: string, especialidadeId: string) => {
+    const isSelected = data.services.some((s) => s.id === serviceId);
 
     if (isSelected) {
       onUpdate({
-        services: data.services.filter(
-          (s) => !(s.name === serviceName && s.especialidadeId === especialidadeId)
-        ),
+        services: data.services.filter((s) => s.id !== serviceId),
       });
     } else {
       onUpdate({
-        services: [...data.services, { name: serviceName, especialidadeId }],
+        services: [...data.services, { id: serviceId, name: serviceName, especialidadeId }],
       });
     }
   };
@@ -237,24 +235,24 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
     if (serviceSearch.trim() && !serviceExistsInSearch && data.especialidades.length > 0) {
       // Add to the first selected especialidade
       const firstEspecialidade = data.especialidades[0];
+      const customId = `custom_serv_${Date.now()}`;
       onUpdate({
         services: [
           ...data.services,
-          { name: serviceSearch.trim(), especialidadeId: firstEspecialidade.id },
+          { id: customId, name: serviceSearch.trim(), especialidadeId: firstEspecialidade.id },
         ],
       });
       setServiceSearch("");
     }
   };
 
-  const isServiceSelected = (serviceName: string, especialidadeId: string) => {
-    return data.services.some(
-      (s) => s.name === serviceName && s.especialidadeId === especialidadeId
-    );
+  const isServiceSelected = (serviceId: string) => {
+    return data.services.some((s) => s.id === serviceId);
   };
 
   const selectAllServices = () => {
     const allServices = availableServices.map((s) => ({
+      id: s.id,
       name: s.name,
       especialidadeId: s.especialidadeId,
     }));
@@ -418,10 +416,10 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
               </p>
             ) : (
               filteredServices.map((service) => {
-                const isSelected = isServiceSelected(service.name, service.especialidadeId);
+                const isSelected = isServiceSelected(service.id);
                 return (
                   <label
-                    key={`${service.name}-${service.especialidadeId}`}
+                    key={service.id}
                     className={cn(
                       "flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all",
                       isSelected
@@ -431,7 +429,7 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
                   >
                     <Checkbox
                       checked={isSelected}
-                      onCheckedChange={() => toggleService(service.name, service.especialidadeId)}
+                      onCheckedChange={() => toggleService(service.id, service.name, service.especialidadeId)}
                     />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate">{service.name}</p>

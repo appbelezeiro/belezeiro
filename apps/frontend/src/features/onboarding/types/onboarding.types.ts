@@ -36,7 +36,8 @@ export interface OrganizationDTO {
 
 export type ServiceType = 'local' | 'home' | 'both';
 export type DayOfWeek = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
-export type AmenityId = 'wifi' | 'parking' | 'coffee' | 'ac' | 'snacks' | 'waiting-room' | 'accessibility';
+// AmenityId is a string that starts with 'amen_' (from the database)
+export type AmenityId = string;
 
 export interface DaySchedule {
   enabled: boolean;

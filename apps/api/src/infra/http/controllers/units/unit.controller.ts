@@ -126,7 +126,7 @@ export class UnitController {
         especialidades: payload.especialidades,
         services: payload.services,
         serviceType: payload.serviceType,
-        amenities: payload.amenities,
+        amenities: payload.amenities ?? [],
         availability_rules: payload.availability_rules,
         availability_exceptions: payload.availability_exceptions,
       });

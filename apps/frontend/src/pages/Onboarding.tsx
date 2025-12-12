@@ -38,7 +38,7 @@ export interface OnboardingFormData {
   
   // Specialties & Services
   especialidades: { id: string; name: string; icon: string }[];
-  services: { name: string; especialidadeId: string }[];
+  services: { id: string; name: string; especialidadeId: string }[];
   
   // Service Type
   serviceType: "local" | "home" | "both" | null;
@@ -165,13 +165,6 @@ const Onboarding = () => {
 
   // Transform form data to API format
   const transformFormDataToSubmit = (): OnboardingSubmitData => {
-    // Transform services to include ID (generate from name)
-    const servicesWithId = formData.services.map((service) => ({
-      id: `serv_${service.name.toLowerCase().replace(/\s+/g, '_')}`,
-      name: service.name,
-      especialidadeId: service.especialidadeId,
-    }));
-
     return {
       businessName: formData.businessName,
       brandColor: formData.brandColor,
@@ -190,7 +183,7 @@ const Onboarding = () => {
         state: formData.state,
       },
       especialidades: formData.especialidades,
-      services: servicesWithId,
+      services: formData.services,
       serviceType: formData.serviceType as 'local' | 'home' | 'both',
       amenities: formData.amenities as AmenityId[],
       // Pass availability rules directly - no conversion needed

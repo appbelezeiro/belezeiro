@@ -1,11 +1,11 @@
 export type AmenityId =
-  | 'wifi'
-  | 'parking'
-  | 'coffee'
-  | 'ac'
-  | 'snacks'
-  | 'waiting-room'
-  | 'accessibility';
+  | 'amen_wifi'
+  | 'amen_parking'
+  | 'amen_coffee'
+  | 'amen_ac'
+  | 'amen_snacks'
+  | 'amen_waiting-room'
+  | 'amen_accessibility';
 
 export interface Amenity {
   id: AmenityId;
@@ -14,11 +14,11 @@ export interface Amenity {
 }
 
 export const PREDEFINED_AMENITIES: Amenity[] = [
-  { id: 'wifi', name: 'Wi-Fi', icon: '📶' },
-  { id: 'parking', name: 'Estacionamento', icon: '🅿️' },
-  { id: 'coffee', name: 'Café', icon: '☕' },
-  { id: 'ac', name: 'Ar Condicionado', icon: '❄️' },
-  { id: 'snacks', name: 'Lanches', icon: '🍪' },
-  { id: 'waiting-room', name: 'Sala de Espera', icon: '🪑' },
-  { id: 'accessibility', name: 'Acessibilidade', icon: '♿' },
+  { id: 'amen_wifi', name: 'Wi-Fi', icon: '📶' },
+  { id: 'amen_parking', name: 'Estacionamento', icon: '🅿️' },
+  { id: 'amen_coffee', name: 'Café', icon: '☕' },
+  { id: 'amen_ac', name: 'Ar Condicionado', icon: '❄️' },
+  { id: 'amen_snacks', name: 'Lanches', icon: '🍪' },
+  { id: 'amen_waiting-room', name: 'Sala de Espera', icon: '🪑' },
+  { id: 'amen_accessibility', name: 'Acessibilidade', icon: '♿' },
 ];

@@ -24,72 +24,69 @@ export const especialidades: Especialidade[] = [
 ];
 
 export const services: Service[] = [
-  // Cabeleireiro
-  { id: "corte-cabelo", name: "Corte de Cabelo", especialidadeIds: ["spec_cabeleireiro"] },
-  { id: "escova", name: "Escova", especialidadeIds: ["spec_cabeleireiro"] },
-  { id: "coloracao", name: "Coloração", especialidadeIds: ["spec_cabeleireiro"] },
-  { id: "hidratacao", name: "Hidratação", especialidadeIds: ["spec_cabeleireiro"] },
-  { id: "progressiva", name: "Progressiva", especialidadeIds: ["spec_cabeleireiro"] },
-  { id: "luzes", name: "Luzes / Mechas", especialidadeIds: ["spec_cabeleireiro"] },
-  { id: "penteado", name: "Penteado", especialidadeIds: ["spec_cabeleireiro", "spec_maquiador"] },
-  { id: "tratamento-capilar", name: "Tratamento Capilar", especialidadeIds: ["spec_cabeleireiro"] },
+  // Cabeleireiro - IDs must match backend PREDEFINED_SERVICES
+  { id: "serv_corte_feminino", name: "Corte Feminino", especialidadeIds: ["spec_cabeleireiro"] },
+  { id: "serv_corte_masculino", name: "Corte Masculino", especialidadeIds: ["spec_cabeleireiro", "spec_barbeiro"] },
+  { id: "serv_corte_infantil", name: "Corte Infantil", especialidadeIds: ["spec_cabeleireiro"] },
+  { id: "serv_coloracao", name: "Coloração", especialidadeIds: ["spec_cabeleireiro"] },
+  { id: "serv_mechas", name: "Mechas", especialidadeIds: ["spec_cabeleireiro"] },
+  { id: "serv_hidratacao", name: "Hidratação", especialidadeIds: ["spec_cabeleireiro"] },
+  { id: "serv_escova", name: "Escova", especialidadeIds: ["spec_cabeleireiro"] },
+  { id: "serv_penteado", name: "Penteado", especialidadeIds: ["spec_cabeleireiro", "spec_maquiador"] },
+  { id: "serv_progressiva", name: "Progressiva", especialidadeIds: ["spec_cabeleireiro"] },
+  { id: "serv_botox_capilar", name: "Botox Capilar", especialidadeIds: ["spec_cabeleireiro"] },
 
   // Barbeiro
-  { id: "corte-barba", name: "Corte de Barba", especialidadeIds: ["spec_barbeiro"] },
-  { id: "corte-masculino", name: "Corte Masculino", especialidadeIds: ["spec_barbeiro", "spec_cabeleireiro"] },
-  { id: "barba-completa", name: "Barba Completa", especialidadeIds: ["spec_barbeiro"] },
-  { id: "sobrancelha-masc", name: "Sobrancelha Masculina", especialidadeIds: ["spec_barbeiro"] },
-  { id: "pigmentacao-barba", name: "Pigmentação de Barba", especialidadeIds: ["spec_barbeiro"] },
+  { id: "serv_corte_barba", name: "Corte + Barba", especialidadeIds: ["spec_barbeiro"] },
+  { id: "serv_barba", name: "Barba", especialidadeIds: ["spec_barbeiro"] },
+  { id: "serv_corte_navalha", name: "Corte na Navalha", especialidadeIds: ["spec_barbeiro"] },
+  { id: "serv_pigmentacao_barba", name: "Pigmentação de Barba", especialidadeIds: ["spec_barbeiro"] },
+  { id: "serv_relaxamento_barba", name: "Relaxamento de Barba", especialidadeIds: ["spec_barbeiro"] },
 
   // Manicure
-  { id: "manicure-simples", name: "Manicure Simples", especialidadeIds: ["spec_manicure"] },
-  { id: "pedicure", name: "Pedicure", especialidadeIds: ["spec_manicure"] },
-  { id: "esmaltacao-gel", name: "Esmaltação em Gel", especialidadeIds: ["spec_manicure"] },
-  { id: "alongamento-unhas", name: "Alongamento de Unhas", especialidadeIds: ["spec_manicure"] },
-  { id: "nail-art", name: "Nail Art", especialidadeIds: ["spec_manicure"] },
-  { id: "spa-maos", name: "Spa das Mãos", especialidadeIds: ["spec_manicure"] },
+  { id: "serv_manicure", name: "Manicure", especialidadeIds: ["spec_manicure"] },
+  { id: "serv_pedicure", name: "Pedicure", especialidadeIds: ["spec_manicure"] },
+  { id: "serv_manicure_pedicure", name: "Manicure + Pedicure", especialidadeIds: ["spec_manicure"] },
+  { id: "serv_unha_gel", name: "Unha em Gel", especialidadeIds: ["spec_manicure"] },
+  { id: "serv_alongamento_unhas", name: "Alongamento de Unhas", especialidadeIds: ["spec_manicure"] },
+  { id: "serv_unhas_decoradas", name: "Unhas Decoradas", especialidadeIds: ["spec_manicure"] },
 
   // Esteticista
-  { id: "limpeza-pele", name: "Limpeza de Pele", especialidadeIds: ["spec_esteticista"] },
-  { id: "peeling", name: "Peeling", especialidadeIds: ["spec_esteticista"] },
-  { id: "microagulhamento", name: "Microagulhamento", especialidadeIds: ["spec_esteticista"] },
-  { id: "radiofrequencia", name: "Radiofrequência", especialidadeIds: ["spec_esteticista"] },
-  { id: "drenagem-facial", name: "Drenagem Facial", especialidadeIds: ["spec_esteticista"] },
-  { id: "botox", name: "Aplicação de Botox", especialidadeIds: ["spec_esteticista"] },
+  { id: "serv_limpeza_pele", name: "Limpeza de Pele", especialidadeIds: ["spec_esteticista"] },
+  { id: "serv_peeling", name: "Peeling", especialidadeIds: ["spec_esteticista"] },
+  { id: "serv_drenagem_linfatica", name: "Drenagem Linfática", especialidadeIds: ["spec_esteticista", "spec_massagista"] },
+  { id: "serv_massagem_modeladora", name: "Massagem Modeladora", especialidadeIds: ["spec_esteticista", "spec_massagista"] },
+  { id: "serv_tratamento_acne", name: "Tratamento para Acne", especialidadeIds: ["spec_esteticista"] },
 
   // Massagista
-  { id: "massagem-relaxante", name: "Massagem Relaxante", especialidadeIds: ["spec_massagista"] },
-  { id: "massagem-modeladora", name: "Massagem Modeladora", especialidadeIds: ["spec_massagista"] },
-  { id: "drenagem-linfatica", name: "Drenagem Linfática", especialidadeIds: ["spec_massagista"] },
-  { id: "quick-massage", name: "Quick Massage", especialidadeIds: ["spec_massagista"] },
-  { id: "pedras-quentes", name: "Massagem com Pedras Quentes", especialidadeIds: ["spec_massagista"] },
+  { id: "serv_massagem_relaxante", name: "Massagem Relaxante", especialidadeIds: ["spec_massagista"] },
+  { id: "serv_massagem_terapeutica", name: "Massagem Terapêutica", especialidadeIds: ["spec_massagista"] },
+  { id: "serv_quick_massage", name: "Quick Massage", especialidadeIds: ["spec_massagista"] },
+  { id: "serv_massagem_pedras_quentes", name: "Massagem com Pedras Quentes", especialidadeIds: ["spec_massagista"] },
 
   // Designer de Sobrancelhas
-  { id: "design-sobrancelha", name: "Design de Sobrancelha", especialidadeIds: ["spec_designer_sobrancelhas"] },
-  { id: "micropigmentacao", name: "Micropigmentação", especialidadeIds: ["spec_designer_sobrancelhas"] },
-  { id: "henna-sobrancelha", name: "Henna de Sobrancelha", especialidadeIds: ["spec_designer_sobrancelhas"] },
-  { id: "brow-lamination", name: "Brow Lamination", especialidadeIds: ["spec_designer_sobrancelhas"] },
+  { id: "serv_design_sobrancelhas", name: "Design de Sobrancelhas", especialidadeIds: ["spec_designer_sobrancelhas"] },
+  { id: "serv_micropigmentacao", name: "Micropigmentação", especialidadeIds: ["spec_designer_sobrancelhas"] },
+  { id: "serv_henna", name: "Henna", especialidadeIds: ["spec_designer_sobrancelhas"] },
 
   // Maquiador
-  { id: "maquiagem-social", name: "Maquiagem Social", especialidadeIds: ["spec_maquiador"] },
-  { id: "maquiagem-noiva", name: "Maquiagem de Noiva", especialidadeIds: ["spec_maquiador"] },
-  { id: "maquiagem-artistica", name: "Maquiagem Artística", especialidadeIds: ["spec_maquiador"] },
-  { id: "automaquiagem", name: "Aula de Automaquiagem", especialidadeIds: ["spec_maquiador"] },
+  { id: "serv_maquiagem_social", name: "Maquiagem Social", especialidadeIds: ["spec_maquiador"] },
+  { id: "serv_maquiagem_noiva", name: "Maquiagem de Noiva", especialidadeIds: ["spec_maquiador"] },
+  { id: "serv_automaquiagem", name: "Curso de Automaquiagem", especialidadeIds: ["spec_maquiador"] },
 
   // Depilador
-  { id: "depilacao-cera", name: "Depilação com Cera", especialidadeIds: ["spec_depilador"] },
-  { id: "depilacao-laser", name: "Depilação a Laser", especialidadeIds: ["spec_depilador"] },
-  { id: "depilacao-linha", name: "Depilação com Linha", especialidadeIds: ["spec_depilador"] },
+  { id: "serv_depilacao_cera", name: "Depilação com Cera", especialidadeIds: ["spec_depilador"] },
+  { id: "serv_depilacao_laser", name: "Depilação a Laser", especialidadeIds: ["spec_depilador"] },
+  { id: "serv_depilacao_luz_pulsada", name: "Depilação Luz Pulsada", especialidadeIds: ["spec_depilador"] },
 
   // Podólogo
-  { id: "podologia", name: "Podologia", especialidadeIds: ["spec_podologo"] },
-  { id: "tratamento-unha", name: "Tratamento de Unha Encravada", especialidadeIds: ["spec_podologo"] },
-  { id: "reflexologia", name: "Reflexologia Podal", especialidadeIds: ["spec_podologo"] },
+  { id: "serv_podologia", name: "Podologia", especialidadeIds: ["spec_podologo"] },
+  { id: "serv_tratamento_calos", name: "Tratamento de Calos", especialidadeIds: ["spec_podologo"] },
+  { id: "serv_tratamento_unhas_encravadas", name: "Tratamento de Unhas Encravadas", especialidadeIds: ["spec_podologo"] },
 
   // Lash Designer
-  { id: "extensao-cilios", name: "Extensão de Cílios", especialidadeIds: ["spec_lash_designer"] },
-  { id: "lash-lifting", name: "Lash Lifting", especialidadeIds: ["spec_lash_designer"] },
-  { id: "manutencao-cilios", name: "Manutenção de Cílios", especialidadeIds: ["spec_lash_designer"] },
+  { id: "serv_extensao_cilios", name: "Extensão de Cílios", especialidadeIds: ["spec_lash_designer"] },
+  { id: "serv_lifting_cilios", name: "Lifting de Cílios", especialidadeIds: ["spec_lash_designer"] },
 ];
 
 export const getServicesByEspecialidade = (especialidadeId: string): Service[] => {

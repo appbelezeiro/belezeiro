@@ -147,7 +147,9 @@ export class UnitEntity extends BaseEntity<UnitEntityProps> {
     const validEspecialidadeIds = PREDEFINED_ESPECIALIDADES.map((e) => e.id);
 
     for (const espec of especialidades) {
-      if (!validEspecialidadeIds.includes(espec.id)) {
+      // Allow predefined especialidades and custom ones (starting with 'custom-')
+      const isCustomEspecialidade = espec.id.startsWith('custom-');
+      if (!isCustomEspecialidade && !validEspecialidadeIds.includes(espec.id)) {
         throw new InvalidEspecialidadeError(`Invalid especialidade ID: ${espec.id}`);
       }
     }
@@ -162,7 +164,9 @@ export class UnitEntity extends BaseEntity<UnitEntityProps> {
     const especialidadeIds = especialidades.map((e) => e.id);
 
     for (const service of services) {
-      if (!validServiceIds.includes(service.id)) {
+      // Allow predefined services and custom services (starting with 'custom_serv_')
+      const isCustomService = service.id.startsWith('custom_serv_');
+      if (!isCustomService && !validServiceIds.includes(service.id)) {
         throw new InvalidServiceError(`Invalid service ID: ${service.id}`);
       }
 
@@ -179,7 +183,10 @@ export class UnitEntity extends BaseEntity<UnitEntityProps> {
     const validAmenityIds = PREDEFINED_AMENITIES.map((a) => a.id);
 
     for (const amenity of amenities) {
-      if (!validAmenityIds.includes(amenity)) {
+      // Allow predefined amenities and custom ones (starting with 'amen_')
+      // All amenities from the DB have the 'amen_' prefix
+      const isValidAmenity = amenity.startsWith('amen_') || validAmenityIds.includes(amenity);
+      if (!isValidAmenity) {
         throw new InvalidAmenityError(`Invalid amenity ID: ${amenity}`);
       }
     }
