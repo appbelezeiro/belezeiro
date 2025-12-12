@@ -1,5 +1,6 @@
 import { AmenityEntity } from '@/domain/entities/amenity.entity';
 import { IAmenityRepository } from '@/application/contracts/i-amenity-repository.interface';
+import { generateSeedId } from '@/domain/constants/seed-ids';
 
 class UseCase {
   constructor(private readonly amenity_repository: IAmenityRepository) {}
@@ -12,9 +13,9 @@ class UseCase {
       const existing = await this.amenity_repository.find_by_code(seed.code);
 
       if (!existing) {
-        // Create with fixed ID
+        // Create with deterministic ID based on code
         const amenity = new AmenityEntity({
-          id: `amen_${seed.code}`,
+          id: generateSeedId('amen', seed.code),
           code: seed.code,
           name: seed.name,
           description: seed.description,

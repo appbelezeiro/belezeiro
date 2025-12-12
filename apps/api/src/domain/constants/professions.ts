@@ -1,3 +1,5 @@
+import { SPECIALTY_IDS } from './seed-ids';
+
 export interface Especialidade {
   id: string;
   name: string;
@@ -5,14 +7,14 @@ export interface Especialidade {
 }
 
 export const PREDEFINED_ESPECIALIDADES: Especialidade[] = [
-  { id: 'spec_cabeleireiro', name: 'Cabeleireiro(a)', icon: '✂️' },
-  { id: 'spec_barbeiro', name: 'Barbeiro(a)', icon: '💈' },
-  { id: 'spec_manicure', name: 'Manicure', icon: '💅' },
-  { id: 'spec_esteticista', name: 'Esteticista', icon: '✨' },
-  { id: 'spec_massagista', name: 'Massagista', icon: '💆' },
-  { id: 'spec_designer_sobrancelhas', name: 'Designer de Sobrancelhas', icon: '👁️' },
-  { id: 'spec_maquiador', name: 'Maquiador(a)', icon: '💄' },
-  { id: 'spec_depilador', name: 'Depilador(a)', icon: '🌸' },
-  { id: 'spec_podologo', name: 'Podólogo(a)', icon: '🦶' },
-  { id: 'spec_lash_designer', name: 'Lash Designer', icon: '👁️‍🗨️' },
+  { id: SPECIALTY_IDS.CABELEIREIRO, name: 'Cabeleireiro(a)', icon: '✂️' },
+  { id: SPECIALTY_IDS.BARBEIRO, name: 'Barbeiro(a)', icon: '💈' },
+  { id: SPECIALTY_IDS.MANICURE, name: 'Manicure', icon: '💅' },
+  { id: SPECIALTY_IDS.ESTETICISTA, name: 'Esteticista', icon: '✨' },
+  { id: SPECIALTY_IDS.MASSAGISTA, name: 'Massagista', icon: '💆' },
+  { id: SPECIALTY_IDS.DESIGNER_SOBRANCELHAS, name: 'Designer de Sobrancelhas', icon: '👁️' },
+  { id: SPECIALTY_IDS.MAQUIADOR, name: 'Maquiador(a)', icon: '💄' },
+  { id: SPECIALTY_IDS.DEPILADOR, name: 'Depilador(a)', icon: '🌸' },
+  { id: SPECIALTY_IDS.PODOLOGO, name: 'Podólogo(a)', icon: '🦶' },
+  { id: SPECIALTY_IDS.LASH_DESIGNER, name: 'Lash Designer', icon: '👁️‍🗨️' },
 ];

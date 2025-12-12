@@ -1,5 +1,6 @@
 import { SpecialtyEntity } from '@/domain/entities/specialty.entity';
 import { ISpecialtyRepository } from '@/application/contracts/i-specialty-repository.interface';
+import { generateSeedId } from '@/domain/constants/seed-ids';
 
 class UseCase {
   constructor(private readonly specialty_repository: ISpecialtyRepository) {}
@@ -12,9 +13,9 @@ class UseCase {
       const existing = await this.specialty_repository.find_by_code(seed.code);
 
       if (!existing) {
-        // Create with fixed ID
+        // Create with deterministic ID based on code
         const specialty = new SpecialtyEntity({
-          id: `spec_${seed.code}`,
+          id: generateSeedId('spec', seed.code),
           code: seed.code,
           name: seed.name,
           description: seed.description,

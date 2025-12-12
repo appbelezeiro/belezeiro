@@ -1,6 +1,7 @@
 import { SeedSpecialtiesUseCase } from '@/application/usecases/specialty/seed-specialties.usecase';
 import { SeedServicesUseCase } from '@/application/usecases/service/seed-services.usecase';
 import { SeedAmenitiesUseCase } from '@/application/usecases/amenity/seed-amenities.usecase';
+import { getSpecialtyIdByCode, SpecialtyCode } from '@/domain/constants/seed-ids';
 import { SPECIALTY_SEEDS } from './specialty-seeds';
 import { SERVICE_SEEDS } from './service-seeds';
 import { AMENITY_SEEDS } from './amenity-seeds';
@@ -19,18 +20,12 @@ export async function runSeeds(
   });
   console.log(`  ✓ Created ${specialties.length} specialties`);
 
-  // Map specialty codes to IDs for service seeding
-  const specialtyCodeToId = new Map<string, string>();
-  for (const seed of SPECIALTY_SEEDS) {
-    specialtyCodeToId.set(seed.code, `spec_${seed.code}`);
-  }
-
-  // Seed services with mapped specialty_ids
+  // Seed services with deterministic specialty_ids
   console.log('  → Seeding services...');
   const services = await seed_services_usecase.execute({
     seeds: SERVICE_SEEDS.map((seed) => ({
       ...seed,
-      specialty_id: specialtyCodeToId.get(seed.specialty_code)!,
+      specialty_id: getSpecialtyIdByCode(seed.specialty_code as SpecialtyCode),
     })),
   });
   console.log(`  ✓ Created ${services.length} services`);
