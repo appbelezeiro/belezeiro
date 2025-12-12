@@ -1,7 +1,6 @@
 import type { Container } from '@/infra/di/factory-root';
 
 import { Hono } from 'hono';
-import { createUserRoutes } from './users/user.routes';
 import { createAuthRoutes } from './auth/auth.routes';
 import { createBookingRoutes } from './bookings/booking.routes';
 import { createOrganizationRoutes } from './organizations/organization.routes';
@@ -19,12 +18,18 @@ import { createUploadRoutes } from './upload.routes';
 import { createAmenityRoutes } from './amenity.routes';
 import { createUnitAmenityRoutes } from './unit-amenity.routes';
 import { createDashboardRoutes } from './dashboard/dashboard.routes';
+import { createAuthMiddleware } from '../middleware/auth.middleware';
 
 export function createRoutes(container: Container) {
   const app = new Hono();
+  const auth_middleware = createAuthMiddleware(container.services.token_service);
 
   app.route('/auth', createAuthRoutes(container));
-  app.route('/users', createUserRoutes(container));
+
+  app.route('/webhooks', createWebhookRoutes(container));
+
+  app.use(auth_middleware);
+
   app.route('/booking', createBookingRoutes(container));
   app.route('/organizations', createOrganizationRoutes(container));
   app.route('/units', createUnitRoutes(container));
@@ -48,7 +53,6 @@ export function createRoutes(container: Container) {
   // Billing routes
   app.route('/plans', createPlanRoutes(container));
   app.route('/subscriptions', createSubscriptionRoutes(container));
-  app.route('/webhooks', createWebhookRoutes(container));
   app.route('/discounts', createDiscountRoutes(container));
 
   // Dashboard routes

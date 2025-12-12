@@ -5,7 +5,7 @@ class UseCase {
   constructor(private readonly organization_repository: IOrganizationRepository) {}
 
   async execute(input: UseCase.Input): UseCase.Output {
-    return this.organization_repository.find_by_owner_id(input.ownerId);
+    return this.organization_repository.list_by_owner_id(input.ownerId);
   }
 }
 
@@ -14,7 +14,7 @@ declare namespace UseCase {
     ownerId: string;
   };
 
-  export type Output = Promise<OrganizationEntity | null>;
+  export type Output = Promise<OrganizationEntity[]>;
 }
 
-export { UseCase as GetOrganizationByOwnerUseCase };
+export { UseCase as ListOrganizationsByOwnerUseCase };

@@ -2,7 +2,7 @@ import { BaseEntity, BaseEntityCreationProps, BaseEntityProps } from '../base.en
 import { InvalidBusinessNameError } from '@/domain/errors/organizations/organization.errors';
 
 type OrganizationEntityOwnProps = {
-  businessName: string;
+  name: string;
   ownerId: string;
 };
 
@@ -15,7 +15,7 @@ export class OrganizationEntity extends BaseEntity<OrganizationEntityProps> {
   }
 
   constructor(props: OrganizationEntityCreationProps) {
-    OrganizationEntity.validateBusinessName(props.businessName);
+    OrganizationEntity.validateBusinessName(props.name);
 
     super(props);
   }
@@ -34,17 +34,17 @@ export class OrganizationEntity extends BaseEntity<OrganizationEntityProps> {
     }
   }
 
-  get businessName(): string {
-    return this.props.businessName;
+  get name(): string {
+    return this.props.name;
   }
 
   get ownerId(): string {
     return this.props.ownerId;
   }
 
-  update_business_name(newName: string): void {
+  update_name(newName: string): void {
     OrganizationEntity.validateBusinessName(newName);
-    this.props.businessName = newName;
+    this.props.name = newName;
     this.touch();
   }
 }

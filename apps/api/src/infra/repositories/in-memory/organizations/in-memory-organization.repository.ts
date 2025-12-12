@@ -19,9 +19,9 @@ export class InMemoryOrganizationRepository implements IOrganizationRepository {
     return item ? OrganizationDataMapper.toDomain(item) : null;
   }
 
-  async find_by_owner_id(ownerId: string): Promise<OrganizationEntity | null> {
-    const item = this.items.find((i) => i.ownerId === ownerId);
-    return item ? OrganizationDataMapper.toDomain(item) : null;
+  async list_by_owner_id(ownerId: string): Promise<OrganizationEntity[]> {
+    const items = this.items.filter((i) => i.ownerId === ownerId);
+    return items.map(OrganizationDataMapper.toDomain);
   }
 
   async list_all(): Promise<OrganizationEntity[]> {

@@ -1,6 +1,6 @@
 import { IBookingRuleRepository } from '@/application/contracts/bookings/i-booking-rule-repository.interface.js';
 import { BookingRuleEntity } from '@/domain/entities/bookings/booking-rule.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { BookingRuleDataMapper } from '../data-mappers/index.js';
 
 export class PrismaBookingRuleRepository implements IBookingRuleRepository {

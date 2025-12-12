@@ -1,6 +1,6 @@
 import { INotificationRepository } from '@/application/contracts/notifications/i-notification-repository.interface.js';
 import { NotificationEntity } from '@/domain/entities/notifications/notification.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { NotificationDataMapper } from '../data-mappers/index.js';
 
 export class PrismaNotificationRepository implements INotificationRepository {

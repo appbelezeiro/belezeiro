@@ -5,7 +5,7 @@ export class OrganizationMapper {
   static toDTO(entity: OrganizationEntity): OrganizationDTO {
     return {
       id: entity.id,
-      businessName: entity.businessName,
+      name: entity.name,
       ownerId: entity.ownerId,
       created_at: entity.created_at,
       updated_at: entity.updated_at,
@@ -15,7 +15,7 @@ export class OrganizationMapper {
   static toSummary(entity: OrganizationEntity): OrganizationSummaryDTO {
     return {
       id: entity.id,
-      businessName: entity.businessName,
+      name: entity.name,
     };
   }
 

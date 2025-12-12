@@ -7,8 +7,9 @@ export function createOrganizationRoutes(container: Container) {
   const controller = new OrganizationController(container);
 
   router.post('/', (context) => controller.create(context));
+  router.get('/', (context) => controller.list(context));
+  router.get('/owner/:ownerId', (context) => controller.list_by_owner(context));
   router.get('/:id', (context) => controller.get_by_id(context));
-  router.get('/owner/:ownerId', (context) => controller.get_by_owner(context));
   router.put('/:id', (context) => controller.update(context));
 
   return router;

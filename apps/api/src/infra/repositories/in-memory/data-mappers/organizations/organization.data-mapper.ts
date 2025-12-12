@@ -2,14 +2,8 @@ import { OrganizationEntity } from '@/domain/entities/organizations/organization
 
 export interface OrganizationPersistence {
   id: string;
-  businessName: string;
-  brandColor: string;
+  name: string;
   ownerId: string;
-  subscription?: {
-    plan: 'free' | 'pro' | 'enterprise';
-    status: 'active' | 'inactive' | 'suspended';
-    expiresAt?: Date;
-  };
   created_at: Date;
   updated_at: Date;
 }
@@ -18,10 +12,8 @@ export class OrganizationDataMapper {
   static toDomain(raw: OrganizationPersistence): OrganizationEntity {
     return new OrganizationEntity({
       id: raw.id,
-      businessName: raw.businessName,
-      brandColor: raw.brandColor,
+      name: raw.name,
       ownerId: raw.ownerId,
-      subscription: raw.subscription,
       created_at: raw.created_at,
       updated_at: raw.updated_at,
     });
@@ -30,10 +22,8 @@ export class OrganizationDataMapper {
   static toPersistence(entity: OrganizationEntity): OrganizationPersistence {
     return {
       id: entity.id,
-      businessName: entity.businessName,
-      brandColor: entity.brandColor,
+      name: entity.name,
       ownerId: entity.ownerId,
-      subscription: entity.subscription,
       created_at: entity.created_at,
       updated_at: entity.updated_at,
     };

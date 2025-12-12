@@ -52,7 +52,7 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"provider\": \"google\",\n  \"token\": \"google_oauth_token\"\n}"
+        "text": "{\n  \"providerId\": \"12345\",\n  \"token\": \"google_oauth_token\",\n  \"name\": \"Leonardo Mendes\",\n  \"email\": \"leo@gmail.com\"\n}"
       },
       "parameters": [],
       "headers": [{ "name": "Content-Type", "value": "application/json" }],
@@ -96,27 +96,6 @@
       "parentId": "fld_auth"
     },
     {
-      "_id": "fld_users",
-      "_type": "request_group",
-      "name": "Users",
-      "parentId": "wrk_belezeiro"
-    },
-    {
-      "_id": "req_users_create",
-      "_type": "request",
-      "name": "Create User",
-      "url": "{{ _.BASE_URL }}/api/users",
-      "method": "POST",
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\n  \"name\": \"Joao Silva\",\n  \"email\": \"joao@example.com\",\n  \"providerId\": \"google_123456\",\n  \"photoUrl\": \"https://example.com/photo.jpg\"\n}"
-      },
-      "parameters": [],
-      "headers": [{ "name": "Content-Type", "value": "application/json" }],
-      "authentication": {},
-      "parentId": "fld_users"
-    },
-    {
       "_id": "fld_organizations",
       "_type": "request_group",
       "name": "Organizations",
@@ -130,7 +109,7 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"businessName\": \"Salao de Beleza ABC\",\n  \"ownerId\": \"user_xxx\"\n}"
+        "text": "{\n  \"name\": \"Salao de Beleza ABC\",\n  \"ownerId\": \"user_xxx\"\n}"
       },
       "parameters": [],
       "headers": [{ "name": "Content-Type", "value": "application/json" }],
@@ -169,7 +148,7 @@
       "method": "PUT",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"businessName\": \"Salao de Beleza XYZ\"\n}"
+        "text": "{\n  \"name\": \"Salao de Beleza XYZ\"\n}"
       },
       "parameters": [],
       "headers": [{ "name": "Content-Type", "value": "application/json" }],

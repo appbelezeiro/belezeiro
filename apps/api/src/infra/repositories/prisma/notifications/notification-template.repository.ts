@@ -1,6 +1,6 @@
 import { INotificationTemplateRepository } from '@/application/contracts/notifications/i-notification-template-repository.interface.js';
 import { NotificationTemplateEntity, TemplateChannel } from '@/domain/entities/notifications/notification-template.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { NotificationTemplateDataMapper } from '../data-mappers/index.js';
 import { NotificationTemplateChannel } from '@prisma/client';
 

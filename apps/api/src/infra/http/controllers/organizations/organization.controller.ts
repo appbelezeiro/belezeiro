@@ -4,30 +4,31 @@ import { z } from 'zod';
 import { OrganizationMapper } from '@/application/dtos/mappers/organizations/organization.mapper';
 import { OrganizationNotFoundError, OrganizationAlreadyExistsError } from '@/domain/errors/organizations/organization.errors';
 import { NotFoundError, ConflictError } from '../../errors/http-errors';
+import { AuthContext } from '../../middleware/auth.middleware';
 
 const CreateOrganizationSchema = z.object({
-  businessName: z.string().min(2).max(100),
-  ownerId: z.string().min(1),
+  name: z.string().min(2).max(100),
 });
 
 const UpdateOrganizationSchema = z.object({
-  businessName: z.string().min(2).max(100).optional(),
+  name: z.string().min(2).max(100).optional(),
 });
 
 export class OrganizationController {
-  constructor(private readonly container: Container) {}
+  constructor(private readonly container: Container) { }
 
   async create(c: Context) {
     try {
       const body = await c.req.json();
       const payload = CreateOrganizationSchema.parse(body);
+      const auth = c.get("auth") as AuthContext;
 
       const organization = await this.container.use_cases.create_organization.execute({
-        businessName: payload.businessName,
-        ownerId: payload.ownerId,
+        name: payload.name,
+        owner_id: auth.userId,
       });
 
-      return c.json(OrganizationMapper.toDTO(organization), 201);
+      return c.json(OrganizationMapper.toSummary(organization), 201);
     } catch (error) {
       if (error instanceof OrganizationAlreadyExistsError) {
         throw new ConflictError(error.message);
@@ -48,18 +49,30 @@ export class OrganizationController {
     return c.json(OrganizationMapper.toDTO(organization));
   }
 
-  async get_by_owner(c: Context) {
+  async list(c: Context) {
+    const { userId } = c.get("auth") as AuthContext;
+
+    const organizations = await this.container.use_cases.list_organizations_by_owner.execute({
+      ownerId: userId,
+    });
+
+    return c.json({
+      items: organizations.map(OrganizationMapper.toDTO),
+      total: organizations.length,
+    });
+  }
+
+  async list_by_owner(c: Context) {
     const { ownerId } = c.req.param();
 
-    const organization = await this.container.use_cases.get_organization_by_owner.execute({
+    const organizations = await this.container.use_cases.list_organizations_by_owner.execute({
       ownerId,
     });
 
-    if (!organization) {
-      throw new NotFoundError('Organization not found');
-    }
-
-    return c.json(OrganizationMapper.toDTO(organization));
+    return c.json({
+      items: organizations.map(OrganizationMapper.toDTO),
+      total: organizations.length,
+    });
   }
 
   async update(c: Context) {
@@ -70,7 +83,7 @@ export class OrganizationController {
 
       const organization = await this.container.use_cases.update_organization.execute({
         id,
-        businessName: payload.businessName,
+        name: payload.name,
       });
 
       return c.json(OrganizationMapper.toDTO(organization));

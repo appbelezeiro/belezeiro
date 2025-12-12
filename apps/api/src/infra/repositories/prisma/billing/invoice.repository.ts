@@ -1,6 +1,6 @@
 import { IInvoiceRepository } from '@/application/contracts/billing/i-invoice-repository.interface.js';
 import { InvoiceEntity, InvoiceStatus } from '@/domain/entities/billing/invoice.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { InvoiceDataMapper } from '../data-mappers/index.js';
 import { InvoiceStatus as PrismaInvoiceStatus } from '@prisma/client';
 

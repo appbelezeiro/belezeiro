@@ -1,6 +1,6 @@
 import { INotificationPreferenceRepository } from '@/application/contracts/notifications/i-notification-preference-repository.interface.js';
 import { NotificationPreferenceEntity, NotificationCategory } from '@/domain/entities/notifications/notification-preference.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { NotificationPreferenceDataMapper } from '../data-mappers/index.js';
 import { NotificationPreferenceCategory } from '@prisma/client';
 

@@ -23,13 +23,7 @@ describe('GetOrganizationByIdUseCase', () => {
   it('should return organization by id', async () => {
     const organization = new OrganizationEntity({
       ownerId: 'owner_123',
-      businessName: 'Beauty Salon',
-      brandColor: '#FF6B6B',
-      subscription: {
-        plan: 'pro',
-        status: 'active',
-        expiresAt: new Date('2025-12-31'),
-      },
+      name: 'Beauty Salon',
     });
 
     await organization_repository.create(organization);
@@ -42,7 +36,7 @@ describe('GetOrganizationByIdUseCase', () => {
 
     expect(result).not.toBeNull();
     expect(result?.id).toBe(organization.id);
-    expect(result?.businessName).toBe('Beauty Salon');
+    expect(result?.name).toBe('Beauty Salon');
   });
 
   it('should return null when organization does not exist', async () => {
@@ -58,13 +52,7 @@ describe('GetOrganizationByIdUseCase', () => {
   it('should return organization with all properties', async () => {
     const organization = new OrganizationEntity({
       ownerId: 'owner_123',
-      businessName: 'Premium Spa',
-      brandColor: '#4ECDC4',
-      subscription: {
-        plan: 'enterprise',
-        status: 'active',
-        expiresAt: new Date('2025-12-31'),
-      },
+      name: 'Premium Spa',
     });
 
     await organization_repository.create(organization);
@@ -76,80 +64,28 @@ describe('GetOrganizationByIdUseCase', () => {
     const result = await sut.execute(input);
 
     expect(result?.ownerId).toBe('owner_123');
-    expect(result?.businessName).toBe('Premium Spa');
-    expect(result?.brandColor).toBe('#4ECDC4');
-    expect(result?.subscription?.plan).toBe('enterprise');
-    expect(result?.subscription?.status).toBe('active');
-    expect(result?.subscription?.expiresAt).toBeInstanceOf(Date);
+    expect(result?.name).toBe('Premium Spa');
+    expect(result?.id).toContain('org_');
   });
 
-  it('should return organization with suspended subscription', async () => {
-    const organization = new OrganizationEntity({
+  it('should return correct organization when multiple exist', async () => {
+    const org1 = new OrganizationEntity({
       ownerId: 'owner_123',
-      businessName: 'Suspended Salon',
-      brandColor: '#FF6B6B',
-      subscription: {
-        plan: 'pro',
-        status: 'suspended',
-      },
+      name: 'Salon 1',
     });
 
-    await organization_repository.create(organization);
-
-    const input = {
-      id: organization.id,
-    };
-
-    const result = await sut.execute(input);
-
-    expect(result?.subscription?.status).toBe('suspended');
-  });
-
-  it('should return organization with inactive subscription', async () => {
-    const organization = new OrganizationEntity({
-      ownerId: 'owner_123',
-      businessName: 'Inactive Salon',
-      brandColor: '#FF6B6B',
-      subscription: {
-        plan: 'free',
-        status: 'inactive',
-      },
+    const org2 = new OrganizationEntity({
+      ownerId: 'owner_456',
+      name: 'Salon 2',
     });
 
-    await organization_repository.create(organization);
+    await organization_repository.create(org1);
+    await organization_repository.create(org2);
 
-    const input = {
-      id: organization.id,
-    };
+    const result = await sut.execute({ id: org2.id });
 
-    const result = await sut.execute(input);
-
-    expect(result?.subscription?.status).toBe('inactive');
-  });
-
-  it('should return organization with different plans', async () => {
-    const plans = ['free', 'pro', 'enterprise'] as const;
-
-    for (const plan of plans) {
-      const organization = new OrganizationEntity({
-        ownerId: `owner_${plan}`,
-        businessName: `Salon ${plan}`,
-        brandColor: '#FF6B6B',
-        subscription: {
-          plan,
-          status: 'active',
-        },
-      });
-
-      await organization_repository.create(organization);
-
-      const input = {
-        id: organization.id,
-      };
-
-      const result = await sut.execute(input);
-
-      expect(result?.subscription?.plan).toBe(plan);
-    }
+    expect(result?.id).toBe(org2.id);
+    expect(result?.name).toBe('Salon 2');
+    expect(result?.ownerId).toBe('owner_456');
   });
 });

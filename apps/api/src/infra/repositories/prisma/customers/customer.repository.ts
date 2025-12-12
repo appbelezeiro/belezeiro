@@ -1,6 +1,6 @@
 import { ICustomerRepository } from '@/application/contracts/customers/i-customer-repository.interface.js';
 import { CustomerEntity } from '@/domain/entities/customers/customer.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { CustomerDataMapper } from '../data-mappers/index.js';
 
 export class PrismaCustomerRepository implements ICustomerRepository {

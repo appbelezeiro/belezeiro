@@ -1,6 +1,6 @@
 import { ICouponRedemptionRepository } from '@/application/contracts/billing/i-coupon-redemption-repository.interface.js';
 import { CouponRedemptionEntity } from '@/domain/entities/billing/coupon-redemption.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { CouponRedemptionDataMapper } from '../data-mappers/index.js';
 
 export class PrismaCouponRedemptionRepository implements ICouponRedemptionRepository {

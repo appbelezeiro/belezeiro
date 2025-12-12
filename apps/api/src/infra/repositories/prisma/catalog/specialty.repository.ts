@@ -1,7 +1,7 @@
 import { ISpecialtyRepository } from '@/application/contracts/i-specialty-repository.interface.js';
 import { SpecialtyEntity } from '@/domain/entities/specialty.entity.js';
 import { CursorPaginatedResponse, DEFAULT_PAGINATION_LIMIT, MAX_PAGINATION_LIMIT } from '@/application/types/cursor-pagination.types.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { SpecialtyDataMapper } from '../data-mappers/index.js';
 
 export class PrismaSpecialtyRepository implements ISpecialtyRepository {

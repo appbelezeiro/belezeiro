@@ -1,4 +1,3 @@
-import { CreateUserUseCase } from '@/application/usecases/users/create-user.usecase';
 import { CompleteOnboardingUseCase } from '@/application/usecases/users/complete-onboarding.usecase';
 import { AuthenticateWithProviderUseCase } from '@/application/usecases/auth/authenticate-with-provider.usecase';
 import { RefreshTokensUseCase } from '@/application/usecases/auth/refresh-tokens.usecase';
@@ -17,7 +16,7 @@ import { GetAvailableDaysUseCase } from '@/application/usecases/bookings/get-ava
 import { GetAvailableSlotsUseCase } from '@/application/usecases/bookings/get-available-slots.usecase';
 import { CreateOrganizationUseCase } from '@/application/usecases/organizations/create-organization.usecase';
 import { GetOrganizationByIdUseCase } from '@/application/usecases/organizations/get-organization-by-id.usecase';
-import { GetOrganizationByOwnerUseCase } from '@/application/usecases/organizations/get-organization-by-owner.usecase';
+import { ListOrganizationsByOwnerUseCase } from '@/application/usecases/organizations/list-organizations-by-owner.usecase';
 import { UpdateOrganizationUseCase } from '@/application/usecases/organizations/update-organization.usecase';
 import { CreateUnitUseCase } from '@/application/usecases/units/create-unit.usecase';
 import { GetUnitByIdUseCase } from '@/application/usecases/units/get-unit-by-id.usecase';
@@ -88,7 +87,6 @@ import type { Services } from './services.factory';
 export function createUseCases(repositories: Repositories, services: Services) {
   return {
     // User use cases
-    create_user: new CreateUserUseCase(repositories.user_repository),
     complete_onboarding: new CompleteOnboardingUseCase(repositories.user_repository),
 
     // Auth use cases
@@ -145,7 +143,7 @@ export function createUseCases(repositories: Repositories, services: Services) {
       repositories.user_repository,
     ),
     get_organization_by_id: new GetOrganizationByIdUseCase(repositories.organization_repository),
-    get_organization_by_owner: new GetOrganizationByOwnerUseCase(
+    list_organizations_by_owner: new ListOrganizationsByOwnerUseCase(
       repositories.organization_repository,
     ),
     update_organization: new UpdateOrganizationUseCase(repositories.organization_repository),

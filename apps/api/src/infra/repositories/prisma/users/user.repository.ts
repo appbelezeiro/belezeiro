@@ -1,6 +1,6 @@
 import { IUserRepository } from '@/application/contracts/users/i-user-repository.interface.js';
 import { UserEntity } from '@/domain/entities/users/user.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { UserDataMapper } from '../data-mappers/index.js';
 
 export class PrismaUserRepository implements IUserRepository {

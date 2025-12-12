@@ -1,6 +1,6 @@
 import { IPlanRepository } from '@/application/contracts/billing/i-plan-repository.interface.js';
 import { PlanEntity } from '@/domain/entities/billing/plan.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { PlanDataMapper } from '../data-mappers/index.js';
 
 export class PrismaPlanRepository implements IPlanRepository {

@@ -1,6 +1,6 @@
 import { IUnitAvailabilityRuleRepository } from '@/application/contracts/units/i-unit-availability-rule-repository.interface.js';
 import { UnitAvailabilityRuleEntity } from '@/domain/entities/units/unit-availability-rule.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { UnitAvailabilityRuleDataMapper } from '../data-mappers/index.js';
 
 export class PrismaUnitAvailabilityRuleRepository implements IUnitAvailabilityRuleRepository {

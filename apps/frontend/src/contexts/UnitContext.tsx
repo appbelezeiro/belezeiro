@@ -114,7 +114,7 @@ export function UnitProvider({ children }: UnitProviderProps) {
     queryKey: ["organization", "owner", user?.id],
     queryFn: async () => {
       if (!user?.id) return null;
-      const response = await apiClient.get<{ id: string; business_name: string }>(
+      const response = await apiClient.get<{ id: string; name: string }>(
         API_ENDPOINTS.ORGANIZATIONS.BY_OWNER(user.id)
       );
       return response.data;
@@ -129,7 +129,7 @@ export function UnitProvider({ children }: UnitProviderProps) {
     if (orgData) {
       setOrganization({
         id: orgData.id,
-        businessName: orgData.business_name,
+        businessName: orgData.name,
       });
     }
   }, [orgData]);

@@ -1,0 +1,611 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+// ============================================
+// CORE MODELS
+// ============================================
+
+model User {
+  id                   String   @id // usr_*
+  name                 String
+  email                String   @unique
+  provider_id          String   @unique @map("provider_id")
+  photo_url            String?  @map("photo_url")
+  onboarding_completed Boolean  @default(false) @map("onboarding_completed")
+  created_at           DateTime @default(now()) @map("created_at")
+  updated_at           DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  organization       Organization?
+  bookings_as_owner  Booking[]                @relation("BookingOwner")
+  bookings_as_client Booking[]                @relation("BookingClient")
+  booking_rules      BookingRule[]
+  booking_exceptions BookingException[]
+  subscriptions      Subscription[]
+  invoices           Invoice[]
+  coupon_redemptions CouponRedemption[]
+  notifications      Notification[]
+  notification_prefs NotificationPreference[]
+  customer_profiles  Customer[]
+
+  @@map("users")
+}
+
+model Organization {
+  id         String   @id // org_*
+  name       String   @map("name")
+  owner_id   String   @unique @map("owner_id")
+  created_at DateTime @default(now()) @map("created_at")
+  updated_at DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  owner User   @relation(fields: [owner_id], references: [id], onDelete: Cascade)
+  units Unit[]
+
+  @@map("organizations")
+}
+
+model Unit {
+  id              String      @id // unit_*
+  organization_id String      @map("organization_id")
+  name            String
+  brand_color     String      @map("brand_color")
+  logo            String?
+  gallery         String[]    @default([])
+  is_active       Boolean     @default(true) @map("is_active")
+  whatsapp        String
+  phone           String?
+  address         Json // { cep, street, number, complement?, neighborhood, city, state }
+  especialidades  Json // EspecialidadeRef[]
+  services        Json // ServiceRef[]
+  service_type    ServiceType @default(local) @map("service_type")
+  amenities       String[]    @default([]) // AmenityId[]
+  subscription    Json? // { plan, status, expiresAt }
+  working_hours   Json?       @map("working_hours") // Record<DayOfWeek, DaySchedule>
+  lunch_break     Json?       @map("lunch_break") // { enabled, start, end }
+  created_at      DateTime    @default(now()) @map("created_at")
+  updated_at      DateTime    @updatedAt @map("updated_at")
+
+  // Relations
+  organization                 Organization                @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  unit_specialties             UnitSpecialty[]
+  unit_services                UnitService[]
+  unit_amenities               UnitAmenity[]
+  unit_availability_rules      UnitAvailabilityRule[]
+  unit_availability_exceptions UnitAvailabilityException[]
+  subscription_record          Subscription?
+  bookings                     Booking[]
+  customers                    Customer[]
+
+  @@map("units")
+}
+
+enum ServiceType {
+  local
+  home
+  both
+}
+
+// ============================================
+// CATALOG MODELS
+// ============================================
+
+model Specialty {
+  id            String   @id // spec_*
+  code          String   @unique
+  name          String
+  description   String?
+  icon          String
+  is_predefined Boolean  @default(false) @map("is_predefined")
+  is_active     Boolean  @default(true) @map("is_active")
+  created_at    DateTime @default(now()) @map("created_at")
+  updated_at    DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  services         Service[]
+  unit_specialties UnitSpecialty[]
+
+  @@map("specialties")
+}
+
+model Amenity {
+  id            String   @id // amen_*
+  code          String   @unique
+  name          String
+  description   String?
+  icon          String
+  is_predefined Boolean  @default(false) @map("is_predefined")
+  is_active     Boolean  @default(true) @map("is_active")
+  created_at    DateTime @default(now()) @map("created_at")
+  updated_at    DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  unit_amenities UnitAmenity[]
+
+  @@map("amenities")
+}
+
+model Service {
+  id                       String   @id // serv_*
+  specialty_id             String   @map("specialty_id")
+  code                     String   @unique
+  name                     String
+  description              String?
+  default_duration_minutes Int      @map("default_duration_minutes")
+  default_price_cents      Int      @map("default_price_cents")
+  is_predefined            Boolean  @default(false) @map("is_predefined")
+  is_active                Boolean  @default(true) @map("is_active")
+  created_at               DateTime @default(now()) @map("created_at")
+  updated_at               DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  specialty     Specialty     @relation(fields: [specialty_id], references: [id], onDelete: Cascade)
+  unit_services UnitService[]
+  bookings      Booking[]
+
+  @@map("services")
+}
+
+// ============================================
+// UNIT ASSOCIATION MODELS (Join Tables)
+// ============================================
+
+model UnitSpecialty {
+  id           String   @id // usp_*
+  unit_id      String   @map("unit_id")
+  specialty_id String   @map("specialty_id")
+  created_at   DateTime @default(now()) @map("created_at")
+  updated_at   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  unit      Unit      @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+  specialty Specialty @relation(fields: [specialty_id], references: [id], onDelete: Cascade)
+
+  @@unique([unit_id, specialty_id])
+  @@map("unit_specialties")
+}
+
+model UnitAmenity {
+  id         String   @id // uam_*
+  unit_id    String   @map("unit_id")
+  amenity_id String   @map("amenity_id")
+  created_at DateTime @default(now()) @map("created_at")
+  updated_at DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  unit    Unit    @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+  amenity Amenity @relation(fields: [amenity_id], references: [id], onDelete: Cascade)
+
+  @@unique([unit_id, amenity_id])
+  @@map("unit_amenities")
+}
+
+model UnitService {
+  id                      String   @id // usv_*
+  unit_id                 String   @map("unit_id")
+  service_id              String   @map("service_id")
+  custom_price_cents      Int?     @map("custom_price_cents")
+  custom_duration_minutes Int?     @map("custom_duration_minutes")
+  is_active               Boolean  @default(true) @map("is_active")
+  created_at              DateTime @default(now()) @map("created_at")
+  updated_at              DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  unit    Unit    @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+  service Service @relation(fields: [service_id], references: [id], onDelete: Cascade)
+
+  @@unique([unit_id, service_id])
+  @@map("unit_services")
+}
+
+// ============================================
+// BOOKING MODELS
+// ============================================
+
+model Booking {
+  id          String        @id // book_*
+  user_id     String        @map("user_id")
+  client_id   String        @map("client_id")
+  unit_id     String        @map("unit_id")
+  service_id  String?       @map("service_id")
+  price_cents Int?          @map("price_cents")
+  notes       String?
+  start_at    DateTime      @map("start_at")
+  end_at      DateTime      @map("end_at")
+  status      BookingStatus @default(confirmed)
+  created_at  DateTime      @default(now()) @map("created_at")
+  updated_at  DateTime      @updatedAt @map("updated_at")
+
+  // Relations
+  owner   User     @relation("BookingOwner", fields: [user_id], references: [id], onDelete: Cascade)
+  client  User     @relation("BookingClient", fields: [client_id], references: [id], onDelete: Cascade)
+  unit    Unit     @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+  service Service? @relation(fields: [service_id], references: [id], onDelete: SetNull)
+
+  @@map("bookings")
+}
+
+enum BookingStatus {
+  confirmed
+  cancelled
+  completed
+  no_show
+}
+
+model Customer {
+  id         String   @id // cust_*
+  user_id    String   @map("user_id")
+  unit_id    String   @map("unit_id")
+  notes      String?
+  created_at DateTime @default(now()) @map("created_at")
+  updated_at DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  unit Unit @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, unit_id])
+  @@map("customers")
+}
+
+model BookingRule {
+  id                              String          @id // brl_*
+  user_id                         String          @map("user_id")
+  type                            BookingRuleType
+  weekday                         Int?
+  date                            String? // YYYY-MM-DD
+  start_time                      DateTime        @map("start_time")
+  end_time                        DateTime        @map("end_time")
+  slot_duration_minutes           Int             @map("slot_duration_minutes")
+  min_advance_minutes             Int?            @map("min_advance_minutes")
+  max_duration_minutes            Int?            @map("max_duration_minutes")
+  max_bookings_per_day            Int?            @map("max_bookings_per_day")
+  max_bookings_per_client_per_day Int?            @map("max_bookings_per_client_per_day")
+  metadata                        Json?
+  created_at                      DateTime        @default(now()) @map("created_at")
+  updated_at                      DateTime        @updatedAt @map("updated_at")
+
+  // Relations
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("booking_rules")
+}
+
+enum BookingRuleType {
+  weekly
+  specific_date
+}
+
+model BookingException {
+  id                    String               @id // bex_*
+  user_id               String               @map("user_id")
+  date                  String // YYYY-MM-DD
+  type                  BookingExceptionType
+  start_time            DateTime?            @map("start_time")
+  end_time              DateTime?            @map("end_time")
+  slot_duration_minutes Int?                 @map("slot_duration_minutes")
+  reason                String?
+  created_at            DateTime             @default(now()) @map("created_at")
+  updated_at            DateTime             @updatedAt @map("updated_at")
+
+  // Relations
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("booking_exceptions")
+}
+
+enum BookingExceptionType {
+  block
+  override
+}
+
+// ============================================
+// UNIT AVAILABILITY MODELS
+// ============================================
+
+model UnitAvailabilityRule {
+  id                    String                   @id // uar_*
+  unit_id               String                   @map("unit_id")
+  type                  UnitAvailabilityRuleType
+  weekday               Int?
+  date                  String? // YYYY-MM-DD
+  start_time            String                   @map("start_time") // HH:MM
+  end_time              String                   @map("end_time") // HH:MM
+  slot_duration_minutes Int                      @map("slot_duration_minutes")
+  is_active             Boolean                  @default(true) @map("is_active")
+  metadata              Json?
+  created_at            DateTime                 @default(now()) @map("created_at")
+  updated_at            DateTime                 @updatedAt @map("updated_at")
+
+  // Relations
+  unit Unit @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+
+  @@map("unit_availability_rules")
+}
+
+enum UnitAvailabilityRuleType {
+  weekly
+  specific_date
+}
+
+model UnitAvailabilityException {
+  id                    String                        @id // uex_*
+  unit_id               String                        @map("unit_id")
+  date                  String // YYYY-MM-DD
+  type                  UnitAvailabilityExceptionType
+  start_time            String?                       @map("start_time") // HH:MM
+  end_time              String?                       @map("end_time") // HH:MM
+  slot_duration_minutes Int?                          @map("slot_duration_minutes")
+  reason                String?
+  created_at            DateTime                      @default(now()) @map("created_at")
+  updated_at            DateTime                      @updatedAt @map("updated_at")
+
+  // Relations
+  unit Unit @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+
+  @@map("unit_availability_exceptions")
+}
+
+enum UnitAvailabilityExceptionType {
+  block
+  override
+}
+
+// ============================================
+// BILLING MODELS
+// ============================================
+
+model Plan {
+  id          String          @id // plan_*
+  name        String          @unique
+  description String?
+  price       Int // price in cents
+  currency    String          @default("BRL")
+  interval    RenewalInterval
+  features    Json // PlanFeatures
+  limits      Json // PlanLimits
+  trial_days  Int?            @map("trial_days")
+  is_active   Boolean         @default(true) @map("is_active")
+  metadata    Json?
+  created_at  DateTime        @default(now()) @map("created_at")
+  updated_at  DateTime        @updatedAt @map("updated_at")
+
+  // Relations
+  subscriptions Subscription[]
+
+  @@map("plans")
+}
+
+enum RenewalInterval {
+  monthly
+  yearly
+  custom
+}
+
+model Subscription {
+  id                       String             @id // sub_*
+  unit_id                  String             @unique @map("unit_id")
+  user_id                  String             @map("user_id")
+  plan_id                  String             @map("plan_id")
+  status                   SubscriptionStatus
+  start_date               DateTime           @map("start_date")
+  current_period_start     DateTime           @map("current_period_start")
+  current_period_end       DateTime           @map("current_period_end")
+  cancel_at_period_end     Boolean            @default(false) @map("cancel_at_period_end")
+  canceled_at              DateTime?          @map("canceled_at")
+  trial_end                DateTime?          @map("trial_end")
+  renewal_interval         RenewalInterval    @map("renewal_interval")
+  discount_id              String?            @map("discount_id")
+  provider_subscription_id String?            @map("provider_subscription_id")
+  metadata                 Json?
+  created_at               DateTime           @default(now()) @map("created_at")
+  updated_at               DateTime           @updatedAt @map("updated_at")
+
+  // Relations
+  unit               Unit               @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+  user               User               @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  plan               Plan               @relation(fields: [plan_id], references: [id])
+  discount           Discount?          @relation(fields: [discount_id], references: [id])
+  invoices           Invoice[]
+  coupon_redemptions CouponRedemption[]
+
+  @@map("subscriptions")
+}
+
+enum SubscriptionStatus {
+  incomplete
+  incomplete_expired
+  trialing
+  active
+  past_due
+  unpaid
+  canceled
+  expired
+}
+
+model Invoice {
+  id                  String        @id // inv_*
+  user_id             String        @map("user_id")
+  subscription_id     String        @map("subscription_id")
+  amount              Int // amount in cents
+  currency            String        @default("BRL")
+  status              InvoiceStatus
+  line_items          Json // InvoiceLineItem[]
+  due_date            DateTime      @map("due_date")
+  paid_at             DateTime?     @map("paid_at")
+  provider_invoice_id String?       @map("provider_invoice_id")
+  metadata            Json?
+  created_at          DateTime      @default(now()) @map("created_at")
+  updated_at          DateTime      @updatedAt @map("updated_at")
+
+  // Relations
+  user         User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  subscription Subscription @relation(fields: [subscription_id], references: [id], onDelete: Cascade)
+
+  @@map("invoices")
+}
+
+enum InvoiceStatus {
+  open
+  paid
+  uncollectible
+  void
+}
+
+model Discount {
+  id                  String           @id // disc_*
+  code                String           @unique
+  type                DiscountType
+  value               Int // percentage or fixed cents
+  duration            DiscountDuration
+  repeating_count     Int?             @map("repeating_count")
+  assigned_to_user_id String?          @map("assigned_to_user_id")
+  max_redemptions     Int?             @map("max_redemptions")
+  redemptions_count   Int              @default(0) @map("redemptions_count")
+  expires_at          DateTime?        @map("expires_at")
+  is_active           Boolean          @default(true) @map("is_active")
+  metadata            Json?
+  created_at          DateTime         @default(now()) @map("created_at")
+  updated_at          DateTime         @updatedAt @map("updated_at")
+
+  // Relations
+  subscriptions Subscription[]
+
+  @@map("discounts")
+}
+
+enum DiscountType {
+  percentage
+  fixed
+  free_period
+}
+
+enum DiscountDuration {
+  once
+  repeating
+  forever
+}
+
+model CouponRedemption {
+  id              String   @id // cred_*
+  coupon_id       String   @map("coupon_id")
+  user_id         String   @map("user_id")
+  subscription_id String   @map("subscription_id")
+  redeemed_at     DateTime @default(now()) @map("redeemed_at")
+  metadata        Json?
+  created_at      DateTime @default(now()) @map("created_at")
+  updated_at      DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user         User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  subscription Subscription @relation(fields: [subscription_id], references: [id], onDelete: Cascade)
+
+  @@map("coupon_redemptions")
+}
+
+// ============================================
+// NOTIFICATION MODELS
+// ============================================
+
+model Notification {
+  id             String               @id // notif_*
+  target_user_id String               @map("target_user_id")
+  channel        NotificationChannel
+  template_id    String               @map("template_id")
+  payload        Json
+  priority       NotificationPriority @default(normal)
+  status         NotificationStatus   @default(pending)
+  provider_id    String?              @map("provider_id")
+  error_message  String?              @map("error_message")
+  metadata       Json?
+  message_id     String               @unique @map("message_id")
+  sent_at        DateTime?            @map("sent_at")
+  delivered_at   DateTime?            @map("delivered_at")
+  read_at        DateTime?            @map("read_at")
+  created_at     DateTime             @default(now()) @map("created_at")
+  updated_at     DateTime             @updatedAt @map("updated_at")
+
+  // Relations
+  user     User                 @relation(fields: [target_user_id], references: [id], onDelete: Cascade)
+  template NotificationTemplate @relation(fields: [template_id], references: [id])
+
+  @@map("notifications")
+}
+
+enum NotificationChannel {
+  email
+  whatsapp
+  push
+}
+
+enum NotificationStatus {
+  pending
+  sent
+  failed
+  delivered
+}
+
+enum NotificationPriority {
+  low
+  normal
+  high
+}
+
+model NotificationTemplate {
+  id             String                      @id // tmpl_*
+  name           String
+  channel        NotificationTemplateChannel
+  subject        String?
+  body_template  String                      @map("body_template")
+  title_template String?                     @map("title_template")
+  variables      String[]                    @default([])
+  version        Int                         @default(1)
+  is_active      Boolean                     @default(true) @map("is_active")
+  metadata       Json?
+  created_at     DateTime                    @default(now()) @map("created_at")
+  updated_at     DateTime                    @updatedAt @map("updated_at")
+
+  // Relations
+  notifications Notification[]
+
+  @@unique([name, channel])
+  @@map("notification_templates")
+}
+
+enum NotificationTemplateChannel {
+  email
+  whatsapp
+  push
+}
+
+model NotificationPreference {
+  id         String                         @id // npref_*
+  user_id    String                         @map("user_id")
+  category   NotificationPreferenceCategory
+  channels   Json // { email: boolean, whatsapp: boolean, push: boolean }
+  metadata   Json?
+  created_at DateTime                       @default(now()) @map("created_at")
+  updated_at DateTime                       @updatedAt @map("updated_at")
+
+  // Relations
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, category])
+  @@map("notification_preferences")
+}
+
+enum NotificationPreferenceCategory {
+  transactional
+  marketing
+  security
+  billing
+}

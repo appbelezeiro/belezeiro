@@ -1,56 +1,58 @@
-import { InMemoryUserRepository } from '@/infra/repositories/in-memory/users/in-memory-user.repository';
-import { InMemoryBookingRuleRepository } from '@/infra/repositories/in-memory/bookings/in-memory-booking-rule.repository';
-import { InMemoryBookingExceptionRepository } from '@/infra/repositories/in-memory/bookings/in-memory-booking-exception.repository';
-import { InMemoryBookingRepository } from '@/infra/repositories/in-memory/bookings/in-memory-booking.repository';
-import { InMemoryOrganizationRepository } from '@/infra/repositories/in-memory/organizations/in-memory-organization.repository';
-import { InMemoryUnitRepository } from '@/infra/repositories/in-memory/units/in-memory-unit.repository';
-import { InMemoryPlanRepository } from '@/infra/repositories/in-memory/billing/in-memory-plan.repository';
-import { InMemorySubscriptionRepository } from '@/infra/repositories/in-memory/billing/in-memory-subscription.repository';
-import { InMemoryInvoiceRepository } from '@/infra/repositories/in-memory/billing/in-memory-invoice.repository';
-import { InMemoryDiscountRepository } from '@/infra/repositories/in-memory/billing/in-memory-discount.repository';
-import { InMemoryCouponRedemptionRepository } from '@/infra/repositories/in-memory/billing/in-memory-coupon-redemption.repository';
-import { InMemorySpecialtyRepository } from '@/infra/repositories/in-memory/in-memory-specialty.repository';
-import { InMemoryServiceRepository } from '@/infra/repositories/in-memory/in-memory-service.repository';
-import { InMemoryUnitSpecialtyRepository } from '@/infra/repositories/in-memory/in-memory-unit-specialty.repository';
-import { InMemoryUnitServiceRepository } from '@/infra/repositories/in-memory/in-memory-unit-service.repository';
-import { InMemoryAmenityRepository } from '@/infra/repositories/in-memory/in-memory-amenity.repository';
-import { InMemoryUnitAmenityRepository } from '@/infra/repositories/in-memory/in-memory-unit-amenity.repository';
-import { InMemoryUnitAvailabilityRuleRepository } from '@/infra/repositories/in-memory/units/in-memory-unit-availability-rule.repository';
-import { InMemoryUnitAvailabilityExceptionRepository } from '@/infra/repositories/in-memory/units/in-memory-unit-availability-exception.repository';
-import { InMemoryCustomerRepository } from '@/infra/repositories/in-memory/customers/in-memory-customer.repository';
+import {
+  PrismaUserRepository,
+  PrismaOrganizationRepository,
+  PrismaUnitRepository,
+  PrismaUnitAvailabilityRuleRepository,
+  PrismaUnitAvailabilityExceptionRepository,
+  PrismaCustomerRepository,
+  PrismaSpecialtyRepository,
+  PrismaAmenityRepository,
+  PrismaServiceRepository,
+  PrismaUnitSpecialtyRepository,
+  PrismaUnitAmenityRepository,
+  PrismaUnitServiceRepository,
+  PrismaBookingRepository,
+  PrismaBookingRuleRepository,
+  PrismaBookingExceptionRepository,
+  PrismaPlanRepository,
+  PrismaSubscriptionRepository,
+  PrismaInvoiceRepository,
+  PrismaDiscountRepository,
+  PrismaCouponRedemptionRepository,
+} from '@/infra/repositories/prisma';
 import type { Clients } from './clients.factory';
 
 export function createRepositories(_clients: Clients) {
-  const user_repository = new InMemoryUserRepository();
-  const booking_rule_repository = new InMemoryBookingRuleRepository();
-  const booking_exception_repository = new InMemoryBookingExceptionRepository();
-  const booking_repository = new InMemoryBookingRepository();
-  const organization_repository = new InMemoryOrganizationRepository();
-  const unit_repository = new InMemoryUnitRepository();
+  const user_repository = new PrismaUserRepository();
+  const booking_rule_repository = new PrismaBookingRuleRepository();
+  const booking_exception_repository = new PrismaBookingExceptionRepository();
+  const booking_repository = new PrismaBookingRepository();
+  const organization_repository = new PrismaOrganizationRepository();
+  const unit_repository = new PrismaUnitRepository();
 
   // Billing repositories
-  const plan_repository = new InMemoryPlanRepository();
-  const subscription_repository = new InMemorySubscriptionRepository();
-  const invoice_repository = new InMemoryInvoiceRepository();
-  const discount_repository = new InMemoryDiscountRepository();
-  const coupon_redemption_repository = new InMemoryCouponRedemptionRepository();
+  const plan_repository = new PrismaPlanRepository();
+  const subscription_repository = new PrismaSubscriptionRepository();
+  const invoice_repository = new PrismaInvoiceRepository();
+  const discount_repository = new PrismaDiscountRepository();
+  const coupon_redemption_repository = new PrismaCouponRedemptionRepository();
 
   // Specialties and Services repositories
-  const specialty_repository = new InMemorySpecialtyRepository();
-  const service_repository = new InMemoryServiceRepository();
-  const unit_specialty_repository = new InMemoryUnitSpecialtyRepository();
-  const unit_service_repository = new InMemoryUnitServiceRepository();
+  const specialty_repository = new PrismaSpecialtyRepository();
+  const service_repository = new PrismaServiceRepository();
+  const unit_specialty_repository = new PrismaUnitSpecialtyRepository();
+  const unit_service_repository = new PrismaUnitServiceRepository();
 
   // Amenities repositories
-  const amenity_repository = new InMemoryAmenityRepository();
-  const unit_amenity_repository = new InMemoryUnitAmenityRepository();
+  const amenity_repository = new PrismaAmenityRepository();
+  const unit_amenity_repository = new PrismaUnitAmenityRepository();
 
   // Unit Availability repositories
-  const unit_availability_rule_repository = new InMemoryUnitAvailabilityRuleRepository();
-  const unit_availability_exception_repository = new InMemoryUnitAvailabilityExceptionRepository();
+  const unit_availability_rule_repository = new PrismaUnitAvailabilityRuleRepository();
+  const unit_availability_exception_repository = new PrismaUnitAvailabilityExceptionRepository();
 
   // Customer repository
-  const customer_repository = new InMemoryCustomerRepository();
+  const customer_repository = new PrismaCustomerRepository();
 
   return {
     user_repository,

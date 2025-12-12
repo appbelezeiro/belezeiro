@@ -1,6 +1,6 @@
 import { IOrganizationRepository } from '@/application/contracts/organizations/i-organization-repository.interface.js';
 import { OrganizationEntity } from '@/domain/entities/organizations/organization.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { OrganizationDataMapper } from '../data-mappers/index.js';
 
 export class PrismaOrganizationRepository implements IOrganizationRepository {
@@ -15,9 +15,12 @@ export class PrismaOrganizationRepository implements IOrganizationRepository {
     return found ? OrganizationDataMapper.toDomain(found) : null;
   }
 
-  async find_by_owner_id(ownerId: string): Promise<OrganizationEntity | null> {
-    const found = await prisma.organization.findUnique({ where: { owner_id: ownerId } });
-    return found ? OrganizationDataMapper.toDomain(found) : null;
+  async list_by_owner_id(ownerId: string): Promise<OrganizationEntity[]> {
+    const organizations = await prisma.organization.findMany({
+      where: { owner_id: ownerId },
+      orderBy: { created_at: 'desc' },
+    });
+    return organizations.map(OrganizationDataMapper.toDomain);
   }
 
   async list_all(): Promise<OrganizationEntity[]> {

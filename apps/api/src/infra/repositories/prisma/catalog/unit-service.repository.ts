@@ -1,7 +1,7 @@
 import { IUnitServiceRepository } from '@/application/contracts/i-unit-service-repository.interface.js';
 import { UnitServiceEntity } from '@/domain/entities/unit-service.entity.js';
 import { CursorPaginatedResponse, DEFAULT_PAGINATION_LIMIT, MAX_PAGINATION_LIMIT } from '@/application/types/cursor-pagination.types.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { UnitServiceDataMapper } from '../data-mappers/index.js';
 
 export class PrismaUnitServiceRepository implements IUnitServiceRepository {

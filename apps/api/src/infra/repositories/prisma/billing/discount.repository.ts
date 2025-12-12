@@ -1,6 +1,6 @@
 import { IDiscountRepository } from '@/application/contracts/billing/i-discount-repository.interface.js';
 import { DiscountEntity } from '@/domain/entities/billing/discount.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { DiscountDataMapper } from '../data-mappers/index.js';
 
 export class PrismaDiscountRepository implements IDiscountRepository {

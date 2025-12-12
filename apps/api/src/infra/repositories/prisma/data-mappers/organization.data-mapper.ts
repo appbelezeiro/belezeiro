@@ -5,7 +5,7 @@ export class OrganizationDataMapper {
   static toDomain(raw: PrismaOrganization): OrganizationEntity {
     return new OrganizationEntity({
       id: raw.id,
-      businessName: raw.business_name,
+      name: raw.name,
       ownerId: raw.owner_id,
       created_at: raw.created_at,
       updated_at: raw.updated_at,
@@ -15,7 +15,7 @@ export class OrganizationDataMapper {
   static toPrisma(entity: OrganizationEntity): Omit<PrismaOrganization, 'created_at' | 'updated_at'> {
     return {
       id: entity.id,
-      business_name: entity.businessName,
+      name: entity.name,
       owner_id: entity.ownerId,
     };
   }
@@ -23,7 +23,7 @@ export class OrganizationDataMapper {
   static toPrismaCreate(entity: OrganizationEntity): Omit<PrismaOrganization, 'updated_at'> {
     return {
       id: entity.id,
-      business_name: entity.businessName,
+      name: entity.name,
       owner_id: entity.ownerId,
       created_at: entity.created_at,
     };

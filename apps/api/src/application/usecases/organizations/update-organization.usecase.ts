@@ -3,7 +3,7 @@ import { IOrganizationRepository } from '@/application/contracts/organizations/i
 import { OrganizationNotFoundError } from '@/domain/errors/organizations/organization.errors';
 
 class UseCase {
-  constructor(private readonly organization_repository: IOrganizationRepository) {}
+  constructor(private readonly organization_repository: IOrganizationRepository) { }
 
   async execute(input: UseCase.Input): UseCase.Output {
     const organization = await this.organization_repository.find_by_id(input.id);
@@ -12,8 +12,8 @@ class UseCase {
       throw new OrganizationNotFoundError(`Organization with id ${input.id} not found`);
     }
 
-    if (input.businessName !== undefined) {
-      organization.update_business_name(input.businessName);
+    if (input.name !== undefined) {
+      organization.update_name(input.name);
     }
 
     return this.organization_repository.update(organization);
@@ -23,7 +23,7 @@ class UseCase {
 declare namespace UseCase {
   export type Input = {
     id: string;
-    businessName?: string;
+    name?: string;
   };
 
   export type Output = Promise<OrganizationEntity>;

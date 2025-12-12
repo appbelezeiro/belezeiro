@@ -1,5 +1,5 @@
 // Client
-export { prisma, connectPrisma, disconnectPrisma } from './client/index.js';
+export { prisma, connectPrisma, disconnectPrisma } from '@/infra/clients/prisma-client.js';
 
 // Data Mappers
 export * from './data-mappers/index.js';

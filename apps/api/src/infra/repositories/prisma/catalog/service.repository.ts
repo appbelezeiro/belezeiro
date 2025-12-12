@@ -1,7 +1,7 @@
 import { IServiceRepository } from '@/application/contracts/i-service-repository.interface.js';
 import { ServiceEntity } from '@/domain/entities/service.entity.js';
 import { CursorPaginatedResponse, DEFAULT_PAGINATION_LIMIT, MAX_PAGINATION_LIMIT } from '@/application/types/cursor-pagination.types.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { ServiceDataMapper } from '../data-mappers/index.js';
 
 export class PrismaServiceRepository implements IServiceRepository {

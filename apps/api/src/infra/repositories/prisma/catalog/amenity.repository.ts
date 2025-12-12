@@ -1,7 +1,7 @@
 import { IAmenityRepository } from '@/application/contracts/i-amenity-repository.interface.js';
 import { AmenityEntity } from '@/domain/entities/amenity.entity.js';
 import { CursorPaginatedResponse, DEFAULT_PAGINATION_LIMIT, MAX_PAGINATION_LIMIT } from '@/application/types/cursor-pagination.types.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { AmenityDataMapper } from '../data-mappers/index.js';
 
 export class PrismaAmenityRepository implements IAmenityRepository {

@@ -1,13 +1,15 @@
 import { describe, it, expect, beforeEach, beforeAll } from 'vitest';
 import { CreateOrganizationUseCase } from './create-organization.usecase';
 import { InMemoryOrganizationRepository } from '@/infra/repositories/in-memory/organizations/in-memory-organization.repository';
+import { InMemoryUserRepository } from '@/infra/repositories/in-memory/users/in-memory-user.repository';
 import { BaseEntity } from '@/domain/entities/base.entity';
 import { ULIDXIDGeneratorService } from '@/infra/services/ulidx-id-generator.service';
-import { OrganizationAlreadyExistsError } from '@/domain/errors/organizations/organization.errors';
+import { InvalidBusinessNameError } from '@/domain/errors/organizations/organization.errors';
 
 describe('CreateOrganizationUseCase', () => {
   let sut: CreateOrganizationUseCase;
   let organization_repository: InMemoryOrganizationRepository;
+  let user_repository: InMemoryUserRepository;
 
   beforeAll(() => {
     BaseEntity.configure({
@@ -17,72 +19,57 @@ describe('CreateOrganizationUseCase', () => {
 
   beforeEach(() => {
     organization_repository = new InMemoryOrganizationRepository();
-    sut = new CreateOrganizationUseCase(organization_repository);
+    user_repository = new InMemoryUserRepository();
+    sut = new CreateOrganizationUseCase(organization_repository, user_repository);
   });
 
   it('should create a new organization successfully', async () => {
     const input = {
-      businessName: 'Beleza Salon',
-      brandColor: '#FF5733',
-      ownerId: 'usr_123',
+      name: 'Beleza Salon',
+      owner_id: 'usr_123',
     };
 
     const result = await sut.execute(input);
 
-    expect(result.businessName).toBe('Beleza Salon');
-    expect(result.brandColor).toBe('#FF5733');
+    expect(result.name).toBe('Beleza Salon');
     expect(result.ownerId).toBe('usr_123');
     expect(result.id).toContain('org_');
   });
 
-  it('should create organization with subscription', async () => {
-    const input = {
-      businessName: 'Premium Salon',
-      brandColor: '#00FF00',
-      ownerId: 'usr_456',
-      subscription: {
-        plan: 'pro' as const,
-        status: 'active' as const,
-        expiresAt: new Date('2025-12-31'),
-      },
+  it('should allow same owner to create multiple organizations', async () => {
+    const input1 = {
+      name: 'First Salon',
+      owner_id: 'usr_789',
     };
 
-    const result = await sut.execute(input);
-
-    expect(result.subscription?.plan).toBe('pro');
-    expect(result.subscription?.status).toBe('active');
-    expect(result.has_active_subscription()).toBe(true);
-  });
-
-  it('should throw error if organization already exists for owner', async () => {
-    const input = {
-      businessName: 'First Salon',
-      brandColor: '#FF0000',
-      ownerId: 'usr_789',
+    const input2 = {
+      name: 'Second Salon',
+      owner_id: 'usr_789',
     };
 
-    await sut.execute(input);
+    const result1 = await sut.execute(input1);
+    const result2 = await sut.execute(input2);
 
-    await expect(sut.execute(input)).rejects.toThrow(OrganizationAlreadyExistsError);
+    expect(result1.ownerId).toBe('usr_789');
+    expect(result2.ownerId).toBe('usr_789');
+    expect(result1.id).not.toBe(result2.id);
   });
 
   it('should throw error if business name is too short', async () => {
     const input = {
-      businessName: 'A',
-      brandColor: '#FF0000',
-      ownerId: 'usr_999',
+      name: 'A',
+      owner_id: 'usr_999',
     };
 
-    await expect(sut.execute(input)).rejects.toThrow();
+    await expect(sut.execute(input)).rejects.toThrow(InvalidBusinessNameError);
   });
 
-  it('should throw error if brand color is invalid', async () => {
+  it('should throw error if business name is empty', async () => {
     const input = {
-      businessName: 'Valid Name',
-      brandColor: 'invalid-color',
-      ownerId: 'usr_999',
+      name: '',
+      owner_id: 'usr_999',
     };
 
-    await expect(sut.execute(input)).rejects.toThrow();
+    await expect(sut.execute(input)).rejects.toThrow(InvalidBusinessNameError);
   });
 });

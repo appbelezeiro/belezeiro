@@ -1,6 +1,6 @@
 import { IUnitSpecialtyRepository } from '@/application/contracts/i-unit-specialty-repository.interface.js';
 import { UnitSpecialtyEntity } from '@/domain/entities/unit-specialty.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { UnitSpecialtyDataMapper } from '../data-mappers/index.js';
 
 export class PrismaUnitSpecialtyRepository implements IUnitSpecialtyRepository {

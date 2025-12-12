@@ -1,6 +1,6 @@
 import { ISubscriptionRepository } from '@/application/contracts/billing/i-subscription-repository.interface.js';
 import { SubscriptionEntity, SubscriptionStatus } from '@/domain/entities/billing/subscription.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { SubscriptionDataMapper } from '../data-mappers/index.js';
 import { SubscriptionStatus as PrismaSubscriptionStatus } from '@prisma/client';
 

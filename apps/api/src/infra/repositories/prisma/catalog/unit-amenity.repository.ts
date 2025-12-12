@@ -1,6 +1,6 @@
 import { IUnitAmenityRepository } from '@/application/contracts/i-unit-amenity-repository.interface.js';
 import { UnitAmenityEntity } from '@/domain/entities/unit-amenity.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { UnitAmenityDataMapper } from '../data-mappers/index.js';
 
 export class PrismaUnitAmenityRepository implements IUnitAmenityRepository {

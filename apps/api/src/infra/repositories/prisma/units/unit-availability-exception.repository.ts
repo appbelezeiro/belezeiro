@@ -1,6 +1,6 @@
 import { IUnitAvailabilityExceptionRepository } from '@/application/contracts/units/i-unit-availability-exception-repository.interface.js';
 import { UnitAvailabilityExceptionEntity } from '@/domain/entities/units/unit-availability-exception.entity.js';
-import { prisma } from '../client/index.js';
+import { prisma } from '@/infra/clients/prisma-client.js';
 import { UnitAvailabilityExceptionDataMapper } from '../data-mappers/index.js';
 
 export class PrismaUnitAvailabilityExceptionRepository implements IUnitAvailabilityExceptionRepository {
