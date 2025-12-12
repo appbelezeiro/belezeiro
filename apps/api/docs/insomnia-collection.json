@@ -1,7 +1,7 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2025-12-10T00:00:00.000Z",
+  "__export_date": "2025-12-12T00:00:00.000Z",
   "__export_source": "insomnia.desktop.app:v2023.5.8",
   "resources": [
     {
@@ -10,6 +10,15 @@
       "name": "BELEZEIRO",
       "description": "API Collection do Belezeiro - Sistema de Agendamentos",
       "scope": "collection"
+    },
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "name": "Base Environment",
+      "data": {
+        "BASE_URL": "http://localhost:3000"
+      },
+      "parentId": "wrk_belezeiro"
     },
     {
       "_id": "fld_health",
@@ -35,7 +44,7 @@
       "_id": "fld_auth",
       "_type": "request_group",
       "name": "Auth",
-      "description": "Autenticação e autorização",
+      "description": "Autenticacao e autorizacao",
       "parentId": "wrk_belezeiro"
     },
     {
@@ -65,19 +74,11 @@
       "name": "Refresh Token",
       "url": "{{ _.BASE_URL }}/api/auth/refresh",
       "method": "POST",
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\n  \"refresh_token\": \"your_refresh_token_here\"\n}"
-      },
+      "body": {},
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
+      "headers": [],
       "authentication": {},
-      "description": "Atualiza o token de acesso",
+      "description": "Atualiza o token de acesso (usa cookies)",
       "parentId": "fld_auth"
     },
     {
@@ -90,7 +91,7 @@
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Realiza logout do usuário (usa cookies)",
+      "description": "Realiza logout do usuario (usa cookies)",
       "parentId": "fld_auth"
     },
     {
@@ -103,14 +104,14 @@
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Retorna os dados do usuário autenticado (usa cookies)",
+      "description": "Retorna os dados do usuario autenticado (usa cookies)",
       "parentId": "fld_auth"
     },
     {
       "_id": "fld_users",
       "_type": "request_group",
       "name": "Users",
-      "description": "Gerenciamento de usuários",
+      "description": "Gerenciamento de usuarios",
       "parentId": "wrk_belezeiro"
     },
     {
@@ -121,7 +122,7 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"name\": \"João Silva\",\n  \"email\": \"joao@example.com\",\n  \"phone\": \"+5511999999999\"\n}"
+        "text": "{\n  \"name\": \"Joao Silva\",\n  \"email\": \"joao@example.com\",\n  \"phone\": \"+5511999999999\"\n}"
       },
       "parameters": [],
       "headers": [
@@ -131,14 +132,14 @@
         }
       ],
       "authentication": {},
-      "description": "Cria um novo usuário",
+      "description": "Cria um novo usuario",
       "parentId": "fld_users"
     },
     {
       "_id": "fld_organizations",
       "_type": "request_group",
       "name": "Organizations",
-      "description": "Gerenciamento de organizações",
+      "description": "Gerenciamento de organizacoes",
       "parentId": "wrk_belezeiro"
     },
     {
@@ -149,7 +150,7 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"name\": \"Salão de Beleza ABC\",\n  \"owner_id\": \"user_id_here\"\n}"
+        "text": "{\n  \"name\": \"Salao de Beleza ABC\",\n  \"owner_id\": \"user_id_here\"\n}"
       },
       "parameters": [],
       "headers": [
@@ -159,7 +160,7 @@
         }
       ],
       "authentication": {},
-      "description": "Cria uma nova organização (usa cookies)",
+      "description": "Cria uma nova organizacao (usa cookies)",
       "parentId": "fld_organizations"
     },
     {
@@ -172,7 +173,7 @@
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Busca organização por ID (usa cookies)",
+      "description": "Busca organizacao por ID (usa cookies)",
       "parentId": "fld_organizations"
     },
     {
@@ -185,7 +186,7 @@
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Busca organizações por proprietário (usa cookies)",
+      "description": "Busca organizacoes por proprietario (usa cookies)",
       "parentId": "fld_organizations"
     },
     {
@@ -196,7 +197,7 @@
       "method": "PUT",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"name\": \"Salão de Beleza XYZ\"\n}"
+        "text": "{\n  \"name\": \"Salao de Beleza XYZ\"\n}"
       },
       "parameters": [],
       "headers": [
@@ -206,7 +207,7 @@
         }
       ],
       "authentication": {},
-      "description": "Atualiza uma organização (usa cookies)",
+      "description": "Atualiza uma organizacao (usa cookies)",
       "parentId": "fld_organizations"
     },
     {
@@ -273,7 +274,7 @@
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Lista unidades por organização (usa cookies)",
+      "description": "Lista unidades por organizacao (usa cookies)",
       "parentId": "fld_units"
     },
     {
@@ -296,6 +297,152 @@
       "authentication": {},
       "description": "Atualiza uma unidade (usa cookies)",
       "parentId": "fld_units"
+    },
+    {
+      "_id": "fld_dashboard",
+      "_type": "request_group",
+      "name": "Dashboard",
+      "description": "Endpoints do dashboard",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "req_dashboard_stats",
+      "_type": "request",
+      "name": "Get Dashboard Stats",
+      "url": "{{ _.BASE_URL }}/api/dashboard/stats",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "unitId",
+          "value": "unit_id_here",
+          "description": "ID da unidade"
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "description": "Retorna KPIs do dashboard (agendamentos hoje, novos clientes, servico mais pedido, horario de pico)",
+      "parentId": "fld_dashboard"
+    },
+    {
+      "_id": "req_dashboard_recent_bookings",
+      "_type": "request",
+      "name": "Get Today's Appointments",
+      "url": "{{ _.BASE_URL }}/api/dashboard/recent-bookings",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "unitId",
+          "value": "unit_id_here",
+          "description": "ID da unidade"
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "description": "Lista agendamentos de hoje para a unidade",
+      "parentId": "fld_dashboard"
+    },
+    {
+      "_id": "req_dashboard_plan",
+      "_type": "request",
+      "name": "Get Plan Info",
+      "url": "{{ _.BASE_URL }}/api/dashboard/plan",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "unitId",
+          "value": "unit_id_here",
+          "description": "ID da unidade"
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "description": "Retorna informacoes do plano da unidade (limites, uso, status)",
+      "parentId": "fld_dashboard"
+    },
+    {
+      "_id": "req_dashboard_secretary",
+      "_type": "request",
+      "name": "Get Secretary Status",
+      "url": "{{ _.BASE_URL }}/api/dashboard/secretary",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "description": "Retorna status da secretaria online (mockado)",
+      "parentId": "fld_dashboard"
+    },
+    {
+      "_id": "req_dashboard_revenue",
+      "_type": "request",
+      "name": "Get Revenue Stats",
+      "url": "{{ _.BASE_URL }}/api/dashboard/revenue",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "unitId",
+          "value": "unit_id_here",
+          "description": "ID da unidade"
+        },
+        {
+          "name": "period",
+          "value": "month",
+          "description": "Periodo: day, week, month, year"
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "description": "Retorna estatisticas de faturamento da unidade",
+      "parentId": "fld_dashboard"
+    },
+    {
+      "_id": "req_dashboard_notifications",
+      "_type": "request",
+      "name": "Get Notifications",
+      "url": "{{ _.BASE_URL }}/api/dashboard/notifications",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "limit",
+          "value": "20",
+          "description": "Limite de notificacoes"
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "description": "Lista notificacoes do usuario",
+      "parentId": "fld_dashboard"
+    },
+    {
+      "_id": "req_dashboard_notification_read",
+      "_type": "request",
+      "name": "Mark Notification as Read",
+      "url": "{{ _.BASE_URL }}/api/dashboard/notifications/notification_id_here/read",
+      "method": "PATCH",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "description": "Marca uma notificacao como lida",
+      "parentId": "fld_dashboard"
+    },
+    {
+      "_id": "req_dashboard_notifications_read_all",
+      "_type": "request",
+      "name": "Mark All Notifications as Read",
+      "url": "{{ _.BASE_URL }}/api/dashboard/notifications/read-all",
+      "method": "PATCH",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "description": "Marca todas as notificacoes como lidas",
+      "parentId": "fld_dashboard"
     },
     {
       "_id": "fld_bookings",
@@ -389,7 +536,7 @@
       "_id": "fld_booking_exceptions",
       "_type": "request_group",
       "name": "Booking Exceptions",
-      "description": "Exceções de agendamento",
+      "description": "Excecoes de agendamento",
       "parentId": "fld_bookings"
     },
     {
@@ -410,7 +557,7 @@
         }
       ],
       "authentication": {},
-      "description": "Cria uma exceção de agendamento (usa cookies)",
+      "description": "Cria uma excecao de agendamento (usa cookies)",
       "parentId": "fld_booking_exceptions"
     },
     {
@@ -429,7 +576,7 @@
       ],
       "headers": [],
       "authentication": {},
-      "description": "Lista exceções de agendamento (usa cookies)",
+      "description": "Lista excecoes de agendamento (usa cookies)",
       "parentId": "fld_booking_exceptions"
     },
     {
@@ -450,7 +597,7 @@
         }
       ],
       "authentication": {},
-      "description": "Atualiza uma exceção de agendamento (usa cookies)",
+      "description": "Atualiza uma excecao de agendamento (usa cookies)",
       "parentId": "fld_booking_exceptions"
     },
     {
@@ -463,7 +610,7 @@
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Remove uma exceção de agendamento (usa cookies)",
+      "description": "Remove uma excecao de agendamento (usa cookies)",
       "parentId": "fld_booking_exceptions"
     },
     {
@@ -489,12 +636,12 @@
         {
           "name": "month",
           "value": "2025-12",
-          "description": "Mês (formato: YYYY-MM)"
+          "description": "Mes (formato: YYYY-MM)"
         }
       ],
       "headers": [],
       "authentication": {},
-      "description": "Lista dias disponíveis para agendamento",
+      "description": "Lista dias disponiveis para agendamento",
       "parentId": "fld_booking_availability"
     },
     {
@@ -518,7 +665,7 @@
       ],
       "headers": [],
       "authentication": {},
-      "description": "Lista horários disponíveis para uma data específica",
+      "description": "Lista horarios disponiveis para uma data especifica",
       "parentId": "fld_booking_availability"
     },
     {
@@ -574,7 +721,7 @@
       "_id": "fld_billing",
       "_type": "request_group",
       "name": "Billing",
-      "description": "Módulo de faturamento e assinaturas",
+      "description": "Modulo de faturamento e assinaturas",
       "parentId": "wrk_belezeiro"
     },
     {
@@ -689,14 +836,14 @@
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Valida um código de desconto",
+      "description": "Valida um codigo de desconto",
       "parentId": "fld_discounts"
     },
     {
       "_id": "fld_webhooks",
       "_type": "request_group",
       "name": "Webhooks",
-      "description": "Webhooks de integração",
+      "description": "Webhooks de integracao",
       "parentId": "fld_billing"
     },
     {
