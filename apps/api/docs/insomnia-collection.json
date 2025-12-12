@@ -24,11 +24,10 @@
       "_id": "fld_health",
       "_type": "request_group",
       "name": "Health",
-      "description": "Health check endpoints",
       "parentId": "wrk_belezeiro"
     },
     {
-      "_id": "req_health_check",
+      "_id": "req_health",
       "_type": "request",
       "name": "Health Check",
       "url": "{{ _.BASE_URL }}/health",
@@ -37,14 +36,12 @@
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Verifica o status da API",
       "parentId": "fld_health"
     },
     {
       "_id": "fld_auth",
       "_type": "request_group",
       "name": "Auth",
-      "description": "Autenticacao e autorizacao",
       "parentId": "wrk_belezeiro"
     },
     {
@@ -55,17 +52,11 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"provider\": \"google\",\n  \"token\": \"google_oauth_token_here\"\n}"
+        "text": "{\n  \"provider\": \"google\",\n  \"token\": \"google_oauth_token\"\n}"
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
       "authentication": {},
-      "description": "Login via provedores sociais (Google, Facebook, etc)",
       "parentId": "fld_auth"
     },
     {
@@ -78,7 +69,6 @@
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Atualiza o token de acesso (usa cookies)",
       "parentId": "fld_auth"
     },
     {
@@ -91,7 +81,6 @@
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Realiza logout do usuario (usa cookies)",
       "parentId": "fld_auth"
     },
     {
@@ -104,14 +93,12 @@
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Retorna os dados do usuario autenticado (usa cookies)",
       "parentId": "fld_auth"
     },
     {
       "_id": "fld_users",
       "_type": "request_group",
       "name": "Users",
-      "description": "Gerenciamento de usuarios",
       "parentId": "wrk_belezeiro"
     },
     {
@@ -122,99 +109,77 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"name\": \"Joao Silva\",\n  \"email\": \"joao@example.com\",\n  \"phone\": \"+5511999999999\"\n}"
+        "text": "{\n  \"name\": \"Joao Silva\",\n  \"email\": \"joao@example.com\",\n  \"providerId\": \"google_123456\",\n  \"photoUrl\": \"https://example.com/photo.jpg\"\n}"
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
       "authentication": {},
-      "description": "Cria um novo usuario",
       "parentId": "fld_users"
     },
     {
       "_id": "fld_organizations",
       "_type": "request_group",
       "name": "Organizations",
-      "description": "Gerenciamento de organizacoes",
       "parentId": "wrk_belezeiro"
     },
     {
-      "_id": "req_organizations_create",
+      "_id": "req_org_create",
       "_type": "request",
       "name": "Create Organization",
       "url": "{{ _.BASE_URL }}/api/organizations",
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"name\": \"Salao de Beleza ABC\",\n  \"owner_id\": \"user_id_here\"\n}"
+        "text": "{\n  \"businessName\": \"Salao de Beleza ABC\",\n  \"ownerId\": \"user_xxx\"\n}"
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
       "authentication": {},
-      "description": "Cria uma nova organizacao (usa cookies)",
       "parentId": "fld_organizations"
     },
     {
-      "_id": "req_organizations_get_by_id",
+      "_id": "req_org_get_by_id",
       "_type": "request",
       "name": "Get Organization by ID",
-      "url": "{{ _.BASE_URL }}/api/organizations/org_id_here",
+      "url": "{{ _.BASE_URL }}/api/organizations/:id",
       "method": "GET",
       "body": {},
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Busca organizacao por ID (usa cookies)",
       "parentId": "fld_organizations"
     },
     {
-      "_id": "req_organizations_get_by_owner",
+      "_id": "req_org_get_by_owner",
       "_type": "request",
       "name": "Get Organizations by Owner",
-      "url": "{{ _.BASE_URL }}/api/organizations/owner/owner_id_here",
+      "url": "{{ _.BASE_URL }}/api/organizations/owner/:ownerId",
       "method": "GET",
       "body": {},
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Busca organizacoes por proprietario (usa cookies)",
       "parentId": "fld_organizations"
     },
     {
-      "_id": "req_organizations_update",
+      "_id": "req_org_update",
       "_type": "request",
       "name": "Update Organization",
-      "url": "{{ _.BASE_URL }}/api/organizations/org_id_here",
+      "url": "{{ _.BASE_URL }}/api/organizations/:id",
       "method": "PUT",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"name\": \"Salao de Beleza XYZ\"\n}"
+        "text": "{\n  \"businessName\": \"Salao de Beleza XYZ\"\n}"
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
       "authentication": {},
-      "description": "Atualiza uma organizacao (usa cookies)",
       "parentId": "fld_organizations"
     },
     {
       "_id": "fld_units",
       "_type": "request_group",
       "name": "Units",
-      "description": "Gerenciamento de unidades",
       "parentId": "wrk_belezeiro"
     },
     {
@@ -225,17 +190,11 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"name\": \"Unidade Centro\",\n  \"organization_id\": \"org_id_here\",\n  \"address\": \"Rua Principal, 123\",\n  \"phone\": \"+5511888888888\"\n}"
+        "text": "{\n  \"organizationId\": \"org_xxx\",\n  \"name\": \"Unidade Centro\",\n  \"slug\": \"unidade-centro\",\n  \"phone\": \"+5511888888888\",\n  \"email\": \"centro@salao.com\",\n  \"description\": \"Nossa unidade principal\",\n  \"brandColor\": \"#FF5733\",\n  \"address\": {\n    \"street\": \"Rua Principal\",\n    \"number\": \"123\",\n    \"complement\": \"Sala 1\",\n    \"neighborhood\": \"Centro\",\n    \"city\": \"Sao Paulo\",\n    \"state\": \"SP\",\n    \"zipCode\": \"01234-567\",\n    \"country\": \"BR\"\n  }\n}"
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
       "authentication": {},
-      "description": "Cria uma nova unidade (usa cookies)",
       "parentId": "fld_units"
     },
     {
@@ -248,122 +207,835 @@
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Lista todas as unidades ativas (usa cookies)",
       "parentId": "fld_units"
     },
     {
       "_id": "req_units_get_by_id",
       "_type": "request",
       "name": "Get Unit by ID",
-      "url": "{{ _.BASE_URL }}/api/units/unit_id_here",
+      "url": "{{ _.BASE_URL }}/api/units/:id",
       "method": "GET",
       "body": {},
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Busca unidade por ID (usa cookies)",
       "parentId": "fld_units"
     },
     {
-      "_id": "req_units_list_by_organization",
+      "_id": "req_units_list_by_org",
       "_type": "request",
       "name": "List Units by Organization",
-      "url": "{{ _.BASE_URL }}/api/units/organization/org_id_here",
+      "url": "{{ _.BASE_URL }}/api/units/organization/:organizationId",
       "method": "GET",
       "body": {},
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Lista unidades por organizacao (usa cookies)",
       "parentId": "fld_units"
     },
     {
       "_id": "req_units_update",
       "_type": "request",
       "name": "Update Unit",
-      "url": "{{ _.BASE_URL }}/api/units/unit_id_here",
+      "url": "{{ _.BASE_URL }}/api/units/:id",
       "method": "PUT",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"name\": \"Unidade Centro - Atualizada\",\n  \"address\": \"Rua Principal, 456\"\n}"
+        "text": "{\n  \"name\": \"Unidade Centro Atualizada\",\n  \"phone\": \"+5511999999999\",\n  \"brandColor\": \"#3366FF\"\n}"
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
       "authentication": {},
-      "description": "Atualiza uma unidade (usa cookies)",
       "parentId": "fld_units"
+    },
+    {
+      "_id": "fld_unit_availability",
+      "_type": "request_group",
+      "name": "Unit Availability",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "req_ua_rules_create",
+      "_type": "request",
+      "name": "Create Rule",
+      "url": "{{ _.BASE_URL }}/api/unit-availability/rules",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unit_id\": \"unit_xxx\",\n  \"day_of_week\": 1,\n  \"start_time\": \"09:00\",\n  \"end_time\": \"18:00\",\n  \"slot_duration_minutes\": 30,\n  \"is_active\": true\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_unit_availability"
+    },
+    {
+      "_id": "req_ua_rules_bulk",
+      "_type": "request",
+      "name": "Bulk Create Rules",
+      "url": "{{ _.BASE_URL }}/api/unit-availability/rules/bulk",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unit_id\": \"unit_xxx\",\n  \"rules\": [\n    { \"day_of_week\": 1, \"start_time\": \"09:00\", \"end_time\": \"18:00\", \"slot_duration_minutes\": 30 },\n    { \"day_of_week\": 2, \"start_time\": \"09:00\", \"end_time\": \"18:00\", \"slot_duration_minutes\": 30 },\n    { \"day_of_week\": 3, \"start_time\": \"09:00\", \"end_time\": \"18:00\", \"slot_duration_minutes\": 30 },\n    { \"day_of_week\": 4, \"start_time\": \"09:00\", \"end_time\": \"18:00\", \"slot_duration_minutes\": 30 },\n    { \"day_of_week\": 5, \"start_time\": \"09:00\", \"end_time\": \"18:00\", \"slot_duration_minutes\": 30 }\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_unit_availability"
+    },
+    {
+      "_id": "req_ua_rules_list",
+      "_type": "request",
+      "name": "List Rules by Unit",
+      "url": "{{ _.BASE_URL }}/api/unit-availability/rules/unit/:unit_id",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_unit_availability"
+    },
+    {
+      "_id": "req_ua_rules_update",
+      "_type": "request",
+      "name": "Update Rule",
+      "url": "{{ _.BASE_URL }}/api/unit-availability/rules/:id",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"start_time\": \"08:00\",\n  \"end_time\": \"19:00\",\n  \"is_active\": true\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_unit_availability"
+    },
+    {
+      "_id": "req_ua_rules_delete",
+      "_type": "request",
+      "name": "Delete Rule",
+      "url": "{{ _.BASE_URL }}/api/unit-availability/rules/:id",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_unit_availability"
+    },
+    {
+      "_id": "req_ua_exc_create",
+      "_type": "request",
+      "name": "Create Exception",
+      "url": "{{ _.BASE_URL }}/api/unit-availability/exceptions",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unit_id\": \"unit_xxx\",\n  \"date\": \"2025-12-25\",\n  \"start_time\": null,\n  \"end_time\": null,\n  \"is_available\": false,\n  \"reason\": \"Feriado - Natal\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_unit_availability"
+    },
+    {
+      "_id": "req_ua_exc_bulk",
+      "_type": "request",
+      "name": "Bulk Create Exceptions",
+      "url": "{{ _.BASE_URL }}/api/unit-availability/exceptions/bulk",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unit_id\": \"unit_xxx\",\n  \"exceptions\": [\n    { \"date\": \"2025-12-25\", \"is_available\": false, \"reason\": \"Natal\" },\n    { \"date\": \"2025-12-31\", \"is_available\": false, \"reason\": \"Reveillon\" },\n    { \"date\": \"2025-01-01\", \"is_available\": false, \"reason\": \"Ano Novo\" }\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_unit_availability"
+    },
+    {
+      "_id": "req_ua_exc_list",
+      "_type": "request",
+      "name": "List Exceptions by Unit",
+      "url": "{{ _.BASE_URL }}/api/unit-availability/exceptions/unit/:unit_id",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_unit_availability"
+    },
+    {
+      "_id": "req_ua_exc_update",
+      "_type": "request",
+      "name": "Update Exception",
+      "url": "{{ _.BASE_URL }}/api/unit-availability/exceptions/:id",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"reason\": \"Feriado Atualizado\",\n  \"is_available\": false\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_unit_availability"
+    },
+    {
+      "_id": "req_ua_exc_delete",
+      "_type": "request",
+      "name": "Delete Exception",
+      "url": "{{ _.BASE_URL }}/api/unit-availability/exceptions/:id",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_unit_availability"
+    },
+    {
+      "_id": "req_ua_slots",
+      "_type": "request",
+      "name": "Get Available Slots",
+      "url": "{{ _.BASE_URL }}/api/unit-availability/slots/unit/:unit_id/date/:date",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_unit_availability"
+    },
+    {
+      "_id": "fld_specialties",
+      "_type": "request_group",
+      "name": "Specialties",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "req_spec_create",
+      "_type": "request",
+      "name": "Create Specialty",
+      "url": "{{ _.BASE_URL }}/api/specialties",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"code\": \"cabeleireiro\",\n  \"name\": \"Cabeleireiro\",\n  \"description\": \"Especialista em cortes e penteados\",\n  \"icon\": \"scissors\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_specialties"
+    },
+    {
+      "_id": "req_spec_list",
+      "_type": "request",
+      "name": "List Specialties",
+      "url": "{{ _.BASE_URL }}/api/specialties",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_specialties"
+    },
+    {
+      "_id": "req_spec_search",
+      "_type": "request",
+      "name": "Search Specialties",
+      "url": "{{ _.BASE_URL }}/api/specialties/search",
+      "method": "GET",
+      "body": {},
+      "parameters": [{ "name": "q", "value": "cabelo" }],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_specialties"
+    },
+    {
+      "_id": "req_spec_get",
+      "_type": "request",
+      "name": "Get Specialty by ID",
+      "url": "{{ _.BASE_URL }}/api/specialties/:id",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_specialties"
+    },
+    {
+      "_id": "fld_services",
+      "_type": "request_group",
+      "name": "Services",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "req_serv_create",
+      "_type": "request",
+      "name": "Create Service",
+      "url": "{{ _.BASE_URL }}/api/services",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"specialty_id\": \"spec_xxx\",\n  \"code\": \"corte_masculino\",\n  \"name\": \"Corte Masculino\",\n  \"description\": \"Corte de cabelo masculino tradicional\",\n  \"default_duration_minutes\": 30,\n  \"default_price_cents\": 5000\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_services"
+    },
+    {
+      "_id": "req_serv_list",
+      "_type": "request",
+      "name": "List Services",
+      "url": "{{ _.BASE_URL }}/api/services",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_services"
+    },
+    {
+      "_id": "req_serv_search",
+      "_type": "request",
+      "name": "Search Services",
+      "url": "{{ _.BASE_URL }}/api/services/search",
+      "method": "GET",
+      "body": {},
+      "parameters": [{ "name": "q", "value": "corte" }],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_services"
+    },
+    {
+      "_id": "req_serv_get",
+      "_type": "request",
+      "name": "Get Service by ID",
+      "url": "{{ _.BASE_URL }}/api/services/:id",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_services"
+    },
+    {
+      "_id": "req_serv_update",
+      "_type": "request",
+      "name": "Update Service",
+      "url": "{{ _.BASE_URL }}/api/services/:id",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Corte Masculino Premium\",\n  \"default_duration_minutes\": 45,\n  \"default_price_cents\": 7500,\n  \"is_active\": true\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_services"
+    },
+    {
+      "_id": "req_serv_delete",
+      "_type": "request",
+      "name": "Delete Service",
+      "url": "{{ _.BASE_URL }}/api/services/:id",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_services"
+    },
+    {
+      "_id": "fld_unit_specialties",
+      "_type": "request_group",
+      "name": "Unit Specialties",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "req_us_list",
+      "_type": "request",
+      "name": "List Unit Specialties",
+      "url": "{{ _.BASE_URL }}/api/units/:unit_id/specialties",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_unit_specialties"
+    },
+    {
+      "_id": "req_us_link",
+      "_type": "request",
+      "name": "Link Specialty to Unit",
+      "url": "{{ _.BASE_URL }}/api/units/:unit_id/specialties",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"specialty_id\": \"spec_xxx\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_unit_specialties"
+    },
+    {
+      "_id": "req_us_unlink",
+      "_type": "request",
+      "name": "Unlink Specialty from Unit",
+      "url": "{{ _.BASE_URL }}/api/units/:unit_id/specialties/:specialty_id",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_unit_specialties"
+    },
+    {
+      "_id": "fld_unit_services",
+      "_type": "request_group",
+      "name": "Unit Services",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "req_usv_list",
+      "_type": "request",
+      "name": "List Unit Services",
+      "url": "{{ _.BASE_URL }}/api/units/:unit_id/services",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_unit_services"
+    },
+    {
+      "_id": "req_usv_add",
+      "_type": "request",
+      "name": "Add Service to Unit",
+      "url": "{{ _.BASE_URL }}/api/units/:unit_id/services",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"service_id\": \"serv_xxx\",\n  \"custom_price_cents\": 6000,\n  \"custom_duration_minutes\": 40\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_unit_services"
+    },
+    {
+      "_id": "req_usv_update",
+      "_type": "request",
+      "name": "Update Unit Service",
+      "url": "{{ _.BASE_URL }}/api/units/:unit_id/services/:service_id",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"custom_price_cents\": 7000,\n  \"custom_duration_minutes\": 45,\n  \"is_active\": true\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_unit_services"
+    },
+    {
+      "_id": "req_usv_remove",
+      "_type": "request",
+      "name": "Remove Service from Unit",
+      "url": "{{ _.BASE_URL }}/api/units/:unit_id/services/:service_id",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_unit_services"
+    },
+    {
+      "_id": "fld_amenities",
+      "_type": "request_group",
+      "name": "Amenities",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "req_amen_create",
+      "_type": "request",
+      "name": "Create Amenity",
+      "url": "{{ _.BASE_URL }}/api/amenities",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"code\": \"wifi\",\n  \"name\": \"Wi-Fi Gratuito\",\n  \"description\": \"Internet sem fio disponivel\",\n  \"icon\": \"wifi\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_amenities"
+    },
+    {
+      "_id": "req_amen_list",
+      "_type": "request",
+      "name": "List Amenities",
+      "url": "{{ _.BASE_URL }}/api/amenities",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_amenities"
+    },
+    {
+      "_id": "req_amen_search",
+      "_type": "request",
+      "name": "Search Amenities",
+      "url": "{{ _.BASE_URL }}/api/amenities/search",
+      "method": "GET",
+      "body": {},
+      "parameters": [{ "name": "q", "value": "wifi" }],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_amenities"
+    },
+    {
+      "_id": "req_amen_seed",
+      "_type": "request",
+      "name": "Seed Amenities",
+      "url": "{{ _.BASE_URL }}/api/amenities/seed",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"seeds\": [\n    { \"code\": \"wifi\", \"name\": \"Wi-Fi\", \"icon\": \"wifi\" },\n    { \"code\": \"parking\", \"name\": \"Estacionamento\", \"icon\": \"car\" },\n    { \"code\": \"ac\", \"name\": \"Ar Condicionado\", \"icon\": \"snowflake\" },\n    { \"code\": \"coffee\", \"name\": \"Cafe\", \"icon\": \"coffee\" }\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_amenities"
+    },
+    {
+      "_id": "req_amen_get",
+      "_type": "request",
+      "name": "Get Amenity by ID",
+      "url": "{{ _.BASE_URL }}/api/amenities/:id",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_amenities"
+    },
+    {
+      "_id": "req_amen_update",
+      "_type": "request",
+      "name": "Update Amenity",
+      "url": "{{ _.BASE_URL }}/api/amenities/:id",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Wi-Fi Premium\",\n  \"icon\": \"wifi-high\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_amenities"
+    },
+    {
+      "_id": "req_amen_activate",
+      "_type": "request",
+      "name": "Activate Amenity",
+      "url": "{{ _.BASE_URL }}/api/amenities/:id/activate",
+      "method": "POST",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_amenities"
+    },
+    {
+      "_id": "req_amen_deactivate",
+      "_type": "request",
+      "name": "Deactivate Amenity",
+      "url": "{{ _.BASE_URL }}/api/amenities/:id/deactivate",
+      "method": "POST",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_amenities"
+    },
+    {
+      "_id": "fld_unit_amenities",
+      "_type": "request_group",
+      "name": "Unit Amenities",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "req_uam_list",
+      "_type": "request",
+      "name": "List Unit Amenities",
+      "url": "{{ _.BASE_URL }}/api/units/:unit_id/amenities",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_unit_amenities"
+    },
+    {
+      "_id": "req_uam_link",
+      "_type": "request",
+      "name": "Link Amenity to Unit",
+      "url": "{{ _.BASE_URL }}/api/units/:unit_id/amenities",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"amenity_id\": \"amen_xxx\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_unit_amenities"
+    },
+    {
+      "_id": "req_uam_unlink",
+      "_type": "request",
+      "name": "Unlink Amenity from Unit",
+      "url": "{{ _.BASE_URL }}/api/units/:unit_id/amenities/:amenity_id",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_unit_amenities"
+    },
+    {
+      "_id": "fld_bookings",
+      "_type": "request_group",
+      "name": "Bookings",
+      "parentId": "wrk_belezeiro"
+    },
+    {
+      "_id": "req_book_create",
+      "_type": "request",
+      "name": "Create Booking",
+      "url": "{{ _.BASE_URL }}/api/booking",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unit_id\": \"unit_xxx\",\n  \"user_id\": \"user_xxx\",\n  \"service_id\": \"serv_xxx\",\n  \"start_at\": \"2025-12-15T14:00:00.000Z\",\n  \"end_at\": \"2025-12-15T14:30:00.000Z\",\n  \"price_cents\": 5000,\n  \"notes\": \"Cliente prefere corte mais curto\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_bookings"
+    },
+    {
+      "_id": "req_book_cancel",
+      "_type": "request",
+      "name": "Cancel Booking",
+      "url": "{{ _.BASE_URL }}/api/booking/:id/cancel",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"reason\": \"Cliente solicitou cancelamento\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_bookings"
+    },
+    {
+      "_id": "req_book_days",
+      "_type": "request",
+      "name": "Get Available Days",
+      "url": "{{ _.BASE_URL }}/api/booking/available-days",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        { "name": "unit_id", "value": "unit_xxx" },
+        { "name": "month", "value": "2025-12" }
+      ],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_bookings"
+    },
+    {
+      "_id": "req_book_slots",
+      "_type": "request",
+      "name": "Get Available Slots",
+      "url": "{{ _.BASE_URL }}/api/booking/available-slots",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        { "name": "unit_id", "value": "unit_xxx" },
+        { "name": "date", "value": "2025-12-15" }
+      ],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_bookings"
+    },
+    {
+      "_id": "fld_booking_rules",
+      "_type": "request_group",
+      "name": "Booking Rules",
+      "parentId": "fld_bookings"
+    },
+    {
+      "_id": "req_br_create",
+      "_type": "request",
+      "name": "Create Rule",
+      "url": "{{ _.BASE_URL }}/api/booking/rules",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"user_id\": \"user_xxx\",\n  \"type\": \"weekly\",\n  \"day_of_week\": 1,\n  \"start_time\": \"09:00\",\n  \"end_time\": \"18:00\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_booking_rules"
+    },
+    {
+      "_id": "req_br_list",
+      "_type": "request",
+      "name": "List Rules",
+      "url": "{{ _.BASE_URL }}/api/booking/rules",
+      "method": "GET",
+      "body": {},
+      "parameters": [{ "name": "user_id", "value": "user_xxx" }],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_booking_rules"
+    },
+    {
+      "_id": "req_br_update",
+      "_type": "request",
+      "name": "Update Rule",
+      "url": "{{ _.BASE_URL }}/api/booking/rules/:id",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"start_time\": \"08:00\",\n  \"end_time\": \"19:00\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_booking_rules"
+    },
+    {
+      "_id": "req_br_delete",
+      "_type": "request",
+      "name": "Delete Rule",
+      "url": "{{ _.BASE_URL }}/api/booking/rules/:id",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_booking_rules"
+    },
+    {
+      "_id": "fld_booking_exc",
+      "_type": "request_group",
+      "name": "Booking Exceptions",
+      "parentId": "fld_bookings"
+    },
+    {
+      "_id": "req_be_create",
+      "_type": "request",
+      "name": "Create Exception",
+      "url": "{{ _.BASE_URL }}/api/booking/exceptions",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"user_id\": \"user_xxx\",\n  \"date\": \"2025-12-25\",\n  \"start_time\": null,\n  \"end_time\": null,\n  \"is_available\": false,\n  \"reason\": \"Ferias\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_booking_exc"
+    },
+    {
+      "_id": "req_be_list",
+      "_type": "request",
+      "name": "List Exceptions",
+      "url": "{{ _.BASE_URL }}/api/booking/exceptions",
+      "method": "GET",
+      "body": {},
+      "parameters": [{ "name": "user_id", "value": "user_xxx" }],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_booking_exc"
+    },
+    {
+      "_id": "req_be_update",
+      "_type": "request",
+      "name": "Update Exception",
+      "url": "{{ _.BASE_URL }}/api/booking/exceptions/:id",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"reason\": \"Ferias Atualizado\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_booking_exc"
+    },
+    {
+      "_id": "req_be_delete",
+      "_type": "request",
+      "name": "Delete Exception",
+      "url": "{{ _.BASE_URL }}/api/booking/exceptions/:id",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "parentId": "fld_booking_exc"
     },
     {
       "_id": "fld_dashboard",
       "_type": "request_group",
       "name": "Dashboard",
-      "description": "Endpoints do dashboard",
       "parentId": "wrk_belezeiro"
     },
     {
-      "_id": "req_dashboard_stats",
+      "_id": "req_dash_stats",
       "_type": "request",
-      "name": "Get Dashboard Stats",
+      "name": "Get Stats",
       "url": "{{ _.BASE_URL }}/api/dashboard/stats",
       "method": "GET",
       "body": {},
-      "parameters": [
-        {
-          "name": "unitId",
-          "value": "unit_id_here",
-          "description": "ID da unidade"
-        }
-      ],
+      "parameters": [{ "name": "unitId", "value": "unit_xxx" }],
       "headers": [],
       "authentication": {},
-      "description": "Retorna KPIs do dashboard (agendamentos hoje, novos clientes, servico mais pedido, horario de pico)",
       "parentId": "fld_dashboard"
     },
     {
-      "_id": "req_dashboard_recent_bookings",
+      "_id": "req_dash_bookings",
       "_type": "request",
       "name": "Get Today's Appointments",
       "url": "{{ _.BASE_URL }}/api/dashboard/recent-bookings",
       "method": "GET",
       "body": {},
-      "parameters": [
-        {
-          "name": "unitId",
-          "value": "unit_id_here",
-          "description": "ID da unidade"
-        }
-      ],
+      "parameters": [{ "name": "unitId", "value": "unit_xxx" }],
       "headers": [],
       "authentication": {},
-      "description": "Lista agendamentos de hoje para a unidade",
       "parentId": "fld_dashboard"
     },
     {
-      "_id": "req_dashboard_plan",
+      "_id": "req_dash_plan",
       "_type": "request",
       "name": "Get Plan Info",
       "url": "{{ _.BASE_URL }}/api/dashboard/plan",
       "method": "GET",
       "body": {},
-      "parameters": [
-        {
-          "name": "unitId",
-          "value": "unit_id_here",
-          "description": "ID da unidade"
-        }
-      ],
+      "parameters": [{ "name": "unitId", "value": "unit_xxx" }],
       "headers": [],
       "authentication": {},
-      "description": "Retorna informacoes do plano da unidade (limites, uso, status)",
       "parentId": "fld_dashboard"
     },
     {
-      "_id": "req_dashboard_secretary",
+      "_id": "req_dash_secretary",
       "_type": "request",
       "name": "Get Secretary Status",
       "url": "{{ _.BASE_URL }}/api/dashboard/secretary",
@@ -372,67 +1044,49 @@
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Retorna status da secretaria online (mockado)",
       "parentId": "fld_dashboard"
     },
     {
-      "_id": "req_dashboard_revenue",
+      "_id": "req_dash_revenue",
       "_type": "request",
       "name": "Get Revenue Stats",
       "url": "{{ _.BASE_URL }}/api/dashboard/revenue",
       "method": "GET",
       "body": {},
       "parameters": [
-        {
-          "name": "unitId",
-          "value": "unit_id_here",
-          "description": "ID da unidade"
-        },
-        {
-          "name": "period",
-          "value": "month",
-          "description": "Periodo: day, week, month, year"
-        }
+        { "name": "unitId", "value": "unit_xxx" },
+        { "name": "period", "value": "month" }
       ],
       "headers": [],
       "authentication": {},
-      "description": "Retorna estatisticas de faturamento da unidade",
       "parentId": "fld_dashboard"
     },
     {
-      "_id": "req_dashboard_notifications",
+      "_id": "req_dash_notif",
       "_type": "request",
       "name": "Get Notifications",
       "url": "{{ _.BASE_URL }}/api/dashboard/notifications",
       "method": "GET",
       "body": {},
-      "parameters": [
-        {
-          "name": "limit",
-          "value": "20",
-          "description": "Limite de notificacoes"
-        }
-      ],
+      "parameters": [{ "name": "limit", "value": "20" }],
       "headers": [],
       "authentication": {},
-      "description": "Lista notificacoes do usuario",
       "parentId": "fld_dashboard"
     },
     {
-      "_id": "req_dashboard_notification_read",
+      "_id": "req_dash_notif_read",
       "_type": "request",
       "name": "Mark Notification as Read",
-      "url": "{{ _.BASE_URL }}/api/dashboard/notifications/notification_id_here/read",
+      "url": "{{ _.BASE_URL }}/api/dashboard/notifications/:id/read",
       "method": "PATCH",
       "body": {},
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Marca uma notificacao como lida",
       "parentId": "fld_dashboard"
     },
     {
-      "_id": "req_dashboard_notifications_read_all",
+      "_id": "req_dash_notif_all",
       "_type": "request",
       "name": "Mark All Notifications as Read",
       "url": "{{ _.BASE_URL }}/api/dashboard/notifications/read-all",
@@ -441,430 +1095,237 @@
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Marca todas as notificacoes como lidas",
       "parentId": "fld_dashboard"
     },
     {
-      "_id": "fld_bookings",
+      "_id": "fld_upload",
       "_type": "request_group",
-      "name": "Bookings",
-      "description": "Gerenciamento de agendamentos",
+      "name": "Upload",
       "parentId": "wrk_belezeiro"
     },
     {
-      "_id": "fld_booking_rules",
-      "_type": "request_group",
-      "name": "Booking Rules",
-      "description": "Regras de agendamento",
-      "parentId": "fld_bookings"
-    },
-    {
-      "_id": "req_booking_rules_create",
+      "_id": "req_up_url",
       "_type": "request",
-      "name": "Create Booking Rule",
-      "url": "{{ _.BASE_URL }}/api/booking/rules",
+      "name": "Generate Upload URL",
+      "url": "{{ _.BASE_URL }}/api/upload/generate-url",
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"unit_id\": \"unit_id_here\",\n  \"day_of_week\": 1,\n  \"start_time\": \"09:00\",\n  \"end_time\": \"18:00\",\n  \"slot_duration_minutes\": 30\n}"
+        "text": "{\n  \"filename\": \"photo.jpg\",\n  \"content_type\": \"image/jpeg\",\n  \"purpose\": \"user_photo\"\n}"
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
       "authentication": {},
-      "description": "Cria uma regra de agendamento (usa cookies)",
-      "parentId": "fld_booking_rules"
+      "parentId": "fld_upload"
     },
     {
-      "_id": "req_booking_rules_list",
+      "_id": "req_up_batch_urls",
       "_type": "request",
-      "name": "List Booking Rules",
-      "url": "{{ _.BASE_URL }}/api/booking/rules",
-      "method": "GET",
-      "body": {},
-      "parameters": [
-        {
-          "name": "unit_id",
-          "value": "unit_id_here",
-          "description": "ID da unidade"
-        }
-      ],
-      "headers": [],
-      "authentication": {},
-      "description": "Lista regras de agendamento (usa cookies)",
-      "parentId": "fld_booking_rules"
-    },
-    {
-      "_id": "req_booking_rules_update",
-      "_type": "request",
-      "name": "Update Booking Rule",
-      "url": "{{ _.BASE_URL }}/api/booking/rules/rule_id_here",
-      "method": "PUT",
+      "name": "Generate Batch Upload URLs",
+      "url": "{{ _.BASE_URL }}/api/upload/generate-batch-urls",
+      "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"start_time\": \"08:00\",\n  \"end_time\": \"19:00\"\n}"
+        "text": "{\n  \"files\": [\n    { \"filename\": \"photo1.jpg\", \"content_type\": \"image/jpeg\" },\n    { \"filename\": \"photo2.jpg\", \"content_type\": \"image/jpeg\" }\n  ],\n  \"purpose\": \"unit_gallery\"\n}"
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
       "authentication": {},
-      "description": "Atualiza uma regra de agendamento (usa cookies)",
-      "parentId": "fld_booking_rules"
+      "parentId": "fld_upload"
     },
     {
-      "_id": "req_booking_rules_delete",
+      "_id": "req_up_user_photo",
       "_type": "request",
-      "name": "Delete Booking Rule",
-      "url": "{{ _.BASE_URL }}/api/booking/rules/rule_id_here",
+      "name": "Confirm User Photo",
+      "url": "{{ _.BASE_URL }}/api/upload/confirm/user-photo",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"file_key\": \"uploads/users/xxx/photo.jpg\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_upload"
+    },
+    {
+      "_id": "req_up_unit_logo",
+      "_type": "request",
+      "name": "Confirm Unit Logo",
+      "url": "{{ _.BASE_URL }}/api/upload/confirm/unit/:unit_id/logo",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"file_key\": \"uploads/units/xxx/logo.jpg\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_upload"
+    },
+    {
+      "_id": "req_up_gallery",
+      "_type": "request",
+      "name": "Add Gallery Photo",
+      "url": "{{ _.BASE_URL }}/api/upload/confirm/unit/:unit_id/gallery",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"file_key\": \"uploads/units/xxx/gallery/photo1.jpg\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_upload"
+    },
+    {
+      "_id": "req_up_gallery_batch",
+      "_type": "request",
+      "name": "Batch Confirm Gallery",
+      "url": "{{ _.BASE_URL }}/api/upload/confirm/unit/:unit_id/gallery/batch",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"file_keys\": [\n    \"uploads/units/xxx/gallery/photo1.jpg\",\n    \"uploads/units/xxx/gallery/photo2.jpg\"\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "parentId": "fld_upload"
+    },
+    {
+      "_id": "req_up_gallery_rm",
+      "_type": "request",
+      "name": "Remove Gallery Photo",
+      "url": "{{ _.BASE_URL }}/api/upload/unit/:unit_id/gallery/:photo_url",
       "method": "DELETE",
       "body": {},
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Remove uma regra de agendamento (usa cookies)",
-      "parentId": "fld_booking_rules"
-    },
-    {
-      "_id": "fld_booking_exceptions",
-      "_type": "request_group",
-      "name": "Booking Exceptions",
-      "description": "Excecoes de agendamento",
-      "parentId": "fld_bookings"
-    },
-    {
-      "_id": "req_booking_exceptions_create",
-      "_type": "request",
-      "name": "Create Booking Exception",
-      "url": "{{ _.BASE_URL }}/api/booking/exceptions",
-      "method": "POST",
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\n  \"unit_id\": \"unit_id_here\",\n  \"date\": \"2025-12-25\",\n  \"reason\": \"Feriado - Natal\",\n  \"is_available\": false\n}"
-      },
-      "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
-      "authentication": {},
-      "description": "Cria uma excecao de agendamento (usa cookies)",
-      "parentId": "fld_booking_exceptions"
-    },
-    {
-      "_id": "req_booking_exceptions_list",
-      "_type": "request",
-      "name": "List Booking Exceptions",
-      "url": "{{ _.BASE_URL }}/api/booking/exceptions",
-      "method": "GET",
-      "body": {},
-      "parameters": [
-        {
-          "name": "unit_id",
-          "value": "unit_id_here",
-          "description": "ID da unidade"
-        }
-      ],
-      "headers": [],
-      "authentication": {},
-      "description": "Lista excecoes de agendamento (usa cookies)",
-      "parentId": "fld_booking_exceptions"
-    },
-    {
-      "_id": "req_booking_exceptions_update",
-      "_type": "request",
-      "name": "Update Booking Exception",
-      "url": "{{ _.BASE_URL }}/api/booking/exceptions/exception_id_here",
-      "method": "PUT",
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\n  \"reason\": \"Feriado - Natal (Atualizado)\"\n}"
-      },
-      "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
-      "authentication": {},
-      "description": "Atualiza uma excecao de agendamento (usa cookies)",
-      "parentId": "fld_booking_exceptions"
-    },
-    {
-      "_id": "req_booking_exceptions_delete",
-      "_type": "request",
-      "name": "Delete Booking Exception",
-      "url": "{{ _.BASE_URL }}/api/booking/exceptions/exception_id_here",
-      "method": "DELETE",
-      "body": {},
-      "parameters": [],
-      "headers": [],
-      "authentication": {},
-      "description": "Remove uma excecao de agendamento (usa cookies)",
-      "parentId": "fld_booking_exceptions"
-    },
-    {
-      "_id": "fld_booking_availability",
-      "_type": "request_group",
-      "name": "Availability",
-      "description": "Consulta de disponibilidade",
-      "parentId": "fld_bookings"
-    },
-    {
-      "_id": "req_booking_available_days",
-      "_type": "request",
-      "name": "Get Available Days",
-      "url": "{{ _.BASE_URL }}/api/booking/available-days",
-      "method": "GET",
-      "body": {},
-      "parameters": [
-        {
-          "name": "unit_id",
-          "value": "unit_id_here",
-          "description": "ID da unidade"
-        },
-        {
-          "name": "month",
-          "value": "2025-12",
-          "description": "Mes (formato: YYYY-MM)"
-        }
-      ],
-      "headers": [],
-      "authentication": {},
-      "description": "Lista dias disponiveis para agendamento",
-      "parentId": "fld_booking_availability"
-    },
-    {
-      "_id": "req_booking_available_slots",
-      "_type": "request",
-      "name": "Get Available Slots",
-      "url": "{{ _.BASE_URL }}/api/booking/available-slots",
-      "method": "GET",
-      "body": {},
-      "parameters": [
-        {
-          "name": "unit_id",
-          "value": "unit_id_here",
-          "description": "ID da unidade"
-        },
-        {
-          "name": "date",
-          "value": "2025-12-10",
-          "description": "Data (formato: YYYY-MM-DD)"
-        }
-      ],
-      "headers": [],
-      "authentication": {},
-      "description": "Lista horarios disponiveis para uma data especifica",
-      "parentId": "fld_booking_availability"
-    },
-    {
-      "_id": "fld_booking_management",
-      "_type": "request_group",
-      "name": "Booking Management",
-      "description": "Gerenciamento de agendamentos",
-      "parentId": "fld_bookings"
-    },
-    {
-      "_id": "req_bookings_create",
-      "_type": "request",
-      "name": "Create Booking",
-      "url": "{{ _.BASE_URL }}/api/booking",
-      "method": "POST",
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\n  \"unit_id\": \"unit_id_here\",\n  \"user_id\": \"user_id_here\",\n  \"date\": \"2025-12-15\",\n  \"start_time\": \"14:00\",\n  \"service_name\": \"Corte de Cabelo\",\n  \"customer_name\": \"Maria Santos\",\n  \"customer_phone\": \"+5511777777777\"\n}"
-      },
-      "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
-      "authentication": {},
-      "description": "Cria um novo agendamento (usa cookies)",
-      "parentId": "fld_booking_management"
-    },
-    {
-      "_id": "req_bookings_cancel",
-      "_type": "request",
-      "name": "Cancel Booking",
-      "url": "{{ _.BASE_URL }}/api/booking/booking_id_here/cancel",
-      "method": "POST",
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\n  \"reason\": \"Cliente solicitou cancelamento\"\n}"
-      },
-      "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
-      "authentication": {},
-      "description": "Cancela um agendamento (usa cookies)",
-      "parentId": "fld_booking_management"
+      "parentId": "fld_upload"
     },
     {
       "_id": "fld_billing",
       "_type": "request_group",
       "name": "Billing",
-      "description": "Modulo de faturamento e assinaturas",
       "parentId": "wrk_belezeiro"
     },
     {
       "_id": "fld_plans",
       "_type": "request_group",
       "name": "Plans",
-      "description": "Gerenciamento de planos",
       "parentId": "fld_billing"
     },
     {
       "_id": "req_plans_list",
       "_type": "request",
-      "name": "List Active Plans",
+      "name": "List Plans",
       "url": "{{ _.BASE_URL }}/api/plans",
       "method": "GET",
       "body": {},
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Lista todos os planos ativos",
       "parentId": "fld_plans"
     },
     {
-      "_id": "req_plans_get_by_id",
+      "_id": "req_plans_get",
       "_type": "request",
       "name": "Get Plan by ID",
-      "url": "{{ _.BASE_URL }}/api/plans/plan_id_here",
+      "url": "{{ _.BASE_URL }}/api/plans/:id",
       "method": "GET",
       "body": {},
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Busca plano por ID",
       "parentId": "fld_plans"
     },
     {
       "_id": "fld_subscriptions",
       "_type": "request_group",
       "name": "Subscriptions",
-      "description": "Gerenciamento de assinaturas",
       "parentId": "fld_billing"
     },
     {
-      "_id": "req_subscriptions_checkout",
+      "_id": "req_sub_checkout",
       "_type": "request",
       "name": "Create Checkout",
       "url": "{{ _.BASE_URL }}/api/subscriptions/checkout",
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"plan_id\": \"plan_id_here\",\n  \"unit_id\": \"unit_id_here\",\n  \"discount_code\": \"PROMO2025\"\n}"
+        "text": "{\n  \"unit_id\": \"unit_xxx\",\n  \"plan_id\": \"plan_xxx\",\n  \"success_url\": \"https://app.belezeiro.com/success\",\n  \"cancel_url\": \"https://app.belezeiro.com/cancel\",\n  \"coupon_code\": \"PROMO2025\",\n  \"trial_days\": 7\n}"
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
       "authentication": {},
-      "description": "Cria um checkout para assinatura (usa cookies)",
       "parentId": "fld_subscriptions"
     },
     {
-      "_id": "req_subscriptions_get_by_unit",
+      "_id": "req_sub_get",
       "_type": "request",
       "name": "Get Subscription by Unit",
-      "url": "{{ _.BASE_URL }}/api/subscriptions/unit/unit_id_here",
+      "url": "{{ _.BASE_URL }}/api/subscriptions/unit/:unit_id",
       "method": "GET",
       "body": {},
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Busca assinatura por unidade (usa cookies)",
       "parentId": "fld_subscriptions"
     },
     {
-      "_id": "req_subscriptions_cancel",
+      "_id": "req_sub_cancel",
       "_type": "request",
       "name": "Cancel Subscription",
-      "url": "{{ _.BASE_URL }}/api/subscriptions/subscription_id_here/cancel",
+      "url": "{{ _.BASE_URL }}/api/subscriptions/:id/cancel",
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"reason\": \"Cliente solicitou cancelamento\"\n}"
+        "text": "{\n  \"cancel_immediately\": false\n}"
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
       "authentication": {},
-      "description": "Cancela uma assinatura (usa cookies)",
       "parentId": "fld_subscriptions"
     },
     {
       "_id": "fld_discounts",
       "_type": "request_group",
       "name": "Discounts",
-      "description": "Gerenciamento de descontos",
       "parentId": "fld_billing"
     },
     {
-      "_id": "req_discounts_validate",
+      "_id": "req_disc_validate",
       "_type": "request",
       "name": "Validate Discount Code",
-      "url": "{{ _.BASE_URL }}/api/discounts/validate/PROMO2025",
+      "url": "{{ _.BASE_URL }}/api/discounts/validate/:code",
       "method": "GET",
       "body": {},
       "parameters": [],
       "headers": [],
       "authentication": {},
-      "description": "Valida um codigo de desconto",
       "parentId": "fld_discounts"
     },
     {
       "_id": "fld_webhooks",
       "_type": "request_group",
       "name": "Webhooks",
-      "description": "Webhooks de integracao",
       "parentId": "fld_billing"
     },
     {
-      "_id": "req_webhooks_payment_provider",
+      "_id": "req_wh_payment",
       "_type": "request",
       "name": "Payment Provider Webhook",
       "url": "{{ _.BASE_URL }}/api/webhooks/payment-provider",
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"event\": \"payment.succeeded\",\n  \"data\": {}\n}"
+        "text": "{\n  \"event\": \"payment.succeeded\",\n  \"data\": {\n    \"subscription_id\": \"sub_xxx\",\n    \"amount\": 9900\n  }\n}"
       },
       "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
       "authentication": {},
-      "description": "Webhook do provedor de pagamento",
       "parentId": "fld_webhooks"
     }
   ]
