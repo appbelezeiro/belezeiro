@@ -1,5 +1,6 @@
 import { ServiceEntity } from '@/domain/entities/service.entity';
 import { IServiceRepository } from '@/application/contracts/i-service-repository.interface';
+import { generateSeedId } from '@/domain/constants/seed-ids';
 
 class UseCase {
   constructor(private readonly service_repository: IServiceRepository) {}
@@ -12,9 +13,9 @@ class UseCase {
       const existing = await this.service_repository.find_by_code(seed.code);
 
       if (!existing) {
-        // Create with fixed ID
+        // Create with deterministic ID based on code
         const service = new ServiceEntity({
-          id: `serv_${seed.code}`,
+          id: generateSeedId('serv', seed.code),
           specialty_id: seed.specialty_id,
           code: seed.code,
           name: seed.name,
