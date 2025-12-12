@@ -55,15 +55,15 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
     }));
 
     // Add custom specialties that user created
-    const customSpecialties = data.professions.filter(
+    const customSpecialties = data.especialidades.filter(
       (p) => !mapped.find((m) => m.id === p.id)
     );
 
     return [...mapped, ...customSpecialties];
-  }, [apiSpecialties, data.professions]);
+  }, [apiSpecialties, data.especialidades]);
 
   // Get selected specialty IDs for fetching services
-  const selectedSpecialtyIds = data.professions.map((p) => p.id);
+  const selectedSpecialtyIds = data.especialidades.map((p) => p.id);
 
   // Fetch services for each selected specialty using useQueries (handles dynamic array)
   const servicesQueries = useQueries({
@@ -77,24 +77,24 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
 
   // Combine all services from selected specialties
   const availableServices = useMemo(() => {
-    const servicesMap = new Map<string, { name: string; professionId: string; professionName: string }>();
+    const servicesMap = new Map<string, { name: string; especialidadeId: string; especialidadeName: string }>();
 
     servicesQueries.forEach((query, index) => {
       const specialtyId = selectedSpecialtyIds[index];
-      const specialty = data.professions.find((p) => p.id === specialtyId);
+      const specialty = data.especialidades.find((p) => p.id === specialtyId);
 
       // useQueries returns data directly (not pages like infinite query)
       const response = query.data as ServicesResponse | undefined;
       if (!response?.items || !specialty) return;
 
       response.items.forEach((service) => {
-        // Use name+professionId as key to avoid duplicates
+        // Use name+especialidadeId as key to avoid duplicates
         const key = `${service.name}-${specialtyId}`;
         if (!servicesMap.has(key)) {
           servicesMap.set(key, {
             name: service.name,
-            professionId: specialtyId,
-            professionName: specialty.name,
+            especialidadeId: specialtyId,
+            especialidadeName: specialty.name,
           });
         }
       });
@@ -102,26 +102,26 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
 
     // Include custom services that are NOT from API (custom specialties only)
     data.services.forEach((s) => {
-      const key = `${s.name}-${s.professionId}`;
+      const key = `${s.name}-${s.especialidadeId}`;
       // Only add if not already in map (prevents duplicates)
       if (!servicesMap.has(key)) {
-        const profession = data.professions.find((p) => p.id === s.professionId);
-        if (profession) {
+        const especialidade = data.especialidades.find((p) => p.id === s.especialidadeId);
+        if (especialidade) {
           servicesMap.set(key, {
             name: s.name,
-            professionId: s.professionId,
-            professionName: profession.name,
+            especialidadeId: s.especialidadeId,
+            especialidadeName: especialidade.name,
           });
         }
       }
     });
 
     return Array.from(servicesMap.values());
-  }, [servicesQueries, selectedSpecialtyIds, data.professions, data.services]);
+  }, [servicesQueries, selectedSpecialtyIds, data.especialidades, data.services]);
 
   // Auto-select all services when a new specialty is selected and its services are loaded
   useEffect(() => {
-    const newServices: { name: string; professionId: string }[] = [];
+    const newServices: { name: string; especialidadeId: string }[] = [];
 
     servicesQueries.forEach((query, index) => {
       const specialtyId = selectedSpecialtyIds[index];
@@ -140,10 +140,10 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
       // Add all services from this specialty
       response.items.forEach((service) => {
         const alreadySelected = data.services.some(
-          (s) => s.name === service.name && s.professionId === specialtyId
+          (s) => s.name === service.name && s.especialidadeId === specialtyId
         );
         if (!alreadySelected) {
-          newServices.push({ name: service.name, professionId: specialtyId });
+          newServices.push({ name: service.name, especialidadeId: specialtyId });
         }
       });
     });
@@ -188,34 +188,34 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
   }, [availableServices, serviceSearch]);
 
   const toggleSpecialty = (specialty: { id: string; name: string; icon: string }) => {
-    const isSelected = data.professions.some((p) => p.id === specialty.id);
+    const isSelected = data.especialidades.some((p) => p.id === specialty.id);
 
     if (isSelected) {
       onUpdate({
-        professions: data.professions.filter((p) => p.id !== specialty.id),
-        services: data.services.filter((s) => s.professionId !== specialty.id),
+        especialidades: data.especialidades.filter((p) => p.id !== specialty.id),
+        services: data.services.filter((s) => s.especialidadeId !== specialty.id),
       });
     } else {
       onUpdate({
-        professions: [...data.professions, specialty],
+        especialidades: [...data.especialidades, specialty],
       });
     }
   };
 
-  const toggleService = (serviceName: string, professionId: string) => {
+  const toggleService = (serviceName: string, especialidadeId: string) => {
     const isSelected = data.services.some(
-      (s) => s.name === serviceName && s.professionId === professionId
+      (s) => s.name === serviceName && s.especialidadeId === especialidadeId
     );
 
     if (isSelected) {
       onUpdate({
         services: data.services.filter(
-          (s) => !(s.name === serviceName && s.professionId === professionId)
+          (s) => !(s.name === serviceName && s.especialidadeId === especialidadeId)
         ),
       });
     } else {
       onUpdate({
-        services: [...data.services, { name: serviceName, professionId }],
+        services: [...data.services, { name: serviceName, especialidadeId }],
       });
     }
   };
@@ -224,8 +224,8 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
     if (specialtySearch.trim() && !specialtyExistsInSearch) {
       const newId = `custom-${Date.now()}`;
       onUpdate({
-        professions: [
-          ...data.professions,
+        especialidades: [
+          ...data.especialidades,
           { id: newId, name: specialtySearch.trim(), icon: "✨" },
         ],
       });
@@ -234,29 +234,29 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
   };
 
   const addCustomService = () => {
-    if (serviceSearch.trim() && !serviceExistsInSearch && data.professions.length > 0) {
-      // Add to the first selected profession
-      const firstProfession = data.professions[0];
+    if (serviceSearch.trim() && !serviceExistsInSearch && data.especialidades.length > 0) {
+      // Add to the first selected especialidade
+      const firstEspecialidade = data.especialidades[0];
       onUpdate({
         services: [
           ...data.services,
-          { name: serviceSearch.trim(), professionId: firstProfession.id },
+          { name: serviceSearch.trim(), especialidadeId: firstEspecialidade.id },
         ],
       });
       setServiceSearch("");
     }
   };
 
-  const isServiceSelected = (serviceName: string, professionId: string) => {
+  const isServiceSelected = (serviceName: string, especialidadeId: string) => {
     return data.services.some(
-      (s) => s.name === serviceName && s.professionId === professionId
+      (s) => s.name === serviceName && s.especialidadeId === especialidadeId
     );
   };
 
   const selectAllServices = () => {
     const allServices = availableServices.map((s) => ({
       name: s.name,
-      professionId: s.professionId,
+      especialidadeId: s.especialidadeId,
     }));
     onUpdate({ services: allServices });
   };
@@ -265,7 +265,7 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
     onUpdate({ services: [] });
   };
 
-  const isValid = data.professions.length > 0 && data.services.length > 0;
+  const isValid = data.especialidades.length > 0 && data.services.length > 0;
   const isLoading = isLoadingSpecialties || isSearching;
 
   return (
@@ -325,7 +325,7 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
             </div>
           ) : (
             allSpecialties.map((specialty) => {
-              const isSelected = data.professions.some((p) => p.id === specialty.id);
+              const isSelected = data.especialidades.some((p) => p.id === specialty.id);
               return (
                 <button
                   key={specialty.id}
@@ -347,9 +347,9 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
         </div>
 
         {/* Selected specialties badges */}
-        {data.professions.length > 0 && (
+        {data.especialidades.length > 0 && (
           <div className="flex flex-wrap gap-2">
-            {data.professions.map((p) => (
+            {data.especialidades.map((p) => (
               <span
                 key={p.id}
                 className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary text-primary-foreground text-sm"
@@ -369,7 +369,7 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
       </div>
 
       {/* Services Search */}
-      {data.professions.length > 0 && (
+      {data.especialidades.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <Label className="text-base font-semibold">Serviços</Label>
@@ -401,7 +401,7 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
             >
               <Plus className="h-4 w-4 text-primary" />
               <span className="text-sm font-medium text-primary">
-                Criar serviço personalizado "{serviceSearch.trim()}" em {data.professions[0].name}
+                Criar serviço personalizado "{serviceSearch.trim()}" em {data.especialidades[0].name}
               </span>
             </button>
           )}
@@ -418,10 +418,10 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
               </p>
             ) : (
               filteredServices.map((service) => {
-                const isSelected = isServiceSelected(service.name, service.professionId);
+                const isSelected = isServiceSelected(service.name, service.especialidadeId);
                 return (
                   <label
-                    key={`${service.name}-${service.professionId}`}
+                    key={`${service.name}-${service.especialidadeId}`}
                     className={cn(
                       "flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all",
                       isSelected
@@ -431,11 +431,11 @@ export const OnboardingStepSpecialties = ({ data, onUpdate, onNext, onBack }: On
                   >
                     <Checkbox
                       checked={isSelected}
-                      onCheckedChange={() => toggleService(service.name, service.professionId)}
+                      onCheckedChange={() => toggleService(service.name, service.especialidadeId)}
                     />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate">{service.name}</p>
-                      <p className="text-xs text-muted-foreground">{service.professionName}</p>
+                      <p className="text-xs text-muted-foreground">{service.especialidadeName}</p>
                     </div>
                   </label>
                 );

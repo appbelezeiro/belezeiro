@@ -24,7 +24,7 @@ const addressSchema = z.object({
   state: z.string().length(2, 'Estado deve ter 2 caracteres'),
 });
 
-const professionRefSchema = z.object({
+const especialidadeRefSchema = z.object({
   id: z.string(),
   name: z.string(),
   icon: z.string(),
@@ -33,7 +33,7 @@ const professionRefSchema = z.object({
 const serviceRefSchema = z.object({
   id: z.string(),
   name: z.string(),
-  professionId: z.string(),
+  especialidadeId: z.string(),
 });
 
 const lunchBreakSchema = z.object({
@@ -68,29 +68,13 @@ const amenityIdSchema = z.enum([
 
 export const createOrganizationRequestSchema = z.object({
   businessName: z.string().min(2, 'Nome deve ter pelo menos 2 caracteres').max(100),
-  brandColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, 'Cor inválida'),
   ownerId: z.string().min(1),
-  subscription: z
-    .object({
-      plan: z.enum(['free', 'pro', 'enterprise']),
-      status: z.enum(['active', 'inactive', 'suspended']),
-      expiresAt: z.string().optional(),
-    })
-    .optional(),
 });
 
 export const organizationDTOSchema = z.object({
   id: z.string(),
   businessName: z.string(),
-  brandColor: z.string(),
   ownerId: z.string(),
-  subscription: z
-    .object({
-      plan: z.enum(['free', 'pro', 'enterprise']),
-      status: z.enum(['active', 'inactive', 'suspended']),
-      expiresAt: z.string().optional(),
-    })
-    .optional(),
   created_at: z.string(),
   updated_at: z.string(),
 });
@@ -102,12 +86,20 @@ export const organizationDTOSchema = z.object({
 export const createUnitRequestSchema = z.object({
   organizationId: z.string().min(1),
   name: z.string().min(1, 'Nome da unidade é obrigatório'),
+  brandColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, 'Cor inválida'),
+  subscription: z
+    .object({
+      plan: z.enum(['free', 'pro', 'enterprise']),
+      status: z.enum(['active', 'inactive', 'suspended']),
+      expiresAt: z.string().optional(),
+    })
+    .optional(),
   logo: z.string().url().optional(),
   gallery: z.array(z.string().url()).optional(),
   whatsapp: z.string().min(10, 'WhatsApp deve ter pelo menos 10 dígitos'),
   phone: z.string().min(10).optional(),
   address: addressSchema,
-  professions: z.array(professionRefSchema).min(1, 'Selecione pelo menos uma profissão'),
+  especialidades: z.array(especialidadeRefSchema).min(1, 'Selecione pelo menos uma especialidade'),
   services: z.array(serviceRefSchema).min(1, 'Selecione pelo menos um serviço'),
   serviceType: z.enum(['local', 'home', 'both']),
   amenities: z.array(amenityIdSchema),
@@ -119,13 +111,21 @@ export const unitDTOSchema = z.object({
   id: z.string(),
   organizationId: z.string(),
   name: z.string(),
+  brandColor: z.string(),
+  subscription: z
+    .object({
+      plan: z.enum(['free', 'pro', 'enterprise']),
+      status: z.enum(['active', 'inactive', 'suspended']),
+      expiresAt: z.string().optional(),
+    })
+    .optional(),
   logo: z.string().optional(),
   gallery: z.array(z.string()),
   isActive: z.boolean(),
   whatsapp: z.string(),
   phone: z.string().optional(),
   address: addressSchema,
-  professions: z.array(professionRefSchema),
+  especialidades: z.array(especialidadeRefSchema),
   services: z.array(serviceRefSchema),
   serviceType: z.enum(['local', 'home', 'both']),
   amenities: z.array(amenityIdSchema),
@@ -142,16 +142,16 @@ export const unitDTOSchema = z.object({
 export const onboardingSubmitDataSchema = z.object({
   // Organization
   businessName: z.string().min(2, 'Nome do negócio deve ter pelo menos 2 caracteres').max(100),
-  brandColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, 'Cor inválida'),
 
   // Unit
   unitName: z.string().min(1, 'Nome da unidade é obrigatório'),
+  brandColor: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, 'Cor inválida'),
   logo: z.string().optional(),
   gallery: z.array(z.string()),
   whatsapp: z.string().min(10, 'WhatsApp deve ter pelo menos 10 dígitos'),
   phone: z.string().optional(),
   address: addressSchema,
-  professions: z.array(professionRefSchema).min(1, 'Selecione pelo menos uma profissão'),
+  especialidades: z.array(especialidadeRefSchema).min(1, 'Selecione pelo menos uma especialidade'),
   services: z.array(serviceRefSchema).min(1, 'Selecione pelo menos um serviço'),
   serviceType: z.enum(['local', 'home', 'both']),
   amenities: z.array(amenityIdSchema),

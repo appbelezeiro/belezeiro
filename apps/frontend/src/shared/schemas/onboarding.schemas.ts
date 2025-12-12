@@ -52,7 +52,7 @@ export type AddressStepFormData = z.infer<typeof addressStepSchema>;
  * Schema para Step 3: Especialidades
  */
 export const specialtiesSchema = z.object({
-  professions: z.array(z.string()).min(1, 'Selecione pelo menos uma profissão'),
+  especialidades: z.array(z.string()).min(1, 'Selecione pelo menos uma especialidade'),
   services: z.array(z.string()).min(1, 'Selecione pelo menos um serviço'),
 });
 
@@ -91,7 +91,7 @@ export const onboardingErrors = {
   neighborhood: 'Bairro é obrigatório',
   city: 'Cidade é obrigatória',
   state: 'Estado é obrigatório',
-  professions: 'Selecione pelo menos uma profissão',
+  especialidades: 'Selecione pelo menos uma especialidade',
   services: 'Selecione pelo menos um serviço',
   serviceType: 'Selecione o tipo de atendimento',
   brandColor: 'Cor da marca inválida',

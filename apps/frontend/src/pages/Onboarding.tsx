@@ -37,8 +37,8 @@ export interface OnboardingFormData {
   complement: string;
   
   // Specialties & Services
-  professions: { id: string; name: string; icon: string }[];
-  services: { name: string; professionId: string }[];
+  especialidades: { id: string; name: string; icon: string }[];
+  services: { name: string; especialidadeId: string }[];
   
   // Service Type
   serviceType: "local" | "home" | "both" | null;
@@ -68,7 +68,7 @@ const initialFormData: OnboardingFormData = {
   state: "",
   number: "",
   complement: "",
-  professions: [],
+  especialidades: [],
   services: [],
   serviceType: null,
   amenities: [],
@@ -169,7 +169,7 @@ const Onboarding = () => {
     const servicesWithId = formData.services.map((service) => ({
       id: `serv_${service.name.toLowerCase().replace(/\s+/g, '_')}`,
       name: service.name,
-      professionId: service.professionId,
+      especialidadeId: service.especialidadeId,
     }));
 
     return {
@@ -189,7 +189,7 @@ const Onboarding = () => {
         city: formData.city,
         state: formData.state,
       },
-      professions: formData.professions,
+      especialidades: formData.especialidades,
       services: servicesWithId,
       serviceType: formData.serviceType as 'local' | 'home' | 'both',
       amenities: formData.amenities as AmenityId[],
