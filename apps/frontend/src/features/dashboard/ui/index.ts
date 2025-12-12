@@ -8,3 +8,4 @@ export { ReferralBanner } from "./ReferralBanner";
 export { AppointmentsList } from "./AppointmentsList";
 export { SecretaryStatusCard } from "./SecretaryStatusCard";
 export { PlanStatusCard } from "./PlanStatusCard";
+export { RevenueStatsCard } from "./RevenueStatsCard";

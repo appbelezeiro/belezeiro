@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Bell, X } from "lucide-react";
+import { Bell, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -17,84 +17,96 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { dashboardService } from "../api/dashboard.service";
+import type { DashboardNotification } from "../types";
 
-interface Notification {
-  id: string;
-  title: string;
-  message: string;
-  time: string;
-  read: boolean;
-  type: "info" | "success" | "warning";
+type NotificationType = "appointment" | "message" | "reminder" | "system" | "payment";
+
+function formatTime(dateString: string): string {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return "Agora";
+  if (diffMins < 60) return `Ha ${diffMins} min`;
+  if (diffHours < 24) return `Ha ${diffHours} hora${diffHours > 1 ? "s" : ""}`;
+  if (diffDays === 1) return "Ontem";
+  return `Ha ${diffDays} dias`;
 }
 
-const mockNotifications: Notification[] = [
-  {
-    id: "1",
-    title: "Novo agendamento",
-    message: "Maria Silva agendou um horário para amanhã às 14:00",
-    time: "Há 5 min",
-    read: false,
-    type: "success",
-  },
-  {
-    id: "2",
-    title: "Lembrete",
-    message: "Você tem 3 agendamentos para hoje",
-    time: "Há 1 hora",
-    read: false,
-    type: "info",
-  },
-  {
-    id: "3",
-    title: "Cancelamento",
-    message: "João Pedro cancelou o agendamento de hoje às 16:00",
-    time: "Há 2 horas",
-    read: true,
-    type: "warning",
-  },
-  {
-    id: "4",
-    title: "Nova avaliação",
-    message: "Você recebeu uma avaliação 5 estrelas de Ana Costa",
-    time: "Ontem",
-    read: true,
-    type: "success",
-  },
-];
+function getTypeColor(type: string): string {
+  switch (type as NotificationType) {
+    case "appointment":
+      return "bg-emerald-500";
+    case "payment":
+      return "bg-amber-500";
+    case "message":
+      return "bg-blue-500";
+    case "reminder":
+      return "bg-purple-500";
+    case "system":
+    default:
+      return "bg-primary";
+  }
+}
 
-function NotificationList({
-  notifications,
-  onMarkAsRead,
-  onMarkAllAsRead,
-}: {
-  notifications: Notification[];
-  onMarkAsRead: (id: string) => void;
-  onMarkAllAsRead: () => void;
-}) {
-  const unreadCount = notifications.filter((n) => !n.read).length;
-
-  const getTypeColor = (type: Notification["type"]) => {
-    switch (type) {
-      case "success":
-        return "bg-emerald-500";
-      case "warning":
-        return "bg-amber-500";
-      default:
-        return "bg-primary";
-    }
-  };
-
+function NotificationListSkeleton() {
   return (
     <>
       <div className="flex items-center justify-between p-3 border-b border-border">
-        <span className="font-medium text-sm">Notificações</span>
+        <span className="font-medium text-sm">Notificacoes</span>
+      </div>
+      <div className="p-1">
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="p-3">
+            <div className="flex gap-3">
+              <div className="h-2 w-2 rounded-full bg-muted animate-pulse mt-2" />
+              <div className="flex-1 space-y-2">
+                <div className="h-4 w-32 bg-muted rounded animate-pulse" />
+                <div className="h-3 w-48 bg-muted rounded animate-pulse" />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function NotificationList({
+  notifications,
+  unreadCount,
+  onMarkAsRead,
+  onMarkAllAsRead,
+  isMarkingRead,
+  isMarkingAllRead,
+}: {
+  notifications: DashboardNotification[];
+  unreadCount: number;
+  onMarkAsRead: (id: string) => void;
+  onMarkAllAsRead: () => void;
+  isMarkingRead: boolean;
+  isMarkingAllRead: boolean;
+}) {
+  return (
+    <>
+      <div className="flex items-center justify-between p-3 border-b border-border">
+        <span className="font-medium text-sm">Notificacoes</span>
         {unreadCount > 0 && (
           <Button
             variant="ghost"
             size="sm"
             className="text-xs text-muted-foreground h-auto p-1"
             onClick={onMarkAllAsRead}
+            disabled={isMarkingAllRead}
           >
+            {isMarkingAllRead ? (
+              <Loader2 className="h-3 w-3 animate-spin mr-1" />
+            ) : null}
             Marcar todas como lidas
           </Button>
         )}
@@ -104,14 +116,15 @@ function NotificationList({
         {notifications.length === 0 ? (
           <div className="py-8 text-center text-muted-foreground">
             <Bell className="h-10 w-10 mx-auto mb-2 opacity-50" />
-            <p className="text-sm">Nenhuma notificação</p>
+            <p className="text-sm">Nenhuma notificacao</p>
           </div>
         ) : (
           <div className="p-1">
             {notifications.map((notification) => (
               <button
                 key={notification.id}
-                onClick={() => onMarkAsRead(notification.id)}
+                onClick={() => !notification.read && onMarkAsRead(notification.id)}
+                disabled={isMarkingRead}
                 className={cn(
                   "w-full text-left p-3 rounded-lg transition-colors",
                   notification.read
@@ -137,7 +150,7 @@ function NotificationList({
                         {notification.title}
                       </p>
                       <span className="text-xs text-muted-foreground flex-shrink-0">
-                        {notification.time}
+                        {formatTime(notification.createdAt)}
                       </span>
                     </div>
                     <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
@@ -156,19 +169,43 @@ function NotificationList({
 
 export function NotificationBell() {
   const [isOpen, setIsOpen] = useState(false);
-  const [notifications, setNotifications] = useState(mockNotifications);
   const isMobile = useIsMobile();
+  const queryClient = useQueryClient();
 
-  const unreadCount = notifications.filter((n) => !n.read).length;
+  const {
+    data: notificationsData,
+    isLoading,
+  } = useQuery({
+    queryKey: ["dashboard", "notifications"],
+    queryFn: () => dashboardService.getNotifications(20),
+    staleTime: 1000 * 60 * 2, // 2 minutes
+    refetchOnWindowFocus: true,
+  });
 
-  const markAsRead = (id: string) => {
-    setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, read: true } : n))
-    );
+  const markReadMutation = useMutation({
+    mutationFn: (notificationId: string) =>
+      dashboardService.markNotificationRead(notificationId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["dashboard", "notifications"] });
+    },
+  });
+
+  const markAllReadMutation = useMutation({
+    mutationFn: () => dashboardService.markAllNotificationsRead(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["dashboard", "notifications"] });
+    },
+  });
+
+  const notifications = notificationsData?.items ?? [];
+  const unreadCount = notificationsData?.unreadCount ?? 0;
+
+  const handleMarkAsRead = (id: string) => {
+    markReadMutation.mutate(id);
   };
 
-  const markAllAsRead = () => {
-    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+  const handleMarkAllAsRead = () => {
+    markAllReadMutation.mutate();
   };
 
   const TriggerButton = (
@@ -176,10 +213,23 @@ export function NotificationBell() {
       <Bell className="h-5 w-5 text-muted-foreground" />
       {unreadCount > 0 && (
         <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">
-          {unreadCount}
+          {unreadCount > 9 ? "9+" : unreadCount}
         </span>
       )}
     </Button>
+  );
+
+  const content = isLoading ? (
+    <NotificationListSkeleton />
+  ) : (
+    <NotificationList
+      notifications={notifications}
+      unreadCount={unreadCount}
+      onMarkAsRead={handleMarkAsRead}
+      onMarkAllAsRead={handleMarkAllAsRead}
+      isMarkingRead={markReadMutation.isPending}
+      isMarkingAllRead={markAllReadMutation.isPending}
+    />
   );
 
   if (isMobile) {
@@ -188,20 +238,14 @@ export function NotificationBell() {
         <SheetTrigger asChild>{TriggerButton}</SheetTrigger>
         <SheetContent side="top" className="h-full">
           <SheetHeader className="flex flex-row items-center justify-between pr-0">
-            <SheetTitle>Notificações</SheetTitle>
+            <SheetTitle>Notificacoes</SheetTitle>
             <SheetClose asChild>
               <Button variant="ghost" size="icon" className="h-8 w-8">
                 <X className="h-5 w-5" />
               </Button>
             </SheetClose>
           </SheetHeader>
-          <div className="mt-4">
-            <NotificationList
-              notifications={notifications}
-              onMarkAsRead={markAsRead}
-              onMarkAllAsRead={markAllAsRead}
-            />
-          </div>
+          <div className="mt-4">{content}</div>
         </SheetContent>
       </Sheet>
     );
@@ -211,11 +255,7 @@ export function NotificationBell() {
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>{TriggerButton}</PopoverTrigger>
       <PopoverContent align="end" className="w-80 p-0" sideOffset={8}>
-        <NotificationList
-          notifications={notifications}
-          onMarkAsRead={markAsRead}
-          onMarkAllAsRead={markAllAsRead}
-        />
+        {content}
       </PopoverContent>
     </Popover>
   );

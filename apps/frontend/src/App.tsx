@@ -7,6 +7,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AppProvider } from "@/contexts/AppContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { UnitProvider } from "@/contexts/UnitContext";
 import { GlobalDebugControl } from "@/components/debug/GlobalDebugControl";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { PublicRoute } from "@/components/PublicRoute";
@@ -49,6 +50,7 @@ const App = () => (
             <ToastFeedbackModule />
             <BrowserRouter>
               <AuthProvider>
+                <UnitProvider>
                 <Routes>
                   {/* Public Routes */}
                   <Route path="/" element={<LandingPage />} />
@@ -179,6 +181,7 @@ const App = () => (
                   <Route path="*" element={<NotFound />} />
                 </Routes>
                 <GlobalDebugControl />
+                </UnitProvider>
               </AuthProvider>
             </BrowserRouter>
           </TooltipProvider>

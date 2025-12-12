@@ -4,6 +4,7 @@ import { KPICards } from "./KPICards";
 import { AppointmentsList } from "./AppointmentsList";
 import { SecretaryStatusCard } from "./SecretaryStatusCard";
 import { PlanStatusCard } from "./PlanStatusCard";
+import { RevenueStatsCard } from "./RevenueStatsCard";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export function DashboardView() {
@@ -21,6 +22,7 @@ export function DashboardView() {
         <div className={`flex gap-6 ${isMobile ? "flex-col" : ""}`}>
           <div className="flex-1 space-y-6">
             <KPICards />
+            <RevenueStatsCard />
             <AppointmentsList />
           </div>
 

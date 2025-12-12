@@ -17,6 +17,7 @@ import { InMemoryAmenityRepository } from '@/infra/repositories/in-memory/in-mem
 import { InMemoryUnitAmenityRepository } from '@/infra/repositories/in-memory/in-memory-unit-amenity.repository';
 import { InMemoryUnitAvailabilityRuleRepository } from '@/infra/repositories/in-memory/units/in-memory-unit-availability-rule.repository';
 import { InMemoryUnitAvailabilityExceptionRepository } from '@/infra/repositories/in-memory/units/in-memory-unit-availability-exception.repository';
+import { InMemoryCustomerRepository } from '@/infra/repositories/in-memory/customers/in-memory-customer.repository';
 import type { Clients } from './clients.factory';
 
 export function createRepositories(_clients: Clients) {
@@ -48,6 +49,9 @@ export function createRepositories(_clients: Clients) {
   const unit_availability_rule_repository = new InMemoryUnitAvailabilityRuleRepository();
   const unit_availability_exception_repository = new InMemoryUnitAvailabilityExceptionRepository();
 
+  // Customer repository
+  const customer_repository = new InMemoryCustomerRepository();
+
   return {
     user_repository,
     booking_rule_repository,
@@ -68,6 +72,7 @@ export function createRepositories(_clients: Clients) {
     unit_amenity_repository,
     unit_availability_rule_repository,
     unit_availability_exception_repository,
+    customer_repository,
   };
 }
 

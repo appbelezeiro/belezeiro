@@ -8,16 +8,22 @@ import { BookingInvalidDurationForSlotError } from '@/domain/errors/bookings/boo
 type BookingEntityOwnProps = {
   user_id: string; // owner of the schedule
   client_id: string; // who books
+  unit_id: string; // which unit the booking belongs to
+  service_id?: string; // which service (optional)
+  price_cents?: number; // price in cents (optional)
+  notes?: string; // booking notes (optional)
   start_at: string; // ISO timestamp
   end_at: string; // ISO timestamp
-  status: 'confirmed' | 'cancelled';
+  status: 'confirmed' | 'cancelled' | 'completed' | 'no_show';
 };
 
 type BookingEntityCreationProps = Omit<BookingEntityOwnProps, 'status'> &
   Partial<Pick<BookingEntityOwnProps, 'status'>> &
   BaseEntityCreationProps;
 
-type BookingEntityProps = Required<BookingEntityOwnProps> & BaseEntityProps;
+type BookingEntityProps = Omit<BookingEntityOwnProps, 'service_id' | 'price_cents' | 'notes'> &
+  Pick<BookingEntityOwnProps, 'service_id' | 'price_cents' | 'notes'> &
+  BaseEntityProps;
 
 export class BookingEntity extends BaseEntity<BookingEntityProps> {
   protected prefix(): string {
@@ -39,6 +45,22 @@ export class BookingEntity extends BaseEntity<BookingEntityProps> {
     return this.props.client_id;
   }
 
+  get unit_id(): string {
+    return this.props.unit_id;
+  }
+
+  get service_id(): string | undefined {
+    return this.props.service_id;
+  }
+
+  get price_cents(): number | undefined {
+    return this.props.price_cents;
+  }
+
+  get notes(): string | undefined {
+    return this.props.notes;
+  }
+
   get start_at(): string {
     return this.props.start_at;
   }
@@ -47,8 +69,18 @@ export class BookingEntity extends BaseEntity<BookingEntityProps> {
     return this.props.end_at;
   }
 
-  get status(): 'confirmed' | 'cancelled' {
+  get status(): 'confirmed' | 'cancelled' | 'completed' | 'no_show' {
     return this.props.status;
+  }
+
+  complete(): void {
+    this.props.status = 'completed';
+    this.touch();
+  }
+
+  mark_no_show(): void {
+    this.props.status = 'no_show';
+    this.touch();
   }
 
   cancel(): void {

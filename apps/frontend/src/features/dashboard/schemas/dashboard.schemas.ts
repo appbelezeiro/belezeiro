@@ -5,19 +5,29 @@
 import { z } from "zod";
 
 /**
- * Dashboard Stats Schema
+ * Dashboard Stats Schema (matches backend response)
  */
 export const dashboardStatsSchema = z.object({
-  appointmentsToday: z.number(),
-  appointmentsChange: z.number(),
-  newClients: z.number(),
-  newClientsChange: z.number(),
-  topService: z.string(),
-  topServicePercentage: z.number(),
-  peakHours: z.string(),
-  peakHoursCount: z.number(),
-  revenue: z.number(),
-  revenueChange: z.number(),
+  appointmentsToday: z.object({
+    value: z.number(),
+    change: z.number(),
+    changeLabel: z.string(),
+  }),
+  newCustomers: z.object({
+    value: z.number(),
+    change: z.number(),
+    changeLabel: z.string(),
+  }),
+  topService: z.object({
+    value: z.string(),
+    percentage: z.number(),
+    changeLabel: z.string(),
+  }),
+  peakHours: z.object({
+    value: z.string(),
+    count: z.number(),
+    changeLabel: z.string(),
+  }),
 });
 
 /**
@@ -33,26 +43,33 @@ export const appointmentStatusSchema = z.enum([
 ]);
 
 /**
- * Dashboard Appointment Schema
+ * Dashboard Appointment Schema (matches backend response)
  */
 export const dashboardAppointmentSchema = z.object({
   id: z.string(),
-  clientName: z.string(),
-  clientPhone: z.string(),
-  clientPhoto: z.string().optional(),
-  serviceName: z.string(),
-  serviceColor: z.string(),
-  time: z.string(),
-  duration: z.number(),
-  status: appointmentStatusSchema,
-  professionalName: z.string().optional(),
+  client: z.object({
+    id: z.string(),
+    name: z.string(),
+    email: z.string(),
+    photo: z.string().nullable().optional(),
+  }),
+  service: z.object({
+    id: z.string(),
+    name: z.string(),
+    duration: z.number(),
+  }).nullable(),
+  startAt: z.string(),
+  endAt: z.string(),
+  status: z.string(),
+  priceCents: z.number().nullable(),
+  notes: z.string().nullable(),
 });
 
 /**
  * Dashboard Appointments Response Schema
  */
 export const dashboardAppointmentsResponseSchema = z.object({
-  appointments: z.array(dashboardAppointmentSchema),
+  items: z.array(dashboardAppointmentSchema),
   total: z.number(),
 });
 
@@ -67,15 +84,17 @@ export const secretaryStatusSchema = z.enum([
 ]);
 
 /**
- * Secretary Info Schema
+ * Secretary Info Schema (matches backend mock response)
  */
 export const secretaryInfoSchema = z.object({
-  status: secretaryStatusSchema,
-  messagesHandled: z.number(),
-  appointmentsBooked: z.number(),
-  responseRate: z.number(),
-  averageResponseTime: z.number(),
-  isEnabled: z.boolean(),
+  enabled: z.boolean(),
+  stats: z.object({
+    messagesHandled: z.number(),
+    appointmentsScheduled: z.number(),
+    questionsAnswered: z.number(),
+  }),
+  status: z.string(),
+  lastActive: z.string().nullable(),
 });
 
 /**
@@ -89,16 +108,27 @@ export const planTypeSchema = z.enum([
 ]);
 
 /**
- * Plan Info Schema
+ * Plan Info Schema (matches backend response)
  */
 export const planInfoSchema = z.object({
-  plan: planTypeSchema,
-  planName: z.string(),
-  daysRemaining: z.number().optional(),
-  nextBillingDate: z.string().optional(),
-  appointmentsUsed: z.number(),
-  appointmentsLimit: z.number(),
-  features: z.array(z.string()),
+  plan: z.object({
+    id: z.string().optional(),
+    name: z.string(),
+    status: z.string(),
+    price: z.number().optional(),
+  }),
+  limits: z.object({
+    bookingsPerMonth: z.number().nullable(),
+    customersLimit: z.number().nullable(),
+    unitsLimit: z.number().nullable(),
+  }),
+  usage: z.object({
+    bookingsThisMonth: z.number(),
+    customersCount: z.number().optional(),
+    unitsCount: z.number().optional(),
+  }),
+  currentPeriodEnd: z.string().nullable().optional(),
+  cancelAtPeriodEnd: z.boolean().optional(),
 });
 
 /**
@@ -113,43 +143,52 @@ export const notificationTypeSchema = z.enum([
 ]);
 
 /**
- * Dashboard Notification Schema
+ * Dashboard Notification Schema (matches backend response)
  */
 export const dashboardNotificationSchema = z.object({
   id: z.string(),
-  type: notificationTypeSchema,
   title: z.string(),
   message: z.string(),
-  timestamp: z.string(),
+  type: z.string(),
+  priority: z.string(),
   read: z.boolean(),
-  actionUrl: z.string().optional(),
+  createdAt: z.string(),
 });
 
 /**
- * Revenue Data Point Schema
+ * Dashboard Notifications Response Schema
+ */
+export const dashboardNotificationsResponseSchema = z.object({
+  items: z.array(dashboardNotificationSchema),
+  unreadCount: z.number(),
+  total: z.number(),
+});
+
+/**
+ * Revenue Data Point Schema (matches backend response)
  */
 export const revenueDataPointSchema = z.object({
   date: z.string(),
-  revenue: z.number(),
-  appointments: z.number(),
+  amount: z.number(),
+  amountFormatted: z.string(),
 });
 
 /**
- * Revenue Stats Schema
+ * Revenue Stats Schema (matches backend response)
  */
 export const revenueStatsSchema = z.object({
-  period: z.enum(["day", "week", "month", "year"]),
-  total: z.number(),
-  change: z.number(),
   data: z.array(revenueDataPointSchema),
+  total: z.number(),
+  totalFormatted: z.string(),
+  change: z.number(),
+  changeLabel: z.string(),
+  period: z.enum(["day", "week", "month", "year"]),
 });
 
 // Type exports from schemas
 export type DashboardStatsInput = z.infer<typeof dashboardStatsSchema>;
 export type AppointmentStatusInput = z.infer<typeof appointmentStatusSchema>;
-export type DashboardAppointmentInput = z.infer<
-  typeof dashboardAppointmentSchema
->;
+export type DashboardAppointmentInput = z.infer<typeof dashboardAppointmentSchema>;
 export type SecretaryInfoInput = z.infer<typeof secretaryInfoSchema>;
 export type PlanInfoInput = z.infer<typeof planInfoSchema>;
 export type NotificationInput = z.infer<typeof dashboardNotificationSchema>;

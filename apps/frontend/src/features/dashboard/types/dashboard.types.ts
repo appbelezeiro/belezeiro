@@ -3,31 +3,29 @@
 // ============================================================================
 
 /**
- * KPI Data for Dashboard Cards
- */
-export interface KPI {
-  id: string;
-  label: string;
-  value: string | number;
-  change?: string;
-  changeType?: "positive" | "negative" | "neutral";
-  icon: string;
-}
-
-/**
- * Dashboard Stats Response
+ * Dashboard Stats Response (matches backend)
  */
 export interface DashboardStats {
-  appointmentsToday: number;
-  appointmentsChange: number;
-  newClients: number;
-  newClientsChange: number;
-  topService: string;
-  topServicePercentage: number;
-  peakHours: string;
-  peakHoursCount: number;
-  revenue: number;
-  revenueChange: number;
+  appointmentsToday: {
+    value: number;
+    change: number;
+    changeLabel: string;
+  };
+  newCustomers: {
+    value: number;
+    change: number;
+    changeLabel: string;
+  };
+  topService: {
+    value: string;
+    percentage: number;
+    changeLabel: string;
+  };
+  peakHours: {
+    value: string;
+    count: number;
+    changeLabel: string;
+  };
 }
 
 /**
@@ -42,26 +40,33 @@ export type AppointmentStatus =
   | "no_show";
 
 /**
- * Appointment for Dashboard List
+ * Dashboard Appointment (matches backend)
  */
 export interface DashboardAppointment {
   id: string;
-  clientName: string;
-  clientPhone: string;
-  clientPhoto?: string;
-  serviceName: string;
-  serviceColor: string;
-  time: string;
-  duration: number;
-  status: AppointmentStatus;
-  professionalName?: string;
+  client: {
+    id: string;
+    name: string;
+    email: string;
+    photo?: string | null;
+  };
+  service: {
+    id: string;
+    name: string;
+    duration: number;
+  } | null;
+  startAt: string;
+  endAt: string;
+  status: string;
+  priceCents: number | null;
+  notes: string | null;
 }
 
 /**
  * Dashboard Appointments Response
  */
 export interface DashboardAppointmentsResponse {
-  appointments: DashboardAppointment[];
+  items: DashboardAppointment[];
   total: number;
 }
 
@@ -71,15 +76,17 @@ export interface DashboardAppointmentsResponse {
 export type SecretaryStatus = "active" | "inactive" | "busy" | "offline";
 
 /**
- * AI Secretary Info
+ * AI Secretary Info (matches backend)
  */
 export interface SecretaryInfo {
-  status: SecretaryStatus;
-  messagesHandled: number;
-  appointmentsBooked: number;
-  responseRate: number;
-  averageResponseTime: number; // in seconds
-  isEnabled: boolean;
+  enabled: boolean;
+  stats: {
+    messagesHandled: number;
+    appointmentsScheduled: number;
+    questionsAnswered: number;
+  };
+  status: string;
+  lastActive: string | null;
 }
 
 /**
@@ -88,16 +95,27 @@ export interface SecretaryInfo {
 export type PlanType = "free" | "starter" | "professional" | "enterprise";
 
 /**
- * Plan Status Info
+ * Plan Status Info (matches backend)
  */
 export interface PlanInfo {
-  plan: PlanType;
-  planName: string;
-  daysRemaining?: number;
-  nextBillingDate?: string;
-  appointmentsUsed: number;
-  appointmentsLimit: number;
-  features: string[];
+  plan: {
+    id?: string;
+    name: string;
+    status: string;
+    price?: number;
+  };
+  limits: {
+    bookingsPerMonth: number | null;
+    customersLimit: number | null;
+    unitsLimit: number | null;
+  };
+  usage: {
+    bookingsThisMonth: number;
+    customersCount?: number;
+    unitsCount?: number;
+  };
+  currentPeriodEnd?: string | null;
+  cancelAtPeriodEnd?: boolean;
 }
 
 /**
@@ -111,33 +129,44 @@ export type NotificationType =
   | "payment";
 
 /**
- * Dashboard Notification
+ * Dashboard Notification (matches backend)
  */
 export interface DashboardNotification {
   id: string;
-  type: NotificationType;
   title: string;
   message: string;
-  timestamp: string;
+  type: string;
+  priority: string;
   read: boolean;
-  actionUrl?: string;
+  createdAt: string;
 }
 
 /**
- * Revenue Data Point (for charts)
+ * Dashboard Notifications Response
+ */
+export interface DashboardNotificationsResponse {
+  items: DashboardNotification[];
+  unreadCount: number;
+  total: number;
+}
+
+/**
+ * Revenue Data Point (matches backend)
  */
 export interface RevenueDataPoint {
   date: string;
-  revenue: number;
-  appointments: number;
+  amount: number;
+  amountFormatted: string;
 }
 
 /**
- * Revenue Stats
+ * Revenue Stats (matches backend)
  */
 export interface RevenueStats {
-  period: "day" | "week" | "month" | "year";
-  total: number;
-  change: number;
   data: RevenueDataPoint[];
+  total: number;
+  totalFormatted: string;
+  change: number;
+  changeLabel: string;
+  period: "day" | "week" | "month" | "year";
 }

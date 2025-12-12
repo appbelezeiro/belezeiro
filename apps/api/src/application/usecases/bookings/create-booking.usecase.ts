@@ -1,7 +1,9 @@
 import { BookingEntity } from '@/domain/entities/bookings/booking.entity';
+import { CustomerEntity } from '@/domain/entities/customers/customer.entity';
 import { IBookingRepository } from '@/application/contracts/bookings/i-booking-repository.interface';
 import { IBookingRuleRepository } from '@/application/contracts/bookings/i-booking-rule-repository.interface';
 import { IBookingExceptionRepository } from '@/application/contracts/bookings/i-booking-exception-repository.interface';
+import { ICustomerRepository } from '@/application/contracts/customers/i-customer-repository.interface';
 import { BookingOverlapError } from '@/domain/errors/bookings/booking-overlap.error';
 import { SlotNotAvailableError } from '@/domain/errors/bookings/slot-not-available.error';
 import { DailyBookingLimitExceededError } from '@/domain/errors/bookings/daily-booking-limit-exceeded.error';
@@ -17,6 +19,7 @@ class UseCase {
     private readonly booking_repository: IBookingRepository,
     private readonly booking_rule_repository: IBookingRuleRepository,
     booking_exception_repository: IBookingExceptionRepository,
+    private readonly customer_repository?: ICustomerRepository,
   ) {
     this.availability_service = new AvailabilityService(
       booking_rule_repository,
@@ -34,6 +37,10 @@ class UseCase {
     const booking = new BookingEntity({
       user_id: input.user_id,
       client_id: input.client_id,
+      unit_id: input.unit_id,
+      service_id: input.service_id,
+      price_cents: input.price_cents,
+      notes: input.notes,
       start_at: input.start_at,
       end_at: input.end_at,
     });
@@ -127,7 +134,24 @@ class UseCase {
       );
     }
 
-    // 8. Create booking
+    // 8. Create or find customer relationship
+    if (this.customer_repository) {
+      const existingCustomer = await this.customer_repository.find_by_user_and_unit(
+        input.client_id,
+        input.unit_id,
+      );
+
+      if (!existingCustomer) {
+        // Create new customer relationship
+        const customer = new CustomerEntity({
+          userId: input.client_id,
+          unitId: input.unit_id,
+        });
+        await this.customer_repository.create(customer);
+      }
+    }
+
+    // 9. Create booking
     return this.booking_repository.create(booking);
   }
 
@@ -164,6 +188,10 @@ declare namespace UseCase {
   export type Input = {
     user_id: string;
     client_id: string;
+    unit_id: string;
+    service_id?: string;
+    price_cents?: number;
+    notes?: string;
     start_at: string; // ISO timestamp
     end_at: string; // ISO timestamp
   };
