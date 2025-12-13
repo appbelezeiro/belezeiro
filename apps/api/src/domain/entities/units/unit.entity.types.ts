@@ -1,5 +1,5 @@
 import { AddressVO, AddressProps } from "@/domain/value-objects/address.value-object";
-import { PhoneVO, PhoneProps } from "@/domain/value-objects/phone.value-object";
+import { PhoneVO, PhoneProps, PhoneInputProps } from "@/domain/value-objects/phone.value-object";
 import { SpecialtyEntity } from "../specialty.entity";
 import { ServiceEntity } from "../service.entity";
 import { AmenityEntity } from "../amenity.entity";
@@ -34,7 +34,7 @@ export type UnityEntityCreationProps = {
   logo: string;
   gallery: string[];
   active?: boolean;
-  phones: PhoneProps[];
+  phones: (PhoneProps | PhoneInputProps)[];
   address?: AddressProps;
   especialidades: SpecialtyEntity[];
   services: ServiceEntity[];

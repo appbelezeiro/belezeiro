@@ -16,6 +16,10 @@ import { NotFoundError, BadRequestError, ConflictError } from '../../errors/http
 const CreateBookingSchema = z.object({
   user_id: z.string().min(1),
   client_id: z.string().min(1),
+  unit_id: z.string().min(1),
+  service_id: z.string().optional(),
+  price_cents: z.number().optional(),
+  notes: z.string().optional(),
   start_at: z.string().min(1), // ISO timestamp
   end_at: z.string().min(1), // ISO timestamp
 });
@@ -31,6 +35,10 @@ export class BookingController {
       const booking = await this.container.use_cases.create_booking.execute({
         user_id: payload.user_id,
         client_id: payload.client_id,
+        unit_id: payload.unit_id,
+        service_id: payload.service_id,
+        price_cents: payload.price_cents,
+        notes: payload.notes,
         start_at: payload.start_at,
         end_at: payload.end_at,
       });

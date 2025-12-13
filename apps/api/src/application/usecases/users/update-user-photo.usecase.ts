@@ -1,6 +1,5 @@
 import { IUserRepository } from '@/application/contracts/users/i-user-repository.interface';
 import { IStorageGateway } from '@/domain/services/storage/i-storage-gateway.service';
-import { UserEntity } from '@/domain/entities/users/user.entity';
 
 class UseCase {
   constructor(

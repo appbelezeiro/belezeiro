@@ -1,12 +1,24 @@
 import { describe, it, expect, beforeEach, beforeAll } from 'vitest';
 import { CreateUnitUseCase } from './create-unit.usecase';
 import { InMemoryUnitRepository } from '@/infra/repositories/in-memory/units/in-memory-unit.repository';
+import { InMemoryAmenityRepository } from '@/infra/repositories/in-memory/in-memory-amenity.repository';
+import { InMemorySpecialtyRepository } from '@/infra/repositories/in-memory/in-memory-specialty.repository';
+import { InMemoryServiceRepository } from '@/infra/repositories/in-memory/in-memory-service.repository';
 import { BaseEntity } from '@/domain/entities/base.entity';
 import { ULIDXIDGeneratorService } from '@/infra/services/ulidx-id-generator.service';
+import { AmenityEntity } from '@/domain/entities/amenity.entity';
+import { SpecialtyEntity } from '@/domain/entities/specialty.entity';
+import { ServiceEntity } from '@/domain/entities/service.entity';
+import { OneOrMoreAmenitiesNotFound } from '@/domain/errors/amenities/one-or-more-amenities-not-found.error';
+import { OneOrMoreSpecialitiesNotFound } from '@/domain/errors/specialities/one-or-more-specialities-not-found.error';
+import { OneOrMoreServicesNotFound } from '@/domain/errors/services/one-or-more-services-not-found.error';
 
 describe('CreateUnitUseCase', () => {
   let sut: CreateUnitUseCase;
   let unit_repository: InMemoryUnitRepository;
+  let amenity_repository: InMemoryAmenityRepository;
+  let specialty_repository: InMemorySpecialtyRepository;
+  let service_repository: InMemoryServiceRepository;
 
   beforeAll(() => {
     BaseEntity.configure({
@@ -16,204 +28,268 @@ describe('CreateUnitUseCase', () => {
 
   beforeEach(() => {
     unit_repository = new InMemoryUnitRepository();
-    sut = new CreateUnitUseCase(unit_repository);
+    amenity_repository = new InMemoryAmenityRepository();
+    specialty_repository = new InMemorySpecialtyRepository();
+    service_repository = new InMemoryServiceRepository();
+    sut = new CreateUnitUseCase(
+      unit_repository,
+      amenity_repository,
+      specialty_repository,
+      service_repository,
+    );
   });
 
   it('should create a new unit successfully', async () => {
+    const amenity = new AmenityEntity({
+      id: 'amen_wifi',
+      code: 'wifi',
+      name: 'Wi-Fi',
+      icon: '📶',
+      is_predefined: true,
+      is_active: true,
+    });
+    await amenity_repository.create(amenity);
+
+    const specialty = new SpecialtyEntity({
+      id: 'spec_hair',
+      code: 'haircut',
+      name: 'Cabeleireiro',
+      icon: '✂️',
+      is_predefined: true,
+      is_active: true,
+    });
+    await specialty_repository.create(specialty);
+
+    const service = new ServiceEntity({
+      id: 'serv_corte',
+      specialty_id: 'spec_hair',
+      code: 'corte_feminino',
+      name: 'Corte Feminino',
+      default_duration_minutes: 60,
+      default_price_cents: 5000,
+      is_predefined: true,
+      is_active: true,
+    });
+    await service_repository.create(service);
+
     const input = {
-      organizationId: 'org_123',
+      orgId: 'org_123',
       name: 'Unidade Centro',
-      whatsapp: '+5511999999999',
+      logo: '',
+      gallery: [],
+      phones: [{ country_code: '+55', area_code: '11', number: '999999999' }],
       address: {
-        cep: '01310-100',
         street: 'Av. Paulista',
         number: '1000',
         neighborhood: 'Bela Vista',
         city: 'São Paulo',
         state: 'SP',
+        zipcode: '01310-100',
       },
-      professions: [
-        { id: 'prof_cabeleireiro', name: 'Cabeleireiro(a)', icon: '✂️' },
-      ],
-      services: [
-        { id: 'serv_corte_feminino', name: 'Corte Feminino', professionId: 'prof_cabeleireiro' },
-      ],
-      serviceType: 'local' as const,
-      amenities: ['wifi' as const, 'parking' as const],
-      workingHours: {
-        monday: { enabled: true, open: '09:00', close: '18:00' },
-        tuesday: { enabled: true, open: '09:00', close: '18:00' },
-        wednesday: { enabled: true, open: '09:00', close: '18:00' },
-        thursday: { enabled: true, open: '09:00', close: '18:00' },
-        friday: { enabled: true, open: '09:00', close: '18:00' },
-        saturday: { enabled: true, open: '09:00', close: '14:00' },
-        sunday: { enabled: false, open: '00:00', close: '00:00' },
-      },
+      preferences: {},
+      specalities: ['spec_hair'],
+      services: ['serv_corte'],
+      serviceType: 'on-site' as const,
+      amenities: ['amen_wifi'],
     };
 
     const result = await sut.execute(input);
 
     expect(result.name).toBe('Unidade Centro');
-    expect(result.organizationId).toBe('org_123');
-    expect(result.isActive).toBe(true);
+    expect(result.orgId).toBe('org_123');
+    expect(result.active).toBe(true);
     expect(result.id).toContain('unit_');
-    expect(result.professions).toHaveLength(1);
+    expect(result.especialidades).toHaveLength(1);
     expect(result.services).toHaveLength(1);
+    expect(result.amenities).toHaveLength(1);
   });
 
-  it('should create unit with optional fields', async () => {
+  it('should create unit with optional gallery', async () => {
+    const amenity = new AmenityEntity({
+      id: 'amen_parking',
+      code: 'parking',
+      name: 'Estacionamento',
+      icon: '🚗',
+      is_predefined: true,
+      is_active: true,
+    });
+    await amenity_repository.create(amenity);
+
+    const specialty = new SpecialtyEntity({
+      id: 'spec_barber',
+      code: 'barber',
+      name: 'Barbeiro',
+      icon: '💈',
+      is_predefined: true,
+      is_active: true,
+    });
+    await specialty_repository.create(specialty);
+
+    const service = new ServiceEntity({
+      id: 'serv_barba',
+      specialty_id: 'spec_barber',
+      code: 'corte_barba',
+      name: 'Corte + Barba',
+      default_duration_minutes: 45,
+      default_price_cents: 4000,
+      is_predefined: true,
+      is_active: true,
+    });
+    await service_repository.create(service);
+
     const input = {
-      organizationId: 'org_456',
+      orgId: 'org_456',
       name: 'Unidade Jardins',
       logo: 'https://example.com/logo.png',
       gallery: ['https://example.com/photo1.jpg'],
-      whatsapp: '+5511988888888',
-      phone: '+5511988888887',
+      phones: [{ country_code: '+55', area_code: '11', number: '988888888' }],
       address: {
-        cep: '01310-100',
         street: 'Av. Paulista',
         number: '2000',
         complement: 'Sala 10',
         neighborhood: 'Bela Vista',
         city: 'São Paulo',
         state: 'SP',
+        zipcode: '01310-100',
       },
-      professions: [
-        { id: 'prof_barbeiro', name: 'Barbeiro(a)', icon: '💈' },
-      ],
-      services: [
-        { id: 'serv_corte_barba', name: 'Corte + Barba', professionId: 'prof_barbeiro' },
-      ],
+      preferences: {},
+      specalities: ['spec_barber'],
+      services: ['serv_barba'],
       serviceType: 'both' as const,
-      amenities: ['wifi' as const, 'coffee' as const, 'ac' as const],
-      workingHours: {
-        monday: { enabled: true, open: '08:00', close: '20:00' },
-        tuesday: { enabled: true, open: '08:00', close: '20:00' },
-        wednesday: { enabled: true, open: '08:00', close: '20:00' },
-        thursday: { enabled: true, open: '08:00', close: '20:00' },
-        friday: { enabled: true, open: '08:00', close: '20:00' },
-        saturday: { enabled: true, open: '08:00', close: '16:00' },
-        sunday: { enabled: false, open: '00:00', close: '00:00' },
-      },
-      lunchBreak: {
-        enabled: true,
-        start: '12:00',
-        end: '13:00',
-      },
+      amenities: ['amen_parking'],
     };
 
     const result = await sut.execute(input);
 
-    expect(result.logo).toBe('https://example.com/logo.png');
+    expect(result.logo?.toString()).toBe('https://example.com/logo.png');
     expect(result.gallery).toHaveLength(1);
-    expect(result.phone).toBe('+5511988888887');
-    expect(result.address.complement).toBe('Sala 10');
-    expect(result.lunchBreak?.enabled).toBe(true);
+    expect(result.address?.complement).toBe('Sala 10');
   });
 
-  it('should throw error if CEP is invalid', async () => {
+  it('should throw error if amenities not found', async () => {
+    const specialty = new SpecialtyEntity({
+      id: 'spec_hair',
+      code: 'haircut',
+      name: 'Cabeleireiro',
+      icon: '✂️',
+      is_predefined: true,
+      is_active: true,
+    });
+    await specialty_repository.create(specialty);
+
+    const service = new ServiceEntity({
+      id: 'serv_corte',
+      specialty_id: 'spec_hair',
+      code: 'corte_feminino',
+      name: 'Corte Feminino',
+      default_duration_minutes: 60,
+      default_price_cents: 5000,
+      is_predefined: true,
+      is_active: true,
+    });
+    await service_repository.create(service);
+
     const input = {
-      organizationId: 'org_123',
+      orgId: 'org_123',
       name: 'Test Unit',
-      whatsapp: '+5511999999999',
+      logo: '',
+      gallery: [],
+      phones: [{ country_code: '+55', area_code: '11', number: '999999999' }],
       address: {
-        cep: 'invalid',
         street: 'Street',
         number: '100',
         neighborhood: 'Neighborhood',
         city: 'City',
         state: 'SP',
+        zipcode: '01310-100',
       },
-      professions: [
-        { id: 'prof_cabeleireiro', name: 'Cabeleireiro(a)', icon: '✂️' },
-      ],
-      services: [
-        { id: 'serv_corte_feminino', name: 'Corte Feminino', professionId: 'prof_cabeleireiro' },
-      ],
-      serviceType: 'local' as const,
-      amenities: [],
-      workingHours: {
-        monday: { enabled: true, open: '09:00', close: '18:00' },
-        tuesday: { enabled: true, open: '09:00', close: '18:00' },
-        wednesday: { enabled: true, open: '09:00', close: '18:00' },
-        thursday: { enabled: true, open: '09:00', close: '18:00' },
-        friday: { enabled: true, open: '09:00', close: '18:00' },
-        saturday: { enabled: false, open: '00:00', close: '00:00' },
-        sunday: { enabled: false, open: '00:00', close: '00:00' },
-      },
+      preferences: {},
+      specalities: ['spec_hair'],
+      services: ['serv_corte'],
+      serviceType: 'on-site' as const,
+      amenities: ['nonexistent_amenity'],
     };
 
-    await expect(sut.execute(input)).rejects.toThrow();
+    await expect(sut.execute(input)).rejects.toThrow(OneOrMoreAmenitiesNotFound);
   });
 
-  it('should throw error if working hours open >= close', async () => {
+  it('should throw error if specialties not found', async () => {
+    const amenity = new AmenityEntity({
+      id: 'amen_wifi',
+      code: 'wifi',
+      name: 'Wi-Fi',
+      icon: '📶',
+      is_predefined: true,
+      is_active: true,
+    });
+    await amenity_repository.create(amenity);
+
     const input = {
-      organizationId: 'org_123',
+      orgId: 'org_123',
       name: 'Test Unit',
-      whatsapp: '+5511999999999',
+      logo: '',
+      gallery: [],
+      phones: [{ country_code: '+55', area_code: '11', number: '999999999' }],
       address: {
-        cep: '01310-100',
         street: 'Street',
         number: '100',
         neighborhood: 'Neighborhood',
         city: 'City',
         state: 'SP',
+        zipcode: '01310-100',
       },
-      professions: [
-        { id: 'prof_cabeleireiro', name: 'Cabeleireiro(a)', icon: '✂️' },
-      ],
-      services: [
-        { id: 'serv_corte_feminino', name: 'Corte Feminino', professionId: 'prof_cabeleireiro' },
-      ],
-      serviceType: 'local' as const,
-      amenities: [],
-      workingHours: {
-        monday: { enabled: true, open: '18:00', close: '09:00' }, // Invalid
-        tuesday: { enabled: true, open: '09:00', close: '18:00' },
-        wednesday: { enabled: true, open: '09:00', close: '18:00' },
-        thursday: { enabled: true, open: '09:00', close: '18:00' },
-        friday: { enabled: true, open: '09:00', close: '18:00' },
-        saturday: { enabled: false, open: '00:00', close: '00:00' },
-        sunday: { enabled: false, open: '00:00', close: '00:00' },
-      },
+      preferences: {},
+      specalities: ['nonexistent_specialty'],
+      services: [],
+      serviceType: 'on-site' as const,
+      amenities: ['amen_wifi'],
     };
 
-    await expect(sut.execute(input)).rejects.toThrow();
+    await expect(sut.execute(input)).rejects.toThrow(OneOrMoreSpecialitiesNotFound);
   });
 
-  it('should throw error if service profession is not selected', async () => {
+  it('should throw error if services not found', async () => {
+    const amenity = new AmenityEntity({
+      id: 'amen_wifi',
+      code: 'wifi',
+      name: 'Wi-Fi',
+      icon: '📶',
+      is_predefined: true,
+      is_active: true,
+    });
+    await amenity_repository.create(amenity);
+
+    const specialty = new SpecialtyEntity({
+      id: 'spec_hair',
+      code: 'haircut',
+      name: 'Cabeleireiro',
+      icon: '✂️',
+      is_predefined: true,
+      is_active: true,
+    });
+    await specialty_repository.create(specialty);
+
     const input = {
-      organizationId: 'org_123',
+      orgId: 'org_123',
       name: 'Test Unit',
-      whatsapp: '+5511999999999',
+      logo: '',
+      gallery: [],
+      phones: [{ country_code: '+55', area_code: '11', number: '999999999' }],
       address: {
-        cep: '01310-100',
         street: 'Street',
         number: '100',
         neighborhood: 'Neighborhood',
         city: 'City',
         state: 'SP',
+        zipcode: '01310-100',
       },
-      professions: [
-        { id: 'prof_cabeleireiro', name: 'Cabeleireiro(a)', icon: '✂️' },
-      ],
-      services: [
-        // Service requires barbeiro profession but only cabeleireiro is selected
-        { id: 'serv_corte_barba', name: 'Corte + Barba', professionId: 'prof_barbeiro' },
-      ],
-      serviceType: 'local' as const,
-      amenities: [],
-      workingHours: {
-        monday: { enabled: true, open: '09:00', close: '18:00' },
-        tuesday: { enabled: true, open: '09:00', close: '18:00' },
-        wednesday: { enabled: true, open: '09:00', close: '18:00' },
-        thursday: { enabled: true, open: '09:00', close: '18:00' },
-        friday: { enabled: true, open: '09:00', close: '18:00' },
-        saturday: { enabled: false, open: '00:00', close: '00:00' },
-        sunday: { enabled: false, open: '00:00', close: '00:00' },
-      },
+      preferences: {},
+      specalities: ['spec_hair'],
+      services: ['nonexistent_service'],
+      serviceType: 'on-site' as const,
+      amenities: ['amen_wifi'],
     };
 
-    await expect(sut.execute(input)).rejects.toThrow();
+    await expect(sut.execute(input)).rejects.toThrow(OneOrMoreServicesNotFound);
   });
 });

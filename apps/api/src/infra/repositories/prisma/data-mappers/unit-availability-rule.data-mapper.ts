@@ -1,4 +1,4 @@
-import { UnitAvailabilityRule as PrismaUnitAvailabilityRule, UnitAvailabilityRuleType } from '@prisma/client';
+import { UnitAvailabilityRule as PrismaUnitAvailabilityRule, UnitAvailabilityRuleType, Prisma } from '@prisma/client';
 import { UnitAvailabilityRuleEntity } from '@/domain/entities/units/unit-availability-rule.entity.js';
 
 export class UnitAvailabilityRuleDataMapper {
@@ -19,7 +19,7 @@ export class UnitAvailabilityRuleDataMapper {
     });
   }
 
-  static toPrisma(entity: UnitAvailabilityRuleEntity): Omit<PrismaUnitAvailabilityRule, 'created_at' | 'updated_at'> {
+  static toPrisma(entity: UnitAvailabilityRuleEntity): Prisma.UnitAvailabilityRuleUncheckedUpdateInput {
     return {
       id: entity.id,
       unit_id: entity.unit_id,
@@ -30,14 +30,14 @@ export class UnitAvailabilityRuleDataMapper {
       end_time: entity.end_time,
       slot_duration_minutes: entity.slot_duration_minutes,
       is_active: entity.is_active,
-      metadata: entity.metadata ?? null,
+      metadata: entity.metadata ? (entity.metadata as Prisma.InputJsonValue) : Prisma.JsonNull,
     };
   }
 
-  static toPrismaCreate(entity: UnitAvailabilityRuleEntity): Omit<PrismaUnitAvailabilityRule, 'updated_at'> {
+  static toPrismaCreate(entity: UnitAvailabilityRuleEntity): Prisma.UnitAvailabilityRuleUncheckedCreateInput {
     return {
       ...UnitAvailabilityRuleDataMapper.toPrisma(entity),
       created_at: entity.created_at,
-    };
+    } as Prisma.UnitAvailabilityRuleUncheckedCreateInput;
   }
 }

@@ -55,6 +55,7 @@ describe('CreateBookingUseCase', () => {
       const result = await sut.execute({
         user_id: 'user_1',
         client_id: 'client_1',
+        unit_id: 'unit_1',
         start_at: '2025-12-16T10:00:00.000Z',
         end_at: '2025-12-16T11:00:00.000Z',
       });
@@ -62,6 +63,7 @@ describe('CreateBookingUseCase', () => {
       expect(result).toBeInstanceOf(BookingEntity);
       expect(result.user_id).toBe('user_1');
       expect(result.client_id).toBe('client_1');
+      expect(result.unit_id).toBe('unit_1');
       expect(result.status).toBe('confirmed');
     });
 
@@ -70,6 +72,7 @@ describe('CreateBookingUseCase', () => {
         sut.execute({
           user_id: 'user_1',
           client_id: 'client_1',
+          unit_id: 'unit_1',
           start_at: '2025-12-16T11:00:00.000Z',
           end_at: '2025-12-16T10:00:00.000Z',
         }),
@@ -81,6 +84,7 @@ describe('CreateBookingUseCase', () => {
         new BookingEntity({
           user_id: 'user_1',
           client_id: 'client_1',
+          unit_id: 'unit_1',
           start_at: '2025-12-16T10:00:00.000Z',
           end_at: '2025-12-16T11:00:00.000Z',
         }),
@@ -90,6 +94,7 @@ describe('CreateBookingUseCase', () => {
         sut.execute({
           user_id: 'user_1',
           client_id: 'client_2',
+          unit_id: 'unit_1',
           start_at: '2025-12-16T10:30:00.000Z',
           end_at: '2025-12-16T11:30:00.000Z',
         }),
@@ -106,6 +111,7 @@ describe('CreateBookingUseCase', () => {
         sut.execute({
           user_id: 'user_1',
           client_id: 'client_1',
+          unit_id: 'unit_1',
           start_at: past.toISOString(),
           end_at: new Date(past.getTime() + 3600000).toISOString(),
         }),
@@ -115,7 +121,6 @@ describe('CreateBookingUseCase', () => {
 
   describe('Minimum advance time', () => {
     it('should throw BookingTooCloseError when not enough advance', async () => {
-      // Use Tuesday 2025-12-16 as reference (far future, known weekday)
       await booking_rule_repository.create(
         new BookingRuleEntity({
           user_id: 'user_1',
@@ -128,11 +133,11 @@ describe('CreateBookingUseCase', () => {
         }),
       );
 
-      // Try to book Tuesday 2025-12-16 (only ~6 days advance from 2025-12-10)
       await expect(
         sut.execute({
           user_id: 'user_1',
           client_id: 'client_1',
+          unit_id: 'unit_1',
           start_at: '2025-12-16T10:00:00.000Z',
           end_at: '2025-12-16T11:00:00.000Z',
         }),
@@ -158,6 +163,7 @@ describe('CreateBookingUseCase', () => {
         sut.execute({
           user_id: 'user_1',
           client_id: 'client_1',
+          unit_id: 'unit_1',
           start_at: '2026-01-13T10:00:00.000Z',
           end_at: '2026-01-13T12:00:00.000Z', // 120 minutes
         }),
@@ -182,6 +188,7 @@ describe('CreateBookingUseCase', () => {
         sut.execute({
           user_id: 'user_1',
           client_id: 'client_1',
+          unit_id: 'unit_1',
           start_at: '2026-01-13T10:00:00.000Z',
           end_at: '2026-01-13T10:45:00.000Z', // 45 minutes
         }),
@@ -207,6 +214,7 @@ describe('CreateBookingUseCase', () => {
         new BookingEntity({
           user_id: 'user_1',
           client_id: 'client_1',
+          unit_id: 'unit_1',
           start_at: '2026-01-13T08:00:00.000Z',
           end_at: '2026-01-13T09:00:00.000Z',
         }),
@@ -216,6 +224,7 @@ describe('CreateBookingUseCase', () => {
         new BookingEntity({
           user_id: 'user_1',
           client_id: 'client_2',
+          unit_id: 'unit_1',
           start_at: '2026-01-13T10:00:00.000Z',
           end_at: '2026-01-13T11:00:00.000Z',
         }),
@@ -225,6 +234,7 @@ describe('CreateBookingUseCase', () => {
         sut.execute({
           user_id: 'user_1',
           client_id: 'client_3',
+          unit_id: 'unit_1',
           start_at: '2026-01-13T12:00:00.000Z',
           end_at: '2026-01-13T13:00:00.000Z',
         }),
@@ -250,6 +260,7 @@ describe('CreateBookingUseCase', () => {
         new BookingEntity({
           user_id: 'user_1',
           client_id: 'client_1',
+          unit_id: 'unit_1',
           start_at: '2026-01-13T08:00:00.000Z',
           end_at: '2026-01-13T09:00:00.000Z',
         }),
@@ -259,6 +270,7 @@ describe('CreateBookingUseCase', () => {
         sut.execute({
           user_id: 'user_1',
           client_id: 'client_1',
+          unit_id: 'unit_1',
           start_at: '2026-01-13T10:00:00.000Z',
           end_at: '2026-01-13T11:00:00.000Z',
         }),

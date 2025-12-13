@@ -1,6 +1,7 @@
 import {
   NotificationTemplate as PrismaNotificationTemplate,
   NotificationTemplateChannel as PrismaNotificationTemplateChannel,
+  Prisma,
 } from '@prisma/client';
 import {
   NotificationTemplateEntity,
@@ -25,7 +26,7 @@ export class NotificationTemplateDataMapper {
     });
   }
 
-  static toPrisma(entity: NotificationTemplateEntity): Omit<PrismaNotificationTemplate, 'created_at' | 'updated_at'> {
+  static toPrisma(entity: NotificationTemplateEntity): Prisma.NotificationTemplateUncheckedUpdateInput {
     return {
       id: entity.id,
       name: entity.name,
@@ -36,14 +37,14 @@ export class NotificationTemplateDataMapper {
       variables: entity.variables,
       version: entity.version,
       is_active: entity.is_active,
-      metadata: entity.metadata ?? null,
+      metadata: entity.metadata ? (entity.metadata as Prisma.InputJsonValue) : Prisma.JsonNull,
     };
   }
 
-  static toPrismaCreate(entity: NotificationTemplateEntity): Omit<PrismaNotificationTemplate, 'updated_at'> {
+  static toPrismaCreate(entity: NotificationTemplateEntity): Prisma.NotificationTemplateUncheckedCreateInput {
     return {
       ...NotificationTemplateDataMapper.toPrisma(entity),
       created_at: entity.created_at,
-    };
+    } as Prisma.NotificationTemplateUncheckedCreateInput;
   }
 }

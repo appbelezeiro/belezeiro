@@ -1,4 +1,4 @@
-import { BookingRule as PrismaBookingRule, BookingRuleType } from '@prisma/client';
+import { BookingRule as PrismaBookingRule, BookingRuleType, Prisma } from '@prisma/client';
 import { BookingRuleEntity } from '@/domain/entities/bookings/booking-rule.entity.js';
 
 export class BookingRuleDataMapper {
@@ -22,7 +22,7 @@ export class BookingRuleDataMapper {
     });
   }
 
-  static toPrisma(entity: BookingRuleEntity): Omit<PrismaBookingRule, 'created_at' | 'updated_at'> {
+  static toPrisma(entity: BookingRuleEntity): Prisma.BookingRuleUncheckedUpdateInput {
     return {
       id: entity.id,
       user_id: entity.user_id,
@@ -36,14 +36,14 @@ export class BookingRuleDataMapper {
       max_duration_minutes: entity.max_duration_minutes ?? null,
       max_bookings_per_day: entity.max_bookings_per_day ?? null,
       max_bookings_per_client_per_day: entity.max_bookings_per_client_per_day ?? null,
-      metadata: entity.metadata ?? null,
+      metadata: entity.metadata ? (entity.metadata as Prisma.InputJsonValue) : Prisma.JsonNull,
     };
   }
 
-  static toPrismaCreate(entity: BookingRuleEntity): Omit<PrismaBookingRule, 'updated_at'> {
+  static toPrismaCreate(entity: BookingRuleEntity): Prisma.BookingRuleUncheckedCreateInput {
     return {
       ...BookingRuleDataMapper.toPrisma(entity),
       created_at: entity.created_at,
-    };
+    } as Prisma.BookingRuleUncheckedCreateInput;
   }
 }

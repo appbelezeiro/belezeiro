@@ -3,6 +3,7 @@ import {
   NotificationChannel as PrismaNotificationChannel,
   NotificationStatus as PrismaNotificationStatus,
   NotificationPriority as PrismaNotificationPriority,
+  Prisma,
 } from '@prisma/client';
 import {
   NotificationEntity,
@@ -32,28 +33,29 @@ export class NotificationDataMapper {
     });
   }
 
-  static toPrisma(entity: NotificationEntity): Omit<PrismaNotification, 'created_at' | 'updated_at'> {
+  static toPrisma(entity: NotificationEntity): Prisma.NotificationUncheckedUpdateInput {
     return {
       id: entity.id,
       target_user_id: entity.target_user_id,
       channel: entity.channel as PrismaNotificationChannel,
       template_id: entity.template_id,
-      payload: entity.payload as unknown as PrismaNotification['payload'],
+      payload: entity.payload as Prisma.InputJsonValue,
       priority: entity.priority as PrismaNotificationPriority,
       status: entity.status as PrismaNotificationStatus,
       provider_id: entity.provider_id ?? null,
       error_message: entity.error_message ?? null,
-      metadata: entity.metadata ?? null,
+      metadata: entity.metadata ? (entity.metadata as Prisma.InputJsonValue) : Prisma.JsonNull,
       message_id: entity.message_id,
       sent_at: entity.sent_at ?? null,
       delivered_at: entity.delivered_at ?? null,
+      read_at: null,
     };
   }
 
-  static toPrismaCreate(entity: NotificationEntity): Omit<PrismaNotification, 'updated_at'> {
+  static toPrismaCreate(entity: NotificationEntity): Prisma.NotificationUncheckedCreateInput {
     return {
       ...NotificationDataMapper.toPrisma(entity),
       created_at: entity.created_at,
-    };
+    } as Prisma.NotificationUncheckedCreateInput;
   }
 }

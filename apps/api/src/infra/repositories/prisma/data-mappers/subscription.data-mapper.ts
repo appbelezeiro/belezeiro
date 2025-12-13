@@ -1,4 +1,4 @@
-import { Subscription as PrismaSubscription, SubscriptionStatus as PrismaSubscriptionStatus, RenewalInterval as PrismaRenewalInterval } from '@prisma/client';
+import { Subscription as PrismaSubscription, SubscriptionStatus as PrismaSubscriptionStatus, RenewalInterval as PrismaRenewalInterval, Prisma } from '@prisma/client';
 import { SubscriptionEntity, SubscriptionStatus } from '@/domain/entities/billing/subscription.entity.js';
 import { RenewalInterval } from '@/domain/entities/billing/plan.entity.js';
 
@@ -47,7 +47,7 @@ export class SubscriptionDataMapper {
     });
   }
 
-  static toPrisma(entity: SubscriptionEntity): Omit<PrismaSubscription, 'created_at' | 'updated_at'> {
+  static toPrisma(entity: SubscriptionEntity): Prisma.SubscriptionUncheckedUpdateInput {
     return {
       id: entity.id,
       unit_id: entity.unit_id,
@@ -63,14 +63,14 @@ export class SubscriptionDataMapper {
       renewal_interval: entity.renewal_interval as PrismaRenewalInterval,
       discount_id: entity.discount_id ?? null,
       provider_subscription_id: entity.provider_subscription_id ?? null,
-      metadata: entity.metadata ?? null,
+      metadata: entity.metadata ? (entity.metadata as Prisma.InputJsonValue) : Prisma.JsonNull,
     };
   }
 
-  static toPrismaCreate(entity: SubscriptionEntity): Omit<PrismaSubscription, 'updated_at'> {
+  static toPrismaCreate(entity: SubscriptionEntity): Prisma.SubscriptionUncheckedCreateInput {
     return {
       ...SubscriptionDataMapper.toPrisma(entity),
       created_at: entity.created_at,
-    };
+    } as Prisma.SubscriptionUncheckedCreateInput;
   }
 }

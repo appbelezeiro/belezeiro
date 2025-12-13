@@ -1,4 +1,4 @@
-import { CouponRedemption as PrismaCouponRedemption } from '@prisma/client';
+import { CouponRedemption as PrismaCouponRedemption, Prisma } from '@prisma/client';
 import { CouponRedemptionEntity } from '@/domain/entities/billing/coupon-redemption.entity.js';
 
 export class CouponRedemptionDataMapper {
@@ -15,21 +15,21 @@ export class CouponRedemptionDataMapper {
     });
   }
 
-  static toPrisma(entity: CouponRedemptionEntity): Omit<PrismaCouponRedemption, 'created_at' | 'updated_at'> {
+  static toPrisma(entity: CouponRedemptionEntity): Prisma.CouponRedemptionUncheckedUpdateInput {
     return {
       id: entity.id,
       coupon_id: entity.coupon_id,
       user_id: entity.user_id,
       subscription_id: entity.subscription_id,
       redeemed_at: entity.redeemed_at,
-      metadata: entity.metadata ?? null,
+      metadata: entity.metadata ? (entity.metadata as Prisma.InputJsonValue) : Prisma.JsonNull,
     };
   }
 
-  static toPrismaCreate(entity: CouponRedemptionEntity): Omit<PrismaCouponRedemption, 'updated_at'> {
+  static toPrismaCreate(entity: CouponRedemptionEntity): Prisma.CouponRedemptionUncheckedCreateInput {
     return {
       ...CouponRedemptionDataMapper.toPrisma(entity),
       created_at: entity.created_at,
-    };
+    } as Prisma.CouponRedemptionUncheckedCreateInput;
   }
 }

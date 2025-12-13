@@ -1,4 +1,4 @@
-import { Discount as PrismaDiscount, DiscountType as PrismaDiscountType, DiscountDuration as PrismaDiscountDuration } from '@prisma/client';
+import { Discount as PrismaDiscount, DiscountType as PrismaDiscountType, DiscountDuration as PrismaDiscountDuration, Prisma } from '@prisma/client';
 import { DiscountEntity, DiscountType, DiscountDuration } from '@/domain/entities/billing/discount.entity.js';
 
 const typeToPrisma: Record<DiscountType, PrismaDiscountType> = {
@@ -45,7 +45,7 @@ export class DiscountDataMapper {
     });
   }
 
-  static toPrisma(entity: DiscountEntity): Omit<PrismaDiscount, 'created_at' | 'updated_at'> {
+  static toPrisma(entity: DiscountEntity): Prisma.DiscountUncheckedUpdateInput {
     return {
       id: entity.id,
       code: entity.code,
@@ -58,14 +58,14 @@ export class DiscountDataMapper {
       redemptions_count: entity.redemptions_count,
       expires_at: entity.expires_at ?? null,
       is_active: entity.is_active,
-      metadata: entity.metadata ?? null,
+      metadata: entity.metadata ? (entity.metadata as Prisma.InputJsonValue) : Prisma.JsonNull,
     };
   }
 
-  static toPrismaCreate(entity: DiscountEntity): Omit<PrismaDiscount, 'updated_at'> {
+  static toPrismaCreate(entity: DiscountEntity): Prisma.DiscountUncheckedCreateInput {
     return {
       ...DiscountDataMapper.toPrisma(entity),
       created_at: entity.created_at,
-    };
+    } as Prisma.DiscountUncheckedCreateInput;
   }
 }

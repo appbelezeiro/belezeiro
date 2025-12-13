@@ -4,6 +4,38 @@ import { InMemoryUnitRepository } from '@/infra/repositories/in-memory/units/in-
 import { UnitEntity } from '@/domain/entities/units/unit.entity';
 import { BaseEntity } from '@/domain/entities/base.entity';
 import { ULIDXIDGeneratorService } from '@/infra/services/ulidx-id-generator.service';
+import { UnitServiceType } from '@/domain/entities/units/unit.entity.types';
+
+function createTestUnit(overrides: Partial<{
+  orgId: string;
+  name: string;
+  serviceType: UnitServiceType;
+  active: boolean;
+  logo: string;
+  gallery: string[];
+}> = {}) {
+  return new UnitEntity({
+    orgId: overrides.orgId ?? 'org_123',
+    name: overrides.name ?? 'Test Unit',
+    logo: overrides.logo ?? '',
+    gallery: overrides.gallery ?? [],
+    phones: [{ raw_number: '+5511999999999' }],
+    address: {
+      street: 'Main St',
+      number: '123',
+      neighborhood: 'Downtown',
+      city: 'São Paulo',
+      state: 'SP',
+      zipcode: '01000-000',
+    },
+    especialidades: [],
+    services: [],
+    serviceType: overrides.serviceType ?? 'on-site',
+    amenities: [],
+    preferences: {},
+    active: overrides.active,
+  });
+}
 
 describe('GetUnitByIdUseCase', () => {
   let sut: GetUnitByIdUseCase;
@@ -21,32 +53,7 @@ describe('GetUnitByIdUseCase', () => {
   });
 
   it('should return unit by id', async () => {
-    const unit = new UnitEntity({
-      organizationId: 'org_123',
-      name: 'Beauty Salon Downtown',
-      whatsapp: '+5511999999999',
-      address: {
-        street: 'Main St',
-        number: '123',
-        neighborhood: 'Downtown',
-        city: 'São Paulo',
-        state: 'SP',
-        cep: '01000-000',
-      },
-      professions: [],
-      services: [],
-      serviceType: 'local',
-      amenities: [],
-      workingHours: {
-        monday: { open: '09:00', close: '18:00', enabled: true },
-        tuesday: { open: '09:00', close: '18:00', enabled: true },
-        wednesday: { open: '09:00', close: '18:00', enabled: true },
-        thursday: { open: '09:00', close: '18:00', enabled: true },
-        friday: { open: '09:00', close: '18:00', enabled: true },
-        saturday: { open: '09:00', close: '18:00', enabled: true },
-        sunday: { open: '09:00', close: '18:00', enabled: false },
-      },
-    });
+    const unit = createTestUnit({ name: 'Beauty Salon Downtown' });
 
     await unit_repository.create(unit);
 
@@ -72,40 +79,11 @@ describe('GetUnitByIdUseCase', () => {
   });
 
   it('should return unit with all properties', async () => {
-    const unit = new UnitEntity({
-      organizationId: 'org_123',
+    const unit = createTestUnit({
       name: 'Complete Salon',
       logo: 'https://example.com/logo.png',
       gallery: ['https://example.com/img1.jpg', 'https://example.com/img2.jpg'],
-      whatsapp: '+5511999999999',
-      phone: '+551133333333',
-      address: {
-        street: 'Complete St',
-        number: '789',
-        neighborhood: 'Central',
-        city: 'São Paulo',
-        state: 'SP',
-        cep: '03000-000',
-        complement: 'Suite 100',
-      },
-      professions: [{ id: 'prof_1', name: 'Hairdresser', icon: 'scissors' }],
-      services: [{ id: 'svc_1', name: 'Haircut', professionId: 'prof_1' }],
       serviceType: 'both',
-      amenities: ['wifi', 'parking'],
-      workingHours: {
-        monday: { open: '09:00', close: '18:00', enabled: true },
-        tuesday: { open: '09:00', close: '18:00', enabled: true },
-        wednesday: { open: '09:00', close: '18:00', enabled: true },
-        thursday: { open: '09:00', close: '18:00', enabled: true },
-        friday: { open: '09:00', close: '18:00', enabled: true },
-        saturday: { open: '09:00', close: '18:00', enabled: true },
-        sunday: { open: '09:00', close: '18:00', enabled: false },
-      },
-      lunchBreak: {
-        start: '12:00',
-        end: '13:00',
-        enabled: true,
-      },
     });
 
     await unit_repository.create(unit);
@@ -117,43 +95,13 @@ describe('GetUnitByIdUseCase', () => {
     const result = await sut.execute(input);
 
     expect(result?.name).toBe('Complete Salon');
-    expect(result?.logo).toBe('https://example.com/logo.png');
+    expect(result?.logo?.toString()).toBe('https://example.com/logo.png');
     expect(result?.gallery).toHaveLength(2);
-    expect(result?.professions).toHaveLength(1);
-    expect(result?.services).toHaveLength(1);
     expect(result?.serviceType).toBe('both');
-    expect(result?.amenities).toContain('wifi');
-    expect(result?.workingHours).toBeDefined();
-    expect(result?.lunchBreak).toBeDefined();
   });
 
   it('should return active unit', async () => {
-    const unit = new UnitEntity({
-      organizationId: 'org_123',
-      name: 'Active Unit',
-      whatsapp: '+5511999999999',
-      address: {
-        street: 'Main St',
-        number: '123',
-        neighborhood: 'Downtown',
-        city: 'São Paulo',
-        state: 'SP',
-        cep: '01000-000',
-      },
-      professions: [],
-      services: [],
-      serviceType: 'local',
-      amenities: [],
-      workingHours: {
-        monday: { open: '09:00', close: '18:00', enabled: true },
-        tuesday: { open: '09:00', close: '18:00', enabled: true },
-        wednesday: { open: '09:00', close: '18:00', enabled: true },
-        thursday: { open: '09:00', close: '18:00', enabled: true },
-        friday: { open: '09:00', close: '18:00', enabled: true },
-        saturday: { open: '09:00', close: '18:00', enabled: true },
-        sunday: { open: '09:00', close: '18:00', enabled: false },
-      },
-    });
+    const unit = createTestUnit({ name: 'Active Unit' });
 
     await unit_repository.create(unit);
 
@@ -163,36 +111,11 @@ describe('GetUnitByIdUseCase', () => {
 
     const result = await sut.execute(input);
 
-    expect(result?.isActive).toBe(true);
+    expect(result?.active).toBe(true);
   });
 
   it('should return inactive unit', async () => {
-    const unit = new UnitEntity({
-      organizationId: 'org_123',
-      name: 'Inactive Unit',
-      whatsapp: '+5511999999999',
-      address: {
-        street: 'Main St',
-        number: '123',
-        neighborhood: 'Downtown',
-        city: 'São Paulo',
-        state: 'SP',
-        cep: '01000-000',
-      },
-      professions: [],
-      services: [],
-      serviceType: 'local',
-      amenities: [],
-      workingHours: {
-        monday: { open: '09:00', close: '18:00', enabled: true },
-        tuesday: { open: '09:00', close: '18:00', enabled: true },
-        wednesday: { open: '09:00', close: '18:00', enabled: true },
-        thursday: { open: '09:00', close: '18:00', enabled: true },
-        friday: { open: '09:00', close: '18:00', enabled: true },
-        saturday: { open: '09:00', close: '18:00', enabled: true },
-        sunday: { open: '09:00', close: '18:00', enabled: false },
-      },
-    });
+    const unit = createTestUnit({ name: 'Inactive Unit' });
 
     unit.deactivate();
     await unit_repository.create(unit);
@@ -203,38 +126,16 @@ describe('GetUnitByIdUseCase', () => {
 
     const result = await sut.execute(input);
 
-    expect(result?.isActive).toBe(false);
+    expect(result?.active).toBe(false);
   });
 
   it('should return unit with different service types', async () => {
-    const serviceTypes = ['local', 'home', 'both'] as const;
+    const serviceTypes: UnitServiceType[] = ['on-site', 'home-care', 'both'];
 
     for (const serviceType of serviceTypes) {
-      const unit = new UnitEntity({
-        organizationId: 'org_123',
+      const unit = createTestUnit({
         name: `Unit ${serviceType}`,
-        whatsapp: '+5511999999999',
-        address: {
-          street: 'Main St',
-          number: '123',
-          neighborhood: 'Downtown',
-          city: 'São Paulo',
-          state: 'SP',
-          cep: '01000-000',
-        },
-        professions: [],
-        services: [],
         serviceType,
-        amenities: [],
-        workingHours: {
-          monday: { open: '09:00', close: '18:00', enabled: true },
-          tuesday: { open: '09:00', close: '18:00', enabled: true },
-          wednesday: { open: '09:00', close: '18:00', enabled: true },
-          thursday: { open: '09:00', close: '18:00', enabled: true },
-          friday: { open: '09:00', close: '18:00', enabled: true },
-          saturday: { open: '09:00', close: '18:00', enabled: true },
-          sunday: { open: '09:00', close: '18:00', enabled: false },
-        },
       });
 
       await unit_repository.create(unit);

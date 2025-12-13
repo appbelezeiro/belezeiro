@@ -1,4 +1,4 @@
-import { Invoice as PrismaInvoice, InvoiceStatus as PrismaInvoiceStatus } from '@prisma/client';
+import { Invoice as PrismaInvoice, InvoiceStatus as PrismaInvoiceStatus, Prisma } from '@prisma/client';
 import { InvoiceEntity, InvoiceStatus, InvoiceLineItem } from '@/domain/entities/billing/invoice.entity.js';
 
 const statusToPrisma: Record<InvoiceStatus, PrismaInvoiceStatus> = {
@@ -34,7 +34,7 @@ export class InvoiceDataMapper {
     });
   }
 
-  static toPrisma(entity: InvoiceEntity): Omit<PrismaInvoice, 'created_at' | 'updated_at'> {
+  static toPrisma(entity: InvoiceEntity): Prisma.InvoiceUncheckedUpdateInput {
     return {
       id: entity.id,
       user_id: entity.user_id,
@@ -42,18 +42,18 @@ export class InvoiceDataMapper {
       amount: entity.amount,
       currency: entity.currency,
       status: statusToPrisma[entity.status],
-      line_items: entity.line_items as unknown as PrismaInvoice['line_items'],
+      line_items: entity.line_items as Prisma.InputJsonValue,
       due_date: entity.due_date,
       paid_at: entity.paid_at ?? null,
       provider_invoice_id: entity.provider_invoice_id ?? null,
-      metadata: entity.metadata ?? null,
+      metadata: entity.metadata ? (entity.metadata as Prisma.InputJsonValue) : Prisma.JsonNull,
     };
   }
 
-  static toPrismaCreate(entity: InvoiceEntity): Omit<PrismaInvoice, 'updated_at'> {
+  static toPrismaCreate(entity: InvoiceEntity): Prisma.InvoiceUncheckedCreateInput {
     return {
       ...InvoiceDataMapper.toPrisma(entity),
       created_at: entity.created_at,
-    };
+    } as Prisma.InvoiceUncheckedCreateInput;
   }
 }

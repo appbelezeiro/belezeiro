@@ -1,14 +1,53 @@
 import { describe, it, expect, beforeEach, beforeAll } from 'vitest';
 import { UpdateUnitUseCase } from './update-unit.usecase';
 import { InMemoryUnitRepository } from '@/infra/repositories/in-memory/units/in-memory-unit.repository';
+import { InMemoryAmenityRepository } from '@/infra/repositories/in-memory/in-memory-amenity.repository';
+import { InMemorySpecialtyRepository } from '@/infra/repositories/in-memory/in-memory-specialty.repository';
+import { InMemoryServiceRepository } from '@/infra/repositories/in-memory/in-memory-service.repository';
 import { UnitEntity } from '@/domain/entities/units/unit.entity';
 import { BaseEntity } from '@/domain/entities/base.entity';
 import { ULIDXIDGeneratorService } from '@/infra/services/ulidx-id-generator.service';
 import { UnitNotFoundError } from '@/domain/errors/units/unit.errors';
+import { UnitServiceType } from '@/domain/entities/units/unit.entity.types';
+
+function createTestUnit(overrides: Partial<{
+  orgId: string;
+  name: string;
+  serviceType: UnitServiceType;
+  active: boolean;
+  logo: string;
+  gallery: string[];
+}> = {}) {
+  return new UnitEntity({
+    orgId: overrides.orgId ?? 'org_123',
+    name: overrides.name ?? 'Test Unit',
+    logo: overrides.logo ?? '',
+    gallery: overrides.gallery ?? [],
+    phones: [{ raw_number: '+5511999999999' }],
+    address: {
+      street: 'Main St',
+      number: '123',
+      complement: 'Apt 4',
+      neighborhood: 'Downtown',
+      city: 'São Paulo',
+      state: 'SP',
+      zipcode: '01000-000',
+    },
+    especialidades: [],
+    services: [],
+    serviceType: overrides.serviceType ?? 'on-site',
+    amenities: [],
+    preferences: {},
+    active: overrides.active,
+  });
+}
 
 describe('UpdateUnitUseCase', () => {
   let sut: UpdateUnitUseCase;
   let unit_repository: InMemoryUnitRepository;
+  let amenity_repository: InMemoryAmenityRepository;
+  let specialty_repository: InMemorySpecialtyRepository;
+  let service_repository: InMemoryServiceRepository;
 
   beforeAll(() => {
     BaseEntity.configure({
@@ -18,37 +57,19 @@ describe('UpdateUnitUseCase', () => {
 
   beforeEach(() => {
     unit_repository = new InMemoryUnitRepository();
-    sut = new UpdateUnitUseCase(unit_repository);
+    amenity_repository = new InMemoryAmenityRepository();
+    specialty_repository = new InMemorySpecialtyRepository();
+    service_repository = new InMemoryServiceRepository();
+    sut = new UpdateUnitUseCase(
+      unit_repository,
+      amenity_repository,
+      specialty_repository,
+      service_repository,
+    );
   });
 
   it('should update unit name', async () => {
-    const unit = new UnitEntity({
-      name: 'Old Name',
-      organizationId: 'org_123',
-      whatsapp: '+5511999999999',
-      address: {
-        street: 'Main St',
-        number: '123',
-        complement: 'Apt 4',
-        neighborhood: 'Downtown',
-        city: 'São Paulo',
-        state: 'SP',
-        cep: '01000-000',
-      },
-      professions: [],
-      services: [],
-      serviceType: 'local',
-      amenities: [],
-      workingHours: {
-        monday: { open: '09:00', close: '18:00', enabled: true },
-        tuesday: { open: '09:00', close: '18:00', enabled: true },
-        wednesday: { open: '09:00', close: '18:00', enabled: true },
-        thursday: { open: '09:00', close: '18:00', enabled: true },
-        friday: { open: '09:00', close: '18:00', enabled: true },
-        saturday: { open: '09:00', close: '18:00', enabled: true },
-        sunday: { open: '09:00', close: '18:00', enabled: false },
-      },
-    });
+    const unit = createTestUnit({ name: 'Old Name' });
 
     await unit_repository.create(unit);
 
@@ -61,33 +82,7 @@ describe('UpdateUnitUseCase', () => {
   });
 
   it('should update unit logo', async () => {
-    const unit = new UnitEntity({
-      name: 'Unit',
-      organizationId: 'org_123',
-      whatsapp: '+5511999999999',
-      address: {
-        street: 'Main St',
-        number: '123',
-        complement: 'Apt 4',
-        neighborhood: 'Downtown',
-        city: 'São Paulo',
-        state: 'SP',
-        cep: '01000-000',
-      },
-      professions: [],
-      services: [],
-      serviceType: 'local',
-      amenities: [],
-      workingHours: {
-        monday: { open: '09:00', close: '18:00', enabled: true },
-        tuesday: { open: '09:00', close: '18:00', enabled: true },
-        wednesday: { open: '09:00', close: '18:00', enabled: true },
-        thursday: { open: '09:00', close: '18:00', enabled: true },
-        friday: { open: '09:00', close: '18:00', enabled: true },
-        saturday: { open: '09:00', close: '18:00', enabled: true },
-        sunday: { open: '09:00', close: '18:00', enabled: false },
-      },
-    });
+    const unit = createTestUnit({ name: 'Unit' });
 
     await unit_repository.create(unit);
 
@@ -96,158 +91,37 @@ describe('UpdateUnitUseCase', () => {
       logo: 'https://example.com/logo.png',
     });
 
-    expect(result.logo).toBe('https://example.com/logo.png');
+    expect(result.logo?.toString()).toBe('https://example.com/logo.png');
   });
 
   it('should activate unit', async () => {
-    const unit = new UnitEntity({
-      name: 'Unit',
-      organizationId: 'org_123',
-      whatsapp: '+5511999999999',
-      isActive: false,
-      address: {
-        street: 'Main St',
-        number: '123',
-        complement: 'Apt 4',
-        neighborhood: 'Downtown',
-        city: 'São Paulo',
-        state: 'SP',
-        cep: '01000-000',
-      },
-      professions: [],
-      services: [],
-      serviceType: 'local',
-      amenities: [],
-      workingHours: {
-        monday: { open: '09:00', close: '18:00', enabled: true },
-        tuesday: { open: '09:00', close: '18:00', enabled: true },
-        wednesday: { open: '09:00', close: '18:00', enabled: true },
-        thursday: { open: '09:00', close: '18:00', enabled: true },
-        friday: { open: '09:00', close: '18:00', enabled: true },
-        saturday: { open: '09:00', close: '18:00', enabled: true },
-        sunday: { open: '09:00', close: '18:00', enabled: false },
-      },
-    });
+    const unit = createTestUnit({ name: 'Unit', active: false });
 
     await unit_repository.create(unit);
 
     const result = await sut.execute({
       id: unit.id,
-      isActive: true,
+      active: true,
     });
 
-    expect(result.isActive).toBe(true);
+    expect(result.active).toBe(true);
   });
 
   it('should deactivate unit', async () => {
-    const unit = new UnitEntity({
-      name: 'Unit',
-      organizationId: 'org_123',
-      whatsapp: '+5511999999999',
-      isActive: true,
-      address: {
-        street: 'Main St',
-        number: '123',
-        complement: 'Apt 4',
-        neighborhood: 'Downtown',
-        city: 'São Paulo',
-        state: 'SP',
-        cep: '01000-000',
-      },
-      professions: [],
-      services: [],
-      serviceType: 'local',
-      amenities: [],
-      workingHours: {
-        monday: { open: '09:00', close: '18:00', enabled: true },
-        tuesday: { open: '09:00', close: '18:00', enabled: true },
-        wednesday: { open: '09:00', close: '18:00', enabled: true },
-        thursday: { open: '09:00', close: '18:00', enabled: true },
-        friday: { open: '09:00', close: '18:00', enabled: true },
-        saturday: { open: '09:00', close: '18:00', enabled: true },
-        sunday: { open: '09:00', close: '18:00', enabled: false },
-      },
-    });
+    const unit = createTestUnit({ name: 'Unit', active: true });
 
     await unit_repository.create(unit);
 
     const result = await sut.execute({
       id: unit.id,
-      isActive: false,
+      active: false,
     });
 
-    expect(result.isActive).toBe(false);
-  });
-
-  it('should update unit contact info', async () => {
-    const unit = new UnitEntity({
-      name: 'Unit',
-      organizationId: 'org_123',
-      whatsapp: '+5511999999999',
-      address: {
-        street: 'Main St',
-        number: '123',
-        complement: 'Apt 4',
-        neighborhood: 'Downtown',
-        city: 'São Paulo',
-        state: 'SP',
-        cep: '01000-000',
-      },
-      professions: [],
-      services: [],
-      serviceType: 'local',
-      amenities: [],
-      workingHours: {
-        monday: { open: '09:00', close: '18:00', enabled: true },
-        tuesday: { open: '09:00', close: '18:00', enabled: true },
-        wednesday: { open: '09:00', close: '18:00', enabled: true },
-        thursday: { open: '09:00', close: '18:00', enabled: true },
-        friday: { open: '09:00', close: '18:00', enabled: true },
-        saturday: { open: '09:00', close: '18:00', enabled: true },
-        sunday: { open: '09:00', close: '18:00', enabled: false },
-      },
-    });
-
-    await unit_repository.create(unit);
-
-    const result = await sut.execute({
-      id: unit.id,
-      whatsapp: '+5511888888888',
-      phone: '+551133333333',
-    });
-
-    expect(result.whatsapp).toBe('+5511888888888');
-    expect(result.phone).toBe('+551133333333');
+    expect(result.active).toBe(false);
   });
 
   it('should update multiple fields at once', async () => {
-    const unit = new UnitEntity({
-      name: 'Old Name',
-      organizationId: 'org_123',
-      whatsapp: '+5511999999999',
-      address: {
-        street: 'Main St',
-        number: '123',
-        complement: 'Apt 4',
-        neighborhood: 'Downtown',
-        city: 'São Paulo',
-        state: 'SP',
-        cep: '01000-000',
-      },
-      professions: [],
-      services: [],
-      serviceType: 'local',
-      amenities: [],
-      workingHours: {
-        monday: { open: '09:00', close: '18:00', enabled: true },
-        tuesday: { open: '09:00', close: '18:00', enabled: true },
-        wednesday: { open: '09:00', close: '18:00', enabled: true },
-        thursday: { open: '09:00', close: '18:00', enabled: true },
-        friday: { open: '09:00', close: '18:00', enabled: true },
-        saturday: { open: '09:00', close: '18:00', enabled: true },
-        sunday: { open: '09:00', close: '18:00', enabled: false },
-      },
-    });
+    const unit = createTestUnit({ name: 'Old Name' });
 
     await unit_repository.create(unit);
 
@@ -255,12 +129,12 @@ describe('UpdateUnitUseCase', () => {
       id: unit.id,
       name: 'New Name',
       logo: 'https://example.com/logo.png',
-      isActive: false,
+      active: false,
     });
 
     expect(result.name).toBe('New Name');
-    expect(result.logo).toBe('https://example.com/logo.png');
-    expect(result.isActive).toBe(false);
+    expect(result.logo?.toString()).toBe('https://example.com/logo.png');
+    expect(result.active).toBe(false);
   });
 
   it('should throw UnitNotFoundError when unit does not exist', async () => {

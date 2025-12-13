@@ -25,6 +25,7 @@ describe('CancelBookingUseCase', () => {
     const booking = new BookingEntity({
       user_id: 'user_123',
       client_id: 'client_123',
+      unit_id: 'unit_123',
       start_at: '2024-12-15T10:00:00Z',
       end_at: '2024-12-15T11:00:00Z',
       status: 'confirmed',
@@ -54,6 +55,7 @@ describe('CancelBookingUseCase', () => {
     const booking = new BookingEntity({
       user_id: 'user_123',
       client_id: 'client_123',
+      unit_id: 'unit_123',
       start_at: '2024-12-15T10:00:00Z',
       end_at: '2024-12-15T11:00:00Z',
       status: 'confirmed',
@@ -75,6 +77,7 @@ describe('CancelBookingUseCase', () => {
     const booking = new BookingEntity({
       user_id: 'user_123',
       client_id: 'client_123',
+      unit_id: 'unit_123',
       start_at: '2024-12-15T10:00:00Z',
       end_at: '2024-12-15T11:00:00Z',
       status: 'cancelled',

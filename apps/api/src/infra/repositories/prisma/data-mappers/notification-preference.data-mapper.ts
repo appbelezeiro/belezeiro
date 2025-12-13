@@ -1,6 +1,7 @@
 import {
   NotificationPreference as PrismaNotificationPreference,
   NotificationPreferenceCategory as PrismaNotificationPreferenceCategory,
+  Prisma,
 } from '@prisma/client';
 import {
   NotificationPreferenceEntity,
@@ -26,20 +27,20 @@ export class NotificationPreferenceDataMapper {
     });
   }
 
-  static toPrisma(entity: NotificationPreferenceEntity): Omit<PrismaNotificationPreference, 'created_at' | 'updated_at'> {
+  static toPrisma(entity: NotificationPreferenceEntity): Prisma.NotificationPreferenceUncheckedUpdateInput {
     return {
       id: entity.id,
       user_id: entity.user_id,
       category: entity.category as PrismaNotificationPreferenceCategory,
-      channels: entity.channels as unknown as PrismaNotificationPreference['channels'],
-      metadata: entity.metadata ?? null,
+      channels: entity.channels as Prisma.InputJsonValue,
+      metadata: entity.metadata ? (entity.metadata as Prisma.InputJsonValue) : Prisma.JsonNull,
     };
   }
 
-  static toPrismaCreate(entity: NotificationPreferenceEntity): Omit<PrismaNotificationPreference, 'updated_at'> {
+  static toPrismaCreate(entity: NotificationPreferenceEntity): Prisma.NotificationPreferenceUncheckedCreateInput {
     return {
       ...NotificationPreferenceDataMapper.toPrisma(entity),
       created_at: entity.created_at,
-    };
+    } as Prisma.NotificationPreferenceUncheckedCreateInput;
   }
 }
