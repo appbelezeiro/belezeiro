@@ -9,10 +9,13 @@ import { IServiceRepository } from '@/application/contracts/i-service-repository
 import { OneOrMoreServicesNotFound } from '@/domain/errors/services/one-or-more-services-not-found.error';
 import { AddressProps } from '@/domain/value-objects/address.value-object';
 import { PhoneProps } from '@/domain/value-objects/phone.value-object';
+import { IOrganizationRepository } from '@/application/contracts/organizations/i-organization-repository.interface';
+import { OrganizationNotFoundError } from '@/domain/errors/organizations/organization.errors';
 
 class UseCase {
   constructor(
     private readonly unit_repository: IUnitRepository,
+    private readonly organization_repository: IOrganizationRepository,
     private readonly amenities_repository: IAmenityRepository,
     private readonly specialities_repository: ISpecialtyRepository,
     private readonly services_repository: IServiceRepository,
@@ -35,6 +38,12 @@ class UseCase {
 
     if (services.length !== input.services.length) {
       throw new OneOrMoreServicesNotFound();
+    }
+
+    const organization = await this.organization_repository.find_by_id(input.orgId);
+
+    if (!organization) {
+      throw new OrganizationNotFoundError();
     }
 
     const unit = new UnitEntity({

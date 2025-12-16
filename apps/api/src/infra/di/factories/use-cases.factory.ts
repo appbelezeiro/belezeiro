@@ -22,7 +22,6 @@ import { CreateUnitUseCase } from '@/application/usecases/units/create-unit.usec
 import { GetUnitByIdUseCase } from '@/application/usecases/units/get-unit-by-id.usecase';
 import { ListUnitsByOrganizationUseCase } from '@/application/usecases/units/list-units-by-organization.usecase';
 import { UpdateUnitUseCase } from '@/application/usecases/units/update-unit.usecase';
-import { ListActiveUnitsUseCase } from '@/application/usecases/units/list-active-units.usecase';
 import { CreatePlanUseCase } from '@/application/usecases/billing/create-plan.usecase';
 import { ListActivePlansUseCase } from '@/application/usecases/billing/list-active-plans.usecase';
 import { GetPlanByIdUseCase } from '@/application/usecases/billing/get-plan-by-id.usecase';
@@ -35,7 +34,6 @@ import { ValidateDiscountCodeUseCase } from '@/application/usecases/billing/vali
 import { CreateSpecialtyUseCase } from '@/application/usecases/specialty/create-specialty.usecase';
 import { GetSpecialtyByIdUseCase } from '@/application/usecases/specialty/get-specialty-by-id.usecase';
 import { ListSpecialtiesUseCase } from '@/application/usecases/specialty/list-specialties.usecase';
-import { SearchSpecialtiesUseCase } from '@/application/usecases/specialty/search-specialties.usecase';
 import { CreateServiceUseCase } from '@/application/usecases/service/create-service.usecase';
 import { GetServiceByIdUseCase } from '@/application/usecases/service/get-service-by-id.usecase';
 import { ListServicesUseCase } from '@/application/usecases/service/list-services.usecase';
@@ -194,6 +192,7 @@ export function createUseCases(repositories: Repositories, services: Services) {
     // Unit use cases (updated with availability dependencies)
     create_unit: new CreateUnitUseCase(
       repositories.unit_repository,
+      repositories.organization_repository,
       repositories.amenity_repository,
       repositories.specialty_repository,
       repositories.service_repository,
@@ -206,7 +205,6 @@ export function createUseCases(repositories: Repositories, services: Services) {
       repositories.specialty_repository,
       repositories.service_repository,
     ),
-    list_active_units: new ListActiveUnitsUseCase(repositories.unit_repository),
 
     // Billing - Plan use cases
     create_plan: new CreatePlanUseCase(repositories.plan_repository),
@@ -241,7 +239,6 @@ export function createUseCases(repositories: Repositories, services: Services) {
     create_specialty: new CreateSpecialtyUseCase(repositories.specialty_repository),
     get_specialty_by_id: new GetSpecialtyByIdUseCase(repositories.specialty_repository),
     list_specialties: new ListSpecialtiesUseCase(repositories.specialty_repository),
-    search_specialties: new SearchSpecialtiesUseCase(repositories.specialty_repository),
 
     // Service use cases
     create_service: new CreateServiceUseCase(

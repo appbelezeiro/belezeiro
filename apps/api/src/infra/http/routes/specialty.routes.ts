@@ -8,7 +8,6 @@ export function createSpecialtyRoutes(container: Container) {
 
   router.post('/', (c) => controller.create(c));
   router.get('/', (c) => controller.list(c));
-  router.get('/search', (c) => controller.search(c));
   router.get('/:id', (c) => controller.get_by_id(c));
 
   return router;

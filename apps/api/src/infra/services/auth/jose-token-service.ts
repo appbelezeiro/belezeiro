@@ -7,7 +7,7 @@ import {
 
 export class JoseTokenService implements ITokenService {
   private readonly secret: Uint8Array;
-  private readonly session_expiration = '15m';
+  private readonly session_expiration = '7d';
   private readonly refresh_expiration = '7d';
 
   constructor(secret?: string) {

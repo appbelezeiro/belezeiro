@@ -13,7 +13,7 @@ const CreateSpecialtySchema = z.object({
 });
 
 export class SpecialtyController {
-  constructor(private readonly container: Container) {}
+  constructor(private readonly container: Container) { }
 
   async create(c: Context) {
     try {
@@ -37,31 +37,11 @@ export class SpecialtyController {
   }
 
   async list(c: Context) {
-    const cursor = c.req.query('cursor');
-    const limit = c.req.query('limit') ? parseInt(c.req.query('limit')!) : undefined;
+    const cursor = c.req.query('c');
+    const query = c.req.query('q');
+    const limit = c.req.query('l') ? parseInt(c.req.query('l')!) : undefined;
 
     const result = await this.container.use_cases.list_specialties.execute({
-      cursor,
-      limit,
-    });
-
-    return c.json({
-      items: result.items.map(SpecialtyMapper.toDTO),
-      next_cursor: result.next_cursor,
-      has_more: result.has_more,
-    });
-  }
-
-  async search(c: Context) {
-    const query = c.req.query('q');
-    if (!query) {
-      throw new BadRequestError('Query parameter "q" is required');
-    }
-
-    const cursor = c.req.query('cursor');
-    const limit = c.req.query('limit') ? parseInt(c.req.query('limit')!) : undefined;
-
-    const result = await this.container.use_cases.search_specialties.execute({
       query,
       cursor,
       limit,

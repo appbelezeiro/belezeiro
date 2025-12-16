@@ -1,7 +1,3 @@
-// ============================================================================
-// USE SPECIALTIES - Query Hook for Specialties List with Infinite Scroll
-// ============================================================================
-
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/shared/constants/query-keys";
 import { specialtiesService } from "../../api";
@@ -15,7 +11,7 @@ interface UseSpecialtiesOptions {
 /**
  * Query hook to fetch specialties list with infinite scroll (cursor pagination)
  */
-export function useSpecialties({ limit = 20, enabled = true }: UseSpecialtiesOptions = {}) {
+export function useSpecialties({ limit = 50, enabled = true }: UseSpecialtiesOptions = {}) {
   return useInfiniteQuery<SpecialtiesResponse, Error>({
     queryKey: queryKeys.specialties.list({ limit }),
     queryFn: ({ pageParam }) =>

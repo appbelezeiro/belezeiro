@@ -21,10 +21,15 @@ export class PrismaSpecialtyRepository implements ISpecialtyRepository {
     return found ? SpecialtyDataMapper.toDomain(found) : null;
   }
 
-  async list(cursor?: string, limit?: number): Promise<CursorPaginatedResponse<SpecialtyEntity>> {
+  async list(params: ISpecialtyRepository.ListParams): Promise<CursorPaginatedResponse<SpecialtyEntity>> {
+    const { cursor, limit, query } = params;
+
+    console.log({ cursor, limit, default: DEFAULT_PAGINATION_LIMIT, max: MAX_PAGINATION_LIMIT })
+
     const take = Math.min(limit || DEFAULT_PAGINATION_LIMIT, MAX_PAGINATION_LIMIT);
 
     const specialties = await prisma.specialty.findMany({
+      where: { name: query ? { contains: query, mode: 'insensitive' } : undefined },
       take: take + 1,
       ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}),
       orderBy: { created_at: 'desc' },

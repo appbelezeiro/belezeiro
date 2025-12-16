@@ -110,16 +110,6 @@ export class PrismaUnitRepository implements IUnitRepository {
     return units.map((u) => UnitDataMapper.toDomain(u as UnitWithRelations));
   }
 
-  async list_active(): Promise<UnitEntity[]> {
-    const units = await prisma.unit.findMany({
-      where: { is_active: true },
-      include: unitInclude,
-      orderBy: { created_at: 'desc' },
-    });
-
-    return units.map((u) => UnitDataMapper.toDomain(u as UnitWithRelations));
-  }
-
   async update(entity: UnitEntity): Promise<UnitEntity> {
     const unitData = UnitDataMapper.toPrismaUpdate(entity);
 

@@ -7,7 +7,6 @@ export function createUnitRoutes(container: Container) {
   const controller = new UnitController(container);
 
   router.post('/', (context) => controller.create(context));
-  router.get('/active', (context) => controller.list_active(context));
   router.get('/:id', (context) => controller.get_by_id(context));
   router.get('/organization/:organizationId', (context) =>
     controller.list_by_organization(context)

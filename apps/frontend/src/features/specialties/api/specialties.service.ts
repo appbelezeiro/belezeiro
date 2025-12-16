@@ -22,7 +22,7 @@ class SpecialtiesService {
    */
   async getSpecialties(
     cursor?: string,
-    limit = 20
+    limit = 50
   ): Promise<SpecialtiesResponse> {
     const response = await apiClient.get<SpecialtiesResponse>(
       API_ENDPOINTS.SPECIALTIES.BASE,

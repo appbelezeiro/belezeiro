@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 import { OnboardingStepBasicInfo } from "@/components/onboarding/OnboardingStepBasicInfo";
 import { OnboardingStepAddress } from "@/components/onboarding/OnboardingStepAddress";
 import { OnboardingStepSpecialties } from "@/components/onboarding/OnboardingStepSpecialties";
@@ -301,7 +302,7 @@ const Onboarding = () => {
 
       {/* Content */}
       <main className="content-container py-8">
-        <div className="max-w-2xl mx-auto">
+        <div className={cn("mx-auto", currentStep === 3 ? "max-w-6xl" : "max-w-2xl")}>
           {currentStep === 1 && (
             <OnboardingStepBasicInfo
               data={formData}

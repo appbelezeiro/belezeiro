@@ -122,15 +122,6 @@ export class UnitController {
     });
   }
 
-  async list_active(c: Context) {
-    const units = await this.container.use_cases.list_active_units.execute();
-
-    return c.json({
-      items: UnitMapper.toListItemList(units),
-      total: units.length,
-    });
-  }
-
   async update(c: Context) {
     try {
       const { id } = c.req.param();
